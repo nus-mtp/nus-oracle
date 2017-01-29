@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "react/require-extension": "off",
+    "import/no-extraneous-dependencies": "off"
+  },
+  "settings": {
+    "import/core-modules": [ "meteor/meteor" ]
+  }
+}

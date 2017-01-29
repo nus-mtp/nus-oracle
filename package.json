@@ -1,0 +1,44 @@
+{
+  "name": "nus_oracle",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "lint": "eslint .;exit 0",
+    "pretest": "npm run lint --silent"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.22.0",
+    "react": "^15.4.2",
+    "react-addons-pure-render-mixin": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+
+  "eslintConfig": {
+      "parser": "babel-eslint",
+      "parserOptions": {
+        "allowImportExportEverywhere": true
+      },
+      "plugins": [
+        "meteor"
+      ],
+      "extends": [
+        "airbnb",
+        "plugin:meteor/recommended"
+      ],
+      "settings": {
+        "import/resolver": "meteor"
+      },
+      "rules": {}
+  },
+
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-import-resolver-meteor": "^0.3.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-react": "^6.9.0"
+  }
+}
