@@ -1,4 +1,4 @@
-export const Atom = {
+const Atom = {
   value: 1,
 
   addValue(value) {
