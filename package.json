@@ -12,28 +12,26 @@
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-dom": "^15.4.2"
   },
-
   "eslintConfig": {
-      "parser": "babel-eslint",
-      "parserOptions": {
-        "allowImportExportEverywhere": true
-      },
-      "plugins": [
-        "meteor"
-      ],
-      "extends": [
-        "airbnb",
-        "plugin:meteor/recommended"
-      ],
-      "settings": {
-        "import/resolver": "meteor"
-      },
-      "rules": {}
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "rules": {}
   },
-
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "eslint": "^3.14.1",
+    "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-import-resolver-meteor": "^0.3.4",
     "eslint-plugin-import": "^2.2.0",
