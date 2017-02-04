@@ -1,0 +1,11 @@
+language: node_js
+
+before_install:
+  - PATH=$PATH:$HOME/.meteor
+  # Download Meteor
+  - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+  - meteor npm install
+
+script:
+  # Run all tests:  Unit test, Integration test, Package test
+  - meteor npm run test
