@@ -12,3 +12,10 @@ before_install:
 script:
   # Run all tests:  Unit test, Integration test, Package test
   - meteor npm run test
+
+notifications:
+  slack:
+    rooms:
+      rainbowheadstudios:g0TFwjwrIKTfhRu3vn5fGjVu
+    on_success: always
+    on_failure: always
