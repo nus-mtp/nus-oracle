@@ -1,7 +1,5 @@
 import React from 'react';
 
-const hello = 'hello world';
-
 export default class App extends React.Component {
     render() {
         return (
