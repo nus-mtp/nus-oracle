@@ -1,15 +1,13 @@
 import React from 'react';
+import BasicTable from './BasicTable.jsx';
 
-const hello = 'hello world';
-
-function App() {
-  return (
-    <div className="container">
-      <header>
-        <h1>{hello}!</h1>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>Hello World! NUS Oracle rocks!</h1>
+                <BasicTable />
+            </div>
+        )
+    }
 }
-
-export default App;
