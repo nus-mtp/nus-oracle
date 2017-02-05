@@ -2,14 +2,13 @@ import React from 'react';
 
 const hello = 'hello world';
 
-function App() {
-  return (
-    <div className="container">
-      <header>
-        <h1>{hello}!</h1>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>Hello World! I am a React Component!!</h1>
+                <h2>NUS Oracle rocks!</h2>
+            </div>
+        )
+    }
 }
-
-export default App;
