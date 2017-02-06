@@ -1,10 +1,10 @@
 import React from 'react';
-import BasicTable from '../components/BasicTable';
+import Dashboard from '../pages/Dashboard';
 
 export default function App() {
   return (
     <div>
-      <BasicTable />
+      <Dashboard />
     </div>
   );
 }
