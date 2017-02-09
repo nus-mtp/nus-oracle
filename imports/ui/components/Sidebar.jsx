@@ -1,9 +1,11 @@
 import React from 'react';
 
-export default function App() {
-  return (
-    <nav className="side-menu">
-      The SideBar
-    </nav>
-  );
+export default class Sidebar extends React.Component {
+  render() {
+    return (
+      <nav className="side-menu">
+        The SideBar
+      </nav>
+    );
+  }
 }

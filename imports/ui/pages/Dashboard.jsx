@@ -2,11 +2,17 @@ import React from 'react';
 import Sidebar from '../components/Sidebar';
 import StudyPlan from '../components/StudyPlan';
 
-export default function Dashboard() {
-  return (
-    <div className="with-side-menu">
-      <Sidebar />
-      <StudyPlan />
-    </div>
-  );
+export default class Dashboard extends React.Component {
+  render() {
+    return (
+      <div className="with-side-menu">
+          <Sidebar />
+        <div className="page-content">
+          <div className="container-fluid">
+            <StudyPlan />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
