@@ -2,11 +2,11 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 
-import App from '../imports/ui/App';
-
+// Import all entry points needed for rendering the main page
+import App from '../imports/ui/pages/App';
 import './main.html';
 
+// React components to render immediately on start up
 Meteor.startup(() => {
-  render(
-    <App />, global.document.getElementById('render-target'));
+  render(<App />, global.document.getElementById('render-target'));
 });
