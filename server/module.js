@@ -23,6 +23,9 @@ const createModCollection = function createModuleCollection() {
   moduleCollection = new Meteor.Collection('module');
   moduleCollection.schema = new SimpleSchema(
     {
+      moduleCode: {
+        type: String,
+      },
       moduleName: {
         type: String,
       },
@@ -34,6 +37,7 @@ const createModCollection = function createModuleCollection() {
       },
       moduleCorequisite: {
         type: String,
+        optional: true,
       },
       modulePreclusion: {
         type: String,
@@ -78,14 +82,15 @@ const testDataNew = function insertTestData() {
     },
   );
 
-  const a = termCollection.find({}).fetch();
+  const a = termCollection.find({},{semester:'1'}).fetch();
   console.log(a);
   moduleCollection.insert(
     {
-      moduleName: 'cs1101s',
+      moduleCode: 'cs1101s',
+      moduleName: 'Programming Methodology',
       modulePreclusion: 'cs1010, cs1010e, cs1010s, and its equivalent',
-      moduleCorequisite: 'nonez',
-      moduleDescription: 'too Lazy',
+      moduleCorequisite: '-',
+      moduleDescription: 'An advance version of cs1010.',
       modulePrerequisite: 'none',
       termOffered: a,
     },
@@ -93,5 +98,23 @@ const testDataNew = function insertTestData() {
   console.log(moduleCollection.findOne({}).termOffered);
 };
 
-createModCollection();
-testDataNew();
+// This method try to find module in the collection by the moduleCode
+const searchByModuleCode = function retrieveMod(modCode) {
+  const searchResult = moduleCollection.findOne({ moduleCode: modCode });
+
+  if (searchResult.length === 0) {
+    return {};
+  }
+  const returnPackage = {
+    moduleCode: searchResult.moduleCode,
+    moduleID: searchResult._id,
+  };
+
+  return returnPackage;
+};
+
+// For testing purposes
+// createModCollection();
+// testDataNew();
+// const testResult = searchByModuleCode('cs1101s');
+// console.log(testResult);
