@@ -5,6 +5,7 @@ import { createPlanner,
          getPlannerFocusArea,
          getPlannerName,
          setPlannerFocusArea,
+         setPlannerName,
          removePlanner,
          insertNewSemesterInPlanner,
          getSemesterInPlanner,
@@ -49,6 +50,15 @@ describe('planner', function () {
     assert.equal(numOfDocumentsUpdatedWithSemester, 1);
     assert.equal(planner.focusArea.length, 1);
     assert.equal(planner.focusArea[0], 'Computer Graphics And Games');
+  });
+
+  it ('set new planner name', function()  {
+    const newPlannerName = 'testNewPlanner';
+    const numOfDocumentsUpdatedWithSemester = setPlannerName(testPlannerID, newPlannerName);
+    const planner = Planner.findOne(testPlannerID);
+
+    assert.equal(planner.name, newPlannerName);
+    assert.equal(numOfDocumentsUpdatedWithSemester, 1);
   });
 
   it ('insert semester into planner', function () {
