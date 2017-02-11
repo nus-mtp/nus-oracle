@@ -33,6 +33,15 @@ export const getPlannerName = function getPlannerName(plannerID) {
   return planner.name;
 };
 
+export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {
+  const planner = Planner.findOne(plannerID);
+
+  const numOfDocumentsUpdatedWithSemester = Planner.update(
+     plannerID,
+    { $set: { focusArea: newFocusArea } });
+  return numOfDocumentsUpdatedWithSemester;
+};
+
 // removes all semester associated with the planner and the planner document itself
 export const removePlanner = function removePlanner(plannerID) {
   Planner.remove(plannerID);

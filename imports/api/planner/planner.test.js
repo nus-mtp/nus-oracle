@@ -4,6 +4,7 @@ import { Planner } from './planner';
 import { createPlanner,
          getPlannerFocusArea,
          getPlannerName,
+         setPlannerFocusArea,
          removePlanner,
          insertNewSemesterInPlanner,
          getSemesterInPlanner,
@@ -37,6 +38,17 @@ describe('planner', function () {
   it ('get planner name', function ()  {
     const plannerName = getPlannerName(testPlannerID);
     assert.equal(plannerName, testPlannerName);
+  });
+
+  it ('set new planner focus area', function()  {
+    const newFocusArea = ['Computer Graphics And Games'];
+    const numOfDocumentsUpdatedWithSemester = setPlannerFocusArea(testPlannerID, newFocusArea);
+
+    const planner = Planner.findOne(testPlannerID);
+
+    assert.equal(numOfDocumentsUpdatedWithSemester, 1);
+    assert.equal(planner.focusArea.length, 1);
+    assert.equal(planner.focusArea[0], 'Computer Graphics And Games');
   });
 
   it ('insert semester into planner', function () {
