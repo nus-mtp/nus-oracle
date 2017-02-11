@@ -27,6 +27,7 @@ less                           # Alternative to CSS
 mongo@1.1.14                   # The database Meteor supports right now
 aldeed:collection2
 aldeed:simple-schema
+harrison:papa-parse             # parsing csv to json
 
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode

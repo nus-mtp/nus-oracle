@@ -2,24 +2,12 @@ import { Meteor } from 'meteor/meteor';
 // temporary schema for storing module and term whereby the module is offered
 // TO-DO: check with the front end regarding student + study plan database.
 
-// this function should only be called if there is no module collection yet to
-// be established.
 let termCollection;
 let moduleCollection;
 
-const createModCollection = function createModuleCollection() {
-  termCollection = new Meteor.Collection('termOffered');
-  termCollection.Schema = new SimpleSchema(
-    {
-      termYear: {
-        type: String,
-      },
-      semester: {
-        type: String,
-      },
-    },
-  );
-
+// this function should only be called if there is no module collection yet to
+// be established.
+const createModuleCollection = function createModuleCollection() {
   moduleCollection = new Meteor.Collection('module');
   moduleCollection.schema = new SimpleSchema(
     {
@@ -42,62 +30,23 @@ const createModCollection = function createModuleCollection() {
       modulePreclusion: {
         type: String,
       },
+      moduleMC: {
+        type: Number,
+      },
       termOffered: {
         type: [Object],
+        blackbox: true,
       },
     },
   );
 };
 
-const testDataNew = function insertTestData() {
-  // always remove previous content before inserting
-  termCollection.remove({});
-  moduleCollection.remove({});
-  // start inserting values
-  termCollection.insert(
-    {
-      termYear: '2016/7',
-      semester: '1',
-    },
-  );
-
-  termCollection.insert(
-    {
-      termYear: '2016/7',
-      semester: '2',
-    },
-  );
-
-  termCollection.insert(
-    {
-      termYear: '2017/8',
-      semester: '1',
-    },
-  );
-
-  termCollection.insert(
-    {
-      termYear: '2017/8',
-      semester: '2',
-    },
-  );
-
-  const a = termCollection.find({},{semester:'1'}).fetch();
-  console.log(a);
-  moduleCollection.insert(
-    {
-      moduleCode: 'cs1101s',
-      moduleName: 'Programming Methodology',
-      modulePreclusion: 'cs1010, cs1010e, cs1010s, and its equivalent',
-      moduleCorequisite: '-',
-      moduleDescription: 'An advance version of cs1010.',
-      modulePrerequisite: 'none',
-      termOffered: a,
-    },
-  );
-  console.log(moduleCollection.findOne({}).termOffered);
-};
-
+const isExistModuleCollection = function checkForCollection() {
+  if (typeof moduleCollection != 'undefined'){
+    return true;
+  }
+    return false;
+}
 // This method try to find module in the collection by the moduleCode
 const searchByModuleCode = function retrieveMod(modCode) {
   const searchResult = moduleCollection.findOne({ moduleCode: modCode });
@@ -113,8 +62,67 @@ const searchByModuleCode = function retrieveMod(modCode) {
   return returnPackage;
 };
 
-// For testing purposes
-// createModCollection();
-// testDataNew();
-// const testResult = searchByModuleCode('cs1101s');
-// console.log(testResult);
+// check if the collection of module is empty
+const isEmptyModuleCollection = function checkForAnyContent() {
+  const searchResult = moduleCollection.find({}).fetch();
+  if (searchResult.length == 0) {
+    return true;
+  }
+  return false;
+};
+
+const removeAllModule = function removeAllModule() {
+  moduleCollection.remove({});
+};
+
+const removeAllTerm = function removeAllTerm() {
+  termCollection.remove({});
+};
+
+const insertToTermCollection = function insertToTermCollection(object) {
+  termCollection.insert(object);
+
+  // TO DO:return success/ failure message
+};
+
+const insertToModuleCollection = function insertToModuleCollection(object) {
+  moduleCollection.insert(object);
+  console.log(moduleCollection.find({}).fetch());
+  // TO DO:return success/ failure message
+};
+
+const removeModuleFromCollection = function removeOneModule(moduleId) {
+  moduleCollection.remove({ _id: moduleId });
+};
+
+const removeTermFromCollection = function removeTermCollection(termId) {
+  // check if the term is used in any of the module
+  const checkForTermUseInModule = moduleCollection.find(
+    {
+      termOffered: {
+        _id: termId
+      },
+    }
+  );
+
+  if (checkForTermUseInModule.fetch().empty()) {
+    termCollection.remove({
+      termOffered: {
+        _id: termId
+      },
+    });
+
+    return true;
+  }
+  // the term data is in use, forbid data from being deleted
+  return false;
+};
+
+export {
+  createModCollection,
+  removeAllTerm,
+  removeAllModule,
+  insertToTermCollection,
+  insertToModuleCollection,
+  isEmptyModuleCollection,
+};
