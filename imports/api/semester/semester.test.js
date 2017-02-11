@@ -2,35 +2,34 @@ import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Random } from 'meteor/random';
 import { createPlanner,
           insertNewSemesterInPlanner } from '../planner/methods';
-import { insertModuleInSemester,
-         getModuleInSemester,
-         deleteModuleInSemester } from './methods';
+import { insertOneModuleInSemester,
+         getOneModuleInSemester,
+         deleteOneModuleInSemester } from './methods';
 
 describe('semesters', function () {
   // inserts a semester document into the mongo collection
   const plannerName = 'testPlannerTwo';
-  const semesterNum = 1;
+  const testAcademicYear = '14/15';
+  const testSemesterNum = 1;
+
   const plannerID = createPlanner(plannerName, []);
-  insertNewSemesterInPlanner(semesterNum, plannerID);
+  insertNewSemesterInPlanner(testAcademicYear, testSemesterNum, plannerID);
 
-  const testModule = {
-    _id: Random.id(),
-    code: 'CS1010',
-  }
+  const testModuleName = 'CS1010';
 
-  const module = insertModuleInSemester(plannerID, semesterNum, testModule);
+  const moduleName = insertOneModuleInSemester(0, testModuleName, plannerID);
 
   it ('insert one module into semester object', function () {
-    assert.equal(module.code, 'CS1010');
+    assert.equal(moduleName, 'CS1010');
   });
 
   it ('get a module in semester object', function () {
-    const module = getModuleInSemester(plannerID, semesterNum, testModule);
-    assert.equal(module.code, 'CS1010');
+    const module = getOneModuleInSemester(0, testModuleName, plannerID);
+    assert.equal(module, 'CS1010');
   });
 
   it ('remove a module in semester object', function () {
-    const module = deleteModuleInSemester(plannerID, semesterNum, testModule);
-    assert.equal(Object.keys(module).length, 0);
+    const module = deleteOneModuleInSemester(0, testModuleName, plannerID);
+    assert.equal(module, 'CS1010');
   });
 });

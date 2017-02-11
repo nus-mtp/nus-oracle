@@ -6,38 +6,46 @@ import { Planner } from '../planner/planner';
 
   //Semester.schema.validate(newSem);
 
-  // retrieves module object given a planner and semesterNum
-export const insertModuleInSemester = function insertModuleInSemester(plannerID, semesterNum, module) {
+// inserts a module into the semester
+export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemester = planner.semesters;
-  const modules = retrievedSemester[semesterNum];
-  modules[module.code] = module;
+  const retrievedSemesters = planner.semesters;
+  const oneSemester = retrievedSemesters[semesterIndex];
+  const modules = oneSemester.moduleHashmap;
 
-  retrievedSemester[semesterNum] = modules;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemester } });
+  // in the future, store moduleID instead of moduleName
+  modules[moduleName] = moduleName;
 
-  return retrievedSemester[semesterNum][module.code];
+  oneSemester.moduleHashmap = modules;
+  retrievedSemesters[semesterIndex] = oneSemester;
+  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
+
+  return modules[moduleName];
 };
 
-// retrieves module object given a planner and semesterNum
-export const getModuleInSemester = function getModuleInSemester(plannerID, semesterNum, module) {
+// retrieves module object given a plannerID and semesterIndex, returns a string
+export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemester = planner.semesters;
-  const modules = retrievedSemester[semesterNum];
+  const retrievedSemesters = planner.semesters;
+  const oneSemester = retrievedSemesters[semesterIndex];
+  const modules = oneSemester.moduleHashmap;
 
-  return modules[module.code];
+  return modules[moduleName];
 };
 
-// delete a module object given a planner and semester
-export const deleteModuleInSemester = function deleteModuleInSemester(plannerID, semesterNum, module) {
+// delete a module object given a planner and semester, returns a string
+export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemester = planner.semesters;
-  const modules = retrievedSemester[semesterNum];
+  const retrievedSemesters = planner.semesters;
+  const oneSemester = retrievedSemesters[semesterIndex];
+  const modules = oneSemester.moduleHashmap;
 
-  delete modules[module.code];
+  const deletedModule = modules[moduleName];
+  delete modules[moduleName];
 
-  retrievedSemester[semesterNum] = modules;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemester } });
+  oneSemester.moduleHashmap = modules;
+  retrievedSemesters[semesterIndex] = oneSemester;
+  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
 
-  return retrievedSemester[semesterNum];
+  return deletedModule;
 };

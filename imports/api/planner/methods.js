@@ -5,13 +5,14 @@ import { Planner } from './planner';
 */
 
 // creates a new semester object in collection and returns the id
+
 export const createPlanner = function createPlanner(plannerName, focusArea) {
   // create new empty semester schema and insert into Semester collection
   const newPlanner = {
     name: plannerName,
-    semesters: {},
-    userID: '',
+    semesters: [],
     focusArea: focusArea,
+    userID: '',
   };
 
   // Semester.schema.validate(newSem);
@@ -20,11 +21,13 @@ export const createPlanner = function createPlanner(plannerName, focusArea) {
   return id;
 };
 
+// retrieves the focus area of the planner
 export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
   const planner = Planner.findOne(plannerID);
   return planner.focusArea;
 };
 
+// retrieves the name of the planner
 export const getPlannerName = function getPlannerName(plannerID) {
   const planner = Planner.findOne(plannerID);
   return planner.name;
@@ -36,38 +39,44 @@ export const removePlanner = function removePlanner(plannerID) {
 };
 
 // inserts into a semester the moduleID and returns how many documents were modified
-export const insertNewSemesterInPlanner = function insertSemesterInPlanner(semesterNum, plannerID) {
+export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
+  const semesterObject = {
+    academicYear: academicYear,
+    semesterNum: semesterNum,
+    moduleHashmap: {},
+  }
+
   const planner = Planner.findOne(plannerID);
 
-  const newSemesters = planner.semesters;
+  const retrievedSemester = planner.semesters;
 
-  newSemesters[semesterNum] = {};
+  retrievedSemester.push(semesterObject);
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(
      plannerID,
-    { $set: { semesters: newSemesters } });
+    { $set: { semesters: retrievedSemester } });
 
-  return numOfDocumentsUpdatedWithSemester;
+  return retrievedSemester.length-1;
 };
 
 // retrieves moduleIDs and returns a Mongo Object
-export const getSemesterInPlanner = function getSemesterInPlanner(semesterNum, plannerID) {
+export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
   const retrievedSemester = planner.semesters;
 
-  return retrievedSemester[semesterNum];
+  return retrievedSemester[semesterIndex];
 };
 
 // delete a semester module in collection
-export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterNum, plannerID) {
+export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
 
   const retrievedSemester = planner.semesters;
-  delete retrievedSemester[semesterNum];
+  retrievedSemester.pop();
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(
     { _id: plannerID },
     { $set: { semesters: retrievedSemester } },
   );
-  return numOfDocumentsUpdatedWithSemester;
+  return retrievedSemester.length;
 };

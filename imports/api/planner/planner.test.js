@@ -15,10 +15,15 @@ describe('planner', function () {
     'Computer Graphics And Games',
      'Parallel Computing'
   ];
+
+  const testAcademicYear = '14/15';
+  const testSemesterNum = 1;
+
   const testPlannerID = createPlanner(testPlannerName, focusArea);
 
   it('create new planner document in mongo collection', function () {
     const planner = Planner.findOne(testPlannerID);
+    expect(planner.semesters).to.be.an('array');
     expect(planner._id).to.be.a('string');
     assert.equal(planner._id, testPlannerID);
   });
@@ -36,30 +41,30 @@ describe('planner', function () {
 
   it ('insert semester into planner', function () {
     const semesterNum = 1;
-    const numOfDocumentsUpdatedWithSemester = insertNewSemesterInPlanner(semesterNum, testPlannerID);
+    const semesterIndex = insertNewSemesterInPlanner(testAcademicYear, testSemesterNum, testPlannerID);
 
     const planner = Planner.findOne(testPlannerID);
     const retrievedSemesters = planner.semesters;
 
-    assert.equal(Object.keys(retrievedSemesters).length, 1);
-    assert.equal(numOfDocumentsUpdatedWithSemester, 1);
+    assert.equal(retrievedSemesters.length, 1);
+    assert.equal(semesterIndex, 0);
   });
 
   it ('get semester in planner', function () {
-    const semesterNum = 1;
-    const modules = getSemesterInPlanner(semesterNum, testPlannerID);
-    expect(modules).to.be.a('object');
+    const semesterIndex = 0;
+    const semesterModules = getSemesterInPlanner(semesterIndex, testPlannerID);
+    expect(semesterModules).to.be.a('object');
   });
 
   it ('delete semester in planner', function () {
-    const semesterNum = 1;
-    const numOfDocumentsUpdatedWithSemester = deleteSemesterInPlanner(semesterNum, testPlannerID);
+    const semesterIndex = 0;
+    const numOfSemesters = deleteSemesterInPlanner(semesterIndex, testPlannerID);
 
     const planner = Planner.findOne(testPlannerID);
     const retrievedSemesters = planner.semesters;
 
-    assert.equal(Object.keys(retrievedSemesters).length, 0);
-    assert.equal(numOfDocumentsUpdatedWithSemester, 1);
+    assert.equal(retrievedSemesters.length, 0);
+    assert.equal(numOfSemesters, 0);
   });
 
   it ('remove planner document in mongo collection', function () {
