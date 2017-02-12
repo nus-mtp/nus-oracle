@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 // temporary schema for storing module and term whereby the module is offered
-// TO-DO: check with the front end regarding student + study plan database.
 
-let termCollection;
+// reference to module collection
 let moduleCollection;
 
 // this function should only be called if there is no module collection yet to
@@ -41,11 +40,12 @@ const createModuleCollection = function createModuleCollection() {
   );
 };
 
+// to check if the reference to module collection has been made
 const isExistModuleCollection = function checkForCollection() {
   if (typeof moduleCollection != 'undefined'){
     return true;
   }
-    return false;
+  return false;
 }
 // This method try to find module in the collection by the moduleCode
 const searchByModuleCode = function retrieveMod(modCode) {
@@ -75,54 +75,33 @@ const removeAllModule = function removeAllModule() {
   moduleCollection.remove({});
 };
 
-const removeAllTerm = function removeAllTerm() {
-  termCollection.remove({});
-};
-
-const insertToTermCollection = function insertToTermCollection(object) {
-  termCollection.insert(object);
-
-  // TO DO:return success/ failure message
-};
-
+// insert one new module collection to the Module Database
 const insertToModuleCollection = function insertToModuleCollection(object) {
   moduleCollection.insert(object);
-  console.log(moduleCollection.find({}).fetch());
   // TO DO:return success/ failure message
 };
 
-const removeModuleFromCollection = function removeOneModule(moduleId) {
-  moduleCollection.remove({ _id: moduleId });
+const retrieveAllModule = function findAll() {
+  return moduleCollection.find({}).fetch();
 };
 
-const removeTermFromCollection = function removeTermCollection(termId) {
-  // check if the term is used in any of the module
-  const checkForTermUseInModule = moduleCollection.find(
-    {
-      termOffered: {
-        _id: termId
-      },
-    }
-  );
-
-  if (checkForTermUseInModule.fetch().empty()) {
-    termCollection.remove({
-      termOffered: {
-        _id: termId
-      },
-    });
-
-    return true;
+const retrieveModuleReference = function retrieveModuleCollectionReference() {
+  if (!isExistModuleCollection){
+    return moduleCollection;
   }
-  // the term data is in use, forbid data from being deleted
-  return false;
+
+  createModuleCollection();
+  return moduleCollection;
 };
+
 
 export {
-  createModCollection,
-  removeAllTerm,
+  createModuleCollection,
   removeAllModule,
-  insertToTermCollection,
   insertToModuleCollection,
   isEmptyModuleCollection,
+  isExistModuleCollection,
+  searchByModuleCode,
+  retrieveAllModule,
+  retrieveModuleReference,
 };
