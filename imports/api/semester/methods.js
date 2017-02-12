@@ -6,7 +6,7 @@ import { Planner } from '../planner/planner';
 
   //Semester.schema.validate(newSem);
 
-// inserts a module into the semester
+// inserts a module into the semester and returns the module name as a string
 export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   const retrievedSemesters = planner.semesters;
@@ -23,7 +23,7 @@ export const insertOneModuleInSemester = function insertOneModuleInSemester(seme
   return modules[moduleName];
 };
 
-// retrieves module object given a plannerID and semesterIndex, returns a string
+// retrieves module from the semester and returns the module name as a string
 export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   const retrievedSemesters = planner.semesters;
@@ -33,7 +33,7 @@ export const getOneModuleInSemester = function getOneModuleInSemester(semesterIn
   return modules[moduleName];
 };
 
-// delete a module object given a planner and semester, returns a string
+// deletes a module from the semester and returns the deleted module name as string
 export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   const retrievedSemesters = planner.semesters;

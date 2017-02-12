@@ -5,11 +5,11 @@
 // This file are supposed to only run once and if any change are mad to the csv file,
 // The entire file will be read and stored in the moduleCollection defined in module.js
 import { Meteor } from 'meteor/meteor';
+import { Papa } from 'meteor/harrison:papa-parse';
 import { createModuleCollection,
          removeAllModule,
          isExistModuleCollection,
-         insertToModuleCollection,
-         retrieveAllModule } from './module';
+         insertToModuleCollection } from '../database-controller/module';
 
 // data mapping for CSV-JSON output from papa parse output
 const CSV_ROW_LENGTH = 10;
@@ -61,6 +61,12 @@ const setFileAcademicYear = function setAcademicYear(xxyy) {
   acadYear = xxyy;
 };
 
+const parseCSVFileAndStoreToDB = function parseAndStore() {
+  const rawModuleJSON = parseCSVModuleFileToJSON();
+  const newModuleJSONArray = rearrangeJSONToModuleSchema(rawModuleJSON);
+  storeJSONArrayToDB(newModuleJSONArray);
+};
+
 // method to read csv file, return a json file containing
 const parseCSVModuleFileToJSON = function openingCSVFile() {
   if (csvFile != '') {
@@ -70,6 +76,68 @@ const parseCSVModuleFileToJSON = function openingCSVFile() {
     // The new JSON file is stored in data
     return JSONParsedResult.data;
   }
+};
+
+const rearrangeJSONToModuleSchema = function rearrangeJSON(rawJSONData) {
+
+  const rawJSONLength = rawJSONData.length;
+  const newModuleJSONArray = [];
+  let currentRawIndex;
+  let currentNewJSONIndex = 0;
+
+  for (currentRawIndex = 0; currentRawIndex < rawJSONLength; currentRawIndex++) {
+    const currentData = rawJSONData[currentRawIndex];
+    const rearrangedData = rearrangeModuleToModuleSchema(currentData);
+    if (rearrangedData != {}) {
+      newModuleJSONArray[currentNewJSONIndex] = rearrangedData;
+      currentNewJSONIndex += 1;
+    }
+  }
+
+  return newModuleJSONArray
+};
+
+const storeJSONArrayToDB = function storeArrayToDB(JSONArray) {
+  if (!isExistModuleCollection()) {
+    createModuleCollection();
+  }
+  removeAllModule();
+
+  let currentArrayIndex;
+
+  for (currentArrayIndex = 0; currentArrayIndex < JSONArray.length ; currentArrayIndex++) {
+    storeModuleToDB(JSONArray[currentArrayIndex]);
+  }
+};
+
+// method to convert individual module json data to follow schema
+const rearrangeModuleToModuleSchema = function rearrangeModule(data){
+
+  // check Data Length, if doesn't fit return empty json
+  if (data.length !== CSV_ROW_LENGTH) {
+    return {};
+  }
+
+  let newModuleJSON = {};
+  let newTermOfferedJSON = {};
+
+  // Module
+  newModuleJSON[MODULE_CODE] = data[CSV_MODULE_CODE].replace(/(\r\n|\n|\r)/gm, '');
+  newModuleJSON[MODULE_NAME] = data[CSV_MODULE_NAME];
+  newModuleJSON[MODULE_DESCRIPTION] = data[CSV_MODULE_DESC];
+  newModuleJSON[MODULE_PREREQUISITE] = data[CSV_MODULE_PREREQ];
+  newModuleJSON[MODULE_PRECLUSION] = data[CSV_MODULE_PRECLUSION];
+  newModuleJSON[MODULE_MC] = parseInt(data[CSV_MODULE_MC], 10); // parameter to ensure decimal parsing
+
+  // Semester Object + Quota
+  newTermOfferedJSON = createNewTermOfferedObject(data, acadYear);
+  newModuleJSON[MODULE_TERM_OFFERED] = newTermOfferedJSON;
+
+  return newModuleJSON;
+};
+
+const storeModuleToDB = function storeToDB(ModuleJSON) {
+  insertToModuleCollection(ModuleJSON);
 };
 
 //creating new Term Object
@@ -103,84 +171,9 @@ const createNewTermOfferedObject = function createTermObject(data, AcadYearStrin
   return termObject;
 };
 
-// method to convert individual module json data to follow schema
-const rearrangeModuleToModuleSchema = function rearrangeModule(data){
-
-  // check Data Length, if doesn't fit return empty json
-  if (data.length !== CSV_ROW_LENGTH) {
-    return {};
-  }
-
-  let newModuleJSON = {};
-  let newTermOfferedJSON = {};
-
-  // Module
-  newModuleJSON[MODULE_CODE] = data[CSV_MODULE_CODE].replace(/(\r\n|\n|\r)/gm, '');
-  newModuleJSON[MODULE_NAME] = data[CSV_MODULE_NAME];
-  newModuleJSON[MODULE_DESCRIPTION] = data[CSV_MODULE_DESC];
-  newModuleJSON[MODULE_PREREQUISITE] = data[CSV_MODULE_PREREQ];
-  newModuleJSON[MODULE_PRECLUSION] = data[CSV_MODULE_PRECLUSION];
-  newModuleJSON[MODULE_MC] = parseInt(data[CSV_MODULE_MC], 10); // parameter to ensure decimal parsing
-
-  // Semester Object + Quota
-  newTermOfferedJSON = createNewTermOfferedObject(data, acadYear);
-  newModuleJSON[MODULE_TERM_OFFERED] = newTermOfferedJSON;
-
-  return newModuleJSON;
-};
-
-const rearrangeJSONToModuleSchema = function rearrangeJSON(rawJSONData) {
-
-  const rawJSONLength = rawJSONData.length;
-  const newModuleJSONArray = [];
-  let currentRawIndex;
-  let currentNewJSONIndex = 0;
-
-  for (currentRawIndex = 0; currentRawIndex < rawJSONLength; currentRawIndex++) {
-    const currentData = rawJSONData[currentRawIndex];
-    const rearrangedData = rearrangeModuleToModuleSchema(currentData);
-    if (rearrangedData != {}) {
-      newModuleJSONArray[currentNewJSONIndex] = rearrangedData;
-      currentNewJSONIndex += 1;
-    }
-  }
-
-  return newModuleJSONArray
-};
-
-const storeModuleToDB = function storeToDB(ModuleJSON) {
-  insertToModuleCollection(ModuleJSON);
-};
-
-const storeJSONArrayToDB = function storeArrayToDB(JSONArray) {
-  console.log(isExistModuleCollection());
-  if (!isExistModuleCollection()) {
-    createModuleCollection();
-  }
-  removeAllModule();
-
-  let currentArrayIndex;
-
-  for (currentArrayIndex = 0; currentArrayIndex < JSONArray.length ; currentArrayIndex++) {
-    storeModuleToDB(JSONArray[currentArrayIndex]);
-  }
-};
-
-const parseCSVFileAndStoreToDB = function parseAndStore() {
-  const rawModuleJSON = parseCSVModuleFileToJSON();
-  const newModuleJSONArray = rearrangeJSONToModuleSchema(rawModuleJSON);
-  storeJSONArrayToDB(newModuleJSONArray);
-};
-
-
 export {
   setCSVFilePathToBeParsed,
   setPapaParserConfig,
   setFileAcademicYear,
-  parseCSVModuleFileToJSON,
   parseCSVFileAndStoreToDB,
-  rearrangeModuleToModuleSchema,
-  rearrangeJSONToModuleSchema,
-  storeModuleToDB,
-  storeJSONArrayToDB,
 };

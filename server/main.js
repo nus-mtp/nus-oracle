@@ -1,16 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import {createModuleCollection} from '../imports/api/module'
+import {createModuleCollection} from '../imports/api/database-controller/module';
 import  {
   setCSVFilePathToBeParsed,
   setPapaParserConfig,
   setFileAcademicYear,
-  parseCSVModuleFileToJSON,
-  parseCSVFileAndStoreToDB,
-  rearrangeModuleToModuleSchema,
-  rearrangeJSONToModuleSchema,
-  storeModuleToDB,
-  storeJSONArrayToDB
-} from '../imports/api/moduleCSVParser';
+  parseCSVFileAndStoreToDB } from '../imports/api/database-conversion/moduleCSVParser';
 
 // CSV file name Property, to be included in the asset folder of the script
 // by default Assets package will refer to the private folder in the repository.
