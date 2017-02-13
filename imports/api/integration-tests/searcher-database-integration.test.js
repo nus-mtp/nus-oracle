@@ -5,15 +5,19 @@ import  { populateModuleFixture,
 
 
 describe('search-controller', function() {
-  describe('module database', function () {
-    it('module database populate', function() {
+  describe('methods testing', function()  {
+    beforeEach(function() {
       const database = populateModuleFixture();
       expect(database).to.be.an('array');
       assert.equal(database.length, 8);
     });
-  });
 
-  describe('methods testing', function()  {
+    afterEach(function() {
+      const database = dePopulateModuleFixture();
+      expect(database).to.be.an('array');
+      assert.equal(database.length, 0);
+    });
+
     it('full module code search query returns correct modules', function() {
       const code = 'CS1010';
       const moduleArrayResults = sendQuery(code);

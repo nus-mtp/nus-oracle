@@ -39,5 +39,3 @@ Planner.schema = new SimpleSchema({
     type: String,
   },
 });
-
-Planner.attachSchema(Planner.schema);
