@@ -29,6 +29,11 @@ export const getPlannerName = function getPlannerName(plannerID) {
   return planner.name;
 };
 
+export const getPlannerUserID = function getPlannerUserID(plannerID)  {
+  const planner = Planner.findOne(plannerID);
+  return planner.userID;
+}
+
 // set the planner focus areas
 export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {
   const planner = Planner.findOne(plannerID);

@@ -1,5 +1,7 @@
 import { createModuleCollection,
-         insertToModuleCollection } from '../database-controller/module';
+         insertToModuleCollection,
+         removeOneModule,
+         retrieveAllModule} from '../database-controller/module';
 
 export const populateModuleFixture = function populateModuleFixture() {
   createModuleCollection();
@@ -12,4 +14,13 @@ export const populateModuleFixture = function populateModuleFixture() {
     };
     insertToModuleCollection(testModule);
   }
+  return retrieveAllModule();
 };
+
+export const dePopulateModuleFixture = function dePopulateModuleFixture() {
+  const modules = retrieveAllModule();
+  for (var i = 0; i < modules.length; i++)  {
+    removeOneModule(modules[i]._id);
+  }
+  return retrieveAllModule();
+}
