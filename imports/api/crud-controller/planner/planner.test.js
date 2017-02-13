@@ -17,11 +17,12 @@ describe('planner', function () {
     'Computer Graphics And Games',
      'Parallel Computing'
   ];
+  const testUserID = Random.id;
 
   const testAcademicYear = '14/15';
   const testSemesterNum = 1;
 
-  const testPlannerID = createPlanner(testPlannerName, focusArea);
+  const testPlannerID = createPlanner(testPlannerName, focusArea, testUserID);
 
   it('create new planner document in mongo collection', function () {
     const planner = Planner.findOne(testPlannerID);

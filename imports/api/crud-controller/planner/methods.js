@@ -5,12 +5,12 @@ import { Planner } from './planner';
 */
 
 // creates a new planner
-export const createPlanner = function createPlanner(plannerName, focusArea) {
+export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
   const newPlanner = {
     name: plannerName,
     semesters: [],
     focusArea: focusArea,
-    userID: '',
+    userID: userID,
   };
 
   const id = Planner.insert(newPlanner);
