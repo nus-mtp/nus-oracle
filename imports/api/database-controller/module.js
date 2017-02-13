@@ -53,12 +53,31 @@ const searchByModuleCode = function retrieveMod(modCode) {
   if (searchResult.length === 0) {
     return {};
   }
+
   const returnPackage = {
     moduleCode: searchResult.moduleCode,
     moduleID: searchResult._id,
   };
 
   return returnPackage;
+};
+
+// This method finds all modules with matching substring
+const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
+  // search by module code
+  const searchResult = Modules.find({ moduleCode: { $regex: string } }).fetch();
+  const resultArray = [];
+
+  // wrap into module name and id
+  for (var i=0; i<searchResult.length; i++) {
+    const returnPackage = {
+      moduleCode: searchResult[i].moduleCode,
+      moduleID: searchResult[i]._id,
+    };
+    resultArray.push(returnPackage);
+  }
+
+  return resultArray;
 };
 
 // check if the collection of module is empty
@@ -101,6 +120,7 @@ export {
   isEmptyModuleCollection,
   isExistModuleCollection,
   searchByModuleCode,
+  searchByModuleCodeRegex,
   retrieveAllModule,
   retrieveModuleReference,
 };
