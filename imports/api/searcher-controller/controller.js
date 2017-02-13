@@ -11,5 +11,7 @@ export const sendQuery = function sendQuery(userInput) {
   // search module by code
   modules = modules.concat(searchByModuleCodeRegex(userInput));
 
+  // search module by name
+
   return modules;
 };
