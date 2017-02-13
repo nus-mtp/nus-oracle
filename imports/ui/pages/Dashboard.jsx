@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/sidebar_menu/Sidebar';
 import StudyPlan from '../components/StudyPlan';
 
 export default class Dashboard extends React.Component {
