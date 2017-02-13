@@ -1,5 +1,7 @@
 import { createModuleCollection,
-         insertToModuleCollection } from '../database-controller/module';
+         insertToModuleCollection,
+         removeAllModule,
+         retrieveAllModule} from '../database-controller/module';
 
 export const populateModuleFixture = function populateModuleFixture() {
   createModuleCollection();
@@ -12,4 +14,9 @@ export const populateModuleFixture = function populateModuleFixture() {
     };
     insertToModuleCollection(testModule);
   }
+  return retrieveAllModule();
 };
+
+export const dePopulateModuleFixture = function dePopulateModuleFixture() {
+  return removeAllModule();
+}

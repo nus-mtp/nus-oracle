@@ -1,9 +1,9 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
-import { Random } from 'meteor/random';
 import { Planner } from './planner';
 import { createPlanner,
          getPlannerFocusArea,
          getPlannerName,
+         getPlannerUserID,
          setPlannerFocusArea,
          setPlannerName,
          removePlanner,
@@ -17,7 +17,7 @@ describe('planner', function () {
     'Computer Graphics And Games',
      'Parallel Computing'
   ];
-  const testUserID = Random.id;
+  const testUserID = 'da2hljfnlajdl1k2';
 
   const testAcademicYear = '14/15';
   const testSemesterNum = 1;
@@ -40,6 +40,12 @@ describe('planner', function () {
   it ('get planner name', function ()  {
     const plannerName = getPlannerName(testPlannerID);
     assert.equal(plannerName, testPlannerName);
+  });
+
+  it ('get planner userID', function()  {
+    const plannerUserID = getPlannerUserID(testPlannerID);
+    expect(plannerUserID).to.be.a('string');
+    assert.equal(plannerUserID, testUserID);
   });
 
   it ('set new planner focus area', function()  {

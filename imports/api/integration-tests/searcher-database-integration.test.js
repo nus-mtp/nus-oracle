@@ -1,10 +1,17 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { sendQuery } from '../searcher-controller/controller';
-import  { populateModuleFixture } from './fixtures';
+import  { populateModuleFixture,
+          dePopulateModuleFixture } from './fixtures';
 
 
 describe('search-controller', function() {
-  populateModuleFixture();
+  describe('module database', function () {
+    it('module database populate', function() {
+      const database = populateModuleFixture();
+      expect(database).to.be.an('array');
+      assert.equal(database.length, 8);
+    });
+  });
 
   describe('methods testing', function()  {
     it('full module code search query returns correct modules', function() {

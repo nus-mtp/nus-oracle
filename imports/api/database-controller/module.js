@@ -91,7 +91,7 @@ const isEmptyModuleCollection = function checkForAnyContent() {
 };
 
 const removeAllModule = function removeAllModule() {
-  Modules.remove({});
+  return Modules.remove({});
 };
 
 // insert one new module collection to the Module Database

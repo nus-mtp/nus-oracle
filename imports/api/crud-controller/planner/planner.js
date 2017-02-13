@@ -21,22 +21,23 @@ class PlannerCollection extends Mongo.Collection {
 
 export const Planner = new PlannerCollection('planner');
 
-/*
-  Planner.schema = new SimpleSchema({
-  _id: {
+
+Planner.schema = new SimpleSchema({
+  name: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true,
   },
 
-  semesterIDs: {
-    type: Object,
+  semesters: {
+    type: [Object],
   },
 
-  // this field needs to be kept private
+  focusArea: {
+    type: [String],
+  },
+
   userID: {
     type: String,
   },
 });
 
-Planner.attachSchema(Planner.schema);*/
+Planner.attachSchema(Planner.schema);
