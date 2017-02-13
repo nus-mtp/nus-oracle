@@ -5,5 +5,6 @@ export default function App() {
     <nav className="side-menu">
       The SideBar
     </nav>
+    
   );
 }
