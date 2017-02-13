@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 // temporary schema for storing module and term whereby the module is offered
 
 const Modules = new Meteor.Collection('module');
