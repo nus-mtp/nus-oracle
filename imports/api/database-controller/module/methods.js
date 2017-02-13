@@ -1,41 +1,5 @@
-// temporary schema for storing module and term whereby the module is offered
+import { Modules } from './module';
 
-const Modules = new Meteor.Collection('module');
-
-// this function should only be called if there is no module collection yet to
-// be established.
-const createModuleCollection = function createModuleCollection() {
-  Modules.schema = new SimpleSchema(
-    {
-      moduleCode: {
-        type: String,
-      },
-      moduleName: {
-        type: String,
-      },
-      moduleDescription: {
-        type: String,
-      },
-      modulePrerequisite: {
-        type: String,
-      },
-      moduleCorequisite: {
-        type: String,
-        optional: true,
-      },
-      modulePreclusion: {
-        type: String,
-      },
-      moduleMC: {
-        type: Number,
-      },
-      termOffered: {
-        type: [Object],
-        blackbox: true,
-      },
-    },
-  );
-};
 
 // to check if the reference to module collection has been made
 const isExistModuleCollection = function checkForCollection() {
@@ -66,8 +30,8 @@ const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
   // search by module code
   const searchResult = Modules.find({ moduleCode: { $regex: string } }).fetch();
   const resultArray = [];
-
   // wrap into module name and id
+
   for (var i=0; i<searchResult.length; i++) {
     const returnPackage = {
       moduleCode: searchResult[i].moduleCode,
@@ -89,12 +53,12 @@ const isEmptyModuleCollection = function checkForAnyContent() {
 };
 
 const removeAllModule = function removeAllModule() {
-  Modules.remove({});
+  return Modules.remove({});
 };
 
 // insert one new module collection to the Module Database
 const insertToModuleCollection = function insertToModuleCollection(object) {
-  Modules.insert(object);
+  return Modules.insert(object);
   // TO DO:return success/ failure message
 };
 
@@ -102,18 +66,9 @@ const retrieveAllModule = function findAll() {
   return Modules.find({}).fetch();
 };
 
-const retrieveModuleReference = function retrieveModuleCollectionReference() {
-  if (!isExistModuleCollection){
-    return Modules;
-  }
-
-  createModuleCollection();
-  return Modules;
-};
 
 
 export {
-  createModuleCollection,
   removeAllModule,
   insertToModuleCollection,
   isEmptyModuleCollection,
@@ -121,5 +76,4 @@ export {
   searchByModuleCode,
   searchByModuleCodeRegex,
   retrieveAllModule,
-  retrieveModuleReference,
 };

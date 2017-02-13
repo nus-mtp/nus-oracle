@@ -6,10 +6,9 @@
 // The entire file will be read and stored in the moduleCollection defined in module.js
 import { Meteor } from 'meteor/meteor';
 import { Papa } from 'meteor/harrison:papa-parse';
-import { createModuleCollection,
-         removeAllModule,
+import { removeAllModule,
          isExistModuleCollection,
-         insertToModuleCollection } from '../database-controller/module';
+         insertToModuleCollection } from '../database-controller/module/methods';
 
 // data mapping for CSV-JSON output from papa parse output
 const CSV_ROW_LENGTH = 10;
@@ -42,7 +41,6 @@ const MODULE_MC = 'moduleMC';
 
 const TERM_YEAR = 'termYear';
 const TERM_SEM = 'semester';
-const TERM_QUOTA = 'quota';
 
 let csvFile = '';
 let papaConfig = {};
@@ -64,6 +62,7 @@ const setFileAcademicYear = function setAcademicYear(xxyy) {
 const parseCSVFileAndStoreToDB = function parseAndStore() {
   const rawModuleJSON = parseCSVModuleFileToJSON();
   const newModuleJSONArray = rearrangeJSONToModuleSchema(rawModuleJSON);
+  console.log(newModuleJSONArray);
   storeJSONArrayToDB(newModuleJSONArray);
 };
 
@@ -146,25 +145,19 @@ const createNewTermOfferedObject = function createTermObject(data, AcadYearStrin
   let sem1Object = {};
   let sem2Object = {};
   let termIndex = 0;
-  let sem1Quota;
-  let sem2Quota;
   const sem1 = data[CSV_MODULE_SEM1];
   const sem2 = data[CSV_MODULE_SEM2];
 
   if (sem1 == IS_OFFERED) {
-    sem1Quota = data[CSV_MODULE_SEM1Quota];
     sem1Object[TERM_YEAR] = AcadYearString;
     sem1Object[TERM_SEM] = 1;
-    sem1Object[TERM_QUOTA] = parseInt(sem1Quota);
     termObject[termIndex] = sem1Object;
     termIndex += 1;
   }
 
   if (sem2 == IS_OFFERED) {
-    sem2Quota = data[CSV_MODULE_SEM2Quota];
     sem2Object[TERM_YEAR] = AcadYearString;
     sem2Object[TERM_SEM] = 2;
-    sem2Object[TERM_QUOTA] = parseInt(sem2Quota);
     termObject[termIndex] = sem2Object;
   }
 

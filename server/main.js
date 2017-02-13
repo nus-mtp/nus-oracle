@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import {createModuleCollection} from '../imports/api/database-controller/module';
 import  {
   setCSVFilePathToBeParsed,
   setPapaParserConfig,
@@ -20,9 +19,8 @@ const PAPA_CONFIG = {
 
 
 Meteor.startup(() => {
-  // code to run on server at startup
-  createModuleCollection();
   //ParsingCSVFile, comment this out after first run
+
   setCSVFilePathToBeParsed(CSV_FILE_FOLDER + CSV_FILE_NAME);
   setPapaParserConfig(PAPA_CONFIG);
   setFileAcademicYear(FILE_YEAR);
