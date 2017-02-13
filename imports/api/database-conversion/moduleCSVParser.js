@@ -70,7 +70,7 @@ const parseCSVFileAndStoreToDB = function parseAndStore() {
 // method to read csv file, return a json file containing
 const parseCSVModuleFileToJSON = function openingCSVFile() {
   if (csvFile != '') {
-    const FileContentInString = csvFile;
+    const FileContentInString = Assets.getText(csvFile);
     // parse to JSON by using Papa.parse
     const JSONParsedResult = Papa.parse(FileContentInString, papaConfig);
     console.log(JSONParsedResult);
