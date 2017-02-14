@@ -1,5 +1,9 @@
 import React from 'react';
-import SignIn from './SignIn'
+import SignIn2 from './SignIn2'
+
+
+const LoginButtons = BlazeToReact('loginButtons')
+
 
 export default function StudyPlan() {
   return (
@@ -9,6 +13,8 @@ export default function StudyPlan() {
       <div className="container-fluid">
         <div className="col-xxl-3 col-md-6">
           Study Plan
+          <SignIn2 />
+          <App />
         </div>
       </div>
     </div>
@@ -16,3 +22,13 @@ export default function StudyPlan() {
 
   );
 }
+
+App = React.createClass({
+  render() {
+    return (
+      <div>
+        <LoginButtons />
+      </div>
+    );
+  }
+})

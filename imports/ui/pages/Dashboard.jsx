@@ -1,12 +1,12 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
-import StudyPlan from '../components/StudyPlan';
+import StudyPlan2 from '../components/StudyPlan2';
 
 export default function Dashboard() {
   return (
     <div className="with-side-menu">
       <Sidebar />
-      <StudyPlan />
+      <StudyPlan2 />
     </div>
   );
 }
