@@ -72,6 +72,7 @@ const parseCSVModuleFileToJSON = function openingCSVFile() {
     const FileContentInString = Assets.getText(csvFile);
     // parse to JSON by using Papa.parse
     const JSONParsedResult = Papa.parse(FileContentInString, papaConfig);
+    console.log(JSONParsedResult);
     // The new JSON file is stored in data
     return JSONParsedResult.data;
   }

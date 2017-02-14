@@ -1,5 +1,4 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
-import { Random } from 'meteor/random';
 import { createPlanner,
           insertNewSemesterInPlanner } from '../planner/methods';
 import { insertOneModuleInSemester,
@@ -11,8 +10,9 @@ describe('semesters', function () {
   const plannerName = 'testPlannerTwo';
   const testAcademicYear = '14/15';
   const testSemesterNum = 1;
+  const testUserID = 'akshhr31lci1lkal';
 
-  const plannerID = createPlanner(plannerName, []);
+  const plannerID = createPlanner(plannerName, [], testUserID);
   insertNewSemesterInPlanner(testAcademicYear, testSemesterNum, plannerID);
 
   const testModuleName = 'CS1010';

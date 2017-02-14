@@ -5,12 +5,12 @@ import { Planner } from './planner';
 */
 
 // creates a new planner
-export const createPlanner = function createPlanner(plannerName, focusArea) {
+export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
   const newPlanner = {
     name: plannerName,
     semesters: [],
     focusArea: focusArea,
-    userID: '',
+    userID: userID,
   };
 
   const id = Planner.insert(newPlanner);
@@ -28,6 +28,11 @@ export const getPlannerName = function getPlannerName(plannerID) {
   const planner = Planner.findOne(plannerID);
   return planner.name;
 };
+
+export const getPlannerUserID = function getPlannerUserID(plannerID)  {
+  const planner = Planner.findOne(plannerID);
+  return planner.userID;
+}
 
 // set the planner focus areas
 export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {

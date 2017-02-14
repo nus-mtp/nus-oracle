@@ -1,8 +1,10 @@
+
 import { Modules } from './module';
+import { Meteor } from 'meteor/meteor';
 
 
 // to check if the reference to module collection has been made
-const isExistModuleCollection = function checkForCollection() {
+export const isExistModuleCollection = function checkForCollection() {
   if (typeof Modules != 'undefined'){
     return true;
   }
@@ -10,7 +12,7 @@ const isExistModuleCollection = function checkForCollection() {
   return false;
 }
 // This method try to find module in the collection by the moduleCode
-const searchByModuleCode = function retrieveMod(modCode) {
+export const searchByModuleCode = function retrieveMod(modCode) {
   const searchResult = Modules.findOne({ moduleCode: modCode });
 
   if (searchResult.length === 0) {
@@ -26,7 +28,7 @@ const searchByModuleCode = function retrieveMod(modCode) {
 };
 
 // This method finds all modules with matching substring
-const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
+export const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
   // search by module code
   const searchResult = Modules.find({ moduleCode: { $regex: string } }).fetch();
   const resultArray = [];
@@ -44,7 +46,7 @@ const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
 };
 
 // check if the collection of module is empty
-const isEmptyModuleCollection = function checkForAnyContent() {
+export const isEmptyModuleCollection = function checkForAnyContent() {
   const searchResult = Modules.find({}).fetch();
   if (searchResult.length == 0) {
     return true;
@@ -52,28 +54,29 @@ const isEmptyModuleCollection = function checkForAnyContent() {
   return false;
 };
 
-const removeAllModule = function removeAllModule() {
+export const removeAllModule = function removeAllModule() {
   return Modules.remove({});
 };
 
+export const removeOneModule = function removeOneModule(moduleID)  {
+  Modules.remove(moduleID);
+};
+
 // insert one new module collection to the Module Database
-const insertToModuleCollection = function insertToModuleCollection(object) {
-  return Modules.insert(object);
+export const insertToModuleCollection = function insertToModuleCollection(object) {
+  Modules.insert(object);
   // TO DO:return success/ failure message
 };
 
-const retrieveAllModule = function findAll() {
+export const retrieveAllModule = function findAll() {
   return Modules.find({}).fetch();
 };
 
+export const instantiateModuleReference = function retrieveModuleCollectionReference() {
+  if (!isExistModuleCollection){
+    return Modules;
+  }
 
-
-export {
-  removeAllModule,
-  insertToModuleCollection,
-  isEmptyModuleCollection,
-  isExistModuleCollection,
-  searchByModuleCode,
-  searchByModuleCodeRegex,
-  retrieveAllModule,
+  createModuleCollection();
+  return Modules;
 };
