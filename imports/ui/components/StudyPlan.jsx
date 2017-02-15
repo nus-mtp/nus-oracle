@@ -1,5 +1,5 @@
 import React from 'react';
-import SignIn from './SignIn'
+import SignIn from './SignIn2'
 import TabbedContainer from './common/TabbedContainer';
 import BasicTable from './common/BasicTable';
 
@@ -17,10 +17,18 @@ import BasicTable from './common/BasicTable';
 
 export default class StudyPlan extends React.Component {
   render() {
-    var contentPanelsList = [<BasicTable />, <BasicTable />];
+    // in here, will need to call list of planner ids from accounts
+
+    // from list of planner ids, loop and call getPlanner to get an array of planner objects
+
+    // for each planner object, create a 'basic table' tab that will input the necessay inputs (such as semesters) into the table
+    // do loop and for each do a push <BasicTable /> component into the array
+
+
+    var contentPanelsList = [<BasicTable />]; // basic table will need input of basic information using props
 
     return (
-          <TabbedContainer tabTitleList={["Plan A", "Plan B"]}
+          <TabbedContainer tabTitleList={["Plan A", "Plan B", "Plan C"]}
                            contentPanelsList={contentPanelsList}/>
     );
   }
