@@ -22,6 +22,7 @@ export default class SignIn extends React.Component {
   }
   handleSubmit(event) {
     let user = {
+      username: this.state.email,
       email: this.state.email,
       password: this.state.password
     }
