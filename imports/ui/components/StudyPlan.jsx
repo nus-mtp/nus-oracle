@@ -18,6 +18,7 @@ import BasicTable from './common/BasicTable';
 export default class StudyPlan extends React.Component {
   render() {
     // in here, will need to call list of planner ids from accounts
+    // without accounts done, just return an empty id array
 
     // from list of planner ids, loop and call getPlanner to get an array of planner objects
 
@@ -27,8 +28,10 @@ export default class StudyPlan extends React.Component {
 
     var contentPanelsList = [<BasicTable />]; // basic table will need input of basic information using props
 
+    // tab list will contain the string name of planner
+
     return (
-          <TabbedContainer tabTitleList={["Plan A", "Plan B", "Plan C"]}
+          <TabbedContainer tabTitleList={["Plan A", "Plan B"]}
                            contentPanelsList={contentPanelsList}/>
     );
   }
