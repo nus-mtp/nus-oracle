@@ -1,5 +1,6 @@
 import React from 'react';
-import SignIn2 from './SignIn2'
+import RegisterAccount from './RegisterAccount'
+import LoginAccount from './LoginAccount'
 
 
 const LoginButtons = BlazeToReact('loginButtons')
@@ -13,7 +14,8 @@ export default function StudyPlan() {
       <div className="container-fluid">
         <div className="col-xxl-3 col-md-6">
           Study Plan
-          <SignIn2 />
+          <RegisterAccount />
+          <LoginAccount />
           <App />
         </div>
       </div>

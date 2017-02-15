@@ -1,16 +1,26 @@
 import React from 'react';
 //import verfification from '../../server/send-verification'
+/*
+ To delete accounts,
+ 1) meteor mongo
+ 2) db.users.remove({_id:db.users.find()[0]._id})
+
+ */
 
 
-
-export default class SignIn extends React.Component {
+export default class LoginAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: '', password:''};
+    this.state = {username: '', email: '', password:''};
 
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleUsernameChange(event) {
+    this.setState({username: event.target.value});
   }
 
   handleEmailChange(event) {
@@ -22,25 +32,28 @@ export default class SignIn extends React.Component {
   }
   handleSubmit(event) {
     let user = {
-      username: this.state.email,
+      username: this.state.username,
       email: this.state.email,
       password: this.state.password
     }
     Accounts.createUser( user, ( error ) => {
       if ( error ) {
         console.log('error in creating user');
-        alert( error.reason, 'danger' );
+        Bert.alert( error.reason, 'danger' );
+        console.log(error.reason);
       } else {
         Meteor.call( 'sendVerificationLink', ( error, response ) => {
           if ( error ) {
             console.log('verification error');
-            alert( error.reason, 'danger' );
+            Bert.alert( error.reason, 'danger' );
           } else {
-            alert( 'Welcome!', 'success' );
+            Bert.alert( 'Welcome!', 'success' );
           }
         });
       }
     });
+
+
     event.preventDefault();
   }
 
@@ -54,6 +67,13 @@ export default class SignIn extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
+          Log in below
+        </label>
+        <label>
+          New Username:
+          <input type="text" value={this.state.value} onChange={this.handleUsernameChange} />
+        </label>
+        <label>
           New Email:
           <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
         </label>
@@ -61,7 +81,7 @@ export default class SignIn extends React.Component {
           Password:
           <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Login" />
       </form>
     );
   }
