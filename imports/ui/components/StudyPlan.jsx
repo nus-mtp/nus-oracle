@@ -1,7 +1,7 @@
 import React from 'react';
 import SignIn from './SignIn2'
-import TabbedContainer from './common/TabbedContainer';
-import BasicTable from './common/BasicTable';
+import AcadYrSection from './study_plan/AcadYrSection';
+import AcadYrRow from './study_plan/AcadYrRow';
 
 /*export default function StudyPlan() {
   return (
@@ -16,23 +16,20 @@ import BasicTable from './common/BasicTable';
 }*/
 
 export default class StudyPlan extends React.Component {
+  // in here, will need to call list of planner ids from accounts
+  // without accounts done, just return an empty id array
+
+  // from list of planner ids, loop and call getPlanner to get an array of planner objects
+
+  // for each planner object, create a 'basic table' tab that will input the necessay inputs (such as semesters) into the table
+  // do loop and for each do a push <BasicTable /> component into the array
+
   render() {
-    // in here, will need to call list of planner ids from accounts
-    // without accounts done, just return an empty id array
-
-    // from list of planner ids, loop and call getPlanner to get an array of planner objects
-
-    // for each planner object, create a 'basic table' tab that will input the necessay inputs (such as semesters) into the table
-    // do loop and for each do a push <BasicTable /> component into the array
-
-
-    var contentPanelsList = [<BasicTable />]; // basic table will need input of basic information using props
-
-    // tab list will contain the string name of planner
+    let contentPanelsList = [<AcadYrSection />];
 
     return (
           <TabbedContainer tabTitleList={["Plan A", "Plan B"]}
-                           contentPanelsList={contentPanelsList}/>
+                           contentPanelsList={contentPanelsList} />
     );
   }
 }
