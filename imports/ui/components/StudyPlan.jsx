@@ -1,7 +1,10 @@
 import React from 'react';
 import SignIn from './SignIn2'
 import AcadYrSection from './study_plan/AcadYrSection';
+import TabbedContainer from './common/TabbedContainer';
 import AcadYrRow from './study_plan/AcadYrRow';
+import { getPlannerName,
+         getPlannerUserID } from '../../api/crud-controller/planner/methods';
 
 /*export default function StudyPlan() {
   return (
@@ -15,21 +18,23 @@ import AcadYrRow from './study_plan/AcadYrRow';
   );
 }*/
 
+
 export default class StudyPlan extends React.Component {
-  // in here, will need to call list of planner ids from accounts
-  // without accounts done, just return an empty id array
-
-  // from list of planner ids, loop and call getPlanner to get an array of planner objects
-
-  // for each planner object, create a 'basic table' tab that will input the necessay inputs (such as semesters) into the table
-  // do loop and for each do a push <BasicTable /> component into the array
-
   render() {
-    let contentPanelsList = [<AcadYrSection />];
+    let plannerNames = [];
+    for (var i = 0; i < this.props.plannerIDs.length; i++)  {
+      plannerNames.push(getPlannerName(this.props.plannerIDs[i]));
+    }
+
+    let contentPanelsList = [<AcadYrSection plannerIDs= {this.props.plannerIDs}/>];
 
     return (
-          <TabbedContainer tabTitleList={["Plan A", "Plan B"]}
+          <TabbedContainer tabTitleList={plannerNames}
                            contentPanelsList={contentPanelsList} />
     );
   }
+}
+
+StudyPlan.propTypes = {
+  plannerIDs: React.PropTypes.array,
 }

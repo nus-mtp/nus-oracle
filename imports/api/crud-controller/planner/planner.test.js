@@ -5,6 +5,7 @@ import { createPlanner,
          getPlannerName,
          getPlannerUserID,
          setPlannerFocusArea,
+         getPlannerIDs,
          setPlannerName,
          removePlanner,
          insertNewSemesterInPlanner,
@@ -46,6 +47,13 @@ describe('planner', function () {
     const plannerUserID = getPlannerUserID(testPlannerID);
     expect(plannerUserID).to.be.a('string');
     assert.equal(plannerUserID, testUserID);
+  });
+
+  it ('get planner ids', function()  {
+    const plannerIDs = getPlannerIDs(testUserID);
+    expect(plannerIDs).to.be.an('array');
+    expect(plannerIDs[0]).to.be.a('string');
+    assert.equal(plannerIDs[0], testPlannerID);
   });
 
   it ('set new planner focus area', function()  {
