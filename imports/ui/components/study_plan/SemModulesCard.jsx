@@ -1,5 +1,6 @@
 import React from 'react';
-import ClickOutHandler from 'react-onclickout'
+import ClickOutHandler from 'react-onclickout';
+import Autosuggest from 'react-autosuggest';
 
 import Module from './Module'
 
@@ -61,6 +62,19 @@ export default class SemModulesCard extends React.Component {
 SemModulesCard.propTypes = {
   sem: React.PropTypes.string
 }
+
+/*
+// Autosuggestion react component example:
+// https://github.com/moroshko/react-autosuggest
+<Autosuggest
+  suggestions={suggestions}
+  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+  getSuggestionValue={getSuggestionValue}
+  renderSuggestion={renderSuggestion}
+  inputProps={inputProps}
+/>
+ */
 
 /*
 // Hardcoded modules - I'll put these aside first.
