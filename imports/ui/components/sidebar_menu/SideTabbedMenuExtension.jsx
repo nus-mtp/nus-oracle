@@ -5,12 +5,12 @@ constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 0
+    isCollapsed: true
   }
 }
 
-handleSwitchTab(index) {
-  this.setState({tabSelectedIndex: index});
+toggleCollapse() {
+  this.setState({isCollapsed: !isCollapsed});
 }
 
 render(){

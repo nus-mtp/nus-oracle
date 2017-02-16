@@ -1,10 +1,11 @@
 import React from 'react';
 import SideTabbedMenu from './SideTabbedMenu';
 import SideTabbedMenuExtension from './SideTabbedMenuExtension';
+import SidebarPanelRequirements from './SidebarPanelRequirements'
 
 export default class Sidebar extends React.Component {
   render() {
-    var menuPanelsList = [<SideTabbedMenuExtension />, <SideTabbedMenuExtension />, <SideTabbedMenuExtension />, <SideTabbedMenuExtension />, <SideTabbedMenuExtension />];
+    var menuPanelsList = [<SideTabbedMenuExtension />, <SidebarPanelRequirements />, <SideTabbedMenuExtension />, <SideTabbedMenuExtension />, <SideTabbedMenuExtension />];
     var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me"];
     var iconList = ["home", "cart", "speed", "users", "comments"];
     return (

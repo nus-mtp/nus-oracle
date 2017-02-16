@@ -5,7 +5,7 @@ constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 0
+    tabSelectedIndex: 1
   }
 }
 
@@ -44,7 +44,9 @@ class SidebarMenuButton extends SideTabbedMenu {
     var buttonIcon = this.props.buttonIcon;
     return (
         <li className={'brown' + (this.props.isActiveTab ? ' opened' : '')}
-            onClick={this.props.onSwitchTab}>
+            onClick={this.props.onSwitchTab}
+            // calls function props onSwitchTab passed from parent componenet
+            >
           <a href="#">
             <i className={"font-icon font-icon-" + buttonIcon}></i>
             <span className="lbl">{this.props.buttonTitle}</span>
