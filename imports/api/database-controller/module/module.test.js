@@ -136,11 +136,14 @@ if(Meteor.isServer){
       assert.equal(retrieveAllModule().length, 1);
     });
     //// unresolved test ////
-    //it('should reject empty data', function() {
-    //    const insertResult = Modules.insert(emptyModule);
-    //
-    //  assert.equal(insertResult, undefined);
-    //})
+    it('should reject empty data', function() {
+      try {
+        Modules.insert(emptyModule);
+      } catch (E) {
+
+      }
+        assert.Equal(retrieveAllModule().length,0);
+  });
 
     //it('should reject module with missing vital info', function() {
     //  const insertResult = Modules.insert(sampleModuleMissingInfos);
