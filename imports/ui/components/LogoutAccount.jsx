@@ -8,29 +8,20 @@ import React from 'react';
  */
 
 
-export default class LoginAccount extends React.Component {
+export default class LogoutAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: '', email: '', password:''};
 
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleUsernameChange(event) {
-    this.setState({username: event.target.value});
-  }
-
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
-  }
-
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
-  }
   handleSubmit(event) {
+    Meteor.loginWithPassword(this.state.email, this.state.password);
+    let user = {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password
+    }
     Meteor.loginWithPassword(this.state.email, this.state.password, ( error ) => {
       if ( error ) {
         console.log('error in logging in user');
@@ -54,18 +45,7 @@ export default class LoginAccount extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Log in below
-        </label>
-        <label>
-          Email:
-          <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
-        </label>
-        <label>
-          Password:
-          <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
-        </label>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Logout" />
       </form>
     );
   }
