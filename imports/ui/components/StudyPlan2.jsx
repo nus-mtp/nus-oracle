@@ -2,6 +2,7 @@ import React from 'react';
 import RegisterAccount from './RegisterAccount'
 import LoginAccount from './LoginAccount'
 import LogoutAccount from './LogoutAccount'
+import ForgetAccount from './ForgetAccount'
 
 
 const LoginButtons = BlazeToReact('loginButtons')
@@ -18,6 +19,7 @@ export default function StudyPlan() {
           <RegisterAccount />
           <LoginAccount />
           <LogoutAccount />
+          <ForgetAccount />
           <App />
         </div>
       </div>
