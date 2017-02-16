@@ -31,23 +31,32 @@ export default class RegisterAccount extends React.Component {
       email: this.state.email,
       password: this.state.password
     }
-    Accounts.createUser( user, ( error ) => {
-      if ( error ) {
-        console.log('error in creating user');
-        Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
-      } else {
-        Meteor.call( 'sendVerificationLink', ( error, response ) => {
+    Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
+      console.log(validEmail);
+      if (validEmail) {
+        Accounts.createUser( user, ( error ) => {
           if ( error ) {
-            console.log('verification error');
+            console.log('error in creating user');
             Bert.alert( error.reason, 'danger' );
+            console.log(error.reason);
           } else {
-            Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
-            Meteor.logout();
+            Meteor.call( 'sendVerificationLink', ( error, response ) => {
+              if ( error ) {
+                console.log('verification error');
+                Bert.alert( error.reason, 'danger' );
+              } else {
+                Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                Meteor.logout();
+              }
+            });
           }
         });
+      } else {
+        Bert.alert( "Invalid nus email, please end your email address with \"@u.nus.edu\"", 'danger' );
       }
     });
+    //console.log(validEmail);
+
     event.preventDefault();
   }
 
