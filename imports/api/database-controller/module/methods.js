@@ -11,9 +11,10 @@ export const isExistModuleCollection = function checkForCollection() {
 
   return false;
 }
+
+
 // This method try to find module in the collection by the moduleCode
 export const searchByModuleCode = function retrieveMod(modCode) {
-  Modules = retrieveModuleCollectionReference();
   const searchResult = Modules.findOne({ moduleCode: modCode });
 
   if (searchResult.length === 0) {
@@ -59,10 +60,6 @@ export const removeAllModule = function removeAllModule() {
   return Modules.remove({});
 };
 
-export const removeOneModule = function removeOneModule(moduleID)  {
-  Modules.remove(moduleID);
-};
-
 // insert one new module collection to the Module Database
 export const insertToModuleCollection = function insertToModuleCollection(object) {
   Modules.insert(object);
@@ -71,13 +68,4 @@ export const insertToModuleCollection = function insertToModuleCollection(object
 
 export const retrieveAllModule = function findAll() {
   return Modules.find({}).fetch();
-};
-
-export const instantiateModuleReference = function retrieveModuleCollectionReference() {
-  if (!isExistModuleCollection){
-    return Modules;
-  }
-
-  createModuleCollection();
-  return Modules;
 };
