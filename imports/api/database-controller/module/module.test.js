@@ -106,8 +106,8 @@ describe ('module', function() {
     assert.equal(firstPass.moduleMC, 200);
     assert.equal(firstPass.moduleCorequisite,'none');
     assert.equal(firstPass.modulePreclusion,'none');
-  });
 
+  });
 
 
 })

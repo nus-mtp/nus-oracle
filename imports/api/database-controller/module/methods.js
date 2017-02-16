@@ -13,6 +13,7 @@ export const isExistModuleCollection = function checkForCollection() {
 }
 // This method try to find module in the collection by the moduleCode
 export const searchByModuleCode = function retrieveMod(modCode) {
+  Modules = retrieveModuleCollectionReference();
   const searchResult = Modules.findOne({ moduleCode: modCode });
 
   if (searchResult.length === 0) {
