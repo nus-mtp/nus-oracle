@@ -37,7 +37,7 @@ export default class LoginAccount extends React.Component {
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        Bert.alert( 'Welcome back!' + Meteor.user().username, 'success' );
+        Bert.alert( 'Welcome back, ' + Meteor.user().username + '!', 'success' );
       }
     });
 

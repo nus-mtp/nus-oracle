@@ -16,19 +16,14 @@ export default class LogoutAccount extends React.Component {
   }
 
   handleSubmit(event) {
-    Meteor.loginWithPassword(this.state.email, this.state.password);
-    let user = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password
-    }
-    Meteor.loginWithPassword(this.state.email, this.state.password, ( error ) => {
+    var username = Meteor.user().username;
+    Meteor.logout(( error ) => {
       if ( error ) {
-        console.log('error in logging in user');
+        console.log('error in logging out  user');
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        Bert.alert( 'Welcome back!' + Meteor.user().username, 'success' );
+        Bert.alert( 'Thanks for using NUS Oracle, ' + username, 'success' );
       }
     });
 
