@@ -37,7 +37,13 @@ export default class LoginAccount extends React.Component {
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        Bert.alert( 'Welcome back, ' + Meteor.user().username + '!', 'success' );
+        console.log(Meteor.user().emails[0].verified);
+        if (Meteor.user().emails[0].verified) {
+          Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
+        } else {
+          Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
+          Meteor.logout();
+        }
       }
     });
 

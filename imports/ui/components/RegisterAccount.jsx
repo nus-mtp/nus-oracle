@@ -47,7 +47,8 @@ export default class RegisterAccount extends React.Component {
             console.log('verification error');
             Bert.alert( error.reason, 'danger' );
           } else {
-            Bert.alert( 'Welcome!', 'success' );
+            Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+            Meteor.logout();
           }
         });
       }

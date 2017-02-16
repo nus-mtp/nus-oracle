@@ -26,7 +26,28 @@ export default function StudyPlan() {
 
   );
 }
-
+/* Testing Code
+LogInOrOut = React.createClass({
+  render() {
+    console.log(Meteor.user() == null);
+    if (Meteor.user() == null) {
+      console.log('Out');
+      return(
+        <div>
+          <LoginAccount />
+        </div>
+      );
+    } else {
+      console.log('In');
+      return(
+        <div>
+          <LogoutAccount />
+        </div>
+      );
+    }
+  }
+})
+*/
 App = React.createClass({
   render() {
     return (

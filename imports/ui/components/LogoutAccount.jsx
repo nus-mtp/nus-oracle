@@ -16,14 +16,13 @@ export default class LogoutAccount extends React.Component {
   }
 
   handleSubmit(event) {
-    var username = Meteor.user().username;
     Meteor.logout(( error ) => {
       if ( error ) {
         console.log('error in logging out  user');
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        Bert.alert( 'Thanks for using NUS Oracle, ' + username, 'success' );
+        Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
       }
     });
 
