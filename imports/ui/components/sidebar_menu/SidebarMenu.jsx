@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default class SideTabbedMenu extends React.Component {
+export default class SidebarMenu extends React.Component {
 constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 0
+    tabSelectedIndex: 1
   }
 }
 
@@ -39,12 +39,14 @@ render(){
 }
 }
 
-class SidebarMenuButton extends SideTabbedMenu {
+class SidebarMenuButton extends SidebarMenu {
   render() {
     var buttonIcon = this.props.buttonIcon;
     return (
         <li className={'brown' + (this.props.isActiveTab ? ' opened' : '')}
-            onClick={this.props.onSwitchTab}>
+            onClick={this.props.onSwitchTab}
+            // calls function props onSwitchTab passed from parent componenet
+            >
           <a href="#">
             <i className={"font-icon font-icon-" + buttonIcon}></i>
             <span className="lbl">{this.props.buttonTitle}</span>
@@ -54,7 +56,7 @@ class SidebarMenuButton extends SideTabbedMenu {
   }
 }
 
-SideTabbedMenu.propTypes = {
+SidebarMenu.propTypes = {
   tabTitleList: React.PropTypes.node,
   menuPanelsList: React.PropTypes.node,
   iconList: React.PropTypes.node

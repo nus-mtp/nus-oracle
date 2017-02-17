@@ -1,10 +1,14 @@
 import React from 'react';
 
 export default class Module extends React.Component {
+  constructor() {
+    super();
+  }
+
   render() {
     return (
-      <li className="dd-grey dd-item" data-id="1">
-      	<div className="dd-handle">
+      <li className="dd-grey dd-item">
+        <div className="dd-handle">
           {this.props.moduleCode}
         </div>
       </li>
@@ -13,5 +17,5 @@ export default class Module extends React.Component {
 }
 
 Module.propTypes = {
-  moduleCode: React.PropTypes.node
+  moduleCode: React.PropTypes.string
 }

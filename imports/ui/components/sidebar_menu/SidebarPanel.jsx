@@ -1,16 +1,16 @@
 import React from 'react';
 
-export default class SideTabbedMenuExtension extends React.Component {
+export default class SidebarPanel extends React.Component {
 constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 0
+    isCollapsed: true
   }
 }
 
-handleSwitchTab(index) {
-  this.setState({tabSelectedIndex: index});
+toggleCollapse() {
+  this.setState({isCollapsed: !isCollapsed});
 }
 
 render(){
