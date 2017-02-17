@@ -51,16 +51,31 @@ export default class Module extends React.Component {
 
     return (
       <Autosuggest
+        id={this.props.id}
+        inputProps={inputProps}
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+        focusFirstSuggestion={true}
+        focusInputOnSuggestionClick={false}
       />
     );
   }
 }
+
+Module.propTypes = {
+  // ID that identifies this component uniquely.
+  // This id also uniquely defines the Autosuggest box - necessary if there are
+  // many Autosuggest boxes on the screen.
+  id: React.PropTypes.string
+}
+
+//======================================================
+// Helper functions for configuring the Autosuggest React component
+//======================================================
 
 const languages = [
   {
@@ -163,7 +178,27 @@ const getSuggestionValue = (suggestion) => {
  * @return {[object]}    Custom HTML element for the design of each suggestion
  */
 const renderSuggestion = (suggestion) => {
-  return <div>{suggestion.code}</div>
+  return <div>{suggestion.code}</div>;
+}
+
+/**
+ * Renders the suggestions container onto the default autosuggest box's style
+ * @param  {[array of objs]} children    List of suggestions Autosuggest will
+ *                                       pass in
+ * @param  {[object]} props    Style props Autosuggest will pass in
+ * @return {[object]}          Custom HTML element for the design of a
+ *                             suggestion container
+ */
+const renderSuggestionsContainer = ({children, ...props}) => {
+  const style = {position:'absolute',
+                 zIndex:'3',
+                 overflowY: 'auto',
+                 height: '8em'}
+  return (
+    <div {...props} style={style}>
+      {children}
+    </div>
+  );
 }
 
 /*
