@@ -1,8 +1,6 @@
 import React from 'react';
 import SignIn from './SignIn2'
-import AcadYrSection from './study_plan/AcadYrSection';
 import TabbedContainer from './common/TabbedContainer';
-import AcadYrRow from './study_plan/AcadYrRow';
 import { getPlannerName,
          getPlannerUserID } from '../../api/crud-controller/planner/methods';
 
@@ -28,11 +26,9 @@ export default class StudyPlan extends React.Component {
       }
     }
 
-    let contentPanelsList = [<AcadYrSection plannerIDs= {this.props.plannerIDs}/>];
-
     return (
           <TabbedContainer tabTitleList={plannerNames}
-                           contentPanelsList={contentPanelsList} />
+                           plannerIDs={this.props.plannerIDs} />
     );
   }
 }

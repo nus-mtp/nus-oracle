@@ -16,7 +16,9 @@ Meteor.startup(() => {
     const plannerNames = ['testPlanner', 'testPlannerTwo'];
     const focusAreas = [['Com graphics'], ['Com Graphics', 'Security']];
 
-    createPlanner(plannerNames[0], focusAreas[0], userIDs);
-    createPlanner(plannerNames[1], focusAreas[1], userIDs);
+    const plannerIDOne = createPlanner(plannerNames[0], focusAreas[0], userIDs);
+    const plannerIDTwo = createPlanner(plannerNames[1], focusAreas[1], userIDs);
+
+    
   }
 });

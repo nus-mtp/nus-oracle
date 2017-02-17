@@ -4,7 +4,7 @@ import AcadYrRow from './AcadYrRow';
 export default class AcadYrSection extends React.Component {
   render() {
 
-    // retrieve planner number here
+    // from the retrieved planner, distribute the semester objects to different rows
 
     let listOfAcadYrRows = [<AcadYrRow key="1" acadYr="Y1 AY14/15" />,
                             <AcadYrRow key="2" acadYr="Y2 AY15/16" />,
@@ -25,5 +25,5 @@ export default class AcadYrSection extends React.Component {
 }
 
 AcadYrSection.propTypes = {
-  plannerIDs: React.PropTypes.array
+  plannerID: React.PropTypes.string,
 }
