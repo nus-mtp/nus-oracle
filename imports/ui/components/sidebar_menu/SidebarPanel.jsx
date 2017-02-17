@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SideTabbedMenuExtension extends React.Component {
+export default class SidebarPanel extends React.Component {
 constructor(){
   super();
 

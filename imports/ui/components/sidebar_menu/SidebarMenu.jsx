@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SideTabbedMenu extends React.Component {
+export default class SidebarMenu extends React.Component {
 constructor(){
   super();
 
@@ -39,7 +39,7 @@ render(){
 }
 }
 
-class SidebarMenuButton extends SideTabbedMenu {
+class SidebarMenuButton extends SidebarMenu {
   render() {
     var buttonIcon = this.props.buttonIcon;
     return (
@@ -56,7 +56,7 @@ class SidebarMenuButton extends SideTabbedMenu {
   }
 }
 
-SideTabbedMenu.propTypes = {
+SidebarMenu.propTypes = {
   tabTitleList: React.PropTypes.node,
   menuPanelsList: React.PropTypes.node,
   iconList: React.PropTypes.node
