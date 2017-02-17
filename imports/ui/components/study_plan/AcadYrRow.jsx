@@ -1,7 +1,6 @@
 import React from 'react';
 import SemModulesCard from './SemModulesCard';
 import SemSpecialModulesCard from './SemSpecialModulesCard';
-import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
 
 export default class AcadYrRow extends React.Component {
   render() {
@@ -12,8 +11,8 @@ export default class AcadYrRow extends React.Component {
         </div>
         <div className="cont">
           <div className="cont-in">
-            <SemModulesCard sem="Sem I" modules={getAllModulesInSemester(this.props.semesterIndex[0], this.props.plannerID)} />
-            <SemModulesCard sem="Sem II" modules={getAllModulesInSemester(this.props.semesterIndex[1], this.props.plannerID)} />
+            <SemModulesCard sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
+            <SemModulesCard sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
             <div className="col-md-4">
               <SemSpecialModulesCard specialSem="Special Sem I" />
               <SemSpecialModulesCard specialSem="Special Sem II" />

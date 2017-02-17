@@ -7,7 +7,7 @@ import { Planner } from '../planner/planner';
   //Semester.schema.validate(newSem);
 
 // get all modules in semester in an array
-// gotta ensure planner is sanitised!!
+// write test case for to check what if semesterIndex does not exist
 export const getAllModulesInSemester = function getAllModulesInSemester(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
@@ -16,6 +16,10 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
 
   const retrievedSemesters = planner.semesters;
   if (!retrievedSemesters) {
+    return {};
+  }
+
+  if (semesterIndex > retrievedSemesters.length-1)  {
     return {};
   }
 

@@ -37,6 +37,7 @@ export const getPlannerUserID = function getPlannerUserID(plannerID)  {
 // retrieve planner IDs given userID
 export const getPlannerIDs = function getPlannerIDs(userID) {
   const planners = Planner.find({userID: userID}).fetch();
+
   const plannerIDs = [];
 
   for (var i = 0; i < planners.length; i++)  {
@@ -93,6 +94,21 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
 
   return retrievedSemester.length-1;
 };
+
+// get all semesters in planner
+export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
+  const planner = Planner.findOne(plannerID);
+  if (!planner) {
+    return [];
+  }
+
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester) {
+    return [];
+  }
+
+  return retrievedSemester;
+}
 
 // retrieves a semester in the planner
 export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {

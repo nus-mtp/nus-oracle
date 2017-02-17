@@ -1,27 +1,25 @@
 import React from 'react';
 import AcadYrRow from './AcadYrRow';
+import { getAllSemestersInPlanner } from '../../../api/crud-controller/planner/methods';
 
 export default class AcadYrSection extends React.Component {
   render() {
-
-    // retrieve size of semesters from here and input into list of acadYrRows
+    // does a check to see if plannerID is a valid character, else return an empty string
     let plannerID = this.props.plannerID;
-
     if (!plannerID) {
       plannerID = '';
     }
 
-    let listOfAcadYrRows = [<AcadYrRow key='1' semesterIndex={[0, 1]} acadYr="AY14/15" plannerID={plannerID} />,
-                            <AcadYrRow key='2' semesterIndex={[2, 3]} acadYr="AY15/16" plannerID={plannerID} />,
-                            <AcadYrRow key='3' semesterIndex={[4, 5]} acadYr="AY16/17" plannerID={plannerID} />,
-                            <AcadYrRow key='4' semesterIndex={[6, 7]} acadYr="AY17/18" plannerID={plannerID} />];
-
+    let listOfSemesters = getAllSemestersInPlanner(plannerID);
 
     return (
       <article className="activity-line-item box-typical">
         <div className="activity-line-action-list">
-          {listOfAcadYrRows.map((acadYrRow) => {
-            return acadYrRow;
+          {listOfSemesters.map((semester, rank) => {
+            // renders an academic year which contains 2 semesters
+            if (rank%2 == 0)  {
+              return <AcadYrRow key={rank} semesterIndex={[rank, rank+1]} acadYr={semester.academicYear} plannerID={plannerID} />;
+            }
           })}
         </div>
       </article>

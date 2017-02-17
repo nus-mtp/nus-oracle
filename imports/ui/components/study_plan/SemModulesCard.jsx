@@ -1,15 +1,17 @@
 import React from 'react';
 import Module from './Module';
+import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
 
 export default class SemModulesCard extends React.Component {
   render() {
+    const modules = getAllModulesInSemester(this.props.semesterIndex, this.props.plannerID);
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              {Object.keys(this.props.modules).map((moduleName) => {
-                return <Module moduleCode={moduleName} />;
+              {Object.keys(modules).map((moduleName, rank) => {
+                return <Module key={rank} moduleCode={moduleName} />;
               })}
   					</div>
   					<div className="card-typical-section">
@@ -26,5 +28,6 @@ export default class SemModulesCard extends React.Component {
 
 SemModulesCard.propTypes = {
   sem: React.PropTypes.string,
-  modules: React.PropTypes.object
+  semesterIndex: React.PropTypes.integer,
+  plannerID: React.PropTypes.string
 }
