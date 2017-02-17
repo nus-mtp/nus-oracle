@@ -35,7 +35,6 @@ describe('search-controller', function() {
       const code = 'cs';
       const moduleArrayResults = sendQuery(code);
 
-      console.log(moduleArrayResults);
       assert.equal(moduleArrayResults.length, 8);
     });
 

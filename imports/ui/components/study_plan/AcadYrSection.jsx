@@ -16,7 +16,7 @@ export default class AcadYrSection extends React.Component {
       <article className="activity-line-item box-typical">
         <div className="activity-line-action-list">
           {listOfSemesters.map((semester, rank) => {
-            // renders an academic year which contains 2 semesters
+            // renders only an academic year which contains 2 semesters
             if (rank%2 == 0)  {
               return <AcadYrRow key={rank} semesterIndex={[rank, rank+1]} acadYr={semester.academicYear} plannerID={plannerID} />;
             }

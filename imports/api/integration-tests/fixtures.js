@@ -11,6 +11,12 @@ export const populateModuleFixture = function populateModuleFixture() {
     const testModule = {
       moduleCode: moduleCodes[i],
       moduleName: moduleNames[i],
+      moduleDescription: 'Lorem ipsum',
+      modulePrerequisite: 'Lorem ipsum',
+      moduleCorequisite: 'Lorem ipsum',
+      modulePreclusion: 'Lorem ipsum',
+      moduleMC: 4,
+      termOffered: {Sem1: 'Sem 1', Sem2: 'Sem 2'}
     };
     insertToModuleCollection(testModule);
   }

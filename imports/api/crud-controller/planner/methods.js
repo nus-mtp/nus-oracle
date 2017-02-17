@@ -29,6 +29,7 @@ export const getPlannerName = function getPlannerName(plannerID) {
   return planner.name;
 };
 
+// retrieves the userID of the planner
 export const getPlannerUserID = function getPlannerUserID(plannerID)  {
   const planner = Planner.findOne(plannerID);
   return planner.userID;
@@ -96,7 +97,6 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
 };
 
 // get all semesters in planner
-// write test cases for this
 export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
