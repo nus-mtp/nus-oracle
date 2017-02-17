@@ -90,7 +90,7 @@ export const getOneModuleInSemester = function getOneModuleInSemester(semesterIn
 // deletes a module from the semester and returns the deleted module name as string
 export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
-  if (!modules) {
+  if (!planner) {
     return {};
   }
   const retrievedSemesters = planner.semesters;
