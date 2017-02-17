@@ -1,5 +1,6 @@
 import React from 'react';
-import Module from './Module'
+import Module from './Module';
+import ModuleSearchBar from './ModuleSearchBar';
 
 export default class SemModulesCard extends React.Component {
   render() {
@@ -8,11 +9,10 @@ export default class SemModulesCard extends React.Component {
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              <Module moduleCode="CS1010" />
-              <Module moduleCode="CS1020" />
-              <Module moduleCode="MA1521" />
-              <Module moduleCode="MA1101R" />
-              <Module moduleCode="IS1103" />
+              {/* ID needs to be given to each autosuggest since there are
+                more than 1 on the page */}
+              <ModuleSearchBar id="autosuggest1"/>
+              <ModuleSearchBar id="autosuggest2"/>
   					</div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
@@ -29,3 +29,25 @@ export default class SemModulesCard extends React.Component {
 SemModulesCard.propTypes = {
   sem: React.PropTypes.string
 }
+
+/*
+// Autosuggestion react component example:
+// https://github.com/moroshko/react-autosuggest
+<Autosuggest
+  suggestions={suggestions}
+  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+  getSuggestionValue={getSuggestionValue}
+  renderSuggestion={renderSuggestion}
+  inputProps={inputProps}
+/>
+ */
+
+/*
+// Hardcoded modules - I'll put these aside first.
+<Module moduleCode="CS1010" />
+<Module moduleCode="CS1020" />
+<Module moduleCode="MA1521" />
+<Module moduleCode="MA1101R" />
+<Module moduleCode="IS1103" />
+ */
