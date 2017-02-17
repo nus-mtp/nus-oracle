@@ -22,8 +22,10 @@ import { getPlannerName,
 export default class StudyPlan extends React.Component {
   render() {
     let plannerNames = [];
-    for (var i = 0; i < this.props.plannerIDs.length; i++)  {
-      plannerNames.push(getPlannerName(this.props.plannerIDs[i]));
+    if (this.props.plannerIDs)  {
+      for (var i = 0; i < this.props.plannerIDs.length; i++)  {
+        plannerNames.push(getPlannerName(this.props.plannerIDs[i]));
+      }
     }
 
     let contentPanelsList = [<AcadYrSection plannerIDs= {this.props.plannerIDs}/>];

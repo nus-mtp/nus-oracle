@@ -21,7 +21,6 @@ class PlannerCollection extends Mongo.Collection {
 
 export const Planner = new PlannerCollection('planner');
 
-
 Planner.schema = new SimpleSchema({
   name: {
     type: String,
@@ -39,3 +38,9 @@ Planner.schema = new SimpleSchema({
     type: String,
   },
 });
+
+if (Meteor.isServer) {
+  Meteor.publish('planner', function taskPublication () {
+    return Planner.find();
+  });
+}
