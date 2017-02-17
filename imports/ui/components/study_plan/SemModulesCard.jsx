@@ -1,51 +1,16 @@
 import React from 'react';
-import ClickOutHandler from 'react-onclickout';
-import Autosuggest from 'react-autosuggest';
-
-import Module from './Module'
+import Module from './Module';
+import ModuleSearchBar from './ModuleSearchBar';
 
 export default class SemModulesCard extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      moduleCode: ""
-    }
-  }
-
-  updateModuleInput(event) {
-    this.setState({
-      moduleCode: event.target.value
-    });
-  }
-
-  onClickOut() {
-    console.log("Clicked outside!");
-    // console.log executes 7 or 8 times and not only once because each input
-    // field is not given a unique key. React identifies unique objects this way.
-    // this.props.handleAddModule(this.state.moduleCode);
-  }
-
   render() {
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              <table>
-                <tbody>
-                  <tr onChange={this.updateModuleInput.bind(this)}>
-                    <td>
-                      <ClickOutHandler onClickOut={this.onClickOut.bind(this)}>
-                        <form className="input-group" style={{width: '100%'}}>
-                          <input type="text" className="form-control"
-                                 value={this.state.moduleCode}/>
-                        </form>
-                      </ClickOutHandler>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <ModuleSearchBar />
+              <ModuleSearchBar />
   					</div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
