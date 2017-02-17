@@ -66,7 +66,7 @@ export const searchByModuleCode = function retrieveMod(modCode) {
 // This method finds all modules with matching substring
 export const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
   // search by module code
-  const searchResult = Modules.find({ moduleCode: { $regex: string } }).fetch();
+  const searchResult = Modules.find({ moduleCode: { $regex: string, $options: 'i' } }).fetch();
   const resultArray = [];
 
   // wrap into module name and id

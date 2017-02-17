@@ -1,5 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import { sendQuery } from '../../../api/searcher-controller/controller';
 
 export default class Module extends React.Component {
   constructor() {
@@ -154,9 +155,13 @@ const getSuggestions = (userInput) => {
     return [];
   } else {
     // Return elements in the list with beginning letters that match inputValue
-    return languages.filter((lang) => {
+    const results = sendQuery(inputValue);
+    return results;
+
+    /*const results = languages.filter((lang) => {
       return lang.code.toLowerCase().slice(0, inputLength) === inputValue;
     });
+    return results;*/
   }
 };
 
@@ -168,7 +173,7 @@ const getSuggestions = (userInput) => {
  *                       populated into the autosuggest input box.
  */
 const getSuggestionValue = (suggestion) => {
-  return suggestion.code;
+  return suggestion.moduleCode;
 }
 
 /**
@@ -178,7 +183,7 @@ const getSuggestionValue = (suggestion) => {
  * @return {[object]}    Custom HTML element for the design of each suggestion
  */
 const renderSuggestion = (suggestion) => {
-  return <div>{suggestion.code}</div>;
+  return <div>{suggestion.moduleCode}</div>;
 }
 
 /**

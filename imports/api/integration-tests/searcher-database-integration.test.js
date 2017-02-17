@@ -24,11 +24,19 @@ describe('search-controller', function() {
       assert.equal(moduleArrayResults.length, 5);
     });
 
-    it ('half finished module code search query returns correct modules', function()  {
+    it ('module number returns correct modules', function()  {
       const code = '1010';
       const moduleArrayResults = sendQuery(code);
 
       assert.equal(moduleArrayResults.length, 5);
+    });
+
+    it ('module letters returns correct modules', function()  {
+      const code = 'cs';
+      const moduleArrayResults = sendQuery(code);
+
+      console.log(moduleArrayResults);
+      assert.equal(moduleArrayResults.length, 8);
     });
 
     it ('no matching string returns no module', function()  {
