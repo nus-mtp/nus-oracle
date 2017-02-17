@@ -97,17 +97,15 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
 // retrieves a semester in the planner
 export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
-
   // return empty object when no planner is found
   if (!planner)  {
     return {};
   }
 
   const retrievedSemester = planner.semesters;
-  if (retrievedSemester.length == 0)  {
+  if (!retrievedSemester)  {
     return {};
   }
-
   return retrievedSemester[semesterIndex];
 };
 
