@@ -1,6 +1,7 @@
 import React from 'react';
 import SemModulesCard from './SemModulesCard';
 import SemSpecialModulesCard from './SemSpecialModulesCard';
+import { getSemesterInPlanner } from '../../../api/crud-controller/planner/methods';
 
 export default class AcadYrRow extends React.Component {
   render() {
@@ -25,5 +26,7 @@ export default class AcadYrRow extends React.Component {
 }
 
 AcadYrRow.propTypes = {
-  acadYr: React.PropTypes.string
+  semesterIndex: React.PropTypes.array,
+  acadYr: React.PropTypes.string,
+  plannerID: React.PropTypes.string
 }

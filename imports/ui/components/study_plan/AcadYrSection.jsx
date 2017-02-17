@@ -4,12 +4,12 @@ import AcadYrRow from './AcadYrRow';
 export default class AcadYrSection extends React.Component {
   render() {
 
-    // from the retrieved planner, distribute the semester objects to different rows
+    // retrieve size of semesters from here and input into list of acadYrRows
 
-    let listOfAcadYrRows = [<AcadYrRow key="1" acadYr="Y1 AY14/15" />,
-                            <AcadYrRow key="2" acadYr="Y2 AY15/16" />,
-                            <AcadYrRow key="3" acadYr="Y3 AY16/17" />,
-                            <AcadYrRow key="4" acadYr="Y4 AY17/18" />];
+    let listOfAcadYrRows = [<AcadYrRow key='1' semesterIndex={[0, 1]} acadYr="AY14/15" plannerID={this.props.plannerID} />,
+                            <AcadYrRow key='2' semesterIndex={[2, 3]} acadYr="AY15/16" plannerID={this.props.plannerID}/>,
+                            <AcadYrRow key='3' semesterIndex={[4, 5]} acadYr="AY16/17" plannerID={this.props.plannerID}/>,
+                            <AcadYrRow key='4' semesterIndex={[6, 7]} acadYr="AY17/18" plannerID={this.props.plannerID}/>];
 
 
     return (
