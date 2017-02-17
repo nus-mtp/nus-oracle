@@ -27,5 +27,6 @@ export default class SemModulesCard extends React.Component {
 }
 
 SemModulesCard.propTypes = {
-  sem: React.PropTypes.string
+  sem: React.PropTypes.string,
+  semester: React.PropTypes.object
 }

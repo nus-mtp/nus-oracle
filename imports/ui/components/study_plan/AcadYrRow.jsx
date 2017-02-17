@@ -12,8 +12,8 @@ export default class AcadYrRow extends React.Component {
         </div>
         <div className="cont">
           <div className="cont-in">
-            <SemModulesCard sem="Sem I" />
-            <SemModulesCard sem="Sem II" />
+            <SemModulesCard sem="Sem I" semester={getSemesterInPlanner(this.props.semesterIndex[0], this.props.plannerID)} />
+            <SemModulesCard sem="Sem II" semester={getSemesterInPlanner(this.props.semesterIndex[1], this.props.plannerID)} />
             <div className="col-md-4">
               <SemSpecialModulesCard specialSem="Special Sem I" />
               <SemSpecialModulesCard specialSem="Special Sem II" />
