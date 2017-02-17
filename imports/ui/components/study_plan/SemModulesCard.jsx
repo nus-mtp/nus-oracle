@@ -9,8 +9,10 @@ export default class SemModulesCard extends React.Component {
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              <ModuleSearchBar />
-              <ModuleSearchBar />
+              {/* ID needs to be given to each autosuggest since there are
+                more than 1 on the page */}
+              <ModuleSearchBar id="autosuggest1"/>
+              <ModuleSearchBar id="autosuggest2"/>
   					</div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
