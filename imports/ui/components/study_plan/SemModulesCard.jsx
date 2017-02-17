@@ -3,6 +3,9 @@ import Module from './Module'
 
 export default class SemModulesCard extends React.Component {
   render() {
+    // loop through each module in the object and retrieve the name of the object
+    
+
     return (
       <div className="col-md-4">
         <div className="card-grid-col">

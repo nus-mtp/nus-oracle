@@ -73,6 +73,7 @@ export const removePlanner = function removePlanner(plannerID) {
 };
 
 // inserts a new semester into the planner
+// semester number refers to either semester 1 or semester 2
 export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
   const semesterObject = {
     academicYear: academicYear,
