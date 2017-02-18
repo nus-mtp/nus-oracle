@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
+import { getAllModulesInSemester } from '../../../api/crud-controller/module/methods';
 import SemModulesCard from './SemModulesCard';
 
 export default SemModulesCardContainer = createContainer((props) => {

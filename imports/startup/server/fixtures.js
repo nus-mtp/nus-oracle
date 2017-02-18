@@ -1,6 +1,6 @@
-import { createPlanner,
-         insertNewSemesterInPlanner } from '../../api/crud-controller/planner/methods';
-import { insertOneModuleInSemester } from '../../api/crud-controller/semester/methods';
+import { createPlanner } from '../../api/crud-controller/planner/methods';
+import { insertNewSemesterInPlanner } from '../../api/crud-controller/semester/methods';
+import { insertOneModuleInSemester } from '../../api/crud-controller/module/methods';
 import { populateModuleFixture } from '../../api/integration-tests/fixtures';
 import { Modules,
          createModuleCollection } from '../../api/database-controller/module';

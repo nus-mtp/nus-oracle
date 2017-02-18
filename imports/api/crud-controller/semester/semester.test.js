@@ -1,9 +1,9 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
-import { Planner } from './planner';
+import { Planner } from '../planner/planner';
 import { createPlanner,
          removePlanner,
-         getPlannerIDs,
-         insertNewSemesterInPlanner,
+         getPlannerIDs } from '../planner/methods';
+import { insertNewSemesterInPlanner,
          getAllSemestersInPlanner,
          getSemesterInPlanner,
          deleteSemesterInPlanner } from './methods';
