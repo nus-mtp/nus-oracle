@@ -12,6 +12,7 @@
     "babel-runtime": "^6.22.0",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
+    "react-async-autocomplete": "^1.0.3",
     "react-autosuggest": "^8.0.0",
     "react-dom": "^15.4.2"
   },
