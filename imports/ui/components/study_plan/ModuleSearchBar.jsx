@@ -1,6 +1,21 @@
+import _ from 'underscore'
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 
+import { sendQuery } from '../../../api/searcher-controller/controller.js'
+
+/**
+ * React Component that implements the module search bar which
+ * handles addition of modules into a student's semester.
+ *
+ * * For reference, a module object is formatted like this:
+ * { "_id" : "Wt4PPojMhFPeiKTxZ",
+ *   "moduleCode" : "CS1010",
+ *   "moduleName" : "Programming Methodology",
+ *   "moduleDescription" : "Lorem ipsum", "modulePrerequisite" : "Lorem ipsum",
+ *   "moduleCorequisite" : "Lorem ipsum", "modulePreclusion" : "Lorem ipsum",
+ *   "moduleMC" : 4, "termOffered" : { "Sem1" : "Sem 1", "Sem2" : "Sem 2" } }
+ */
 export default class ModuleSearchBar extends React.Component {
   constructor() {
     super();
@@ -11,6 +26,9 @@ export default class ModuleSearchBar extends React.Component {
     }
   }
 
+  //=============================================
+  // Pre-processing rendering styles
+  //=============================================
   /**
    * Renders the suggestions container onto the default autosuggest box's style
    * @param  {[array of objs]} children    List of suggestions Autosuggest will
@@ -44,151 +62,117 @@ export default class ModuleSearchBar extends React.Component {
    * @return {[object]}    Custom HTML element for the design of each suggestion
    */
   renderSuggestion(suggestion) {
-    let displayedSugg = suggestion.code;
+    let moduleCode = suggestion.moduleCode;
     let nonHighlightedBG = "transparent";
     let highlightedBG = "#ec7513";
     return(
       <div className="typeahead-item" style={{width: '9em'}}
            ref={(htmlElem) => {
-                  if (htmlElem) { // Ensure it's not a null element
-                    if (this.state.userInput === displayedSugg) {
+                  if (htmlElem) { // Ensure it's not null
+                    if (this.state.userInput === moduleCode) {
                       htmlElem.style.backgroundColor = highlightedBG;
                     } else {
                       htmlElem.style.backgroundColor = nonHighlightedBG;
                     }
                   }
                }}>
-        {displayedSugg}
+        {moduleCode}
       </div>
     );
   }
 
-  onSuggestionsFetchRequested(value) {
-    console.log("onSuggestionsFetchRequested: " + value + " value: " + value.value);
-    this.setState({suggestions: getSuggestions(value)});
+  /**
+   * Populates the autocomplete input box when a suggestion has been
+   * selected. E.g. If a student hovers over "CS1010" in the
+   * suggestion box, this component will populate the input box
+   * with the returned value.
+   *
+   * @param  {[object]} suggestion    Module object
+   * @return {[string]}    String representation of the input element to be
+   *                       populated into the autosuggest input box.
+   */
+  getSuggestionValue(suggestion) {
+    return suggestion.moduleCode;
+  }
+
+  //=============================================
+  // Event Handlers
+  //=============================================
+  /**
+   * Event where the list of suggestions displayed needs to be re-computed,
+   * we compute how suggestions are displayed as a list to the user.
+   *
+   * @param {[string]} value    Value typed in to the search box by user
+   */
+  onSuggestionsFetchRequested(userInput) {
+    let extractedValue = userInput.value;
+    let inputValue = extractedValue.trim().toLowerCase(); //string normalization
+    const inputLength = extractedValue.length;
+
+    let listOfSuggestions = [];
+    if (inputLength !== 0) {
+      // Return suggestions from modules database that best match inputValue
+      let fetchedListOfModulesFromDB = sendQuery(inputValue);
+      // console.log("listOfModulesFromDB: " + _.map(fetchedListOfModulesFromDB, (module) => {return JSON.stringify(module);}));
+      listOfSuggestions = fetchedListOfModulesFromDB
+    }
+    // Update the suggestions to be displayed to user
+    this.setState({ suggestions: listOfSuggestions });
   };
 
+  /**
+   * Called every time suggestions need to be cleared
+   */
   onSuggestionsClearRequested() {
-    this.setState({suggestions: []});
+    this.setState({ suggestions: [] });
   };
 
-  updateModuleInput(event, {newValue}) {
-    console.log(" newValue: " + newValue);
-    this.setState({userInput: newValue});
+  /**
+   * Updates the input field with what user is typing
+   */
+  updateInputWithNewValue(event, {newValue}) {
+    this.setState({ userInput: newValue });
+  }
+
+  /**
+   * Adds the chosen module to the database
+   */
+  handleConfirmModule(userInput, event) {
+    if (event.charCode == 13) { // If pressed ENTER
+      console.log("Pressed ENTER for " + userInput);
+      // Add module to DB
+    }
   }
 
   render() {
-    const value = this.state.userInput;
+    const userInput = this.state.userInput;
     const suggestions = this.state.suggestions;
     const inputProps = {
       placeholder: 'Module code',
-      value,
-      onChange: this.updateModuleInput.bind(this)
+      value: userInput,
+      onChange: this.updateInputWithNewValue.bind(this)
     };
 
-    return (<Autosuggest
-      id={this.props.id}
-      inputProps={inputProps}
-      suggestions={suggestions}
-      renderSuggestion={this.renderSuggestion.bind(this)}
-      renderSuggestionsContainer={this.renderSuggestionsContainer.bind(this)}
-      onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-      onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-      getSuggestionValue={getSuggestionValue}
-      focusFirstSuggestion={false}
-      scrollBar={true}
-      focusInputOnSuggestionClick={false}/>);
+    return (
+      <div tabIndex="0"
+           onKeyPress={this.handleConfirmModule.bind(this, userInput)}>
+        <Autosuggest id={this.props.id} inputProps={inputProps}
+          suggestions={suggestions}
+          renderSuggestion={this.renderSuggestion.bind(this)}
+          renderSuggestionsContainer={this.renderSuggestionsContainer.bind(this)}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+          getSuggestionValue={this.getSuggestionValue.bind(this)}
+          focusFirstSuggestion={false}
+          focusInputOnSuggestionClick={false}
+        />
+      </div>);
   }
 }
 
-Module.propTypes = {
+ModuleSearchBar.propTypes = {
   // ID that identifies this component uniquely. This id also
   // uniquely defines the Autosuggest box - necessary if
   // there are many Autosuggest boxes on the screen.
   id: React.PropTypes.string
-}
-
-// ======================================================
-// Helper functions for configuring the Autosuggest React
-// component
-// ======================================================
-
-const languages = [
-  {
-    code: 'adrian',
-    year: 1972
-  }, {
-    code: 'benedict',
-    year: 2012
-  }, {
-    code: 'charles',
-    year: 1972
-  }, {
-    code: 'charlie',
-    year: 2012
-  }, {
-    code: 'elmer',
-    year: 1972
-  }, {
-    code: 'emmanuel',
-    year: 2012
-  }, {
-    code: 'elaine',
-    year: 1972
-  }, {
-    code: 'honey',
-    year: 2012
-  }, {
-    code: 'homer',
-    year: 1972
-  }, {
-    code: 'heath',
-    year: 2012
-  }, {
-    code: 'hebrew',
-    year: 1972
-  }, {
-    code: 'helberg',
-    year: 2012
-  }, {
-    code: 'heinz',
-    year: 1972
-  }, {
-    code: 'hubert',
-    year: 2012
-  }
-]
-
-/**
- * Defines how suggestions are displayed as a list to the user.
- *
- * @param  {[string]} value    Value input by the user in the autocomplete
- *                             input box
- * @return {[array]}    List of suggested modules
- */
-const getSuggestions = (userInput) => {
-  let inputValue = userInput.value;
-  inputValue = inputValue.trim().toLowerCase(); // Perform string normalization
-  const inputLength = inputValue.length;
-
-  if (inputLength === 0) {
-    // No suggestions given to user if they don't type in anything
-    return [];
-  } else {
-    // Return elements in the list with beginning letters that match inputValue
-    return languages.filter((lang) => {
-      return lang.code.toLowerCase().slice(0, inputLength) === inputValue;
-    });
-  }
-};
-
-/**
- * Populates the autocomplete input box when a suggestion has been selected.
- *
- * @param  {[object]} suggestion    Module object representing a suggestion
- * @return {[string]}    String representation of the input element to be
- *                       populated into the autosuggest input box.
- */
-const getSuggestionValue = (suggestion) => {
-  return suggestion.code;
 }
