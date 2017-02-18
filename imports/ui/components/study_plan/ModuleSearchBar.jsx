@@ -169,10 +169,3 @@ export default class ModuleSearchBar extends React.Component {
       </div>);
   }
 }
-
-ModuleSearchBar.propTypes = {
-  // ID that identifies this component uniquely. This id also
-  // uniquely defines the Autosuggest box - necessary if
-  // there are many Autosuggest boxes on the screen.
-  id: React.PropTypes.string
-}

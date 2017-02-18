@@ -2,7 +2,7 @@ import React from 'react';
 import Module from './Module';
 import ModuleSearchBar from './ModuleSearchBar.jsx';
 
-export default class SemModulesCard extends React.Component {
+export default class SemModulesCard extends React.Component {  
   render() {
     const modules = this.props.modules;
     return (
@@ -13,10 +13,7 @@ export default class SemModulesCard extends React.Component {
               {Object.keys(modules).map((moduleName, rank) => {
                 return <Module key={rank} moduleCode={moduleName} />;
               })}
-              {/* ID needs to be given to each autosuggest since there are
-                more than 1 on the page */}
-              <ModuleSearchBar id="autosuggest1"/>
-              <ModuleSearchBar id="autosuggest2"/>
+              <ModuleSearchBar />
   					</div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
