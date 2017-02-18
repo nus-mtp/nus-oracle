@@ -1,3 +1,5 @@
+/*
+@todo: Fix template link
 Accounts.emailTemplates.siteName = "nusOracle";
 Accounts.emailTemplates.from     = "nusOracle <admin@nusOracle.com>";
 
@@ -14,3 +16,4 @@ Accounts.emailTemplates.verifyEmail = {
     return emailBody;
   }
 };
+*/

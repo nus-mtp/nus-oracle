@@ -1,13 +1,17 @@
 import React from 'react';
 //import verfification from '../../server/send-verification'
+/*
+ To delete accounts,
+ 1) meteor mongo
+ 2) db.users.remove({_id:db.users.find()[0]._id})
+
+ */
 
 
-
-export default class SignIn extends React.Component {
+export default class RegisterAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: '', password:''};
-
+    this.state = {username: '', email: '', password:''};
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,6 +19,7 @@ export default class SignIn extends React.Component {
 
   handleEmailChange(event) {
     this.setState({email: event.target.value});
+    this.setState({username: event.target.value});
   }
 
   handlePasswordChange(event) {
@@ -22,24 +27,36 @@ export default class SignIn extends React.Component {
   }
   handleSubmit(event) {
     let user = {
+      username: this.state.email,
       email: this.state.email,
       password: this.state.password
     }
-    Accounts.createUser( user, ( error ) => {
-      if ( error ) {
-        console.log('error in creating user');
-        alert( error.reason, 'danger' );
-      } else {
-        Meteor.call( 'sendVerificationLink', ( error, response ) => {
+    Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
+      console.log(validEmail);
+      if (validEmail) {
+        Accounts.createUser( user, ( error ) => {
           if ( error ) {
-            console.log('verification error');
-            alert( error.reason, 'danger' );
+            console.log('error in creating user');
+            Bert.alert( error.reason, 'danger' );
+            console.log(error.reason);
           } else {
-            alert( 'Welcome!', 'success' );
+            Meteor.call( 'sendVerificationLink', ( error, response ) => {
+              if ( error ) {
+                console.log('verification error');
+                Bert.alert( error.reason, 'danger' );
+              } else {
+                Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                Meteor.logout();
+              }
+            });
           }
         });
+      } else {
+        Bert.alert( "Invalid nus email, please end your email address with \"@u.nus.edu\"", 'danger' );
       }
     });
+    //console.log(validEmail);
+
     event.preventDefault();
   }
 
@@ -53,6 +70,9 @@ export default class SignIn extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
+          Register account below
+        </label>
+        <label>
           New Email:
           <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
         </label>
@@ -60,7 +80,7 @@ export default class SignIn extends React.Component {
           Password:
           <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Register" />
       </form>
     );
   }
