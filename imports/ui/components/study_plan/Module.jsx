@@ -8,7 +8,7 @@ export default class Module extends React.Component {
   render() {
     return (
       <li className="dd-grey dd-item">
-        <div className="dd-handle">
+        <div className="dd-handle" style={{cursor: 'pointer'}}>
           {this.props.moduleCode}
         </div>
       </li>

@@ -68,8 +68,10 @@ export default class ModuleSearchBar extends React.Component {
     let nonHighlightedBG = "transparent";
     let highlightedBG = "#ec7513";
     return(
-      <div className="typeahead-item" style={{width: '9em'}}
+      <div className="typeahead-item"
+           style={{width: '9em', cursor: 'pointer'}}
            ref={(htmlElem) => {
+                  // Refer to HTML element and highlight selected
                   if (htmlElem) { // Ensure it's not null
                     if (this.state.userInput === moduleCode) {
                       htmlElem.style.backgroundColor = highlightedBG;
@@ -108,12 +110,12 @@ export default class ModuleSearchBar extends React.Component {
    */
   onSuggestionsFetchRequested(userInput) {
     let extractedValue = userInput.value;
-    let inputValue = extractedValue.trim().toLowerCase(); //string normalization
+    let inputValue = extractedValue.trim().toLowerCase();
     const inputLength = extractedValue.length;
 
     let listOfSuggestions = [];
     if (inputLength !== 0) {
-      // Return suggestions from modules database that best match inputValue
+      // Get suggestions from modules DB best matches inputValue
       let fetchedListOfModulesFromDB = sendQuery(inputValue);
       // console.log("listOfModulesFromDB: " + _.map(fetchedListOfModulesFromDB, (module) => {return JSON.stringify(module);}));
       listOfSuggestions = fetchedListOfModulesFromDB
@@ -132,7 +134,7 @@ export default class ModuleSearchBar extends React.Component {
   /**
    * Updates the input field with what user is typing
    */
-  updateInputWithNewValue(event, {newValue}) {
+  updateInputWithNewValue(event, {newValue, method}) {
     this.setState({ userInput: newValue });
   }
 
@@ -153,12 +155,22 @@ export default class ModuleSearchBar extends React.Component {
     const inputProps = {
       placeholder: 'Module code',
       value: userInput,
-      onChange: this.updateInputWithNewValue.bind(this)
+      onChange: this.updateInputWithNewValue.bind(this),
+      className: 'form-control',
+      style: {
+        width: '100%',
+        padding: '0.15em 0.35em 0.15em 1.5em'
+      }
     };
 
     return (
-      <div tabIndex="0"
+      <div tabIndex='0' style={{position: 'relative'}}
            onKeyPress={this.handleConfirmModule.bind(this, userInput)}>
+        <i className='font-icon font-icon-plus'
+           style={{position: 'absolute',
+                   top: '0.5em', left: '0.35em',
+                   color: '#edbe93'}}>
+        </i>
         <Autosuggest id={this.props.id} inputProps={inputProps}
           suggestions={suggestions}
           renderSuggestion={this.renderSuggestion.bind(this)}
