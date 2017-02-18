@@ -2,7 +2,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { sendQuery } from '../../../api/searcher-controller/controller';
 
-export default class Module extends React.Component {
+export default class ModuleSearchBar extends React.Component {
   constructor() {
     super();
 
@@ -67,7 +67,7 @@ export default class Module extends React.Component {
   }
 }
 
-Module.propTypes = {
+ModuleSearchBar.propTypes = {
   // ID that identifies this component uniquely.
   // This id also uniquely defines the Autosuggest box - necessary if there are
   // many Autosuggest boxes on the screen.
