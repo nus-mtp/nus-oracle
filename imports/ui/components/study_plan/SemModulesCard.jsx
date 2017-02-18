@@ -1,7 +1,7 @@
 import React from 'react';
 import Module from './Module';
 import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
-import ModuleSearchBar from './ModuleSearchBar';
+import ModuleSearchBar from './ModuleSearchBar.jsx';
 
 export default class SemModulesCard extends React.Component {
   render() {
