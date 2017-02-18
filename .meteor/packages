@@ -29,6 +29,7 @@ aldeed:collection2
 aldeed:simple-schema
 harrison:papa-parse             # parsing csv to json
 
+
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode
 standard-minifier-js@1.2.1    # JS minifier run for production mode
