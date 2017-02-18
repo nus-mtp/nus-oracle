@@ -21,6 +21,7 @@ describe('semester', function () {
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
 
+    const moduleNames = ['Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Data Structures and Algorithms I', 'Data Structures and Algorithms II', 'Design and Analysis of Algorithms'];
     const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
