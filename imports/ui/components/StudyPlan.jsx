@@ -1,21 +1,6 @@
 import React from 'react';
-import SignIn from './SignIn2'
 import TabbedContainer from './common/TabbedContainer';
-import { getPlannerName,
-         getPlannerUserID } from '../../api/crud-controller/planner/methods';
-
-/*export default function StudyPlan() {
-  return (
-    <div className="page-content">
-      <div className="container-fluid">
-        <div className="col-xxl-3 col-md-6">
-          Study Plan
-        </div>
-      </div>
-    </div>
-  );
-}*/
-
+import { getPlannerName } from '../../api/crud-controller/planner/methods';
 
 export default class StudyPlan extends React.Component {
   render() {
