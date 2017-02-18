@@ -38,11 +38,13 @@ export const getPlannerUserID = function getPlannerUserID(plannerID)  {
 // retrieve planner IDs given userID
 export const getPlannerIDs = function getPlannerIDs(userID) {
   const planners = Planner.find({userID: userID}).fetch();
-
   const plannerIDs = [];
 
-  for (var i = 0; i < planners.length; i++)  {
-    plannerIDs.push(planners[i]._id);
+  // checks if planner is a legit return
+  if (typeof planners != 'undefined') {
+    for (var i = 0; i < planners.length; i++)  {
+      plannerIDs.push(planners[i]._id);
+    }
   }
 
   return plannerIDs;

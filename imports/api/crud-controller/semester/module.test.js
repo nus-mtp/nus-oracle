@@ -1,12 +1,12 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { createPlanner,
-          insertNewSemesterInPlanner } from '../../planner/methods';
+          insertNewSemesterInPlanner } from '../planner/methods';
 import { insertOneModuleInSemester,
          getAllModulesInSemester,
          getOneModuleInSemester,
-         deleteOneModuleInSemester } from '../methods';
+         deleteOneModuleInSemester } from './methods';
 
-describe('semesters', function () {
+describe('modules', function () {
   // inserts a semester document into the mongo collection
   const plannerName = 'testPlannerTwo';
   const testAcademicYear = '14/15';
