@@ -4,6 +4,8 @@ import Autosuggest from 'react-autosuggest';
 
 import { sendQuery } from '../../../api/searcher-controller/controller.js'
 
+const enterKeyCharCode = 13;
+
 /**
  * React Component that implements the module search bar which
  * handles addition of modules into a student's semester.
@@ -138,7 +140,7 @@ export default class ModuleSearchBar extends React.Component {
    * Adds the user's chosen module to the database
    */
   handleConfirmModule(moduleCode, event) {
-    if (event.charCode == 13) { // If pressed ENTER
+    if (event.charCode == enterKeyCharCode) { // If pressed ENTER
       console.log("Pressed ENTER for " + moduleCode);
       // Add module to DB
       this.props.handleAddModule(moduleCode);
