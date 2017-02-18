@@ -12,32 +12,22 @@ export default class Module extends React.Component {
   }
 
   onSuggestionsFetchRequested(value) {
-    console.log("onSuggestionsFetchRequested: " + value +
-                " value: " + value.value);
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
+    console.log("onSuggestionsFetchRequested: " + value + " value: " + value.value);
+    this.setState({suggestions: getSuggestions(value)});
   };
 
   onSuggestionsClearRequested() {
-    this.setState({
-      suggestions: []
-    });
+    this.setState({suggestions: []});
   };
 
   // updateModuleInput(event) {
-  //   console.log("updateModuleInput: " + event.target.value);
-  //   this.setState({
-  //     userInput: event.target.value
-  //   });
+  // console.log("updateModuleInput: " + event.target.value);
+  //  this.setState({     userInput: event.target.value   });
   // }
 
   updateModuleInput(event, {newValue}) {
-    console.log("updateModuleInput event: " + event +
-                " newValue: " + newValue);
-    this.setState({
-      userInput: newValue
-    });
+    console.log("updateModuleInput event: " + event + " newValue: " + newValue);
+    this.setState({userInput: newValue});
   }
 
   render() {
@@ -49,88 +39,73 @@ export default class Module extends React.Component {
       onChange: this.updateModuleInput.bind(this)
     };
 
-    return (
-      <Autosuggest
-        id={this.props.id}
-        inputProps={inputProps}
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        renderSuggestionsContainer={renderSuggestionsContainer}
-        focusFirstSuggestion={true}
-        focusInputOnSuggestionClick={false}
-      />
-    );
+    return (<Autosuggest
+      id={this.props.id}
+      inputProps={inputProps}
+      suggestions={suggestions}
+      onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+      onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+      getSuggestionValue={getSuggestionValue}
+      renderSuggestion={renderSuggestion}
+      renderSuggestionsContainer={renderSuggestionsContainer}
+      focusFirstSuggestion={true}
+      focusInputOnSuggestionClick={false}/>);
   }
 }
 
 Module.propTypes = {
-  // ID that identifies this component uniquely.
-  // This id also uniquely defines the Autosuggest box - necessary if there are
-  // many Autosuggest boxes on the screen.
+  // ID that identifies this component uniquely. This id also
+  // uniquely defines the Autosuggest box - necessary if
+  // there are many Autosuggest boxes on the screen.
   id: React.PropTypes.string
 }
 
-//======================================================
-// Helper functions for configuring the Autosuggest React component
-//======================================================
+// ======================================================
+// Helper functions for configuring the Autosuggest React
+// component
+// ======================================================
 
 const languages = [
   {
     code: 'adrian',
     year: 1972
-  },
-  {
+  }, {
     code: 'benedict',
     year: 2012
-  },
-  {
+  }, {
     code: 'charles',
     year: 1972
-  },
-  {
+  }, {
     code: 'charlie',
     year: 2012
-  },
-  {
+  }, {
     code: 'elmer',
     year: 1972
-  },
-  {
+  }, {
     code: 'emmanuel',
     year: 2012
-  },
-  {
+  }, {
     code: 'elaine',
     year: 1972
-  },
-  {
+  }, {
     code: 'honey',
     year: 2012
-  },
-  {
+  }, {
     code: 'homer',
     year: 1972
-  },
-  {
+  }, {
     code: 'heath',
     year: 2012
-  },
-  {
+  }, {
     code: 'hebrew',
     year: 1972
-  },
-  {
+  }, {
     code: 'helberg',
     year: 2012
-  },
-  {
+  }, {
     code: 'heinz',
     year: 1972
-  },
-  {
+  }, {
     code: 'hubert',
     year: 2012
   }
@@ -150,10 +125,12 @@ const getSuggestions = (userInput) => {
   const inputLength = inputValue.length;
 
   if (inputLength === 0) {
-    // No suggestions given to user if they don't type in anything
+    // No suggestions given to user if they don't type in
+    // anything
     return [];
   } else {
-    // Return elements in the list with beginning letters that match inputValue
+    // Return elements in the list with beginning letters that
+    // match inputValue
     return languages.filter((lang) => {
       return lang.code.toLowerCase().slice(0, inputLength) === inputValue;
     });
@@ -178,7 +155,11 @@ const getSuggestionValue = (suggestion) => {
  * @return {[object]}    Custom HTML element for the design of each suggestion
  */
 const renderSuggestion = (suggestion) => {
-  return <div>{suggestion.code}</div>;
+  return(
+    <div className="typeahead-item" style={{width: '10.4em'}}>
+      {suggestion.code}
+    </div>
+  );
 }
 
 /**
@@ -190,21 +171,24 @@ const renderSuggestion = (suggestion) => {
  *                             suggestion container
  */
 const renderSuggestionsContainer = ({children, ...props}) => {
-  const style = {position:'absolute',
-                 zIndex:'3',
-                 overflowY: 'auto',
-                 height: '8em'}
+  let style = {
+    position:'absolute',
+    zIndex:'3',
+    overflowY: 'auto',
+    height: '8em'
+  }
   return (
-    <div {...props} style={style}>
-      {children}
+    <div {...props}>
+      <ul style={style}>
+        {children}
+      </ul>
     </div>
   );
 }
 
 /*
 <form className="input-group" style={{width: '100%'}}>
-  <input type="text" className="form-control"
-         value={this.state.moduleCode}
-         onChange={this.updateModuleInput.bind(this)}/>
+  <input type="text" className="form-control" value={this.state.moduleCode}
+         onChange={this.updateModuleInput.bind(this)} />
 </form>
- */
+*/
