@@ -1,5 +1,6 @@
 import React from 'react'
 import Autocomplete from 'react-async-autocomplete'
+import { sendQuery } from '../../../api/searcher-controller/controller';
 
 export default class ModuleSearchBar extends React.Component {
   constructor() {

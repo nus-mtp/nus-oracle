@@ -1,14 +1,19 @@
 import React from 'react';
 import Module from './Module';
+import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
 import ModuleSearchBar from './ModuleSearchBar';
 
 export default class SemModulesCard extends React.Component {
   render() {
+    const modules = getAllModulesInSemester(this.props.semesterIndex, this.props.plannerID);
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
+              {Object.keys(modules).map((moduleName, rank) => {
+                return <Module key={rank} moduleCode={moduleName} />;
+              })}
               {/* ID needs to be given to each autosuggest since there are
                 more than 1 on the page */}
               <ModuleSearchBar id="autosuggest1"/>
@@ -27,7 +32,9 @@ export default class SemModulesCard extends React.Component {
 }
 
 SemModulesCard.propTypes = {
-  sem: React.PropTypes.string
+  sem: React.PropTypes.string,
+  semesterIndex: React.PropTypes.integer,
+  plannerID: React.PropTypes.string
 }
 
 /*
