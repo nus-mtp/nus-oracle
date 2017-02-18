@@ -135,12 +135,13 @@ export default class ModuleSearchBar extends React.Component {
   }
 
   /**
-   * Adds the chosen module to the database
+   * Adds the user's chosen module to the database
    */
-  handleConfirmModule(userInput, event) {
+  handleConfirmModule(moduleCode, event) {
     if (event.charCode == 13) { // If pressed ENTER
-      console.log("Pressed ENTER for " + userInput);
+      console.log("Pressed ENTER for " + moduleCode);
       // Add module to DB
+      this.props.handleAddModule(moduleCode);
     }
   }
 
@@ -168,4 +169,8 @@ export default class ModuleSearchBar extends React.Component {
         />
       </div>);
   }
+}
+
+ModuleSearchBar.propTypes = {
+  handleAddModule: React.PropTypes.func
 }
