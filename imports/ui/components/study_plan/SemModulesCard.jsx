@@ -2,18 +2,46 @@ import React from 'react';
 import Module from './Module';
 import ModuleSearchBar from './ModuleSearchBar.jsx';
 
-export default class SemModulesCard extends React.Component {  
+import { sendQuery } from '../../../api/searcher-controller/controller.js'
+
+export default class SemModulesCard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      addedModule: false,
+      addedModuleCode: null
+    }
+  }
+
+  /**
+   * Handles the event when a module has been successfully added
+   **/
+  handleAddModule(moduleCode) {
+    console.log("In SemModulesCard's handleAddModule: " + moduleCode);
+    this.setState({
+      addedModule: true,
+      addedModuleCode: moduleCode
+    });
+    //insertOneModuleInSemester(semesterIndex, moduleName, plannerID)
+  }
+
   render() {
     const modules = this.props.modules;
+
+
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              {Object.keys(modules).map((moduleName, rank) => {
-                return <Module key={rank} moduleCode={moduleName} />;
+              {Object.keys(modules).map((moduleName, index) => {
+                return <Module key={index} moduleCode={moduleName} />;
               })}
-              <ModuleSearchBar />
+
+              {this.state.addedModule ?
+                <Module moduleCode={this.state.addedModuleCode} /> :
+                <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />
+              }
   					</div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
