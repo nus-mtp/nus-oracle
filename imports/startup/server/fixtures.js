@@ -3,7 +3,7 @@ import { insertNewSemesterInPlanner } from '../../api/crud-controller/semester/m
 import { insertOneModuleInSemester } from '../../api/crud-controller/module/methods';
 import { populateModuleFixture } from '../../api/integration-tests/fixtures';
 import { Modules,
-         createModuleCollection } from '../../api/database-controller/module';
+         createModuleCollection } from '../../api/database-controller/module/module';
 import { Planner } from '../../api/crud-controller/planner/planner';
 
 Meteor.startup(() => {

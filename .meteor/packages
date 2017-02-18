@@ -25,7 +25,7 @@ less                           # Alternative to CSS
 
 # data
 mongo@1.1.14                   # The database Meteor supports right now
-aldeed:collection2
+aldeed:collection2-core
 aldeed:simple-schema
 harrison:papa-parse             # parsing csv to json
 
