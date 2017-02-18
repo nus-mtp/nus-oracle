@@ -21,13 +21,26 @@ class PlannerCollection extends Mongo.Collection {
 
 export const Planner = new PlannerCollection('planner');
 
+SemesterSchema = new SimpleSchema({
+  academicYear: {
+    type: String,
+  },
+  semesterNum: {
+    type: Number,
+  },
+  moduleHashmap: {
+    type: Object,
+    blackbox: true,
+  },
+});
+
 Planner.schema = new SimpleSchema({
   name: {
     type: String,
   },
 
   semesters: {
-    type: [Object],
+    type: [SemesterSchema],
   },
 
   focusArea: {
@@ -38,6 +51,8 @@ Planner.schema = new SimpleSchema({
     type: String,
   },
 });
+
+Planner.attachSchema(Planner.schema);
 
 if (Meteor.isServer) {
   Meteor.publish('planner', function taskPublication () {
