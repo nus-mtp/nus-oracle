@@ -25,8 +25,10 @@ less                           # Alternative to CSS
 
 # data
 mongo@1.1.14                   # The database Meteor supports right now
-aldeed:simple-schema
 aldeed:collection2
+aldeed:simple-schema
+harrison:papa-parse             # parsing csv to json
+
 
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode
@@ -39,6 +41,13 @@ mobile-experience@1.0.4       # Packages for a great mobile UX
 # Unsafe for production
 autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
+
+# tests
 practicalmeteor:mocha
 dispatch:mocha-phantomjs
 dispatch:phantomjs-tests@=0.0.5
+accounts-password
+accounts-ui
+thereactivestack:blazetoreact
+email
+themeteorchef:bert

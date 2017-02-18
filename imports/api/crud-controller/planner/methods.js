@@ -4,18 +4,14 @@ import { Planner } from './planner';
     once autopublish is disabled
 */
 
-// creates a new semester object in collection and returns the id
-
-export const createPlanner = function createPlanner(plannerName, focusArea) {
-  // create new empty semester schema and insert into Semester collection
+// creates a new planner
+export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
   const newPlanner = {
     name: plannerName,
     semesters: [],
     focusArea: focusArea,
-    userID: '',
+    userID: userID,
   };
-
-  // Semester.schema.validate(newSem);
 
   const id = Planner.insert(newPlanner);
   return id;
@@ -33,6 +29,26 @@ export const getPlannerName = function getPlannerName(plannerID) {
   return planner.name;
 };
 
+// retrieves the userID of the planner
+export const getPlannerUserID = function getPlannerUserID(plannerID)  {
+  const planner = Planner.findOne(plannerID);
+  return planner.userID;
+}
+
+// retrieve planner IDs given userID
+export const getPlannerIDs = function getPlannerIDs(userID) {
+  const planners = Planner.find({userID: userID}).fetch();
+
+  const plannerIDs = [];
+
+  for (var i = 0; i < planners.length; i++)  {
+    plannerIDs.push(planners[i]._id);
+  }
+
+  return plannerIDs;
+}
+
+// set the planner focus areas
 export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {
   const planner = Planner.findOne(plannerID);
 
@@ -42,6 +58,7 @@ export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFo
   return numOfDocumentsUpdatedWithSemester;
 };
 
+// sets the planner name
 export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
   const planner = Planner.findOne(plannerID);
 
@@ -52,12 +69,13 @@ export const setPlannerName = function setPlannerName(plannerID, newPlannerName)
   return numOfDocumentsUpdatedWithSemester;
 }
 
-// removes all semester associated with the planner and the planner document itself
+// removes all the semesters associated with the planner and the planner itself
 export const removePlanner = function removePlanner(plannerID) {
   Planner.remove(plannerID);
 };
 
-// inserts into a semester the moduleID and returns how many documents were modified
+// inserts a new semester into the planner
+// semester number refers to either semester 1 or semester 2
 export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
   const semesterObject = {
     academicYear: academicYear,
@@ -78,15 +96,37 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
   return retrievedSemester.length-1;
 };
 
-// retrieves moduleIDs and returns a Mongo Object
+// get all semesters in planner
+export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
+  const planner = Planner.findOne(plannerID);
+  if (!planner) {
+    return [];
+  }
+
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester) {
+    return [];
+  }
+
+  return retrievedSemester;
+}
+
+// retrieves a semester in the planner
 export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemester = planner.semesters;
+  // return empty object when no planner is found
+  if (!planner)  {
+    return {};
+  }
 
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester)  {
+    return {};
+  }
   return retrievedSemester[semesterIndex];
 };
 
-// delete a semester module in collection
+// delete a semester in a planner
 export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
 

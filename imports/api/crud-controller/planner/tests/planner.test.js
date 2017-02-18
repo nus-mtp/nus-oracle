@@ -1,15 +1,17 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
-import { Random } from 'meteor/random';
-import { Planner } from './planner';
+import { Planner } from '../planner';
 import { createPlanner,
          getPlannerFocusArea,
          getPlannerName,
+         getPlannerUserID,
          setPlannerFocusArea,
+         getPlannerIDs,
          setPlannerName,
          removePlanner,
          insertNewSemesterInPlanner,
+         getAllSemestersInPlanner,
          getSemesterInPlanner,
-         deleteSemesterInPlanner } from './methods';
+         deleteSemesterInPlanner } from '../methods';
 
 describe('planner', function () {
   const testPlannerName = 'testPlanner';
@@ -17,11 +19,12 @@ describe('planner', function () {
     'Computer Graphics And Games',
      'Parallel Computing'
   ];
+  const testUserID = 'da2hljfnlajdl1k2';
 
-  const testAcademicYear = '14/15';
+  const testAcademicYear = 'AY14/15';
   const testSemesterNum = 1;
 
-  const testPlannerID = createPlanner(testPlannerName, focusArea);
+  const testPlannerID = createPlanner(testPlannerName, focusArea, testUserID);
 
   it('create new planner document in mongo collection', function () {
     const planner = Planner.findOne(testPlannerID);
@@ -39,6 +42,19 @@ describe('planner', function () {
   it ('get planner name', function ()  {
     const plannerName = getPlannerName(testPlannerID);
     assert.equal(plannerName, testPlannerName);
+  });
+
+  it ('get planner userID', function()  {
+    const plannerUserID = getPlannerUserID(testPlannerID);
+    expect(plannerUserID).to.be.a('string');
+    assert.equal(plannerUserID, testUserID);
+  });
+
+  it ('get planner ids', function()  {
+    const plannerIDs = getPlannerIDs(testUserID);
+    expect(plannerIDs).to.be.an('array');
+    expect(plannerIDs[0]).to.be.a('string');
+    assert.equal(plannerIDs[0], testPlannerID);
   });
 
   it ('set new planner focus area', function()  {
@@ -72,7 +88,14 @@ describe('planner', function () {
     assert.equal(semesterIndex, 0);
   });
 
-  it ('get semester in planner', function () {
+  it ('get all semester in planner', function() {
+    const retrievedSemesters = getAllSemestersInPlanner(testPlannerID);
+    assert.equal(retrievedSemesters.length, 1);
+    assert.equal(retrievedSemesters[0].academicYear, 'AY14/15');
+    assert.equal(retrievedSemesters[0].semesterNum, 1);
+  });
+
+  it ('get one semester in planner', function () {
     const semesterIndex = 0;
     const semesterModules = getSemesterInPlanner(semesterIndex, testPlannerID);
     expect(semesterModules).to.be.a('object');
