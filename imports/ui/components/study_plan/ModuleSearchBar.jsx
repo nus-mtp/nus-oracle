@@ -1,7 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 
-export default class Module extends React.Component {
+export default class ModuleSearchBar extends React.Component {
   constructor() {
     super();
 
