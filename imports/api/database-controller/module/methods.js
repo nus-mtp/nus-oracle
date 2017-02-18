@@ -1,43 +1,7 @@
+
+import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
-// temporary schema for storing module and term whereby the module is offered
-
-export const Modules = new Meteor.Collection('module');
-
-// this function should only be called if there is no module collection yet to
-// be established.
-export const createModuleCollection = function createModuleCollection() {
-  Modules.schema = new SimpleSchema(
-    {
-      moduleCode: {
-        type: String,
-      },
-      moduleName: {
-        type: String,
-      },
-      moduleDescription: {
-        type: String,
-      },
-      modulePrerequisite: {
-        type: String,
-      },
-      moduleCorequisite: {
-        type: String,
-        optional: true,
-      },
-      modulePreclusion: {
-        type: String,
-      },
-      moduleMC: {
-        type: Number,
-      },
-      termOffered: {
-        type: [Object],
-        blackbox: true,
-      },
-    },
-  );
-};
 
 // to check if the reference to module collection has been made
 export const isExistModuleCollection = function checkForCollection() {
@@ -47,6 +11,8 @@ export const isExistModuleCollection = function checkForCollection() {
 
   return false;
 }
+
+
 // This method try to find module in the collection by the moduleCode
 export const searchByModuleCode = function retrieveMod(modCode) {
   const searchResult = Modules.findOne({ moduleCode: modCode });
@@ -68,8 +34,8 @@ export const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) 
   // search by module code
   const searchResult = Modules.find({ moduleCode: { $regex: string } }).fetch();
   const resultArray = [];
-
   // wrap into module name and id
+
   for (var i=0; i<searchResult.length; i++) {
     const returnPackage = {
       moduleCode: searchResult[i].moduleCode,
@@ -94,10 +60,6 @@ export const removeAllModule = function removeAllModule() {
   return Modules.remove({});
 };
 
-export const removeOneModule = function removeOneModule(moduleID)  {
-  Modules.remove(moduleID);
-};
-
 // insert one new module collection to the Module Database
 export const insertToModuleCollection = function insertToModuleCollection(object) {
   Modules.insert(object);
@@ -106,13 +68,4 @@ export const insertToModuleCollection = function insertToModuleCollection(object
 
 export const retrieveAllModule = function findAll() {
   return Modules.find({}).fetch();
-};
-
-export const retrieveModuleReference = function retrieveModuleCollectionReference() {
-  if (!isExistModuleCollection){
-    return Modules;
-  }
-
-  createModuleCollection();
-  return Modules;
 };
