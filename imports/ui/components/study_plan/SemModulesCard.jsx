@@ -1,23 +1,39 @@
+import _ from 'underscore';
 import React from 'react';
 import Module from './Module';
-import ModuleSearchBar from './ModuleSearchBar';
+import ModuleSearchBar from './ModuleSearchBar.jsx';
+
+import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
 
 export default class SemModulesCard extends React.Component {
+  /**
+   * Handles the event when a module has been successfully added
+   **/
+  handleAddModule(moduleCode) {
+    console.log("In SemModulesCard retrieved: " + JSON.stringify(this.props.modules));
+    console.log("In SemModulesCard's adding mod: " + moduleCode);
+    insertOneModuleInSemester(this.props.semesterIndex, moduleCode, this.props.plannerID);
+  }
+
   render() {
     const modules = this.props.modules;
+    console.log("semesterIndex: " + this.props.semesterIndex);
+    console.log("plannerID: " + this.props.plannerID);
+
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              {Object.keys(modules).map((moduleName, rank) => {
-                return <Module key={rank} moduleCode={moduleName} />;
+
+              {/* Renders all modules from the user's study plan */}
+              {Object.keys(modules).map((moduleCode, index) => {
+                return <Module key={index} moduleCode={moduleCode} />;
               })}
-              {/* ID needs to be given to each autosuggest since there are
-                more than 1 on the page */}
-              <ModuleSearchBar id="autosuggest1"/>
-              <ModuleSearchBar id="autosuggest2"/>
-  					</div>
+
+              <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />
+
+            </div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
                 {this.props.sem}
