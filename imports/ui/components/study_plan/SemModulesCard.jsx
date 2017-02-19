@@ -1,24 +1,29 @@
 import _ from 'underscore';
 import React from 'react';
-import Module from './Module';
+import Module from './Module.jsx';
 import ModuleSearchBar from './ModuleSearchBar.jsx';
 
 import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
+import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods';
 
 export default class SemModulesCard extends React.Component {
   /**
-   * Handles the event when a module has been successfully added
+   * Handles the event when a module is added
    **/
   handleAddModule(moduleCode) {
-    console.log("In SemModulesCard retrieved: " + JSON.stringify(this.props.modules));
-    console.log("In SemModulesCard's adding mod: " + moduleCode);
-    insertOneModuleInSemester(this.props.semesterIndex, moduleCode, this.props.plannerID);
+    insertOneModuleInSemester(this.props.semesterIndex, moduleCode,  this.props.plannerID);
+  }
+
+  /**
+   * Handles the event when a module is deleted
+   */
+  handleDeleteModule(moduleCode) {
+    deleteOneModuleInSemester(
+      this.props.semesterIndex, moduleCode, this.props.plannerID);
   }
 
   render() {
     const modules = this.props.modules;
-    console.log("semesterIndex: " + this.props.semesterIndex);
-    console.log("plannerID: " + this.props.plannerID);
 
     return (
       <div className="col-md-4">
@@ -28,7 +33,9 @@ export default class SemModulesCard extends React.Component {
 
               {/* Renders all modules from the user's study plan */}
               {Object.keys(modules).map((moduleCode, index) => {
-                return <Module key={index} moduleCode={moduleCode} />;
+                return <Module key={index} moduleCode={moduleCode}
+                               handleDeleteModule={
+                                 this.handleDeleteModule.bind(this, moduleCode)}/>;
               })}
 
               <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />

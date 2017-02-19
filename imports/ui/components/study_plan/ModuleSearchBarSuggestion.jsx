@@ -35,12 +35,10 @@ export default class ModuleSearchBarSuggestion extends React.Component {
   }
 
   render() {
-    let moduleCodeOfSuggestion = this.props.moduleCode;
-    let userInput = this.props.userInput;
-    // console.log("module code of sugg: " + moduleCodeOfSuggestion);
-    // console.log("user input: " + userInput);
     const highlightedBG = '#ec7513';
     const nonHighlightedBG = 'transparent'
+    let moduleCodeOfSuggestion = this.props.moduleCode;
+    let userInput = this.props.userInput;
 
     return(
       <div className="typeahead-item"

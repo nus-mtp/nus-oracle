@@ -135,8 +135,7 @@ export default class ModuleSearchBar extends React.Component {
    */
   handleConfirmModule(moduleCode, event) {
     if (event.charCode == enterKeyCharCode) { // If pressed ENTER
-      console.log("Pressed ENTER for " + moduleCode);
-      // Add module to DB
+      // Add module to user's study plan
       this.props.handleAddModule(moduleCode);
 
       // Clears user input
