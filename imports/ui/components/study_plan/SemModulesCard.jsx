@@ -1,11 +1,10 @@
 import React from 'react';
 import Module from './Module';
-import { getAllModulesInSemester } from '../../../api/crud-controller/semester/methods';
 import ModuleSearchBar from './ModuleSearchBar';
 
 export default class SemModulesCard extends React.Component {
   render() {
-    const modules = getAllModulesInSemester(this.props.semesterIndex, this.props.plannerID);
+    const modules = this.props.modules;
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
@@ -33,8 +32,7 @@ export default class SemModulesCard extends React.Component {
 
 SemModulesCard.propTypes = {
   sem: React.PropTypes.string,
-  semesterIndex: React.PropTypes.integer,
-  plannerID: React.PropTypes.string
+  modules: React.PropTypes.object
 }
 
 /*

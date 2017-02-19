@@ -7,61 +7,110 @@ import { createPlanner,
          setPlannerFocusArea,
          getPlannerIDs,
          setPlannerName,
-         removePlanner,
-         insertNewSemesterInPlanner,
-         getAllSemestersInPlanner,
-         getSemesterInPlanner,
-         deleteSemesterInPlanner } from './methods';
+         removePlanner } from './methods';
 
 describe('planner', function () {
-  const testPlannerName = 'testPlanner';
-  const focusArea = [
-    'Computer Graphics And Games',
-     'Parallel Computing'
-  ];
-  const testUserID = 'da2hljfnlajdl1k2';
+  const userID = 'da2hljfnlajdl1k2';
 
-  const testAcademicYear = 'AY14/15';
-  const testSemesterNum = 1;
+  beforeEach(function ()  {
+    const plannerNames = ['plannerOne', 'plannerTwo', 'plannerThree'];
+    const focusArea = [
+      ['Computer Graphics And Games',
+       'Parallel Computing'],
+      ['Computer Graphics and Games',
+       'Algorithms and Theory'],
+      ['Computer Graphics and Games',
+       'Parallel Computing']
+    ];
+    const academicYear = ['AY14/15', 'AY14/15', 'AY15/16', 'AY15/16', 'AY16/17', 'AY16/17', 'AY17/18', 'AY17/18'];
+    const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
+    const semesterIndex = [0, 1, 2, 3, 4, 5, 6, 7];
 
-  const testPlannerID = createPlanner(testPlannerName, focusArea, testUserID);
+    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDTwo = createPlanner(plannerNames[1], focusArea[1], userID);
+    const plannerIDThree = createPlanner(plannerNames[2], focusArea[2], userID);
 
-  it('create new planner document in mongo collection', function () {
-    const planner = Planner.findOne(testPlannerID);
-    expect(planner.semesters).to.be.an('array');
-    expect(planner._id).to.be.a('string');
-    assert.equal(planner._id, testPlannerID);
+    const plannerOne = Planner.findOne(plannerIDOne);
+    const plannerTwo = Planner.findOne(plannerIDTwo);
+    const plannerThree = Planner.findOne(plannerIDThree);
+
+    expect(plannerOne.semesters).to.be.an('array');
+    expect(plannerTwo.semesters).to.be.an('array');
+    expect(plannerThree.semesters).to.be.an('array');
+
+    assert.equal(plannerOne._id, plannerIDOne);
+    assert.equal(plannerTwo._id, plannerIDTwo);
+    assert.equal(plannerThree._id, plannerIDThree);
   });
 
-  it ('get planner in mongo object form', function () {
-    const retrievedFocusArea = getPlannerFocusArea(testPlannerID);
-    assert.equal(retrievedFocusArea[0], 'Computer Graphics And Games');
-    assert.equal(retrievedFocusArea[1], 'Parallel Computing');
+  afterEach(function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+
+    removePlanner(plannerIDs[0]);
+    removePlanner(plannerIDs[1]);
+    removePlanner(plannerIDs[2]);
+
+    const removedPlannerOne = Planner.findOne(plannerIDs[0]);
+    const removedPlannerTwo = Planner.findOne(plannerIDs[1]);
+    const removedPlannerThree = Planner.findOne(plannerIDs[2]);
+
+    expect(removedPlannerOne).to.be.an('undefined');
+    expect(removedPlannerTwo).to.be.an('undefined');
+    expect(removedPlannerThree).to.be.an('undefined');
+  });
+
+  it ('check if planner ids are correctly returned', function()  {
+    const plannerIDs = getPlannerIDs(userID);
+    const plannerOne = Planner.findOne(plannerIDs[0]);
+    const plannerTwo = Planner.findOne(plannerIDs[1]);
+    const plannerThree = Planner.findOne(plannerIDs[2]);
+
+    // plannerIDs returns normal results when given correct userID
+    expect(plannerIDs).to.be.an('array');
+    assert.equal(plannerIDs.length, 3);
+    assert.equal(plannerIDs[0], plannerOne._id);
+    assert.equal(plannerIDs[1], plannerTwo._id);
+    assert.equal(plannerIDs[2], plannerThree._id);
+
+    // plannerIDs returns empty result when given wrong user ID
+    const wrongUserID = 'alkjarnlaas';
+    const wrongPlannerIDs = getPlannerIDs(wrongUserID);
+    assert.equal(wrongPlannerIDs.length, 0);
+  });
+
+  it ('get planner focus area', function () {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const retrievedFocusAreaOne = getPlannerFocusArea(plannerIDs[0]);
+
+    assert.equal(retrievedFocusAreaOne[0], 'Computer Graphics And Games');
+    assert.equal(retrievedFocusAreaOne[1], 'Parallel Computing');
   });
 
   it ('get planner name', function ()  {
-    const plannerName = getPlannerName(testPlannerID);
-    assert.equal(plannerName, testPlannerName);
+    const plannerIDs = getPlannerIDs(userID);
+    const planner = Planner.findOne(plannerIDs[0]);
+
+    const plannerName = getPlannerName(plannerIDs[0]);
+    expect(plannerName).to.be.a('string');
+    assert.equal(plannerName, planner.name);
   });
 
   it ('get planner userID', function()  {
-    const plannerUserID = getPlannerUserID(testPlannerID);
-    expect(plannerUserID).to.be.a('string');
-    assert.equal(plannerUserID, testUserID);
-  });
+    const plannerIDs = getPlannerIDs(userID);
 
-  it ('get planner ids', function()  {
-    const plannerIDs = getPlannerIDs(testUserID);
-    expect(plannerIDs).to.be.an('array');
-    expect(plannerIDs[0]).to.be.a('string');
-    assert.equal(plannerIDs[0], testPlannerID);
+    const plannerUserID = getPlannerUserID(plannerIDs[0]);
+    expect(plannerUserID).to.be.a('string');
+    assert.equal(plannerUserID, userID);
   });
 
   it ('set new planner focus area', function()  {
-    const newFocusArea = ['Computer Graphics And Games'];
-    const numOfDocumentsUpdatedWithSemester = setPlannerFocusArea(testPlannerID, newFocusArea);
+    const plannerIDs = getPlannerIDs(userID);
 
-    const planner = Planner.findOne(testPlannerID);
+    const newFocusArea = ['Computer Graphics And Games'];
+    const numOfDocumentsUpdatedWithSemester = setPlannerFocusArea(plannerIDs[0], newFocusArea);
+
+    const planner = Planner.findOne(plannerIDs[0]);
 
     assert.equal(numOfDocumentsUpdatedWithSemester, 1);
     assert.equal(planner.focusArea.length, 1);
@@ -69,54 +118,13 @@ describe('planner', function () {
   });
 
   it ('set new planner name', function()  {
+    const plannerIDs = getPlannerIDs(userID);
+
     const newPlannerName = 'testNewPlanner';
-    const numOfDocumentsUpdatedWithSemester = setPlannerName(testPlannerID, newPlannerName);
-    const planner = Planner.findOne(testPlannerID);
+    const numOfDocumentsUpdatedWithSemester = setPlannerName(plannerIDs[0], newPlannerName);
+    const planner = Planner.findOne(plannerIDs[0]);
 
     assert.equal(planner.name, newPlannerName);
     assert.equal(numOfDocumentsUpdatedWithSemester, 1);
-  });
-
-  it ('insert semester into planner', function () {
-    const semesterNum = 1;
-    const semesterIndex = insertNewSemesterInPlanner(testAcademicYear, testSemesterNum, testPlannerID);
-
-    const planner = Planner.findOne(testPlannerID);
-    const retrievedSemesters = planner.semesters;
-
-    assert.equal(retrievedSemesters.length, 1);
-    assert.equal(semesterIndex, 0);
-  });
-
-  it ('get all semester in planner', function() {
-    const retrievedSemesters = getAllSemestersInPlanner(testPlannerID);
-    assert.equal(retrievedSemesters.length, 1);
-    assert.equal(retrievedSemesters[0].academicYear, 'AY14/15');
-    assert.equal(retrievedSemesters[0].semesterNum, 1);
-  });
-
-  it ('get one semester in planner', function () {
-    const semesterIndex = 0;
-    const semesterModules = getSemesterInPlanner(semesterIndex, testPlannerID);
-    expect(semesterModules).to.be.a('object');
-  });
-
-  it ('delete semester in planner', function () {
-    const semesterIndex = 0;
-    const numOfSemesters = deleteSemesterInPlanner(semesterIndex, testPlannerID);
-
-    const planner = Planner.findOne(testPlannerID);
-    const retrievedSemesters = planner.semesters;
-
-    assert.equal(retrievedSemesters.length, 0);
-    assert.equal(numOfSemesters, 0);
-  });
-
-  it ('remove planner document in mongo collection', function () {
-    const beforeRemovedPlanner = Planner.findOne(testPlannerID);
-
-    removePlanner(testPlannerID);
-    const afterRemovedPlanner = Planner.findOne(testPlannerID);
-    expect(afterRemovedPlanner).to.be.an('undefined');
   });
 });

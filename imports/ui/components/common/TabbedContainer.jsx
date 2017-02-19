@@ -1,5 +1,5 @@
 import React from 'react';
-import AcadYrSection from '../study_plan/AcadYrSection';
+import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer';
 
 export default class TabbedContainer extends React.Component {
   constructor() {
@@ -17,7 +17,11 @@ export default class TabbedContainer extends React.Component {
     var tabTitleList = this.props.tabTitleList;
     var plannerIDs = this.props.plannerIDs;
     var currentlyActivePanelIndex = this.state.tabSelectedIndex;
-    let contentPanels = [<AcadYrSection plannerID={plannerIDs[currentlyActivePanelIndex]}/>];
+    let contentPanels = [];
+
+    for (var i = 0; i < plannerIDs.length; i++) {
+      contentPanels.push(<AcadYrSectionContainer plannerID={plannerIDs[i]}/>);
+    }
 
     return (
       <section className='tabs-section' style={{margin: 0}}>
