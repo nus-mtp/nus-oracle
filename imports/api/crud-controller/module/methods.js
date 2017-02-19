@@ -18,6 +18,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
     return {};
   }
 
+  // checks semester index is not larger than the size of semester
   if (semesterIndex > retrievedSemesters.length-1)  {
     return {};
   }
@@ -43,7 +44,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  * @return {string}    name of retrieved module in semester
  *
  */
- export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+ export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -52,6 +53,12 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
   if (!retrievedSemesters) {
     return {};
   }
+
+  // checks semester index is not larger than the size of semester
+  if (semesterIndex > retrievedSemesters.length-1)  {
+    return {};
+  }
+
   const oneSemester = retrievedSemesters[semesterIndex];
   if (!oneSemester) {
     return {};
@@ -63,14 +70,14 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
 
   // sanitise module code here
 
-  // in the future, store moduleID instead of moduleName
-  modules[moduleName] = moduleName;
+  // in the future, store moduleID instead of moduleCode
+  modules[moduleCode] = moduleCode;
 
   oneSemester.moduleHashmap = modules;
   retrievedSemesters[semesterIndex] = oneSemester;
   Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
 
-  return modules[moduleName];
+  return modules[moduleCode];
 };
 
 /**
@@ -81,7 +88,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  * @return {string}    name of retrieved module in semester
  *
  */
- export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+ export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -90,6 +97,12 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
   if (!retrievedSemesters) {
     return {};
   }
+
+  // checks semester index is not larger than the size of semester
+  if (semesterIndex > retrievedSemesters.length-1)  {
+    return {};
+  }
+
   const oneSemester = retrievedSemesters[semesterIndex];
   if (!oneSemester) {
     return {};
@@ -99,7 +112,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
     return {};
   }
 
-  return modules[moduleName];
+  return modules[moduleCode];
 };
 
 /**
@@ -110,7 +123,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  * @return {string}    name of retrieved module in semester
  *
  */
-export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -119,6 +132,12 @@ export const deleteOneModuleInSemester = function deleteOneModuleInSemester(seme
   if (!retrievedSemesters) {
     return {};
   }
+
+  // checks semester index is not larger than the size of semester
+  if (semesterIndex > retrievedSemesters.length-1)  {
+    return {};
+  }
+
   const oneSemester = retrievedSemesters[semesterIndex];
   if (!oneSemester) {
     return {};
@@ -128,8 +147,8 @@ export const deleteOneModuleInSemester = function deleteOneModuleInSemester(seme
     return {};
   }
 
-  const deletedModule = modules[moduleName];
-  delete modules[moduleName];
+  const deletedModule = modules[moduleCode];
+  delete modules[moduleCode];
 
   oneSemester.moduleHashmap = modules;
   retrievedSemesters[semesterIndex] = oneSemester;
