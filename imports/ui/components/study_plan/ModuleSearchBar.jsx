@@ -1,7 +1,7 @@
 import _ from 'underscore'
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-
+import ModuleSearchBarSuggestion from './ModuleSearchBarSuggestion.jsx'
 import { sendQuery } from '../../../api/searcher-controller/controller.js'
 
 const enterKeyCharCode = 13;
@@ -57,6 +57,14 @@ export default class ModuleSearchBar extends React.Component {
     );
   }
 
+  handleClickSuggestion(event) {
+    let htmlElem = event.target;
+    let highlightedBG = "#ec7513";
+    event.target.style.backgroundColor = highlightedBG;
+    console.log("Clicked on suggestion! " + htmlElem);
+    console.log(htmlElem.style.backgroundColor);
+  }
+
   /**
    * Renders the suggestion onto the autosuggest input box.
    *
@@ -65,24 +73,8 @@ export default class ModuleSearchBar extends React.Component {
    */
   renderSuggestion(suggestion) {
     let moduleCode = suggestion.moduleCode;
-    let nonHighlightedBG = "transparent";
-    let highlightedBG = "#ec7513";
-    return(
-      <div className="typeahead-item"
-           style={{width: '9em', cursor: 'pointer'}}
-           ref={(htmlElem) => {
-                  // Refer to HTML element and highlight selected
-                  if (htmlElem) { // Ensure it's not null
-                    if (this.state.userInput === moduleCode) {
-                      htmlElem.style.backgroundColor = highlightedBG;
-                    } else {
-                      htmlElem.style.backgroundColor = nonHighlightedBG;
-                    }
-                  }
-               }}>
-        {moduleCode}
-      </div>
-    );
+    return <ModuleSearchBarSuggestion userInput={this.state.userInput}
+                                      moduleCode={moduleCode} />
   }
 
   /**
