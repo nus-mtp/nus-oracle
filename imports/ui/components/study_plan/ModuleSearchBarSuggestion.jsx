@@ -1,6 +1,9 @@
 import React from 'react';
 import { isDefinedObj } from '../../../../api/util.js'
 
+/**
+ * React Component that implements the interactions with each module suggestion.
+ */
 export default class ModuleSearchBarSuggestion extends React.Component {
   constructor() {
     super();
@@ -29,7 +32,7 @@ export default class ModuleSearchBarSuggestion extends React.Component {
   * Takes the html element referenced by the event and applies a bg color
   */
   toggleHighlighted(htmlElem, bgColorToApply) {
-    if (htmlElem !== undefined && htmlElem !== null) {
+    if (isDefinedObj(htmlElem)) {
       htmlElem.style.backgroundColor = bgColorToApply
     }
   }

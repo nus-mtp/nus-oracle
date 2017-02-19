@@ -6,6 +6,11 @@ import ModuleSearchBar from './ModuleSearchBar.jsx';
 import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
 import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods';
 
+/**
+ * React Component that implements the container for a semester's worth of
+ * modules - all list in columnal form with rows of Modules. Also has a
+ * autosuggest box for searching for modules to be added to the user's study plan.
+ */
 export default class SemModulesCard extends React.Component {
   /**
    * Handles the event when a module is added
@@ -57,25 +62,3 @@ SemModulesCard.propTypes = {
   sem: React.PropTypes.string,
   modules: React.PropTypes.object
 }
-
-/*
-// Autosuggestion react component example:
-// https://github.com/moroshko/react-autosuggest
-<Autosuggest
-  suggestions={suggestions}
-  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-  getSuggestionValue={getSuggestionValue}
-  renderSuggestion={renderSuggestion}
-  inputProps={inputProps}
-/>
- */
-
-/*
-// Hardcoded modules - I'll put these aside first.
-<Module moduleCode="CS1010" />
-<Module moduleCode="CS1020" />
-<Module moduleCode="MA1521" />
-<Module moduleCode="MA1101R" />
-<Module moduleCode="IS1103" />
- */

@@ -2,6 +2,10 @@ import React from 'react';
 
 const DELETE_BUTTON_PRESS_TYPE = "DELETE"
 
+/**
+ * Generic button React component for Modules in the Study Plan UI.
+ * Check out the PropTypes below to see how to set your own styles
+ */
 export default class ModuleButton extends React.Component {
   constructor() {
     super();

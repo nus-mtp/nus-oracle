@@ -17,9 +17,14 @@ export default class Module extends React.Component {
     this.setState({ onMouseOver: false });
   }
 
+  /**
+   * Handles button clicks on this component DIfferent types of
+   * buttons can execute different callbacks passed in through
+   * this component's props.
+   *
+   * @param {[string]} buttonPressType    Type of button click
+   */
   handleButtonClick(buttonPressType) {
-    console.log("Button Press type: " + buttonPressType);
-
     switch(buttonPressType) {
       case "DELETE":
         this.props.handleDeleteModule();
@@ -40,8 +45,7 @@ export default class Module extends React.Component {
           {this.state.onMouseOver ?
             <ModuleButton
               icon="font-icon font-icon-trash"
-              displayColor="#505050"
-              onMouseOverColor="#8b2a2a"
+              displayColor="#505050" onMouseOverColor="#8b2a2a"
               buttonType="DELETE"
               onButtonClick={this.handleButtonClick.bind(this)}/> :
             null
