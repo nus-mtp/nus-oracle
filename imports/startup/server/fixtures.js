@@ -2,13 +2,10 @@ import { createPlanner } from '../../api/crud-controller/planner/methods';
 import { insertNewSemesterInPlanner } from '../../api/crud-controller/semester/methods';
 import { insertOneModuleInSemester } from '../../api/crud-controller/module/methods';
 import { populateModuleFixture } from '../../api/integration-tests/fixtures';
-import { Modules,
-         createModuleCollection } from '../../api/database-controller/module';
+import { Modules } from '../../api/database-controller/module/module';
 import { Planner } from '../../api/crud-controller/planner/planner';
 
 Meteor.startup(() => {
-  createModuleCollection();
-
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
   }

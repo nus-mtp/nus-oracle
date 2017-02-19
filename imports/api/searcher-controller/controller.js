@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { searchByModuleCodeRegex } from '../database-controller/module';
+import { searchByModuleCodeRegex } from '../database-controller/module/methods';
 
 export const sendQuery = function sendQuery(userInput) {
   if (typeof userInput != 'string') {
