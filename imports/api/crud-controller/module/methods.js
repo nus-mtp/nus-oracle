@@ -1,13 +1,12 @@
 import { Planner } from '../planner/planner';
 
-/* These methods will have to be converted to publish and subscription
-    once autopublish is disabled
-*/
-
-  //Semester.schema.validate(newSem);
-
-// get all modules in semester in an array
-// write test case for to check what if semesterIndex does not exist
+/**
+ * retrieves all modules in a semester
+ * @param  {number}    index of semester
+ * @param  {string}    id of planner
+ * @return {{string}}  object of all modules in semester
+ *
+ */
 export const getAllModulesInSemester = function getAllModulesInSemester(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
@@ -36,8 +35,15 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
   return modules;
 }
 
-// inserts a module into the semester and returns the module name as a string
-export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+/**
+ * inserts one module in a semester
+ * @param  {number}    index of semester to be insert into
+ * @param  {string}    module code
+ * @param  {string}    id of planner to be inserted into
+ * @return {string}    name of retrieved module in semester
+ *
+ */
+ export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -54,6 +60,8 @@ export const insertOneModuleInSemester = function insertOneModuleInSemester(seme
   if (!modules) {
     return {};
   }
+
+  // sanitise module code here
 
   // in the future, store moduleID instead of moduleName
   modules[moduleName] = moduleName;
@@ -65,8 +73,15 @@ export const insertOneModuleInSemester = function insertOneModuleInSemester(seme
   return modules[moduleName];
 };
 
-// retrieves module from the semester and returns the module name as a string
-export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+/**
+ * retrieves one module in a semester
+ * @param  {number}    index of semester to be insert into
+ * @param  {string}    module code
+ * @param  {string}    id of planner to be inserted into
+ * @return {string}    name of retrieved module in semester
+ *
+ */
+ export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -87,7 +102,14 @@ export const getOneModuleInSemester = function getOneModuleInSemester(semesterIn
   return modules[moduleName];
 };
 
-// deletes a module from the semester and returns the deleted module name as string
+/**
+ * deletes one module in a semester
+ * @param  {number}    index of semester to be insert into
+ * @param  {string}    module code
+ * @param  {string}    id of planner to be inserted into
+ * @return {string}    name of retrieved module in semester
+ *
+ */
 export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {

@@ -1,11 +1,13 @@
 import { Planner } from './planner';
 
-/* These methods will have to be converted to publish and subscription
-    once autopublish is disabled
-*/
-
-// creates a new planner
-export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
+/**
+ * creates a planner
+ * @param  {string}    name of planner
+ * @param  {[string]}  array of focus area
+ * @param {string}     id of user
+ * @return {string}    id of planner
+ */
+ export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
   const newPlanner = {
     name: plannerName,
     semesters: [],
@@ -17,26 +19,42 @@ export const createPlanner = function createPlanner(plannerName, focusArea, user
   return id;
 };
 
-// retrieves the focus area of the planner
+/**
+ * retrieves focus area in a planner
+ * @param {string}     id of planner
+ * @return {[string]}    array of focus areas
+ */
 export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
   const planner = Planner.findOne(plannerID);
   return planner.focusArea;
 };
 
-// retrieves the name of the planner
-export const getPlannerName = function getPlannerName(plannerID) {
+/**
+ * retrieves name of planner
+ * @param {string}     id of planner
+ * @return {string}    name of planner
+ */
+ export const getPlannerName = function getPlannerName(plannerID) {
   const planner = Planner.findOne(plannerID);
   return planner.name;
 };
 
-// retrieves the userID of the planner
-export const getPlannerUserID = function getPlannerUserID(plannerID)  {
+/**
+ * retrieves userID of planner
+ * @param {string}     id of planner
+ * @return {string}    userID of planner
+ */
+ export const getPlannerUserID = function getPlannerUserID(plannerID)  {
   const planner = Planner.findOne(plannerID);
   return planner.userID;
 }
 
-// retrieve planner IDs given userID
-export const getPlannerIDs = function getPlannerIDs(userID) {
+/**
+ * retrieves plannerID of planner
+ * @param {string}     userID of planner
+ * @return {string}    id of planner
+ */
+ export const getPlannerIDs = function getPlannerIDs(userID) {
   const planners = Planner.find({userID: userID}).fetch();
   const plannerIDs = [];
 
@@ -50,8 +68,13 @@ export const getPlannerIDs = function getPlannerIDs(userID) {
   return plannerIDs;
 }
 
-// set the planner focus areas
-export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {
+/**
+ * set focus area of planner
+ * @param {string}     id of planner
+ * @param {[string]}   new focus area of planner
+ * @return {number}    number of updated documents in semeste
+ */
+ export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFocusArea)  {
   const planner = Planner.findOne(plannerID);
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(
@@ -60,8 +83,13 @@ export const setPlannerFocusArea = function setPlannerFocusArea(plannerID, newFo
   return numOfDocumentsUpdatedWithSemester;
 };
 
-// sets the planner name
-export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
+/**
+ * set name of planner
+ * @param {string}     id of planner
+ * @param {string}   new name of planner
+ * @return {number}    number of updated documents in semester
+ */
+ export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
   const planner = Planner.findOne(plannerID);
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(
@@ -71,7 +99,10 @@ export const setPlannerName = function setPlannerName(plannerID, newPlannerName)
   return numOfDocumentsUpdatedWithSemester;
 }
 
-// removes all the semesters associated with the planner and the planner itself
-export const removePlanner = function removePlanner(plannerID) {
+/**
+ * remove planner
+ * @param {string}     id of planner
+ */
+ export const removePlanner = function removePlanner(plannerID) {
   Planner.remove(plannerID);
 };

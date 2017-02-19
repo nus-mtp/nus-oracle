@@ -96,6 +96,6 @@ describe('semester', function () {
     const planner = Planner.findOne(plannerIDs[0]);
     const retrievedSemesters = planner.semesters;
 
-    assert.equal(retrievedSemesters.length, numOfSemesters);
+    assert.equal(retrievedSemesters.length-1, numOfSemesters);
   });
 });

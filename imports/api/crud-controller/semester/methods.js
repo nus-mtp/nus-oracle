@@ -1,8 +1,12 @@
 import { Planner } from '../planner/planner';
 
-// inserts a new semester into the planner
-// semester number refers to either semester 1 or semester 2
-
+/**
+ * insert semester into planner
+ * @param {string}   academic year
+ * @param {number}   semester number
+ * @param {string}   id of planner
+ * @return {number}  index of last semester
+ */
 export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
   const semesterObject = {
     academicYear: academicYear,
@@ -23,8 +27,12 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
   return retrievedSemester.length-1;
 };
 
-// get all semesters in planner
-export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
+/**
+ * get all semesters in planner
+ * @param {string}   id of planner
+ * @return {[object]}  array of semester objects
+ */
+ export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return [];
@@ -38,8 +46,13 @@ export const getAllSemestersInPlanner = function getAllSemestersInPlanner(planne
   return retrievedSemester;
 }
 
-// retrieves a semester in the planner
-export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
+/**
+ * retrieves a semester in planner
+ * @param {number}   index of semester
+ * @param {string}   id of planner
+ * @return {object}  one semester object
+ */
+ export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
   // return empty object when no planner is found
   if (!planner)  {
@@ -53,7 +66,12 @@ export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex,
   return retrievedSemester[semesterIndex];
 };
 
-// delete a semester in a planner
+/**
+ * deletes a semester in planner
+ * @param {number}   index of semester
+ * @param {string}   id of planner
+ * @return {object}  index of last semester
+ */
 export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
 
@@ -64,5 +82,5 @@ export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semester
     { _id: plannerID },
     { $set: { semesters: retrievedSemester } },
   );
-  return retrievedSemester.length;
+  return retrievedSemester.length-1;
 };
