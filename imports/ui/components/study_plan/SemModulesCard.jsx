@@ -27,15 +27,15 @@ export default class SemModulesCard extends React.Component {
 
   render() {
     const modules = this.props.modules;
-
+    console.log(modules);
 
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              {Object.keys(modules).map((moduleName, index) => {
-                return <Module key={index} moduleCode={moduleName} />;
+              {Object.keys(modules).map((moduleCode, index) => {
+                return <Module key={index} moduleCode={moduleCode} />;
               })}
 
               {this.state.addedModule ?
