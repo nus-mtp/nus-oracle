@@ -1,48 +1,39 @@
+import _ from 'underscore';
 import React from 'react';
 import Module from './Module';
 import ModuleSearchBar from './ModuleSearchBar.jsx';
 
-import { sendQuery } from '../../../api/searcher-controller/controller.js'
+import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
 
 export default class SemModulesCard extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      addedModule: false,
-      addedModuleCode: null
-    }
-  }
-
   /**
    * Handles the event when a module has been successfully added
    **/
   handleAddModule(moduleCode) {
-    console.log("In SemModulesCard's handleAddModule: " + moduleCode);
-    this.setState({
-      addedModule: true,
-      addedModuleCode: moduleCode
-    });
-    //insertOneModuleInSemester(semesterIndex, moduleName, plannerID)
+    console.log("In SemModulesCard retrieved: " + JSON.stringify(this.props.modules));
+    console.log("In SemModulesCard's adding mod: " + moduleCode);
+    insertOneModuleInSemester(this.props.semesterIndex, moduleCode, this.props.plannerID);
   }
 
   render() {
     const modules = this.props.modules;
-    console.log(modules);
+    console.log("semesterIndex: " + this.props.semesterIndex);
+    console.log("plannerID: " + this.props.plannerID);
 
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
+
+              {/* Renders all modules from the user's study plan */}
               {Object.keys(modules).map((moduleCode, index) => {
                 return <Module key={index} moduleCode={moduleCode} />;
               })}
 
-              {this.state.addedModule ?
-                <Module moduleCode={this.state.addedModuleCode} /> :
-                <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />
-              }
-  					</div>
+              <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />
+
+            </div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
                 {this.props.sem}

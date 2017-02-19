@@ -119,14 +119,14 @@ export default class ModuleSearchBar extends React.Component {
   /**
    * Called every time suggestions need to be cleared
    */
-  onSuggestionsClearRequested() {
+  clearSuggestions() {
     this.setState({ suggestions: [] });
   };
 
   /**
    * Updates the input field with what user is typing
    */
-  updateInputWithNewValue(event, {newValue, method}) {
+  updateInputWithNewValue(event, {newValue}) {
     this.setState({ userInput: newValue });
   }
 
@@ -138,6 +138,10 @@ export default class ModuleSearchBar extends React.Component {
       console.log("Pressed ENTER for " + moduleCode);
       // Add module to DB
       this.props.handleAddModule(moduleCode);
+
+      // Clears user input
+      this.setState({ userInput: "" });
+      this.clearSuggestions();
     }
   }
 
@@ -168,7 +172,7 @@ export default class ModuleSearchBar extends React.Component {
           renderSuggestion={this.renderSuggestion.bind(this)}
           renderSuggestionsContainer={this.renderSuggestionsContainer.bind(this)}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+          onSuggestionsClearRequested={this.clearSuggestions.bind(this)}
           getSuggestionValue={this.getSuggestionValue.bind(this)}
           focusFirstSuggestion={false}
           focusInputOnSuggestionClick={false}
