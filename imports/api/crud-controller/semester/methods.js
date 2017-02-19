@@ -1,117 +1,67 @@
 import { Planner } from '../planner/planner';
 
-/* These methods will have to be converted to publish and subscription
-    once autopublish is disabled
-*/
+// inserts a new semester into the planner
+// semester number refers to either semester 1 or semester 2
+export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
+  const semesterObject = {
+    academicYear: academicYear,
+    semesterNum: semesterNum,
+    moduleHashmap: {},
+  }
 
-  //Semester.schema.validate(newSem);
+  const planner = Planner.findOne(plannerID);
 
-// get all modules in semester in an array
-// write test case for to check what if semesterIndex does not exist
-export const getAllModulesInSemester = function getAllModulesInSemester(semesterIndex, plannerID) {
+  const retrievedSemester = planner.semesters;
+
+  retrievedSemester.push(semesterObject);
+
+  const numOfDocumentsUpdatedWithSemester = Planner.update(
+     plannerID,
+    { $set: { semesters: retrievedSemester } });
+
+  return retrievedSemester.length-1;
+};
+
+// get all semesters in planner
+export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
-    return {};
+    return [];
   }
 
-  const retrievedSemesters = planner.semesters;
-  if (!retrievedSemesters) {
-    return {};
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester) {
+    return [];
   }
 
-  if (semesterIndex > retrievedSemesters.length-1)  {
-    return {};
-  }
-
-  const oneSemester = retrievedSemesters[semesterIndex];
-  if (!oneSemester) {
-    return {};
-  }
-
-  const modules = oneSemester.moduleHashmap;
-  if (!modules) {
-    return {};
-  }
-
-  return modules;
+  return retrievedSemester;
 }
 
-// inserts a module into the semester and returns the module name as a string
-export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+// retrieves a semester in the planner
+export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
-  if (!planner) {
-    return {};
-  }
-  const retrievedSemesters = planner.semesters;
-  if (!retrievedSemesters) {
-    return {};
-  }
-  const oneSemester = retrievedSemesters[semesterIndex];
-  if (!oneSemester) {
-    return {};
-  }
-  const modules = oneSemester.moduleHashmap;
-  if (!modules) {
+  // return empty object when no planner is found
+  if (!planner)  {
     return {};
   }
 
-  // in the future, store moduleID instead of moduleName
-  modules[moduleName] = moduleName;
-
-  oneSemester.moduleHashmap = modules;
-  retrievedSemesters[semesterIndex] = oneSemester;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
-
-  return modules[moduleName];
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester)  {
+    return {};
+  }
+  return retrievedSemester[semesterIndex];
 };
 
-// retrieves module from the semester and returns the module name as a string
-export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+// delete a semester in a planner
+export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
-  if (!planner) {
-    return {};
-  }
-  const retrievedSemesters = planner.semesters;
-  if (!retrievedSemesters) {
-    return {};
-  }
-  const oneSemester = retrievedSemesters[semesterIndex];
-  if (!oneSemester) {
-    return {};
-  }
-  const modules = oneSemester.moduleHashmap;
-  if (!modules) {
-    return {};
-  }
 
-  return modules[moduleName];
-};
+  const retrievedSemester = planner.semesters;
+  retrievedSemester.pop();
 
-// deletes a module from the semester and returns the deleted module name as string
-export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
-  const planner = Planner.findOne(plannerID);
-  if (!planner) {
-    return {};
-  }
-  const retrievedSemesters = planner.semesters;
-  if (!retrievedSemesters) {
-    return {};
-  }
-  const oneSemester = retrievedSemesters[semesterIndex];
-  if (!oneSemester) {
-    return {};
-  }
-  const modules = oneSemester.moduleHashmap;
-  if (!modules) {
-    return {};
-  }
-
-  const deletedModule = modules[moduleName];
-  delete modules[moduleName];
-
-  oneSemester.moduleHashmap = modules;
-  retrievedSemesters[semesterIndex] = oneSemester;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
-
-  return deletedModule;
+  const numOfDocumentsUpdatedWithSemester = Planner.update(
+    { _id: plannerID },
+    { $set: { semesters: retrievedSemester } },
+  );
+  return retrievedSemester.length;
 };

@@ -11,7 +11,7 @@ export default function Util() {
  * Generates a string of 5 random alpha characters.
  * @returns {string} made up of 5 random alpha characters
  */
-Util.getFiveRandomChars = function() {
+export const getFiveRandomChars = function() {
   var text = "";
   var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -20,4 +20,8 @@ Util.getFiveRandomChars = function() {
   }
 
   return text;
+}
+
+export const isDefinedObj = function(obj) {
+  return obj !== undefined && obj !== null;
 }
