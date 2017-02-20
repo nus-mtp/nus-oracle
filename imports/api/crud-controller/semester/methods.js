@@ -1,51 +1,68 @@
 import { Planner } from '../planner/planner';
 
-/* These methods will have to be converted to publish and subscription
-    once autopublish is disabled
-*/
+// inserts a new semester into the planner
+// semester number refers to either semester 1 or semester 2
 
-  //Semester.schema.validate(newSem);
+export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(academicYear, semesterNum, plannerID) {
+  const semesterObject = {
+    academicYear: academicYear,
+    semesterNum: semesterNum,
+    moduleHashmap: {},
+  }
 
-// inserts a module into the semester and returns the module name as a string
-export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleName, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemesters = planner.semesters;
-  const oneSemester = retrievedSemesters[semesterIndex];
-  const modules = oneSemester.moduleHashmap;
 
-  // in the future, store moduleID instead of moduleName
-  modules[moduleName] = moduleName;
+  const retrievedSemester = planner.semesters;
 
-  oneSemester.moduleHashmap = modules;
-  retrievedSemesters[semesterIndex] = oneSemester;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
+  retrievedSemester.push(semesterObject);
 
-  return modules[moduleName];
+  const numOfDocumentsUpdatedWithSemester = Planner.update(
+     plannerID,
+    { $set: { semesters: retrievedSemester } });
+
+  return retrievedSemester.length-1;
 };
 
-// retrieves module from the semester and returns the module name as a string
-export const getOneModuleInSemester = function getOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+// get all semesters in planner
+export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemesters = planner.semesters;
-  const oneSemester = retrievedSemesters[semesterIndex];
-  const modules = oneSemester.moduleHashmap;
+  if (!planner) {
+    return [];
+  }
 
-  return modules[moduleName];
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester) {
+    return [];
+  }
+
+  return retrievedSemester;
+}
+
+// retrieves a semester in the planner
+export const getSemesterInPlanner = function getSemesterInPlanner(semesterIndex, plannerID) {
+  const planner = Planner.findOne(plannerID);
+  // return empty object when no planner is found
+  if (!planner)  {
+    return {};
+  }
+
+  const retrievedSemester = planner.semesters;
+  if (!retrievedSemester)  {
+    return {};
+  }
+  return retrievedSemester[semesterIndex];
 };
 
-// deletes a module from the semester and returns the deleted module name as string
-export const deleteOneModuleInSemester = function deleteOneModuleInSemester(semesterIndex, moduleName, plannerID) {
+// delete a semester in a planner
+export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemesters = planner.semesters;
-  const oneSemester = retrievedSemesters[semesterIndex];
-  const modules = oneSemester.moduleHashmap;
 
-  const deletedModule = modules[moduleName];
-  delete modules[moduleName];
+  const retrievedSemester = planner.semesters;
+  retrievedSemester.pop();
 
-  oneSemester.moduleHashmap = modules;
-  retrievedSemesters[semesterIndex] = oneSemester;
-  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
-
-  return deletedModule;
+  const numOfDocumentsUpdatedWithSemester = Planner.update(
+    { _id: plannerID },
+    { $set: { semesters: retrievedSemester } },
+  );
+  return retrievedSemester.length;
 };

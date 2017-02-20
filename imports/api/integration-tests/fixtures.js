@@ -1,8 +1,5 @@
 import { Modules } from '../database-controller/module/module';
-import { createModuleCollection,
-         insertToModuleCollection,
-         removeOneModule,
-         retrieveAllModule} from '../database-controller/module/methods';
+import { retrieveAllModule } from '../database-controller/module/methods';
 
 export const populateModuleFixture = function populateModuleFixture() {
   const moduleCodes = ['CS1010', 'CS1010E', 'CS1010J', 'CS1010S', 'CS1010X', 'CS1020', 'CS2010', 'CS3230'];
@@ -11,10 +8,12 @@ export const populateModuleFixture = function populateModuleFixture() {
     const testModule = {
       moduleCode: moduleCodes[i],
       moduleName: moduleNames[i],
-      moduleDescription: 'none',
-      modulePrerequisite: 'none',
-      modulePreclusion: 'none',
-      moduleMC: 0,
+      moduleDescription: 'Lorem ipsum',
+      modulePrerequisite: 'Lorem ipsum',
+      moduleCorequisite: 'Lorem ipsum',
+      modulePreclusion: 'Lorem ipsum',
+      moduleMC: 4,
+      termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
     };
     Modules.insert(testModule);
   }
