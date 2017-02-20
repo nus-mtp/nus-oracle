@@ -3,8 +3,8 @@ import React from 'react';
 import Module from './Module.jsx';
 import ModuleSearchBar from './ModuleSearchBar.jsx';
 
-import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
-import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods';
+import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
+import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
 
 /**
  * React Component that implements the container for a semester's worth of
