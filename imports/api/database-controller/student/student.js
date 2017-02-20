@@ -41,7 +41,7 @@ StudentSchema = {
   },
   studentAcademicCohort: {
     Type: 'String',
-    optional: false,
+    optional: true,
   },
   studentPreviousHighestEducation: {
     Type: 'String',
