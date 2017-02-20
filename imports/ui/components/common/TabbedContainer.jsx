@@ -1,5 +1,5 @@
 import React from 'react';
-import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer';
+import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer.js';
 
 export default class TabbedContainer extends React.Component {
   constructor() {
