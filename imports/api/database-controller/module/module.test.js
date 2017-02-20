@@ -142,7 +142,7 @@ if(Meteor.isServer){
       } catch (E) {
 
       }
-        assert.Equal(retrieveAllModule().length,0);
+        assert.equal(retrieveAllModule().length,0);
   });
 
     //it('should reject module with missing vital info', function() {

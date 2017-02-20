@@ -10,8 +10,8 @@ class StudentCollection extends Mongo.Collection{
     return result;
   };
 
-  update(updatedModule, callBack){
-    const studentDocument = updatedModule;
+  update(updatedStudent, callBack){
+    const studentDocument = updatedStudent;
 
     const result = super.update(studentDocument, callback);
 
@@ -35,7 +35,7 @@ StudentSchema = {
   studentPlannerID:{
     Type: '[String]',
   },
-  studentExemptionModule: {
+  studentExemptedModule: {
     Type: '[String]',
     optional: true,
   },
@@ -46,6 +46,9 @@ StudentSchema = {
   studentPreviousHighestEducation: {
     Type: 'String',
     optional: true,
+  },
+  studentUserID: {
+    Type: 'String',
   }
 }
 
