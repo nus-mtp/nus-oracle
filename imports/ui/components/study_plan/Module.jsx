@@ -1,55 +1,14 @@
 import React from 'react';
-import ModuleButton from './ModuleButton.jsx'
 
 export default class Module extends React.Component {
   constructor() {
     super();
-    this.state = {
-      onMouseOver: false
-    }
-  }
-
-  handleOnMouseEnter(event) {
-    this.setState({ onMouseOver: true });
-  }
-
-  handleOnMouseLeave(event) {
-    this.setState({ onMouseOver: false });
-  }
-
-  /**
-   * Handles button clicks on this component DIfferent types of
-   * buttons can execute different callbacks passed in through
-   * this component's props.
-   *
-   * @param {[string]} buttonPressType    Type of button click
-   */
-  handleButtonClick(buttonPressType) {
-    switch(buttonPressType) {
-      case "DELETE":
-        this.props.handleDeleteModule();
-        break;
-      default:
-        console.log("NO VALID BUTTON PRESS TYPE DETECTED.")
-    }
   }
 
   render() {
     return (
-      <li className="dd-grey dd-item"
-          onMouseEnter={this.handleOnMouseEnter.bind(this)}
-          onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-        <div className="dd-handle" style={{cursor: 'pointer'}}>
-
-          {/* Only want the delete button rendered on hover */}
-          {this.state.onMouseOver ?
-            <ModuleButton
-              icon="font-icon font-icon-trash"
-              displayColor="#505050" onMouseOverColor="#8b2a2a"
-              buttonType="DELETE"
-              onButtonClick={this.handleButtonClick.bind(this)}/> :
-            null
-          }
+      <li className="dd-grey dd-item">
+        <div className="dd-handle">
           {this.props.moduleCode}
         </div>
       </li>
@@ -58,9 +17,5 @@ export default class Module extends React.Component {
 }
 
 Module.propTypes = {
-  // Module code to be rendered
-  moduleCode: React.PropTypes.string,
-
-  // Handler for deleting modules
-  handleDeleteModule: React.PropTypes.func
+  moduleCode: React.PropTypes.string
 }
