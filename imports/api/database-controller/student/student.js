@@ -29,12 +29,6 @@ StudentSchema = {
   _id: {
     Type: 'String',
   },
-  studentEmail: {
-    Type: 'String',
-  },
-  studentPlannerID:{
-    Type: '[String]',
-  },
   studentExemptedModule: {
     Type: '[String]',
     optional: true,
@@ -47,7 +41,7 @@ StudentSchema = {
     Type: 'String',
     optional: true,
   },
-  studentUserID: {
+  accountID: {
     Type: 'String',
   }
 }
