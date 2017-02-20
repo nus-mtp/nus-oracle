@@ -8,10 +8,6 @@ import { insertOneModuleInSemester,
          getAllModulesInSemester,
          getOneModuleInSemester,
          deleteOneModuleInSemester } from './methods';
-import  { insertOneModuleInSemester,
-          getAllModulesInSemester,
-          getOneModuleInSemester,
-          deleteOneModuleInSemester } from './meteor-methods';
 
 describe('modules', function () {
   const userID = 'akshhr31lci1lkal';
