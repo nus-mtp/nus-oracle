@@ -18,10 +18,16 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 
   return result;
 };
-
+// helper function
+const  obtainCurrentStudentDocument = function getCurrentStudentDocument(studentID) {
+  return Students.findOne({_id: studentID});
+}
 // obtain the academic cohort of the current student
-export const getStudentAcademicCohort = function getCohort(studentID) {
-  const studentDocument = Students.findOne({_id: studentID});
 
-  return studentDocument.studentAcademicCohort;
+export const getStudentAcademicCohort = function getCohort(studentID) {
+  return obtainCurrentStudentDocument(studentID).studentAcademicCohort;
+}
+
+export const getStudentExemptedModules = function getExemptedModule(studentID) {
+  return obtainCurrentStudentDocument(studentID).studentExemptedModule;
 }
