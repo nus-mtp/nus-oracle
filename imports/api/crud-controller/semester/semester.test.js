@@ -4,9 +4,11 @@ import { createPlanner,
          removePlanner,
          getPlannerIDs } from '../planner/methods';
 import { insertNewSemesterInPlanner,
+         insertNewAcademicYearInPlanner,
+         deleteAcademicYearInPlanner,
+         deleteSemesterInPlanner ,
          getAllSemestersInPlanner,
-         getSemesterInPlanner,
-         deleteSemesterInPlanner } from './methods';
+         getSemesterInPlanner } from './methods';
 
 describe('semester', function () {
   const userID = 'da2hljfnlajdl1k2';
@@ -17,7 +19,7 @@ describe('semester', function () {
       ['Computer Graphics And Games',
        'Parallel Computing'],
     ];
-    const academicYear = ['AY14/15', 'AY14/15', 'AY15/16', 'AY15/16', 'AY16/17', 'AY16/17', 'AY17/18', 'AY17/18'];
+    const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
 
@@ -60,14 +62,14 @@ describe('semester', function () {
     const retrievedSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
     assert.equal(retrievedSemesters.length, 8);
-    assert.equal(retrievedSemesters[0].academicYear, 'AY14/15');
-    assert.equal(retrievedSemesters[1].academicYear, 'AY14/15');
-    assert.equal(retrievedSemesters[2].academicYear, 'AY15/16');
-    assert.equal(retrievedSemesters[3].academicYear, 'AY15/16');
-    assert.equal(retrievedSemesters[4].academicYear, 'AY16/17');
-    assert.equal(retrievedSemesters[5].academicYear, 'AY16/17');
-    assert.equal(retrievedSemesters[6].academicYear, 'AY17/18');
-    assert.equal(retrievedSemesters[7].academicYear, 'AY17/18');
+    assert.equal(retrievedSemesters[0].academicYear, 'AY 2014/2015');
+    assert.equal(retrievedSemesters[1].academicYear, 'AY 2014/2015');
+    assert.equal(retrievedSemesters[2].academicYear, 'AY 2015/2016');
+    assert.equal(retrievedSemesters[3].academicYear, 'AY 2015/2016');
+    assert.equal(retrievedSemesters[4].academicYear, 'AY 2016/2017');
+    assert.equal(retrievedSemesters[5].academicYear, 'AY 2016/2017');
+    assert.equal(retrievedSemesters[6].academicYear, 'AY 2017/2018');
+    assert.equal(retrievedSemesters[7].academicYear, 'AY 2017/2018');
 
     assert.equal(retrievedSemesters[0].semesterNum, 1);
     assert.equal(retrievedSemesters[1].semesterNum, 2);
@@ -79,12 +81,38 @@ describe('semester', function () {
     assert.equal(retrievedSemesters[7].semesterNum, 2);
   });
 
+  it ('insert one academic year in planner', function() {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const totalNumberOfSemestersInPlanner = insertNewAcademicYearInPlanner(plannerIDs[0]);
+
+    const planner = Planner.findOne(plannerIDs[0]);
+
+    const retrievedSemesters = planner.semesters;
+    assert.equal(retrievedSemesters.length-1, totalNumberOfSemestersInPlanner);
+    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2018/2019');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2018/2019');
+  }),
+
   it ('get one semester in planner', function () {
     const plannerIDs = getPlannerIDs(userID);
     const semesterIndex = 0;
 
     const semesterModules = getSemesterInPlanner(semesterIndex, plannerIDs[0]);
     expect(semesterModules).to.be.a('object');
+  });
+
+  it ('delete one academic year in planner', function() {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const totalNumberOfSemestersInPlanner = deleteAcademicYearInPlanner(plannerIDs[0]);
+
+    const planner = Planner.findOne(plannerIDs[0]);
+
+    const retrievedSemesters = planner.semesters;
+    assert.equal(retrievedSemesters.length-1, totalNumberOfSemestersInPlanner);
+    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2016/2017');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2016/2017');
   });
 
   it ('delete semester in planner', function () {

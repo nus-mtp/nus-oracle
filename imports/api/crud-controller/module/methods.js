@@ -1,4 +1,5 @@
 import { Planner } from '../planner/planner';
+import { searchByModuleCode } from '../../database-controller/module/methods';
 
 /**
  * retrieves all modules in a semester
@@ -45,6 +46,11 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  *
  */
  export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
+  // checks if module exists in database
+  if (Object.keys(searchByModuleCode(moduleCode)).length === 0) {
+    return {};
+  }
+
   const planner = Planner.findOne(plannerID);
   if (!planner) {
     return {};
@@ -67,8 +73,6 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
   if (!modules) {
     return {};
   }
-
-  // sanitise module code here
 
   // in the future, store moduleID instead of moduleCode
   modules[moduleCode] = moduleCode;

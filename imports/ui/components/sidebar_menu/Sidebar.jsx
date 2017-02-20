@@ -1,7 +1,7 @@
 import React from 'react';
-import SidebarMenu from './SidebarMenu';
-import SidebarPanel from './SidebarPanel';
-import PanelRequirements from './PanelRequirements'
+import SidebarMenu from './SidebarMenu.jsx';
+import SidebarPanel from './SidebarPanel.jsx';
+import PanelRequirements from './PanelRequirements.jsx'
 
 export default class Sidebar extends React.Component {
   render() {
