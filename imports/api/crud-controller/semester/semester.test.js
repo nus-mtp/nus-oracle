@@ -5,9 +5,10 @@ import { createPlanner,
          getPlannerIDs } from '../planner/methods';
 import { insertNewSemesterInPlanner,
          insertNewAcademicYearInPlanner,
+         deleteAcademicYearInPlanner,
+         deleteSemesterInPlanner ,
          getAllSemestersInPlanner,
-         getSemesterInPlanner,
-         deleteSemesterInPlanner } from './methods';
+         getSemesterInPlanner } from './methods';
 
 describe('semester', function () {
   const userID = 'da2hljfnlajdl1k2';
@@ -99,6 +100,19 @@ describe('semester', function () {
 
     const semesterModules = getSemesterInPlanner(semesterIndex, plannerIDs[0]);
     expect(semesterModules).to.be.a('object');
+  });
+
+  it ('delete one academic year in planner', function() {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const totalNumberOfSemestersInPlanner = deleteAcademicYearInPlanner(plannerIDs[0]);
+
+    const planner = Planner.findOne(plannerIDs[0]);
+
+    const retrievedSemesters = planner.semesters;
+    assert.equal(retrievedSemesters.length-1, totalNumberOfSemestersInPlanner);
+    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2016/2017');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2016/2017');
   });
 
   it ('delete semester in planner', function () {
