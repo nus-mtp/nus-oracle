@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import ModuleSearchBarSuggestion from './ModuleSearchBarSuggestion.jsx'
 import { sendQuery } from '../../../api/searcher-controller/controller.js'
 
-const enterKeyCharCode = 13;
+const ENTER_CHAR_KEY_CODE = 13;
 
 /**
  * React Component that implements the module search bar which
@@ -41,12 +41,8 @@ export default class ModuleSearchBar extends React.Component {
    */
   renderSuggestionsContainer({children, ...props}) {
     let style = {
-      position:'absolute',
-      zIndex:'3',
-      overflowY: 'auto',
-      height: '8em',
-      'background': '#f6c18a',
-      'opacity': '0.75'
+      position:'absolute', zIndex:'3', overflowY: 'auto', height: '8em',
+      'background': '#f6c18a', 'opacity': '0.75'
     }
     return (
       <div {...props}>
@@ -55,14 +51,6 @@ export default class ModuleSearchBar extends React.Component {
         </ul>
       </div>
     );
-  }
-
-  handleClickSuggestion(event) {
-    let htmlElem = event.target;
-    let highlightedBG = "#ec7513";
-    event.target.style.backgroundColor = highlightedBG;
-    console.log("Clicked on suggestion! " + htmlElem);
-    console.log(htmlElem.style.backgroundColor);
   }
 
   /**
@@ -78,10 +66,9 @@ export default class ModuleSearchBar extends React.Component {
   }
 
   /**
-   * Populates the autocomplete input box when a suggestion has been
-   * selected. E.g. If a student hovers over "CS1010" in the
-   * suggestion box, this component will populate the input box
-   * with the returned value.
+   * Populates the autocomplete input box when a suggestion has been selected.
+   * E.g. If a student hovers over "CS1010" in the suggestion box, this
+   * component will populate the input box with "cs1010".
    *
    * @param  {[object]} suggestion    Module object
    * @return {[string]}    String representation of the input element to be
@@ -89,6 +76,23 @@ export default class ModuleSearchBar extends React.Component {
    */
   getSuggestionValue(suggestion) {
     return suggestion.moduleCode;
+  }
+
+  /**
+   * Called every time suggestions need to be cleared
+   */
+  clearSuggestions() {
+    this.setState({ suggestions: [] });
+  };
+
+  /**
+   * Populates the input field with what user is typing
+   *
+   * @param {[object]} event    Event object for this element
+   * @param {[object]} newValue    New value to updated current state
+   */
+  setUpdatedUserInput(event, {newValue}) {
+    this.setState({ userInput: newValue });
   }
 
   //=============================================
@@ -117,26 +121,11 @@ export default class ModuleSearchBar extends React.Component {
   };
 
   /**
-   * Called every time suggestions need to be cleared
-   */
-  clearSuggestions() {
-    this.setState({ suggestions: [] });
-  };
-
-  /**
-   * Updates the input field with what user is typing
-   */
-  updateInputWithNewValue(event, {newValue}) {
-    this.setState({ userInput: newValue });
-  }
-
-  /**
    * Adds the user's chosen module to the database
    */
   handleConfirmModule(moduleCode, event) {
-    if (event.charCode == enterKeyCharCode) { // If pressed ENTER
-      console.log("Pressed ENTER for " + moduleCode);
-      // Add module to DB
+    if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
+      // Add module to user's study plan
       this.props.handleAddModule(moduleCode);
 
       // Clears user input
@@ -151,7 +140,7 @@ export default class ModuleSearchBar extends React.Component {
     const inputProps = {
       placeholder: 'Module code',
       value: userInput,
-      onChange: this.updateInputWithNewValue.bind(this),
+      onChange: this.setUpdatedUserInput.bind(this),
       className: 'form-control',
       style: {
         width: '100%',

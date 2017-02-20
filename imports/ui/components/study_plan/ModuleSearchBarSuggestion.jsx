@@ -1,6 +1,9 @@
 import React from 'react';
 import { isDefinedObj } from '../../../../api/util.js'
 
+/**
+ * React Component that implements the interactions with each module suggestion.
+ */
 export default class ModuleSearchBarSuggestion extends React.Component {
   constructor() {
     super();
@@ -29,18 +32,16 @@ export default class ModuleSearchBarSuggestion extends React.Component {
   * Takes the html element referenced by the event and applies a bg color
   */
   toggleHighlighted(htmlElem, bgColorToApply) {
-    if (htmlElem !== undefined && htmlElem !== null) {
+    if (isDefinedObj(htmlElem)) {
       htmlElem.style.backgroundColor = bgColorToApply
     }
   }
 
   render() {
-    let moduleCodeOfSuggestion = this.props.moduleCode;
-    let userInput = this.props.userInput;
-    // console.log("module code of sugg: " + moduleCodeOfSuggestion);
-    // console.log("user input: " + userInput);
     const highlightedBG = '#ec7513';
     const nonHighlightedBG = 'transparent'
+    let moduleCodeOfSuggestion = this.props.moduleCode;
+    let userInput = this.props.userInput;
 
     return(
       <div className="typeahead-item"
