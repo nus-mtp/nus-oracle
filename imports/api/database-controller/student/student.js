@@ -24,25 +24,20 @@ class StudentCollection extends Mongo.Collection{
   };
 }
 
-Students = new StudentCollection();
+export const Students = new StudentCollection("Student");
 StudentSchema = {
-  _id: {
-    Type: 'String',
-  },
   studentExemptedModule: {
-    Type: '[String]',
+    type: [String],
     optional: true,
   },
   studentAcademicCohort: {
-    Type: 'String',
-    optional: true,
+    type: String,
   },
   studentPreviousHighestEducation: {
-    Type: 'String',
-    optional: true,
+    type: String,
   },
   accountID: {
-    Type: 'String',
+    type: String,
   }
 }
 
