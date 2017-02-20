@@ -10,3 +10,5 @@ export default function Dashboard() {
     </div>
   );
 }
+//<Sidebar />
+//<StudyPlan2 />

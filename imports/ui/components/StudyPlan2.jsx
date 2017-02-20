@@ -1,3 +1,4 @@
+//This component is to view the templates for Creating account, logging in, logging out and forgetting an account
 import React from 'react';
 import RegisterAccount from './RegisterAccount'
 import LoginAccount from './LoginAccount'
@@ -7,11 +8,8 @@ import ForgetAccount from './ForgetAccount'
 
 const LoginButtons = BlazeToReact('loginButtons')
 
-
 export default function StudyPlan() {
   return (
-
-
     <div className="page-content">
       <div className="container-fluid">
         <div className="col-xxl-3 col-md-6">
@@ -24,32 +22,9 @@ export default function StudyPlan() {
         </div>
       </div>
     </div>
-
-
   );
 }
-/* Testing Code
-LogInOrOut = React.createClass({
-  render() {
-    console.log(Meteor.user() == null);
-    if (Meteor.user() == null) {
-      console.log('Out');
-      return(
-        <div>
-          <LoginAccount />
-        </div>
-      );
-    } else {
-      console.log('In');
-      return(
-        <div>
-          <LogoutAccount />
-        </div>
-      );
-    }
-  }
-})
-*/
+
 App = React.createClass({
   render() {
     return (
