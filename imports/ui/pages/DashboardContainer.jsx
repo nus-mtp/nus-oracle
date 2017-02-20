@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { getPlannerIDs } from '../../api/crud-controller/planner/methods';
-import Dashboard from './Dashboard';
+import { getPlannerIDs } from '../../api/crud-controller/planner/methods.js';
+import Dashboard from './Dashboard.jsx';
 
 export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');

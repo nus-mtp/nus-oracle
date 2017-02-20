@@ -1,6 +1,6 @@
 import React from 'react';
-import SemModulesCardContainer from './SemModulesCardContainer';
-import SemSpecialModulesCard from './SemSpecialModulesCard';
+import SemModulesCardContainer from './SemModulesCardContainer.js';
+import SemSpecialModulesCard from './SemSpecialModulesCard.jsx';
 
 import Util from '../../../../api/util';
 

@@ -10,49 +10,50 @@ import RegisterAccount from '../../ui/components/RegisterAccount';
 import LoginAccount from '../../ui/components/LoginAccount';
 import LogoutAccount from '../../ui/components/LogoutAccount';
 import ForgetAccount from '../../ui/components/ForgetAccount';
-/*
-Meteor.startup(() => {
-  render(<App/>, global.document.getElementById('render-target'));
-});
-*/
+
 const LoginButtons = BlazeToReact('loginButtons')
-//Routing details should be added inside "../lib/Router.jsx"
-//Main Skeleton component for the other components to attach on
+
+// Routing details should be added inside "../lib/Router.jsx"
+// Main Skeleton component for the other components to attach on
 MainLayout = React.createClass({
   render() {
-    return <div>
-      <main>{this.props.content}</main>
-      <AccountDebug/>
-    </div>;
+    return(
+      <div>
+        <main>{this.props.content}</main>
+        <AccountDebug/>
+      </div>
+    );
   }
 });
 
 //The main component to show the Study plan
-StudyPlanComponent = React.createClass({
+AppComponent = React.createClass({
   render() {
-    return <div>
-      <App />
-    </div>;
+    return(
+      <div>
+        <App />
+      </div>
+    );
   }
 });
-
-
 
 //Basic Log in component, should be split up to match
 LogInComponent = React.createClass({
   render() {
-    return <div>
-      <LoginAccount />
-      <RegisterAccount />
-      <ForgetAccount />
-    </div>;
+    return(
+      <div>
+        <LoginAccount />
+        <RegisterAccount />
+        <ForgetAccount />
+      </div>
+    );
   }
 });
 
-//an additional button to see the loginbutton for debugging
+// An additional button to see the loginbutton for debugging
 AccountDebug = React.createClass({
   render() {
-    return (
+    return(
       <div>
         <LoginButtons />
       </div>

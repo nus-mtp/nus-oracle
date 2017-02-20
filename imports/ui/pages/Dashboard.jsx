@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidebar from '../components/sidebar_menu/Sidebar';
-import StudyPlan2 from '../components/StudyPlan2';
-import StudyPlan from '../components/StudyPlan';
+import Sidebar from '../components/sidebar_menu/Sidebar.jsx';
+import StudyPlan2 from '../components/StudyPlan2.jsx';
+import StudyPlan from '../components/StudyPlan.jsx';
 
 /*export default function Dashboard() {
   return (
