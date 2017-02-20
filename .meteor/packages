@@ -18,13 +18,17 @@ blaze-html-templates@1.0.4 # Compile .html files into Meteor Blaze views
 reactive-var@1.0.11            # Reactive variable for tracker
 react-meteor-data              # Meteor React package
 #okgrow:accounts-ui-react       # React package for accounts
-less                           # Alternative to CSS
+less@2.7.8                           # Alternative to CSS
 
 # accounts
 #accounts-password              # accounts package for password
 
 # data
 mongo@1.1.14                   # The database Meteor supports right now
+aldeed:collection2-core
+aldeed:simple-schema
+harrison:papa-parse             # parsing csv to json
+
 
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode
@@ -37,6 +41,13 @@ mobile-experience@1.0.4       # Packages for a great mobile UX
 # Unsafe for production
 autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
-practicalmeteor:mocha         
+
+# tests
+practicalmeteor:mocha
 dispatch:mocha-phantomjs
 dispatch:phantomjs-tests@=0.0.5
+accounts-password@1.3.3
+accounts-ui@1.1.9
+thereactivestack:blazetoreact
+email@1.1.18
+themeteorchef:bert

@@ -1,5 +1,5 @@
 import React from 'react';
-import SemModulesCard from './SemModulesCard';
+import SemModulesCardContainer from './SemModulesCardContainer';
 import SemSpecialModulesCard from './SemSpecialModulesCard';
 
 import Util from '../../../../api/util';
@@ -13,8 +13,8 @@ export default class AcadYrRow extends React.Component {
         </div>
         <div className="cont">
           <div className="cont-in">
-            <SemModulesCard sem="Sem I" />
-            <SemModulesCard sem="Sem II" />
+            <SemModulesCardContainer sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
+            <SemModulesCardContainer sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
             <div className="col-md-4">
               <SemSpecialModulesCard specialSem="Special Sem I" />
               <SemSpecialModulesCard specialSem="Special Sem II" />
@@ -27,5 +27,7 @@ export default class AcadYrRow extends React.Component {
 }
 
 AcadYrRow.propTypes = {
-  acadYr: React.PropTypes.string
+  semesterIndex: React.PropTypes.array,
+  acadYr: React.PropTypes.string,
+  plannerID: React.PropTypes.string
 }
