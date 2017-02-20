@@ -1,5 +1,4 @@
 import React from 'react';
-import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer';
 
 export default class TabbedContainer extends React.Component {
   constructor() {
@@ -15,13 +14,8 @@ export default class TabbedContainer extends React.Component {
 
   render() {
     var tabTitleList = this.props.tabTitleList;
-    var plannerIDs = this.props.plannerIDs;
+    var contentPanels = this.props.contentPanelsList;
     var currentlyActivePanelIndex = this.state.tabSelectedIndex;
-    let contentPanels = [];
-
-    for (var i = 0; i < plannerIDs.length; i++) {
-      contentPanels.push(<AcadYrSectionContainer plannerID={plannerIDs[i]}/>);
-    }
 
     return (
       <section className='tabs-section' style={{margin: 0}}>
@@ -54,7 +48,7 @@ export default class TabbedContainer extends React.Component {
 
 TabbedContainer.propTypes = {
   tabTitleList: React.PropTypes.node,
-  plannerIDs: React.PropTypes.array
+  contentPanelsList: React.PropTypes.node
 }
 
 class Tab extends TabbedContainer {
