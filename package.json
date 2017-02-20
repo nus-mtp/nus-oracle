@@ -15,7 +15,8 @@
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "react-autosuggest": "^8.0.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

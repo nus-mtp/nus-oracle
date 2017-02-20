@@ -1,10 +1,12 @@
 import React from 'react';
-import Dashboard from '../pages/Dashboard';
+import DashboardContainer from '../pages/DashboardContainer';
 
-export default function App() {
-  return (
-    <div>
-      <Dashboard />
-    </div>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <DashboardContainer />
+      </div>
+    );
+  }
 }

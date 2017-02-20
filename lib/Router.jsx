@@ -17,6 +17,12 @@ FlowRouter.route('/', {
   }
 });
 
+FlowRouter.route('/ui', {
+  action() {
+    mount(MainLayout, {content: <StudyPlanComponent />});
+  }
+});
+
 //A template for anyone to redirect if you want to have html extension
 FlowRouter.route('/:postId', {
   action(params) {

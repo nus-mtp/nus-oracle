@@ -1,17 +1,20 @@
+
 //main.html is not needed anymore
-import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import React from 'react';
 import { render } from 'react-dom';
 import {mount} from 'react-mounter';
-
+import App from '../../ui/pages/App';
 // Import all entry points needed for rendering the main page
-import App from '../imports/ui/pages/App';
-import RegisterAccount from '../imports/ui/components/RegisterAccount'
-import LoginAccount from '../imports/ui/components/LoginAccount'
-import LogoutAccount from '../imports/ui/components/LogoutAccount'
-import ForgetAccount from '../imports/ui/components/ForgetAccount'
-
-
+import RegisterAccount from '../../ui/components/RegisterAccount';
+import LoginAccount from '../../ui/components/LoginAccount';
+import LogoutAccount from '../../ui/components/LogoutAccount';
+import ForgetAccount from '../../ui/components/ForgetAccount';
+/*
+Meteor.startup(() => {
+  render(<App/>, global.document.getElementById('render-target'));
+});
+*/
 const LoginButtons = BlazeToReact('loginButtons')
 //Routing details should be added inside "../lib/Router.jsx"
 //Main Skeleton component for the other components to attach on
@@ -32,6 +35,8 @@ StudyPlanComponent = React.createClass({
     </div>;
   }
 });
+
+
 
 //Basic Log in component, should be split up to match
 LogInComponent = React.createClass({
