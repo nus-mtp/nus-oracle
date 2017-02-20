@@ -1,38 +1,17 @@
 import React from 'react';
-import SignIn from './SignIn2'
 import TabbedContainer from './common/TabbedContainer';
-import { getPlannerName,
-         getPlannerUserID } from '../../api/crud-controller/planner/methods';
+import BasicTable from './common/BasicTable';
 
-/*export default function StudyPlan() {
-  return (
-    <div className="page-content">
-      <div className="container-fluid">
-        <div className="col-xxl-3 col-md-6">
-          Study Plan
-        </div>
-      </div>
-    </div>
-  );
-}*/
-
+import AcadYrSection from './study_plan/AcadYrSection';
+import AcadYrRow from './study_plan/AcadYrRow';
 
 export default class StudyPlan extends React.Component {
   render() {
-    let plannerNames = [];
-    if (this.props.plannerIDs)  {
-      for (var i = 0; i < this.props.plannerIDs.length; i++)  {
-        plannerNames.push(getPlannerName(this.props.plannerIDs[i]));
-      }
-    }
+    let contentPanelsList = [<AcadYrSection />];
 
     return (
-          <TabbedContainer tabTitleList={plannerNames}
-                           plannerIDs={this.props.plannerIDs} />
+          <TabbedContainer tabTitleList={["Plan A", "Plan B"]}
+                           contentPanelsList={contentPanelsList} />
     );
   }
-}
-
-StudyPlan.propTypes = {
-  plannerIDs: React.PropTypes.array,
 }

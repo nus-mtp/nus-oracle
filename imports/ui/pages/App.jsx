@@ -1,11 +1,11 @@
 import React from 'react';
-import DashboardContainer from '../pages/DashboardContainer';
+import Dashboard from '../pages/Dashboard';
 
 export default class App extends React.Component {
   render() {
     return (
       <div>
-        <DashboardContainer />
+        <Dashboard />
       </div>
     );
   }
