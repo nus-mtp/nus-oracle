@@ -1,23 +1,51 @@
+import _ from 'underscore';
 import React from 'react';
-import Module from './Module';
-import ModuleSearchBar from './ModuleSearchBar';
+import Module from './Module.jsx';
+import ModuleSearchBar from './ModuleSearchBar.jsx';
 
+import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods';
+import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods';
+
+/**
+ * React Component that implements the container for a semester's worth of
+ * modules - all list in columnal form with rows of Modules. Also has a
+ * autosuggest box for searching for modules to be added to the user's study plan.
+ */
 export default class SemModulesCard extends React.Component {
+  /**
+   * Handles the event when a module is added
+   **/
+  handleAddModule(moduleCode) {
+    insertOneModuleInSemester(this.props.semesterIndex, moduleCode,  this.props.plannerID);
+  }
+
+  /**
+   * Handles the event when a module is deleted
+   */
+  handleDeleteModule(moduleCode) {
+    deleteOneModuleInSemester(
+      this.props.semesterIndex, moduleCode, this.props.plannerID);
+  }
+
   render() {
     const modules = this.props.modules;
+
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
   				<article className="card-typical">
   					<div className="card-typical-section card-typical-content">
-              {Object.keys(modules).map((moduleName, rank) => {
-                return <Module key={rank} moduleCode={moduleName} />;
+
+              {/* Renders all modules from the user's study plan */}
+              {Object.keys(modules).map((moduleCode, index) => {
+                return <Module key={index} moduleCode={moduleCode}
+                               handleDeleteModule={
+                                 this.handleDeleteModule.bind(this, moduleCode)}/>;
               })}
-              {/* ID needs to be given to each autosuggest since there are
-                more than 1 on the page */}
-              <ModuleSearchBar id="autosuggest1"/>
-              <ModuleSearchBar id="autosuggest2"/>
-  					</div>
+
+              <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} />
+
+            </div>
   					<div className="card-typical-section">
   						<div className="card-typical-linked">
                 {this.props.sem}
@@ -34,25 +62,3 @@ SemModulesCard.propTypes = {
   sem: React.PropTypes.string,
   modules: React.PropTypes.object
 }
-
-/*
-// Autosuggestion react component example:
-// https://github.com/moroshko/react-autosuggest
-<Autosuggest
-  suggestions={suggestions}
-  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-  getSuggestionValue={getSuggestionValue}
-  renderSuggestion={renderSuggestion}
-  inputProps={inputProps}
-/>
- */
-
-/*
-// Hardcoded modules - I'll put these aside first.
-<Module moduleCode="CS1010" />
-<Module moduleCode="CS1020" />
-<Module moduleCode="MA1521" />
-<Module moduleCode="MA1101R" />
-<Module moduleCode="IS1103" />
- */
