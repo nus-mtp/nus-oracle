@@ -20,3 +20,5 @@ export default class Dashboard extends React.Component {
 Dashboard.propTypes = {
   plannerIDs: React.PropTypes.array
 }
+//<Sidebar />
+//<StudyPlan2 />

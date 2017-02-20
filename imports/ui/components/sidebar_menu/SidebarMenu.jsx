@@ -1,4 +1,5 @@
 import React from 'react';
+import * as constants from '../common/Constants.js';
 
 export default class SidebarMenu extends React.Component {
 constructor(){
@@ -21,7 +22,8 @@ render(){
 
   return(
     <div>
-    <nav className="side-menu side-menu-compact">
+    <nav className="side-menu side-menu-compact"
+         style={styles} >
       <ul className="side-menu-list">
         {tabTitleList.map((buttonTitle, index) => {
           return (
@@ -68,3 +70,7 @@ SidebarMenuButton.propTypes = {
   buttonTitle: React.PropTypes.string,
   buttonIcon: React.PropTypes.node
 }
+
+const styles = ({
+    width: constants.SIDEBAR_MENU_WIDTH +'px'
+});

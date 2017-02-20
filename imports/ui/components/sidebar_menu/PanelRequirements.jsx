@@ -1,6 +1,7 @@
 import React from 'react';
 import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
+import * as constants from '../common/Constants.js';
 
 export default class PanelRequirements extends React.Component {
   constructor(){
@@ -48,10 +49,17 @@ export default class PanelRequirements extends React.Component {
     ];
 
     return (
-      <nav className="side-menu-addl">
+      <nav className="side-menu-addl" style={styles.PanelRequirements}>
         <PanelHeader  title="Degree Requirements" icon="font-icon font-icon-page" />
         <Nestable items={items} />
       </nav>
     );
   }
 }
+
+const styles = ({
+  PanelRequirements: {
+    width: constants.SIDEBAR_PANEL_WIDTH +'px',
+    left: constants.SIDEBAR_MENU_WIDTH + 'px'
+  }
+});
