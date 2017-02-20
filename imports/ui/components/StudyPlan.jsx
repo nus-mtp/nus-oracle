@@ -1,8 +1,9 @@
 import React from 'react';
-import SignIn from './SignIn2'
-import TabbedContainer from './common/TabbedContainer';
+import SignIn from './SignIn2.jsx'
+import TabbedContainer from './common/TabbedContainer.jsx';
 import { getPlannerName,
-         getPlannerUserID } from '../../api/crud-controller/planner/methods';
+         getPlannerUserID } from '../../api/crud-controller/planner/methods.js';
+import * as constants from './common/Constants.js';
 
 /*export default function StudyPlan() {
   return (
@@ -28,7 +29,8 @@ export default class StudyPlan extends React.Component {
 
     return (
           <TabbedContainer tabTitleList={plannerNames}
-                           plannerIDs={this.props.plannerIDs} />
+                           plannerIDs={this.props.plannerIDs}
+                           style={styles.StudyPlan} />
     );
   }
 }
@@ -36,3 +38,9 @@ export default class StudyPlan extends React.Component {
 StudyPlan.propTypes = {
   plannerIDs: React.PropTypes.array,
 }
+
+const styles = ({
+  StudyPlan: {
+    paddingLeft: constants.SIDEBAR_WIDTH +'px'
+  }
+});

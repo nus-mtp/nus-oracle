@@ -1,5 +1,5 @@
 import React from 'react';
-import AcadYrRow from './AcadYrRow';
+import AcadYrRow from './AcadYrRow.jsx';
 
 export default class AcadYrSection extends React.Component {
   render() {
