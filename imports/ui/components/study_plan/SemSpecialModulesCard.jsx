@@ -7,7 +7,7 @@ export default class SemSpecialModulesCard extends React.Component {
       <div className="card-grid-col">
 				<article className="card-typical">
 					<div className="card-typical-section card-typical-content">
-            <Module moduleCode="BT1101" />
+            {/* <Module moduleCode="BT1101" /> */}
 					</div>
 					<div className="card-typical-section">
 						<div className="card-typical-linked">
