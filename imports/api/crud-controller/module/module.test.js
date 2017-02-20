@@ -19,7 +19,7 @@ describe('modules', function () {
       ['Computer Graphics And Games',
        'Parallel Computing'],
     ];
-    const academicYear = ['AY14/15', 'AY14/15', 'AY15/16', 'AY15/16', 'AY16/17', 'AY16/17', 'AY17/18', 'AY17/18'];
+    const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
     const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);

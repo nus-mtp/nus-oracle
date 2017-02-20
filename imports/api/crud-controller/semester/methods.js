@@ -3,6 +3,31 @@ import { increaseAcadYearByOne } from '../../../utils/util';
 
 /**
  * insert semester into planner
+ * @param {string}   id of planner
+ * @return {number}  index of last semester
+ */
+export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPlanner(plannerID) {
+  const planner = Planner.findOne(plannerID);
+  if (!planner) {
+    return {};
+  }
+
+  // make sure to get the acad year from Student here
+  let previousAcademicYear = '';
+
+  const retrievedSemester = planner.semesters;
+  if (retrievedSemester.length > 0) {
+    previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+  }
+
+  const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);
+  const secondSemLength = insertNewSemesterInPlanner(previousAcademicYear, 2, plannerID);
+
+  return secondSemLength;
+};
+
+/**
+ * insert semester into planner
  * @param {string}   academic year
  * @param {number}   semester number
  * @param {string}   id of planner
@@ -15,13 +40,15 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
   // retrieve previous academic year as student's academic year
   //let previousAcademicYear = getCurrentAcademicCohort();
 
+  const newAcadYear = increaseAcadYearByOne(academicYear);
+  
   // retrieve previous academic year
   //if (retrievedSemester.length > 0) {
-    //previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+    //
   //}
 
   const semesterObject = {
-    academicYear: academicYear,
+    academicYear: newAcadYear,
     semesterNum: semesterNum,
     moduleHashmap: {},
   }
