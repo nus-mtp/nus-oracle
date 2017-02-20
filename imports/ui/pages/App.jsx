@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardContainer from '../pages/DashboardContainer';
+import DashboardContainer from '../pages/DashboardContainer.js';
 
 export default class App extends React.Component {
   render() {

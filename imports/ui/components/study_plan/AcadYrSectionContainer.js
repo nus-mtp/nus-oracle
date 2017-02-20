@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { getAllSemestersInPlanner } from '../../../api/crud-controller/semester/methods';
-import AcadYrSection from './AcadYrSection';
+import { getAllSemestersInPlanner } from '../../../api/crud-controller/semester/methods.js';
+import AcadYrSection from './AcadYrSection.jsx';
 
 export default AcadYrSectionContainer = createContainer((props) => {
   let plannerID = props.plannerID;
