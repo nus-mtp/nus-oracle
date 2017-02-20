@@ -27,7 +27,7 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
 };
 
 /**
- * insert academic year into planner
+ * delete academic year into planner
  * @param {string}   id of planner
  * @return {number}  index of last semester
  */

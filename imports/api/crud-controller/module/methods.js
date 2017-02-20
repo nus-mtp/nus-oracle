@@ -46,7 +46,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  *
  */
  export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
-  // sanitise module code here
+  // checks if module exists in database
   if (Object.keys(searchByModuleCode(moduleCode)).length === 0) {
     return {};
   }
