@@ -1,12 +1,10 @@
 import React from 'react';
 
-const DELETE_BUTTON_PRESS_TYPE = "DELETE"
-
 /**
- * Generic button React component for Modules in the Study Plan UI.
+ * Generic icon button React component.
  * Check out the PropTypes below to see how to set your own styles
  */
-export default class ModuleButton extends React.Component {
+export default class IconButton extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -15,31 +13,34 @@ export default class ModuleButton extends React.Component {
   }
 
   handleOnMouseEnter(event) {
-    this.setState({ onMouseOver: true });
+    this.setState({
+      onMouseOver: true,
+      mouseHoverColor: this.props.onMouseOverColor
+     });
   }
 
   handleOnMouseLeave(event) {
-    this.setState({ onMouseOver: false });
+    this.setState({
+      onMouseOver: false,
+      mouseHoverColor: this.props.displayColor
+    });
   }
 
   /**
-   * Handles button clicks of the varying {buttonType} types.
-   *
-   * Depending on the button type, buttonType will be passed into the
-   * button click handler to the parent component so that the correct
-   * button type may be detected.
+   * Handles button clicks on this button
    */
   handleClick() {
-    this.props.onButtonClick(this.props.buttonType);
+    this.props.onButtonClick();
   }
 
   render() {
-    let iconColor = this.state.onMouseOver ?
-                    this.props.onMouseOverColor : this.props.displayColor;
-
+    // Toggles mouseover colors
+    let iconColor = this.state.mouseHoverColor;
+    let style = this.props.style;
+    style.color = iconColor; // Set this button icon's color
     return (
       <i className={this.props.icon}
-         style={{color: iconColor, float:'right', paddingTop: '0.15em'}}
+         style={style}
          onClick={this.handleClick.bind(this)}
          onMouseEnter={this.handleOnMouseEnter.bind(this)}
          onMouseLeave={this.handleOnMouseLeave.bind(this)}>
@@ -48,8 +49,13 @@ export default class ModuleButton extends React.Component {
   }
 }
 
-ModuleButton.propTypes = {
-  // Custom button styles
+IconButton.propTypes = {
+  /* Custom button CSS */
+  // Object representation of CSS, e.g. you can pass in something like
+  // { float:'right', paddingTop: '0.15em' } as a style
+  style: React.PropTypes.object,
+
+  /* Custom button icon */
   // String representation of the icon CSS class
   icon: React.PropTypes.string,
 
@@ -58,10 +64,6 @@ ModuleButton.propTypes = {
 
   // String representation of the icon color style when hovered
   onMouseOverColor: React.PropTypes.string,
-
-  // Button type
-  // Accepted Button types: "DELETE"
-  buttonType: React.PropTypes.string,
 
   // Handler for button clicks
   onButtonClick: React.PropTypes.func
