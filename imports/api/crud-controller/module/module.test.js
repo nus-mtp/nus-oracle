@@ -70,14 +70,14 @@ describe('modules', function () {
     expect(removedPlannerOne).to.be.an('undefined');
   });
 
-  /*it ('returns an empty object when a wrong input is inserted', function() {
+  it ('returns an empty object when a wrong input is inserted', function() {
     const plannerIDs = getPlannerIDs(userID);
     const semesterIndex = 0;
     const moduleCode = '<script> console.log("LOL INJECTION") </script>';
 
     const retrievedModules = insertOneModuleInSemester(0, moduleCode, plannerIDs[0]);
     assert.equal(Object.keys(retrievedModules).length, 0);
-  });*/
+  });
 
   it ('get all modules from a semester given correct input', function() {
     const plannerIDs = getPlannerIDs(userID);
