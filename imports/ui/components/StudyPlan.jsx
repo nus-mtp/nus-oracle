@@ -4,19 +4,6 @@ import { getPlannerName,
          getPlannerUserID } from '../../api/crud-controller/planner/methods.js';
 import * as constants from './common/Constants.js';
 
-/*export default function StudyPlan() {
-  return (
-    <div className="page-content">
-      <div className="container-fluid">
-        <div className="col-xxl-3 col-md-6">
-          Study Plan
-        </div>
-      </div>
-    </div>
-  );
-}*/
-
-
 export default class StudyPlan extends React.Component {
   render() {
     let plannerNames = [];

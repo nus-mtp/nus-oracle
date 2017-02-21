@@ -28,7 +28,7 @@ mongo@1.1.14                   # The database Meteor supports right now
 aldeed:collection2-core
 aldeed:simple-schema
 harrison:papa-parse             # parsing csv to json
-
+mdg:validated-method            # wrapper for meteor methods
 
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode

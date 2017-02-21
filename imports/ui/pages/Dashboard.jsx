@@ -1,16 +1,6 @@
 import React from 'react';
-import Sidebar from '../components/sidebar_menu/Sidebar.jsx';
-import StudyPlan2 from '../components/StudyPlan2.jsx';
-import StudyPlan from '../components/StudyPlan.jsx';
-
-/*export default function Dashboard() {
-  return (
-    <div className="with-side-menu">
-      <Sidebar />
-      <StudyPlan2 />
-    </div>
-  );
-}*/
+import Sidebar from '../components/sidebar_menu/Sidebar';
+import StudyPlan from '../components/StudyPlan';
 
 export default class Dashboard extends React.Component {
   render() {

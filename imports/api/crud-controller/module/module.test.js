@@ -1,5 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from '../planner/planner';
+import { populateModuleFixture,
+         dePopulateModuleFixture } from '../../integration-tests/fixtures';
 import { createPlanner,
          removePlanner,
          getPlannerIDs } from '../planner/methods';
@@ -14,12 +16,13 @@ describe('modules', function () {
   const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
 
   beforeEach(function ()  {
+    populateModuleFixture();
     const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
        'Parallel Computing'],
     ];
-    const academicYear = ['AY14/15', 'AY14/15', 'AY15/16', 'AY15/16', 'AY16/17', 'AY16/17', 'AY17/18', 'AY17/18'];
+    const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
     const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
@@ -58,6 +61,7 @@ describe('modules', function () {
   });
 
   afterEach(function ()  {
+    dePopulateModuleFixture();
     const plannerIDs = getPlannerIDs(userID);
 
     removePlanner(plannerIDs[0]);
@@ -65,6 +69,15 @@ describe('modules', function () {
     const removedPlannerOne = Planner.findOne(plannerIDs[0]);
     expect(removedPlannerOne).to.be.an('undefined');
   });
+
+  /*it ('returns an empty object when a wrong input is inserted', function() {
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+    const moduleCode = '<script> console.log("LOL INJECTION") </script>';
+
+    const retrievedModules = insertOneModuleInSemester(0, moduleCode, plannerIDs[0]);
+    assert.equal(Object.keys(retrievedModules).length, 0);
+  });*/
 
   it ('get all modules from a semester given correct input', function() {
     const plannerIDs = getPlannerIDs(userID);
