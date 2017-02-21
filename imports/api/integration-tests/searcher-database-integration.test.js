@@ -6,13 +6,13 @@ import  { populateModuleFixture,
 
 describe('search-controller', function() {
   describe('methods testing', function()  {
-    beforeEach(function() {
+    before(function() {
       const database = populateModuleFixture();
       expect(database).to.be.an('array');
       assert.equal(database.length, 8);
     });
 
-    afterEach(function() {
+    after(function() {
       const database = dePopulateModuleFixture();
       expect(database).to.be.an('array');
       assert.equal(database.length, 0);
