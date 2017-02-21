@@ -52,3 +52,5 @@ thereactivestack:blazetoreact
 email@1.1.18
 themeteorchef:bert
 kadira:flow-router
+dispatch:mocha
+aldeed:browser-tests

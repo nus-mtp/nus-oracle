@@ -5,7 +5,9 @@
     "start": "meteor run",
     "lint": "eslint .;exit 0",
     "pretest": "npm run lint --silent",
-    "test": "meteor npm run test-unit",
+    "test": "meteor npm run remove-drivers test-unit add-drivers",
+    "remove-drivers": "meteor remove dispatch:mocha aldeed:browser-tests",
+    "add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
     "test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs"
   },
   "dependencies": {
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "chromedriver": "^2.27.3",
     "enzyme": "^2.7.1",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.0.0",
@@ -48,6 +51,7 @@
     "eslint-plugin-react": "^6.9.0",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "selenium-webdriver": "^3.0.0-beta-2"
   }
 }
