@@ -1,5 +1,5 @@
 import React from 'react';
-import { isDefinedObj } from '../../../../api/util.js'
+import { isDefinedObj } from '../../../utils/util';
 
 /**
  * React Component that implements the interactions with each module suggestion.
