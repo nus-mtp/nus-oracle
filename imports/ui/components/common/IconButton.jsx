@@ -39,8 +39,7 @@ export default class IconButton extends React.Component {
     let style = JSON.parse(JSON.stringify(this.props.style)); // clones a new object
     style.color = iconColor; // Set this button icon's color
     return (
-      <i className={this.props.icon}
-         style={style}
+      <i className={this.props.icon} style={style}
          onClick={this.handleClick.bind(this)}
          onMouseEnter={this.handleOnMouseEnter.bind(this)}
          onMouseLeave={this.handleOnMouseLeave.bind(this)}>
