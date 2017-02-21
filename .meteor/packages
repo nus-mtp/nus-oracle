@@ -21,14 +21,19 @@ react-meteor-data              # Meteor React package
 less@2.7.8                           # Alternative to CSS
 
 # accounts
-#accounts-password              # accounts package for password
+accounts-password@1.3.3
+accounts-ui@1.1.9
+thereactivestack:blazetoreact
+email@1.1.18
+themeteorchef:bert
+kadira:flow-router
 
 # data
 mongo@1.1.14                   # The database Meteor supports right now
 aldeed:collection2-core
 aldeed:simple-schema
 harrison:papa-parse             # parsing csv to json
-
+mdg:validated-method            # wrapper for meteor methods
 
 # production
 standard-minifier-css@1.3.2   # CSS minifier run for production mode
@@ -44,11 +49,7 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 
 # tests
 practicalmeteor:mocha
+dispatch:mocha
+aldeed:browser-tests
 dispatch:mocha-phantomjs
 dispatch:phantomjs-tests@=0.0.5
-accounts-password@1.3.3
-accounts-ui@1.1.9
-thereactivestack:blazetoreact
-email@1.1.18
-themeteorchef:bert
-kadira:flow-router
