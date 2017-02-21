@@ -10,10 +10,9 @@ class StudentCollection extends Mongo.Collection{
     return result;
   };
 
-  update(updatedStudent, callBack){
-    const studentDocument = updatedStudent;
+  update(selector, modifier){
 
-    const result = super.update(studentDocument, callback);
+    const result = super.update(selector, modifier);
 
     return result;
   };

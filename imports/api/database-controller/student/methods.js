@@ -36,3 +36,23 @@ export const getStudentExemptedModules = function getExemptedModule(studentID) {
 export const getStudentPreviousEducation = function getPrevEducation(studentID) {
   return getCurrentStudentDocument(studentID).studentPreviousHighestEducation;
 }
+
+export const updateStudentAcademicCohort = function updateStudentCohort(StudentID, newCohort) {
+  //TO-DO: Check if the cohort exists in the acadCohortDataBase
+  // find the studentID
+  const student = getCurrentStudentDocument(StudentID);
+  if(student == {}){
+    return false;
+  }
+  return Students.update(StudentID, { $set: { studentAcademicCohort: newCohort} });
+}
+
+export const updateStudentPreviousEducation = function updateStudentEducation(StudentID, prevEdu) {
+  //TO-DO: Check if the prevEdu exists in the previousEducationDatabase
+  // find the studentID
+  const student = getCurrentStudentDocument(StudentID);
+  if(student == {}){
+    return false;
+  }
+  return Students.update(StudentID, { $set: { studentPreviousHighestEducation: prevEdu} });
+}
