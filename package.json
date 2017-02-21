@@ -10,10 +10,8 @@
     "ci-add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
     "ci-test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs",
 
-    "local-test": "meteor npm run local-test-unit",
     "local-remove-drivers": "meteor remove dispatch:mocha-phantomjs dispatch:phantomjs-tests",
     "local-add-drivers": "meteor add dispatch:mocha-phantomjs dispatch:phantomjs-tests@=0.0.5",
-    "local-test-unit": "meteor npm run TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
