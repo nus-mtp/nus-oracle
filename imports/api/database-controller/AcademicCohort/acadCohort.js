@@ -32,6 +32,7 @@ const acadCohortSchema ={
   },
   cohortFocusAreaID:{
     type: [String],
+    optional: true
   }
 }
 

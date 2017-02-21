@@ -2,7 +2,9 @@ import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Students } from './student';
 import { createNewStudent,
          getStudentAcademicCohort,
-         getStudentPreviousEducation } from './methods';
+         getStudentPreviousEducation,
+         updateStudentAcademicCohort,
+         updateStudentPreviousEducation} from './methods';
 
 if (Meteor.isServer){
   describe('studentDB', function() {
@@ -35,6 +37,20 @@ if (Meteor.isServer){
       const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
       const queriedPrevEducation = getStudentPreviousEducation(studentID);
       assert.equal(queriedPrevEducation, 'SchoolDontHave');
+    });
+
+    it('Update the previous education if the ID exists', function() {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      updateStudentPreviousEducation(studentID, 'Primary School');
+      const queriedPrevEducation = getStudentPreviousEducation(studentID);
+      assert.equal(queriedPrevEducation, 'Primary School');
+    });
+
+    it('Update the academic Cohort if the ID exists', function() {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      updateStudentAcademicCohort(studentID, 'AY 2016/2017');
+      const queriedCohort = getStudentAcademicCohort(studentID);
+      assert.equal(queriedCohort, 'AY 2016/2017');
     });
   });
 
