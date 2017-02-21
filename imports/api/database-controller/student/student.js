@@ -41,3 +41,8 @@ StudentSchema = {
 }
 
 Students.attachSchema(StudentSchema);
+if (Meteor.isServer) {
+  Meteor.publish('Student', function taskPublication () {
+    return Students.find();
+  });
+}

@@ -10,10 +10,8 @@ class AcadCohortCollection extends Mongo.Collection{
     return result;
   };
 
-  update(updatedCohortData, callBack){
-    const cohortDocument = updatedCohortData;
-
-    const result = super.update(cohortDocument, callback);
+  update(selector, modifier){
+    const result = super.update(selector, modifier);
 
     return result;
   };
