@@ -5,10 +5,11 @@
     "start": "meteor run",
     "lint": "eslint .;exit 0",
     "pretest": "npm run lint --silent",
-    "test": "meteor npm run test-unit",
-    "remove-drivers": "meteor remove dispatch:mocha aldeed:browser-tests",
-    "add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
-    "test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs"
+    "ci-test": "meteor npm run ci-test-unit",
+    "ci-remove-drivers": "meteor remove dispatch:mocha aldeed:browser-tests",
+    "ci-add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
+    "ci-test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs",
+    "local-test": "meteor npm run local-test-unit",
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",

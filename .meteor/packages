@@ -49,8 +49,6 @@ accounts-ui@1.1.9
 thereactivestack:blazetoreact
 email@1.1.18
 themeteorchef:bert
-dispatch:mocha
-aldeed:browser-tests
 kadira:flow-router
 dispatch:mocha
 aldeed:browser-tests
