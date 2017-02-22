@@ -6,8 +6,7 @@ class AcadCohortCollection extends Mongo.Collection{
     const cohortDocument = acadCohortData;
     let result;
     //validate document
-    result = super.insert( cohortDocument, callBack);
-    return result;
+    return super.insert( cohortDocument, callBack);
   };
 
   update(selector, modifier){
