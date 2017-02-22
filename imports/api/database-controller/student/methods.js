@@ -14,9 +14,10 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 
   if (isValid){
     return Students.insert(studentDocument);
-  } else {
-    return {};
   }
+
+  return {};
+
 
 };
 // helper function
