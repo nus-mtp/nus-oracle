@@ -103,7 +103,7 @@ export default class TabbedContainer extends React.Component {
                      enabledMouseOver={false}
                      isFirstTab={false}
                      tabTitle={
-                       <input type="text" className="form-control"
+                       <input autoFocus type="text" className="form-control"
                               style={{height: "1.5em"}}
                               onKeyPress={this.handleEnterStudyPlanName.bind(this)}
                               onBlur={this.handleCancelAddStudyPlan.bind(this)}
