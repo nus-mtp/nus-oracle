@@ -21,7 +21,7 @@ describe('modules', function () {
 
   beforeEach(function ()  {
     populateModuleFixture();
-    const plannerNames = ['plannerOne'];
+    //const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
        'Parallel Computing'],
@@ -29,7 +29,7 @@ describe('modules', function () {
     const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDOne = createPlanner(focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
