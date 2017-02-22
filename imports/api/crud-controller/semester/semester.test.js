@@ -9,12 +9,18 @@ import { insertNewSemesterInPlanner,
          deleteSemesterInPlanner ,
          getAllSemestersInPlanner,
          getSemesterInPlanner } from './methods';
+import { m_insertNewSemesterInPlanner,
+         m_insertNewAcademicYearInPlanner,
+         m_deleteAcademicYearInPlanner,
+         m_deleteSemesterInPlanner ,
+         m_getAllSemestersInPlanner,
+         m_getSemesterInPlanner } from './meteor-methods';
 
 describe('semester', function () {
   const userID = 'da2hljfnlajdl1k2';
 
   beforeEach(function ()  {
-    const plannerNames = ['plannerOne'];
+    //const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
        'Parallel Computing'],
@@ -24,7 +30,7 @@ describe('semester', function () {
     const semesterIndex = [];
 
     const moduleNames = ['Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Data Structures and Algorithms I', 'Data Structures and Algorithms II', 'Design and Analysis of Algorithms'];
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDOne = createPlanner(focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
@@ -119,11 +125,71 @@ describe('semester', function () {
     const plannerIDs = getPlannerIDs(userID);
     const semesterIndex = 0;
 
-    const numOfSemesters = deleteSemesterInPlanner(semesterIndex, plannerIDs[0]);
+    const numOfSemesters = deleteSemesterInPlanner(plannerIDs[0]);
 
     const planner = Planner.findOne(plannerIDs[0]);
     const retrievedSemesters = planner.semesters;
 
     assert.equal(retrievedSemesters.length-1, numOfSemesters);
+  });
+
+  it ('add new semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+    const academicYear = 'AY 2019/2020';
+    const semesterNum = 1;
+
+    const lastIndex = m_insertNewSemesterInPlanner.call({
+      academicYear: academicYear,
+      semesterNum: semesterNum,
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(lastIndex, 8);
+  });
+
+  it ('add new academic year using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const secondSemLength = m_insertNewAcademicYearInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(secondSemLength, 9);
+  });
+
+  it ('delete semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const lastIndex = m_deleteSemesterInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(lastIndex, 6);
+  });
+
+  it ('delete academic year using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const secondSemLength = m_deleteAcademicYearInPlanner.call({
+      plannerID: plannerIDs[0]}
+    );
+    assert.equal(secondSemLength, 5);
+  });
+
+  it ('get all semesters using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+
+    const retrievedSemester = m_getAllSemestersInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(retrievedSemester.length, 8);
+  });
+
+  it ('get one semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+
+    const semesterModules = m_getSemesterInPlanner.call({
+      semesterIndex: semesterIndex,
+      plannerID: plannerIDs[0]
+    });
+    expect(semesterModules).to.be.a('object');
   });
 });

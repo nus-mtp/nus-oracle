@@ -39,7 +39,7 @@ export const m_deleteAcademicYearInPlanner = new ValidatedMethod({
 });
 
 export const m_insertNewSemesterInPlanner = new ValidatedMethod({
-  name: 'insertNewSemesterInPlanner',
+  name: 'm_insertNewSemesterInPlanner',
   validate: new SimpleSchema ({
     academicYear: {
       type: String,
@@ -89,15 +89,12 @@ export const m_getSemesterInPlanner = new ValidatedMethod({
 export const m_deleteSemesterInPlanner = new ValidatedMethod({
   name: 'deleteSemesterInPlanner',
   validate: new SimpleSchema ({
-    semesterIndex: {
-      type: Number,
-    },
     plannerID:  {
       type: String,
     },
   }).validator({clean: true}),
 
-  run({semesterIndex, plannerID}) {
-    return deleteSemesterInPlanner(semesterIndex, plannerID);
+  run({plannerID}) {
+    return deleteSemesterInPlanner(plannerID);
   },
 });
