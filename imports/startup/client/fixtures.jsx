@@ -15,9 +15,6 @@ import ForgetAccount from '../../ui/components/login/ForgetAccount';
 
 //Components for initial set up
 import SetUpAcadDetail from '../../ui/components/setup/SetUpAcadDetail';
-import SetUpJC from '../../ui/components/setup/SetUpJC';
-import SetUpPoly from '../../ui/components/setup/SetUpPoly';
-import SetUpConfirm from '../../ui/components/setup/SetUpConfirm';
 
 const LoginButtons = BlazeToReact('loginButtons')
 
@@ -79,7 +76,6 @@ AccountSetUpLayout = React.createClass({
       <div>
         <h1>Account Set Up</h1>
         <main>{this.props.content}</main>
-        <button>Cancel</button>
       </div>
     );
   }
@@ -92,42 +88,6 @@ AcadDetailComponent = React.createClass({
       <div>
         <h2>Academic Details</h2>
         <SetUpAcadDetail />
-      </div>
-    );
-  }
-});
-
-//Component to set up JC modules
-SetUpJCComponent = React.createClass({
-  render() {
-    return(
-      <div>
-        <h2>Academic Details - Junior College</h2>
-        <SetUpJC />
-      </div>
-    );
-  }
-});
-
-//Component to set up Poly modules
-SetUpPolyComponent = React.createClass({
-  render() {
-    return(
-      <div>
-        <h2>Poly Details - Polytechnic</h2>
-        <SetUpPolyComponent />
-      </div>
-    );
-  }
-});
-
-//Component to set up Poly modules
-SetUpConfirmComponent = React.createClass({
-  render() {
-    return(
-      <div>
-        <h2>Module confirmation</h2>
-        <SetUpConfirm />
       </div>
     );
   }
