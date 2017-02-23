@@ -51,5 +51,4 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 practicalmeteor:mocha
 dispatch:mocha
 aldeed:browser-tests
-dispatch:mocha-phantomjs
-dispatch:phantomjs-tests@=0.0.5
+http

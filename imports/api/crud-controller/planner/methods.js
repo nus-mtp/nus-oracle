@@ -7,9 +7,9 @@ import { Planner } from './planner';
  * @param {string}     id of user
  * @return {string}    id of planner
  */
- export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
+ export const createPlanner = function createPlanner(focusArea, userID) {
   const newPlanner = {
-    name: plannerName,
+    name: 'Untitled',
     semesters: [],
     focusArea: focusArea,
     userID: userID,
@@ -90,6 +90,10 @@ export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
  * @return {number}    number of updated documents in semester
  */
  export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
+  if (newPlannerName === '')  {
+    return 0;
+  }
+
   const planner = Planner.findOne(plannerID);
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(

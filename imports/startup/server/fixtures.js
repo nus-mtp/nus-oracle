@@ -4,6 +4,8 @@ import { insertOneModuleInSemester } from '../../api/crud-controller/module/meth
 import { populateModuleFixture } from '../../api/integration-tests/fixtures';
 import { Modules } from '../../api/database-controller/module/module';
 import { Planner } from '../../api/crud-controller/planner/planner';
+import { moduleInformationParser,
+         moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 
 Meteor.startup(() => {
   if (Modules.find({}).count() === 0) {
@@ -12,7 +14,7 @@ Meteor.startup(() => {
 
   if (Planner.find({}).count() === 0) {
     const userIDs = '9f91pejfj912ras';
-    const plannerNames = ['testPlanner', 'testPlannerTwo'];
+    //const plannerNames = ['testPlanner', 'testPlannerTwo'];
     const focusAreas = [['Com graphics'], ['Com Graphics', 'Security']];
 
     const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
@@ -22,8 +24,8 @@ Meteor.startup(() => {
     const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
     const modulesTwo = ['CS1010X', 'CS1020', 'CS2010'];
 
-    const plannerIDOne = createPlanner(plannerNames[0], focusAreas[0], userIDs);
-    const plannerIDTwo = createPlanner(plannerNames[1], focusAreas[1], userIDs);
+    const plannerIDOne = createPlanner(focusAreas[0], userIDs);
+    const plannerIDTwo = createPlanner(focusAreas[1], userIDs);
 
     // create semesters
     for (var i=0; i< semesterIndex.length; i++) {

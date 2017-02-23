@@ -10,6 +10,10 @@ import { insertOneModuleInSemester,
          getAllModulesInSemester,
          getOneModuleInSemester,
          deleteOneModuleInSemester } from './methods';
+import { m_insertOneModuleInSemester,
+         m_getAllModulesInSemester,
+         m_getOneModuleInSemester,
+         m_deleteOneModuleInSemester } from './meteor-methods';
 
 describe('modules', function () {
   const userID = 'akshhr31lci1lkal';
@@ -17,7 +21,7 @@ describe('modules', function () {
 
   beforeEach(function ()  {
     populateModuleFixture();
-    const plannerNames = ['plannerOne'];
+    //const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
        'Parallel Computing'],
@@ -25,7 +29,7 @@ describe('modules', function () {
     const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [];
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDOne = createPlanner(focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
@@ -103,5 +107,60 @@ describe('modules', function () {
 
     const module = deleteOneModuleInSemester(0, modules[0], plannerIDs[0]);
     assert.equal(module, modules[0]);
+  });
+
+  it ('get all module using meteor methods', function() {
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+
+    const retrievedModules = m_getAllModulesInSemester.call({
+      semesterIndex: semesterIndex,
+      plannerID: plannerIDs[0]
+    });
+
+    assert.equal(Object.keys(retrievedModules).length, 4);
+    assert.equal(retrievedModules[modules[0]], modules[0]);
+    assert.equal(retrievedModules[modules[1]], modules[1]);
+    assert.equal(retrievedModules[modules[2]], modules[2]);
+    assert.equal(retrievedModules[modules[3]], modules[3]);
+  });
+
+  it ('add a module using meteor methods', function() {
+    const modCode = 'CS1010S';
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+
+    const module = m_insertOneModuleInSemester.call({
+      semesterIndex: semesterIndex,
+      moduleCode: modCode,
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(module, modCode);
+  });
+
+  it ('get one module using meteor methods', function() {
+    const modCode = 'CS1010';
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+
+    const module = m_getOneModuleInSemester.call({
+      semesterIndex: semesterIndex,
+      moduleCode: modCode,
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(module, modCode);
+  });
+
+  it ('delete one module using meteor methods', function() {
+    const modCode = 'CS1020';
+    const plannerIDs = getPlannerIDs(userID);
+    const semesterIndex = 0;
+
+    const module = m_deleteOneModuleInSemester.call({
+      semesterIndex: semesterIndex,
+      moduleCode: modCode,
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(module, modCode);
   });
 });

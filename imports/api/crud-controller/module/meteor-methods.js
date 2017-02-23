@@ -10,7 +10,7 @@ import { getAllModulesInSemester,
 * utilizing meteor methods functions
 */
 
-export const getAllModulesInSemester = new ValidatedMethod({
+export const m_getAllModulesInSemester = new ValidatedMethod({
   name: 'getAllModulesInSemester',
   validate: new SimpleSchema ({
     semesterIndex: {
@@ -26,11 +26,11 @@ export const getAllModulesInSemester = new ValidatedMethod({
   },
 });
 
-export const insertOneModuleInSemester = new ValidatedMethod({
+export const m_insertOneModuleInSemester = new ValidatedMethod({
   name: 'insertOneModuleInSemester',
   validate: new SimpleSchema ({
     semesterIndex: {
-      type: String,
+      type: Number,
     },
     moduleCode: {
       type: String,
@@ -40,12 +40,12 @@ export const insertOneModuleInSemester = new ValidatedMethod({
     },
   }).validator({clean: true}),
 
-  run({semesterIndex, plannerID}) {
+  run({semesterIndex, moduleCode, plannerID}) {
     return insertOneModuleInSemester(semesterIndex, moduleCode, plannerID);
   },
 });
 
-export const getOneModuleInSemester = new ValidatedMethod({
+export const m_getOneModuleInSemester = new ValidatedMethod({
   name: 'getOneModuleInSemester',
   validate: new SimpleSchema ({
     semesterIndex: {
@@ -59,12 +59,12 @@ export const getOneModuleInSemester = new ValidatedMethod({
     },
   }).validator({clean: true}),
 
-  run({semesterIndex, plannerID}) {
+  run({semesterIndex, moduleCode, plannerID}) {
     return getOneModuleInSemester(semesterIndex, moduleCode, plannerID);
   },
 });
 
-export const deleteOneModuleInSemester = new ValidatedMethod({
+export const m_deleteOneModuleInSemester = new ValidatedMethod({
   name: 'deleteOneModuleInSemester',
   validate: new SimpleSchema ({
     semesterIndex: {
@@ -78,7 +78,7 @@ export const deleteOneModuleInSemester = new ValidatedMethod({
     },
   }).validator({clean: true}),
 
-  run({semesterIndex, plannerID}) {
+  run({semesterIndex, moduleCode, plannerID}) {
     return deleteOneModuleInSemester(semesterIndex, moduleCode, plannerID);
   },
 });

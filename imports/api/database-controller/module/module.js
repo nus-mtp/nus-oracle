@@ -72,4 +72,3 @@ Schemas.Module = new SimpleSchema({
 });
 
 Modules.attachSchema(Schemas.Module);
-console.log(Modules.insert);

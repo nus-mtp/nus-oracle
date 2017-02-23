@@ -12,6 +12,12 @@ export default class IconButton extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.setState({
+      mouseHoverColor: this.props.displayColor
+    });
+  }
+
   handleOnMouseEnter(event) {
     this.setState({
       onMouseOver: true,
@@ -36,8 +42,13 @@ export default class IconButton extends React.Component {
   render() {
     // Toggles mouseover colors
     let iconColor = this.state.mouseHoverColor;
-    let style = JSON.parse(JSON.stringify(this.props.style)); // clones a new object
-    style.color = iconColor; // Set this button icon's color
+    
+    // Clone a new object since we cannot mutate a state directly in React
+    let style = JSON.parse(JSON.stringify(this.props.style));
+
+    // Set this button icon's color
+    style.color = iconColor;
+
     return (
       <i className={this.props.icon} style={style}
          onClick={this.handleClick.bind(this)}
