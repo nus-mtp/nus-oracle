@@ -4,6 +4,8 @@ import { insertOneModuleInSemester } from '../../api/crud-controller/module/meth
 import { populateModuleFixture } from '../../api/integration-tests/fixtures';
 import { Modules } from '../../api/database-controller/module/module';
 import { Planner } from '../../api/crud-controller/planner/planner';
+import { moduleInformationParser,
+         moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 
 Meteor.startup(() => {
   if (Modules.find({}).count() === 0) {
