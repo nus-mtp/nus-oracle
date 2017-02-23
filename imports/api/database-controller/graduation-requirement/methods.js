@@ -1,0 +1,1 @@
+import { GraduationRequirements } from './graduationRequirement';
