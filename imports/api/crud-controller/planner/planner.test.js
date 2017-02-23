@@ -12,7 +12,7 @@ import { createPlanner,
 describe('planner', function () {
   const userID = 'da2hljfnlajdl1k2';
 
-  beforeEach(function ()  {
+  beforeEach(function (done)  {
     //const plannerNames = ['plannerOne', 'plannerTwo', 'plannerThree'];
     const focusArea = [
       ['Computer Graphics And Games',
@@ -30,6 +30,9 @@ describe('planner', function () {
     const plannerIDTwo = createPlanner(focusArea[1], userID);
     const plannerIDThree = createPlanner(focusArea[2], userID);
 
+    done();
+
+    /*
     const plannerOne = Planner.findOne(plannerIDOne);
     const plannerTwo = Planner.findOne(plannerIDTwo);
     const plannerThree = Planner.findOne(plannerIDThree);
@@ -41,15 +44,19 @@ describe('planner', function () {
     assert.equal(plannerOne._id, plannerIDOne);
     assert.equal(plannerTwo._id, plannerIDTwo);
     assert.equal(plannerThree._id, plannerIDThree);
+    */
   });
 
-  afterEach(function ()  {
+  afterEach(function (done)  {
     const plannerIDs = getPlannerIDs(userID);
 
     removePlanner(plannerIDs[0]);
     removePlanner(plannerIDs[1]);
     removePlanner(plannerIDs[2]);
 
+    done();
+
+    /*
     const removedPlannerOne = Planner.findOne(plannerIDs[0]);
     const removedPlannerTwo = Planner.findOne(plannerIDs[1]);
     const removedPlannerThree = Planner.findOne(plannerIDs[2]);
@@ -57,6 +64,7 @@ describe('planner', function () {
     expect(removedPlannerOne).to.be.an('undefined');
     expect(removedPlannerTwo).to.be.an('undefined');
     expect(removedPlannerThree).to.be.an('undefined');
+    */
   });
 
   it ('check if planner ids are correctly returned', function()  {
