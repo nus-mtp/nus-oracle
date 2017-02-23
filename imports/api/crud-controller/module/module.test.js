@@ -19,7 +19,7 @@ describe('modules', function () {
   const userID = 'akshhr31lci1lkal';
   const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
 
-  beforeEach(function ()  {
+  beforeEach(function (done)  {
     populateModuleFixture();
     //const plannerNames = ['plannerOne'];
     const focusArea = [
@@ -41,6 +41,9 @@ describe('modules', function () {
       }
     }
 
+    done();
+
+    /*
     const plannerOne = Planner.findOne(plannerIDOne);
     const retrievedSemesters = plannerOne.semesters;
 
@@ -62,16 +65,21 @@ describe('modules', function () {
     assert.equal(retrievedSemesters[0].moduleHashmap[modules[1]], modules[1]);
     assert.equal(retrievedSemesters[0].moduleHashmap[modules[2]], modules[2]);
     assert.equal(retrievedSemesters[0].moduleHashmap[modules[3]], modules[3]);
+    */
   });
 
-  afterEach(function ()  {
+  afterEach(function (done)  {
     dePopulateModuleFixture();
     const plannerIDs = getPlannerIDs(userID);
 
     removePlanner(plannerIDs[0]);
 
+    done();
+
+    /*
     const removedPlannerOne = Planner.findOne(plannerIDs[0]);
     expect(removedPlannerOne).to.be.an('undefined');
+    */
   });
 
   it ('returns an empty object when a wrong input is inserted', function() {

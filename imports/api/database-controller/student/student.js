@@ -26,7 +26,11 @@ class StudentCollection extends Mongo.Collection{
 export const Students = new StudentCollection("Student");
 StudentSchema = {
   studentExemptedModule: {
-    type: [String],
+    type: Object,
+    optional: true,
+  },
+  studentWaivedModule:  {
+    type: Object,
     optional: true,
   },
   studentAcademicCohort: {

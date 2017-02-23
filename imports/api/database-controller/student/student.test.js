@@ -1,19 +1,29 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Students } from './student';
+import { populateModuleFixture,
+         dePopulateModuleFixture } from '../../integration-tests/fixtures';
 import { createNewStudent,
          getStudentAcademicCohort,
          getStudentPreviousEducation,
          updateStudentAcademicCohort,
-         updateStudentPreviousEducation} from './methods';
+         updateStudentPreviousEducation,
+         addStudentExemptedModule,
+         deleteStudentExemptedModule,
+         addStudentWaviedModule,
+         deleteStudentWaivedModule } from './methods';
 
 if (Meteor.isServer){
   describe('studentDB', function() {
     // basic set up
-    beforeEach(function () {
+    beforeEach(function (done) {
+      populateModuleFixture();
       Students.remove({});
+      done();
     });
-    afterEach(function() {
+    afterEach(function(done) {
+      dePopulateModuleFixture();
       Students.remove({});
+      done();
     });
 
     //Case of Student Data input
@@ -51,6 +61,59 @@ if (Meteor.isServer){
       updateStudentAcademicCohort(studentID, 'AY 2016/2017');
       const queriedCohort = getStudentAcademicCohort(studentID);
       assert.equal(queriedCohort, 'AY 2016/2017');
+    });
+
+    it ('Add one exempted module if the ID exists', function() {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const exemptedModule = 'CS1010';
+      const numberOfDocsUpdated = addStudentExemptedModule(studentID, exemptedModule, function(error, affectDocs) {
+        assert.equal(numberOfDocsUpdated, 1);
+        assert.equal(Students.findOne(studentID).studentExemptedModule[exemptedModule], exemptedModule);
+      });
+    });
+
+    it ('Does not add exempted module if module does not exists', function()  {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const exemptedModule = 'CS0000';
+      const numberOfDocsUpdated = addStudentExemptedModule(studentID, exemptedModule);
+
+      assert.equal(numberOfDocsUpdated, 0);
+    });
+
+    it ('Delete one exempted module if the ID exists', function() {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const exemptedModule = 'CS1010';
+      addStudentExemptedModule(studentID, exemptedModule, function(error, affectDocs)  {
+        const numberOfDocsUpdated = deleteStudentExemptedModule(studentID, exemptedModule);
+        assert.equal(numberOfDocsUpdated, 1);
+      });
+    });
+
+    it ('Add one waived modules if the ID exists', function() {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const waivedModule = 'CS1020';
+      const numberOfDocsUpdated = addStudentWaviedModule(studentID, waivedModule, function(error, affectDocs) {
+        assert.equal(numberOfDocsUpdated, 1);
+        assert.equal(Students.findOne(studentID).studentWaivedModule[waivedModule], waivedModule);
+      });
+    });
+
+    it ('Does not add waived module if module does not exists', function()  {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const waivedModule = 'CS0000';
+      const numberOfDocsUpdated = addStudentWaviedModule(studentID, waivedModule);
+
+      assert.equal(numberOfDocsUpdated, 0);
+    });
+
+
+    it ('Delete one waived modules if the ID exists', function()  {
+      const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
+      const waivedModule = 'CS1020';
+      addStudentWaviedModule(studentID, waivedModule, function(error, affectDocs)  {
+        const numberOfDocsUpdated = deleteStudentWaivedModule(studentID, waivedModule);
+        assert.equal(numberOfDocsUpdated, 1);
+      });
     });
   });
 
