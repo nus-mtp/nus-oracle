@@ -1,95 +1,70 @@
 import React from 'react';
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
+import Select from 'react-select';
 
- */
+import CourseDropdown from './dropdown/CourseDropdown.jsx';
+import AcadCohortDropdown from './dropdown/AcadCohortDropdown.jsx';
+import PrevEduDropdown from './dropdown/PrevEduDropdown.jsx';
 
 
 export default class SetUpAcadDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: '', password:'', passwordErr: 0};
-
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.state = {cohort: '', course:'', prevEdu: '', doubleCancel: true};
+    this.handleCourseValueChange = this.handleCourseValueChange.bind(this);
+    this.handleAcadValueChange = this.handleAcadValueChange.bind(this);
+    this.handleEduValueChange = this.handleEduValueChange.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
+
+  handleAcadValueChange(obj) {
+    console.log("Cohort " + obj.value);
+    this.state.cohort = obj.value;
+    this.state.doubleCancel = true;
   }
 
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+  handleCourseValueChange(obj) {
+    console.log("Course " + obj.value);
+    this.state.course = obj.value;
+    this.state.doubleCancel = true;
+  }
+
+  handleEduValueChange(obj) {
+    console.log("Previous Education " + obj.value);
+    this.state.prevEdu = obj.value;
+    this.state.doubleCancel = true;
+  }
+
+  handleCancel(event) {
+    console.log("Cancel ");
+    if (this.state.doubleCancel) {
+      Bert.alert( 'Click again to leave page' , 'warning');
+      this.state.doubleCancel = false;
+    } else {
+      Bert.alert( 'Returning to main page' , 'danger');
+      FlowRouter.go('/');
+    }
   }
 
   handleSubmit(event) {
-    FlowRouter.go('/setup2JC');
-    Meteor.loginWithPassword(this.state.email, this.state.password, ( error ) => {
-      if ( error ) { //Log in error
-        if (error.reason == 'Incorrect password') { //Incorrect password
-          Bert.alert( error.reason, 'danger');
-          this.state.passwordErr += 1;
-          console.log(this.state.passwordErr);
-          if (this.state.passwordErr >=5) {
-            this.handleReset();
-          }
-        } else {//Incorrect email, etc.
-          console.log('error in logging in user');
-          Bert.alert( error.reason, 'danger' );
-          console.log(error.reason);
-        }
-      } else {
-        console.log(Meteor.user().emails[0].verified);
-        this.state.passwordErr = 0;
-        if (Meteor.user().emails[0].verified) {
-          FlowRouter.go('/');
-          Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
-        } else {
-          Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
-          Meteor.logout();
-        }
-      }
-    });
-    event.preventDefault();
-  }
-
-  handleReset(event) {
-    console.log(this.state.email);
-    const options ={};
-    options.email = this.state.email;
-    Accounts.forgotPassword(options, ( error ) => {
-      if ( error ) {
-        console.log('error in resetting password');
-        Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
-      } else {
-        Bert.alert('Exceeded log in attempt, password has been reset. Please check email to set new password', 'danger' );
-      }
-    });
-    const userId = Accounts.users.findOne({username: this.state.email})._id;
-    console.log(userId);
-    Meteor.call('resetpassword', userId)
+    console.log("Submit");
+    if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {
+      Bert.alert( 'Please enter all three fields before continuing' , 'danger');
+    } else {
+      Bert.alert( 'Setup completed!' , 'success' );
+      FlowRouter.go('/');
+    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Log in below
-        </label>
-        <label>
-          Email:
-          <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
-        </label>
-        <label>
-          Password:
-          <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
-        </label>
-        <input type="submit" value="Login" />
-      </form>
+      <div>
+        <AcadCohortDropdown searchable onValueClick={this.handleAcadValueChange}/>
+        <CourseDropdown searchable onValueClick={this.handleCourseValueChange}/>
+        <PrevEduDropdown searchable onValueClick={this.handleEduValueChange}/>
+        <button onClick={this.handleCancel}> Cancel Setup</button>
+        <button onClick={this.handleSubmit}> Finish Setup</button>
+      </div>
     );
   }
 }

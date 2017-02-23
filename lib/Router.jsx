@@ -39,43 +39,13 @@ FlowRouter.route('/LogIn', {
 /**
  * Routes to the initial setup
  */
-FlowRouter.route('/setup1', {
+FlowRouter.route('/setup', {
   action() {
     console.log("User is logged out."); // User is logged out.
     mount(AccountSetUpLayout, {content: <AcadDetailComponent />});
   }
 });
 
-/**
- * Routes to the Setup flor for JC to select Modules passed
- */
-FlowRouter.route('/setup2JC', {
-  action() {
-    console.log("User is logged out."); // User is logged out.
-    mount(AccountSetUpLayout, {content: <SetUpJCComponent />});
-  }
-});
-
-
-/**
- * Routes to the Setup flor for Poly to select diploma
- */
-FlowRouter.route('/setup2Poly', {
-  action() {
-    console.log("User is logged out."); // User is logged out.
-    mount(AccountSetUpLayout, {content: <SetUpPolyComponent />});
-  }
-});
-
-/**
- * Routes to the confirmation of specific modules waived and exempted
- */
-FlowRouter.route('/setup3', {
-  action() {
-    console.log("User is logged out."); // User is logged out.
-    mount(AccountSetUpLayout, {content: <SetUpConfirmComponent />});
-  }
-});
 
 /**
  * A template for anyone to redirect if you want to have html extension
