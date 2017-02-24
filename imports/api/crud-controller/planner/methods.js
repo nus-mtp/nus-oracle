@@ -7,9 +7,13 @@ import { Planner } from './planner';
  * @param {string}     id of user
  * @return {string}    id of planner
  */
- export const createPlanner = function createPlanner(focusArea, userID) {
+ export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
+  let name = plannerName;
+  if (name === '') {
+    name = 'Untitled';
+  }
   const newPlanner = {
-    name: 'Untitled',
+    name: name,
     semesters: [],
     focusArea: focusArea,
     userID: userID,

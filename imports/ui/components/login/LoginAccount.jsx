@@ -31,17 +31,13 @@ export default class LoginAccount extends React.Component {
         if (error.reason == 'Incorrect password') { //Incorrect password
           Bert.alert( error.reason, 'danger');
           this.state.passwordErr += 1;
-          console.log(this.state.passwordErr);
           if (this.state.passwordErr >=5) {
             this.handleReset();
           }
         } else {//Incorrect email, etc.
-          console.log('error in logging in user');
           Bert.alert( error.reason, 'danger' );
-          console.log(error.reason);
         }
       } else {
-        console.log(Meteor.user().emails[0].verified);
         this.state.passwordErr = 0;
         if (Meteor.user().emails[0].verified) {
           if (!Meteor.user().profile.hasSetup)  {
@@ -61,20 +57,16 @@ export default class LoginAccount extends React.Component {
   }
 
   handleReset(event) {
-    console.log(this.state.email);
     const options ={};
     options.email = this.state.email;
     Accounts.forgotPassword(options, ( error ) => {
       if ( error ) {
-        console.log('error in resetting password');
         Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
       } else {
         Bert.alert('Exceeded log in attempt, password has been reset. Please check email to set new password', 'danger' );
       }
     });
     const userId = Accounts.users.findOne({username: this.state.email})._id;
-    console.log(userId);
     Meteor.call('resetpassword', userId)
   }
 

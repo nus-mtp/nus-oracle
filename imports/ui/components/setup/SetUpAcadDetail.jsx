@@ -5,6 +5,7 @@ import CourseDropdown from './dropdown/CourseDropdown.jsx';
 import AcadCohortDropdown from './dropdown/AcadCohortDropdown.jsx';
 import PrevEduDropdown from './dropdown/PrevEduDropdown.jsx';
 
+import { createNewStudent } from '../../../api/database-controller/student/methods';
 
 export default class SetUpAcadDetail extends React.Component {
   constructor(props) {
@@ -51,8 +52,17 @@ export default class SetUpAcadDetail extends React.Component {
     if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {
       Bert.alert( 'Please enter all three fields before continuing' , 'danger');
     } else {
+      const userId = Meteor.userId();
+      // create Students document
+      const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
+      // create one planner and attach studentID to document
+
+
+      // set hasSetup to true
+      Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
+
       Bert.alert( 'Setup completed!' , 'success' );
-      FlowRouter.go('/');
+      FlowRouter.go('/userDashboard');
     }
   }
 

@@ -1,6 +1,7 @@
 import { Match } from 'meteor/check';
 import { Students } from './student';
 import { searchByModuleCode } from '../module/methods';
+import { createPlanner } from '../../crud-controller/planner/methods';
 
 // create new Student using the userID from the accountDB right after the sign up
 export const createNewStudent = function createNewStudent(userID, studentCohort, prevEducation){
