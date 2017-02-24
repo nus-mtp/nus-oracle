@@ -44,7 +44,12 @@ export default class LoginAccount extends React.Component {
         console.log(Meteor.user().emails[0].verified);
         this.state.passwordErr = 0;
         if (Meteor.user().emails[0].verified) {
-          FlowRouter.reload();
+          if (!Meteor.user().profile.hasSetup)  {
+            FlowRouter.go('/setup');
+          } else {
+            FlowRouter.go('/userDashboard');
+          }
+          //FlowRouter.reload();
           Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
         } else {
           Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );

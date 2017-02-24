@@ -46,6 +46,15 @@ FlowRouter.route('/setup', {
   }
 });
 
+/**
+ * Routes to the user dashboard
+ */
+ FlowRouter.route('/userDashboard', {
+   action() {
+     console.log("User enters dashboard."); // User is logged out.
+     mount(AccountSetUpLayout, {content: <DashboardContainer />});
+   }
+ });
 
 /**
  * A template for anyone to redirect if you want to have html extension
