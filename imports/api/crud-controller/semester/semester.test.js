@@ -20,7 +20,7 @@ describe('semester', function () {
   const userID = 'da2hljfnlajdl1k2';
 
   beforeEach(function (done)  {
-    //const plannerNames = ['plannerOne'];
+    const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
        'Parallel Computing'],
@@ -30,7 +30,7 @@ describe('semester', function () {
     const semesterIndex = [];
 
     const moduleNames = ['Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Data Structures and Algorithms I', 'Data Structures and Algorithms II', 'Design and Analysis of Algorithms'];
-    const plannerIDOne = createPlanner(focusArea[0], userID);
+    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
