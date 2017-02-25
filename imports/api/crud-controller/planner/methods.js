@@ -1,4 +1,5 @@
 import { Planner } from './planner';
+import { getStudentID } from '../../database-controller/student/methods';
 
 /**
  * creates a planner
@@ -55,10 +56,32 @@ export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
 
 /**
  * retrieves plannerID of planner
+ * @return {string}    id of planner
+ */
+ export const getPlannerIDs = function getPlannerIDs() {
+  let id = '';
+  if (getStudentID()) {
+    id = getStudentID();
+  }
+  const planners = Planner.find({userID: id}).fetch();
+  const plannerIDs = [];
+
+  // checks if planner is a legit return
+  if (typeof planners != 'undefined') {
+    for (var i = 0; i < planners.length; i++)  {
+      plannerIDs.push(planners[i]._id);
+    }
+  }
+
+  return plannerIDs;
+}
+
+/**
+ * retrieves plannerID of planner, DO NOT USE IN PRODUCTION! ONLY FOR TESTING PURPOSES!
  * @param {string}     userID of planner
  * @return {string}    id of planner
  */
- export const getPlannerIDs = function getPlannerIDs(userID) {
+export const getPlannerIDsGivenUserID = function getPlannerGivenID(userID) {
   const planners = Planner.find({userID: userID}).fetch();
   const plannerIDs = [];
 

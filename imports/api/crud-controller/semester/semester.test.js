@@ -2,7 +2,7 @@ import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from '../planner/planner';
 import { createPlanner,
          removePlanner,
-         getPlannerIDs } from '../planner/methods';
+         getPlannerIDsGivenUserID } from '../planner/methods';
 import { insertNewSemesterInPlanner,
          insertNewAcademicYearInPlanner,
          deleteAcademicYearInPlanner,
@@ -58,7 +58,7 @@ describe('semester', function () {
   });
 
   afterEach(function (done)  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     removePlanner(plannerIDs[0]);
 
@@ -69,7 +69,7 @@ describe('semester', function () {
   });
 
   it ('get all semester in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const retrievedSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
@@ -94,7 +94,7 @@ describe('semester', function () {
   });
 
   it ('insert one academic year in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const totalNumberOfSemestersInPlanner = insertNewAcademicYearInPlanner(plannerIDs[0]);
 
@@ -107,7 +107,7 @@ describe('semester', function () {
   }),
 
   it ('get one semester in planner', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const semesterModules = getSemesterInPlanner(semesterIndex, plannerIDs[0]);
@@ -115,7 +115,7 @@ describe('semester', function () {
   });
 
   it ('delete one academic year in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const totalNumberOfSemestersInPlanner = deleteAcademicYearInPlanner(plannerIDs[0]);
 
@@ -128,7 +128,7 @@ describe('semester', function () {
   });
 
   it ('delete semester in planner', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const numOfSemesters = deleteSemesterInPlanner(plannerIDs[0]);
@@ -140,7 +140,7 @@ describe('semester', function () {
   });
 
   it ('add new semester using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const academicYear = 'AY 2019/2020';
     const semesterNum = 1;
 
@@ -153,7 +153,7 @@ describe('semester', function () {
   });
 
   it ('add new academic year using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const secondSemLength = m_insertNewAcademicYearInPlanner.call({
       plannerID: plannerIDs[0]
@@ -162,7 +162,7 @@ describe('semester', function () {
   });
 
   it ('delete semester using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const lastIndex = m_deleteSemesterInPlanner.call({
       plannerID: plannerIDs[0]
@@ -171,7 +171,7 @@ describe('semester', function () {
   });
 
   it ('delete academic year using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const secondSemLength = m_deleteAcademicYearInPlanner.call({
       plannerID: plannerIDs[0]}
@@ -180,7 +180,7 @@ describe('semester', function () {
   });
 
   it ('get all semesters using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const retrievedSemester = m_getAllSemestersInPlanner.call({
       plannerID: plannerIDs[0]
@@ -189,7 +189,7 @@ describe('semester', function () {
   });
 
   it ('get one semester using meteor methods', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const semesterModules = m_getSemesterInPlanner.call({

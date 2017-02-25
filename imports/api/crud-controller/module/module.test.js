@@ -4,7 +4,7 @@ import { populateModuleFixture,
          dePopulateModuleFixture } from '../../integration-tests/fixtures';
 import { createPlanner,
          removePlanner,
-         getPlannerIDs } from '../planner/methods';
+         getPlannerIDsGivenUserID } from '../planner/methods';
 import { insertNewSemesterInPlanner } from '../semester/methods';
 import { insertOneModuleInSemester,
          getAllModulesInSemester,
@@ -70,7 +70,7 @@ describe('modules', function () {
 
   afterEach(function (done)  {
     dePopulateModuleFixture();
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     removePlanner(plannerIDs[0]);
 
@@ -83,7 +83,7 @@ describe('modules', function () {
   });
 
   it ('returns an empty object when a wrong input is inserted', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
     const moduleCode = '<script> console.log("LOL INJECTION") </script>';
 
@@ -92,7 +92,7 @@ describe('modules', function () {
   });
 
   it ('get all modules from a semester given correct input', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const retrievedModules = getAllModulesInSemester(0, plannerIDs[0]);
     assert.equal(Object.keys(retrievedModules).length, 4);
@@ -104,21 +104,21 @@ describe('modules', function () {
   });
 
   it ('get a module in semester object', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const module = getOneModuleInSemester(0, modules[0], plannerIDs[0]);
     assert.equal(module, modules[0]);
   });
 
   it ('remove a module in semester object', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const module = deleteOneModuleInSemester(0, modules[0], plannerIDs[0]);
     assert.equal(module, modules[0]);
   });
 
   it ('get all module using meteor methods', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const retrievedModules = m_getAllModulesInSemester.call({
@@ -135,7 +135,7 @@ describe('modules', function () {
 
   it ('add a module using meteor methods', function() {
     const modCode = 'CS1010S';
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const module = m_insertOneModuleInSemester.call({
@@ -148,7 +148,7 @@ describe('modules', function () {
 
   it ('get one module using meteor methods', function() {
     const modCode = 'CS1010';
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const module = m_getOneModuleInSemester.call({
@@ -161,7 +161,7 @@ describe('modules', function () {
 
   it ('delete one module using meteor methods', function() {
     const modCode = 'CS1020';
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const module = m_deleteOneModuleInSemester.call({
