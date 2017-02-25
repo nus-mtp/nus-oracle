@@ -44,7 +44,7 @@ shell-server@0.2.2            # Server-side component of the `meteor shell` comm
 mobile-experience@1.0.4       # Packages for a great mobile UX
 
 # Unsafe for production
-autopublish@1.0.7             # Publish all data to the clients (for prototyping)
+# autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 
 # tests

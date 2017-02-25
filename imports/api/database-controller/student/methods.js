@@ -25,10 +25,17 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 
 
 };
-export const getStudentID = function getStudentID() {
+
+// get student ID outside of publish
+export const getStudentID = function getStudentID(userId) {
   // account dependent meteor function
-  const userId = Meteor.userId();
-  const student = Students.findOne({accountID: userId});
+  let id = userId;
+
+  if (!id)  {
+    id = Meteor.userId();
+  }
+
+  const student = Students.findOne( {'accountID': id} );
 
   if (!student) {
     return '';

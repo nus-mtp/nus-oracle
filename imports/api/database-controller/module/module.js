@@ -72,3 +72,9 @@ Schemas.Module = new SimpleSchema({
 });
 
 Modules.attachSchema(Schemas.Module);
+
+if (Meteor.isServer) {
+  Meteor.publish('Modules', function taskPublication () {
+    return Modules.find({});
+  });
+}
