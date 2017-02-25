@@ -1,15 +1,47 @@
 import { Planner } from './planner';
+import { getStudentID } from '../../database-controller/student/methods';
 
 /**
  * creates a planner
  * @param  {string}    name of planner
  * @param  {[string]}  array of focus area
+ * @return {string}    id of planner
+ */
+ export const createPlanner = function createPlanner(plannerName, focusArea) {
+  let name = plannerName;
+  if (name === '') {
+    name = 'Untitled';
+  }
+  
+  if (getStudentID() === '')  {
+    return '';
+  }
+
+  const newPlanner = {
+    name: name,
+    semesters: [],
+    focusArea: focusArea,
+    userID: getStudentID(),
+  };
+
+  const id = Planner.insert(newPlanner);
+  return id;
+};
+
+/**
+ * creates a planner given user ID, DO NOT USE IN PRODUCTION, ONLY FOR TESTING PURPOSES!
+ * @param  {string}    name of planner
+ * @param  {[string]}  array of focus area
  * @param {string}     id of user
  * @return {string}    id of planner
  */
- export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
+ export const createPlannerGivenUserID = function createPlanner(plannerName, focusArea, userID) {
+  let name = plannerName;
+  if (name === '') {
+    name = 'Untitled';
+  }
   const newPlanner = {
-    name: plannerName,
+    name: name,
     semesters: [],
     focusArea: focusArea,
     userID: userID,
@@ -51,10 +83,30 @@ export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
 
 /**
  * retrieves plannerID of planner
+ * @return {string}    id of planner
+ */
+ export const getPlannerIDs = function getPlannerIDs() {
+  const id = getStudentID();
+
+  const planners = Planner.find({userID: id}).fetch();
+  const plannerIDs = [];
+
+  // checks if planner is a legit return
+  if (typeof planners != 'undefined') {
+    for (var i = 0; i < planners.length; i++)  {
+      plannerIDs.push(planners[i]._id);
+    }
+  }
+
+  return plannerIDs;
+}
+
+/**
+ * retrieves plannerID of planner, DO NOT USE IN PRODUCTION! ONLY FOR TESTING PURPOSES!
  * @param {string}     userID of planner
  * @return {string}    id of planner
  */
- export const getPlannerIDs = function getPlannerIDs(userID) {
+export const getPlannerIDsGivenUserID = function getPlannerGivenID(userID) {
   const planners = Planner.find({userID: userID}).fetch();
   const plannerIDs = [];
 
@@ -90,6 +142,10 @@ export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
  * @return {number}    number of updated documents in semester
  */
  export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
+  if (newPlannerName === '')  {
+    return 0;
+  }
+
   const planner = Planner.findOne(plannerID);
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(

@@ -1,5 +1,7 @@
 import { Planner } from '../planner/planner';
 import { increaseAcadYearByOne } from '../../../utils/util';
+import { getStudentAcademicCohort,
+         getStudentID } from '../../database-controller/student/methods';
 
 /**
  * insert academic year into planner
@@ -12,12 +14,14 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
     return {};
   }
 
-  // make sure to get the acad year from Student here
   let previousAcademicYear = '';
 
   const retrievedSemester = planner.semesters;
   if (retrievedSemester.length > 0) {
     previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+  } else {
+    // make sure to get the acad year from Student here
+    previousAcademicYear = getStudentAcademicCohort(getStudentID())
   }
 
   const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);
@@ -33,21 +37,15 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
  */
 export const deleteAcademicYearInPlanner = function deleteAcademicYearInPlanner(plannerID) {
   const planner = Planner.findOne(plannerID);
-  const retrievedSemester = planner.semesters;
 
-  // checks if retrieved semester is empty, if so return nothing
-  if (retrievedSemester.length < 0) {
-    return 0;
-  }
-
-  const firstSemLength = deleteSemesterInPlanner(retrievedSemester[retrievedSemester.length-1], plannerID);
+  const firstSemLength = deleteSemesterInPlanner(plannerID);
 
   // checks if after first sem is the 0th index, and if so, no more deleting can be done so return -1
   if (firstSemLength < 0)  {
     return firstSemLength;
   }
 
-  const secondSemLength = deleteSemesterInPlanner(retrievedSemester[firstSemLength], plannerID);
+  const secondSemLength = deleteSemesterInPlanner(plannerID);
 
   return secondSemLength;
 }
@@ -95,7 +93,8 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
  */
  export const getAllSemestersInPlanner = function getAllSemestersInPlanner(plannerID)  {
   const planner = Planner.findOne(plannerID);
-  if (!planner) {
+  if (!planner)
+   {
     return [];
   }
 
@@ -133,10 +132,15 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
  * @param {string}   id of planner
  * @return {object}  index of last semester
  */
-export const deleteSemesterInPlanner = function deleteSemesterInPlanner(semesterIndex, plannerID) {
+export const deleteSemesterInPlanner = function deleteSemesterInPlanner(plannerID) {
   const planner = Planner.findOne(plannerID);
 
   const retrievedSemester = planner.semesters;
+  // checks if retrieved semester is empty, if so return nothing
+  if (retrievedSemester.length < 0) {
+    return 0;
+  }
+
   retrievedSemester.pop();
 
   const numOfDocumentsUpdatedWithSemester = Planner.update(
