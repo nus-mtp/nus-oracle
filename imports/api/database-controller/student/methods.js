@@ -28,9 +28,7 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 export const getStudentID = function getStudentID() {
   // account dependent meteor function
   const userId = Meteor.userId();
-  if (userId) {
-    const student = Students.findOne({accountID: userId});
-  }
+  const student = Students.findOne({accountID: userId});
 
   if (!student) {
     return '';

@@ -1,6 +1,6 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from '../planner/planner';
-import { createPlanner,
+import { createPlannerGivenUserID,
          removePlanner,
          getPlannerIDsGivenUserID } from '../planner/methods';
 import { insertNewSemesterInPlanner,
@@ -30,7 +30,7 @@ describe('semester', function () {
     const semesterIndex = [];
 
     const moduleNames = ['Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Data Structures and Algorithms I', 'Data Structures and Algorithms II', 'Design and Analysis of Algorithms'];
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDOne = createPlannerGivenUserID(plannerNames[0], focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
