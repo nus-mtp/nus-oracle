@@ -56,15 +56,15 @@ export const getCohortByID = function getCohortByID(cohortID) {
   return AcademicCohort.findOne({_id: cohortID});
 }
 
-export const retrieveAcadCohortDataForSetup = function getCohortAndRepackaged() {
-  const acadCohortData = AcademicCohort.find({},{fields: {cohortName:1}});
+export const getAcadCohortDataForSetup = function getCohortAndRepackaged() {
+  const acadCohortData = AcademicCohort.find({}).fetch();
   const repackagedValue = [];
   // repackaged them following the label and value pattern for the UI
-  for (acadCohortCollection in acadCohortData){
-    let acadCohortYear = acadCohortData.cohortName;
+  for (acadCohortDoc in acadCohortData){
+    let acadCohortYear = acadCohortDoc.cohortName;
     repackagedValue.push({label: acadCohortYear,
                           value: acadCohortYear});
   }
-
+  console.log(repackagedValue);
   return repackagedValue;
 }

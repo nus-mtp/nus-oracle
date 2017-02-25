@@ -2,12 +2,13 @@ import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { AcademicCohort } from './acadCohort';
 import { createNewCohort,
          getAllAcadCohort,
+         getAcadCohortDataForSetup,
          getCohortByName,
          getCohortByID,
          insertFocusAreaToCohort,
          removeFocusAreaFromCohort} from './methods';
 if(Meteor.isServer){
-  describe('AcademicCohort', function(){
+  describe('AcademicCohort on Server', function(){
    beforeEach(function() {
      AcademicCohort.remove({});
    });
@@ -49,5 +50,41 @@ if(Meteor.isServer){
    })
 
   });
+}
 
+
+if(Meteor.isClient){
+describe('AcadCohort on Client', function() {
+  const acadCohortName = ['AY 2014/2015', 'AY 2015/2016'];
+  const storeID = [];
+
+  beforeEach( function() {
+    let i = 0;
+    for (i = 0; i < acadCohortName.length ; i ++){
+      let result = createNewCohort(acadCohortName[i]);
+      storeID.push(result);
+    }
+
+    assert.equal(AcademicCohort.find({}).fetch().length, 2);
+  });
+
+  afterEach( function() {
+
+    for (id in storeID){
+      AcademicCohort.remove({_id:id});
+    }
+    while(storeID.length > 0){
+      storeID.pop();
+    }
+  });
+
+  it('should be able to return repackaged data when called in client', function() {
+    const queryResult = getAcadCohortDataForSetup();
+    assert.equal(queryResult.length,2);
+    let i = 0;
+    for (i = 0; i < queryResult.length; i++){
+      assert.equal(queryResult[i].label,queryResult[i].value);
+    }
+  })
+});
 }
