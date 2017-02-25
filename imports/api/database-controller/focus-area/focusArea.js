@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-// This script defines the schema and the collection name
+// This script defines the schema and the collection initialisation
 // for Focus Areas.
 
 // Additional Limitation for the object inside the last three
