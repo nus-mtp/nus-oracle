@@ -26,7 +26,7 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 
 };
 
-// get student ID outside of publish
+// get student ID given userId
 export const getStudentID = function getStudentID(userId) {
   // account dependent meteor function
   let id = userId;

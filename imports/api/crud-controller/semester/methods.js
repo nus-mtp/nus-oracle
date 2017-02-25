@@ -14,12 +14,14 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
     return {};
   }
 
-  // make sure to get the acad year from Student here
-  let previousAcademicYear = getStudentAcademicCohort(getStudentID());
+  let previousAcademicYear = '';
 
   const retrievedSemester = planner.semesters;
   if (retrievedSemester.length > 0) {
     previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+  } else {
+    // make sure to get the acad year from Student here
+    previousAcademicYear = getStudentAcademicCohort(getStudentID())
   }
 
   const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);
