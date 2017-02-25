@@ -1,19 +1,25 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from '../planner/planner';
-import { createPlanner,
+import { createPlannerGivenUserID,
          removePlanner,
-         getPlannerIDs } from '../planner/methods';
+         getPlannerIDsGivenUserID } from '../planner/methods';
 import { insertNewSemesterInPlanner,
          insertNewAcademicYearInPlanner,
          deleteAcademicYearInPlanner,
          deleteSemesterInPlanner ,
          getAllSemestersInPlanner,
          getSemesterInPlanner } from './methods';
+import { m_insertNewSemesterInPlanner,
+         m_insertNewAcademicYearInPlanner,
+         m_deleteAcademicYearInPlanner,
+         m_deleteSemesterInPlanner ,
+         m_getAllSemestersInPlanner,
+         m_getSemesterInPlanner } from './meteor-methods';
 
 describe('semester', function () {
   const userID = 'da2hljfnlajdl1k2';
 
-  beforeEach(function ()  {
+  beforeEach(function (done)  {
     const plannerNames = ['plannerOne'];
     const focusArea = [
       ['Computer Graphics And Games',
@@ -24,12 +30,15 @@ describe('semester', function () {
     const semesterIndex = [];
 
     const moduleNames = ['Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Programming Methodology', 'Data Structures and Algorithms I', 'Data Structures and Algorithms II', 'Design and Analysis of Algorithms'];
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
+    const plannerIDOne = createPlannerGivenUserID(plannerNames[0], focusArea[0], userID);
 
     for (var i=0; i < semesterNum.length; i++)  {
       semesterIndex.push(insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne));
     }
 
+    done();
+
+    /*
     const plannerOne = Planner.findOne(plannerIDOne);
     const retrievedSemesters = plannerOne.semesters;
 
@@ -45,19 +54,22 @@ describe('semester', function () {
     assert.equal(semesterIndex[5], 5);
     assert.equal(semesterIndex[6], 6);
     assert.equal(semesterIndex[7], 7);
+    */
   });
 
-  afterEach(function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+  afterEach(function (done)  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     removePlanner(plannerIDs[0]);
 
-    const removedPlannerOne = Planner.findOne(plannerIDs[0]);
-    expect(removedPlannerOne).to.be.an('undefined');
+    done();
+
+    /*const removedPlannerOne = Planner.findOne(plannerIDs[0]);
+    expect(removedPlannerOne).to.be.an('undefined');*/
   });
 
   it ('get all semester in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const retrievedSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
@@ -82,7 +94,7 @@ describe('semester', function () {
   });
 
   it ('insert one academic year in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const totalNumberOfSemestersInPlanner = insertNewAcademicYearInPlanner(plannerIDs[0]);
 
@@ -95,7 +107,7 @@ describe('semester', function () {
   }),
 
   it ('get one semester in planner', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
     const semesterModules = getSemesterInPlanner(semesterIndex, plannerIDs[0]);
@@ -103,7 +115,7 @@ describe('semester', function () {
   });
 
   it ('delete one academic year in planner', function() {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const totalNumberOfSemestersInPlanner = deleteAcademicYearInPlanner(plannerIDs[0]);
 
@@ -116,14 +128,74 @@ describe('semester', function () {
   });
 
   it ('delete semester in planner', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const semesterIndex = 0;
 
-    const numOfSemesters = deleteSemesterInPlanner(semesterIndex, plannerIDs[0]);
+    const numOfSemesters = deleteSemesterInPlanner(plannerIDs[0]);
 
     const planner = Planner.findOne(plannerIDs[0]);
     const retrievedSemesters = planner.semesters;
 
     assert.equal(retrievedSemesters.length-1, numOfSemesters);
+  });
+
+  it ('add new semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+    const academicYear = 'AY 2019/2020';
+    const semesterNum = 1;
+
+    const lastIndex = m_insertNewSemesterInPlanner.call({
+      academicYear: academicYear,
+      semesterNum: semesterNum,
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(lastIndex, 8);
+  });
+
+  it ('add new academic year using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const secondSemLength = m_insertNewAcademicYearInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(secondSemLength, 9);
+  });
+
+  it ('delete semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const lastIndex = m_deleteSemesterInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(lastIndex, 6);
+  });
+
+  it ('delete academic year using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const secondSemLength = m_deleteAcademicYearInPlanner.call({
+      plannerID: plannerIDs[0]}
+    );
+    assert.equal(secondSemLength, 5);
+  });
+
+  it ('get all semesters using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const retrievedSemester = m_getAllSemestersInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
+    assert.equal(retrievedSemester.length, 8);
+  });
+
+  it ('get one semester using meteor methods', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+    const semesterIndex = 0;
+
+    const semesterModules = m_getSemesterInPlanner.call({
+      semesterIndex: semesterIndex,
+      plannerID: plannerIDs[0]
+    });
+    expect(semesterModules).to.be.a('object');
   });
 });

@@ -22,17 +22,39 @@ FlowRouter.route('/', {
 /**
  * Routes to the main index page with login + initial setup + dashboard
  */
-FlowRouter.route('/1', {
+FlowRouter.route('/LogIn', {
   action() {
     if (!Meteor.userId()) {
       console.log("User is logged out."); // User is logged out.
       mount(MainLayout, {content: <LogInComponent />});
-    } else {
+    } else if (true) { //placeholder to redirect to InitialSetUp
       console.log("User is logged IN."); // User is logged out.
       mount(MainLayout, {content: <AppComponent />});
+    } else {
+      //Redirect to setup
     }
   }
 });
+
+/**
+ * Routes to the initial setup
+ */
+FlowRouter.route('/setup', {
+  action() {
+    console.log("User is logged out."); // User is logged out.
+    mount(AccountSetUpLayout, {content: <AcadDetailComponent />});
+  }
+});
+
+/**
+ * Routes to the user dashboard
+ */
+ FlowRouter.route('/userDashboard', {
+   action() {
+     console.log("User enters dashboard."); // User is logged out.
+     mount(AccountSetUpLayout, {content: <DashboardContainer />});
+   }
+ });
 
 /**
  * A template for anyone to redirect if you want to have html extension

@@ -9,7 +9,6 @@
     "ci-remove-drivers": "meteor remove dispatch:mocha aldeed:browser-tests",
     "ci-add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
     "ci-test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs",
-
     "local-remove-drivers": "meteor remove dispatch:mocha-phantomjs dispatch:phantomjs-tests",
     "local-add-drivers": "meteor add dispatch:mocha-phantomjs dispatch:phantomjs-tests@=0.0.5"
   },
@@ -22,6 +21,7 @@
     "react-autosuggest": "^8.0.1",
     "react-dom": "^15.4.2",
     "react-mounter": "^1.2.0",
+    "react-select": "^1.0.0-rc.3",
     "underscore": "^1.8.3"
   },
   "eslintConfig": {
