@@ -1,7 +1,6 @@
 import { Match } from 'meteor/check';
 import { Students } from './student';
 import { searchByModuleCode } from '../module/methods';
-import { createPlanner } from '../../crud-controller/planner/methods';
 
 // create new Student using the userID from the accountDB right after the sign up
 export const createNewStudent = function createNewStudent(userID, studentCohort, prevEducation){
@@ -17,14 +16,28 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
   // validate the data
   isValid = Match.test(studentDocument, Students.simpleSchema());
 
-  if (isValid){
-    return Students.insert(studentDocument);
+  if (isValid)  {
+    const studentID = Students.insert(studentDocument);
+    return studentID;
   }
 
   return {};
 
 
 };
+export const getStudentID = function getStudentID() {
+  // account dependent meteor function
+  const userId = Meteor.userId();
+  if (userId) {
+    const student = Students.findOne({accountID: userId});
+  }
+
+  if (!student) {
+    return '';
+  }
+  return student._id;
+}
+
 // helper function
 export const getCurrentStudentDocument = function getCurrentStudentDocument(studentID) {
   return Students.findOne({_id: studentID});

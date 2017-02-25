@@ -6,6 +6,7 @@ import { createPlanner,
          getPlannerUserID,
          setPlannerFocusArea,
          getPlannerIDs,
+         getPlannerIDsGivenUserID,
          setPlannerName,
          removePlanner } from './methods';
 
@@ -48,7 +49,7 @@ describe('planner', function () {
   });
 
   afterEach(function (done)  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     removePlanner(plannerIDs[0]);
     removePlanner(plannerIDs[1]);
@@ -68,7 +69,7 @@ describe('planner', function () {
   });
 
   it ('check if planner ids are correctly returned', function()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const plannerOne = Planner.findOne(plannerIDs[0]);
     const plannerTwo = Planner.findOne(plannerIDs[1]);
     const plannerThree = Planner.findOne(plannerIDs[2]);
@@ -82,12 +83,12 @@ describe('planner', function () {
 
     // plannerIDs returns empty result when given wrong user ID
     const wrongUserID = 'alkjarnlaas';
-    const wrongPlannerIDs = getPlannerIDs(wrongUserID);
+    const wrongPlannerIDs = getPlannerIDsGivenUserID(wrongUserID);
     assert.equal(wrongPlannerIDs.length, 0);
   });
 
   it ('get planner focus area', function () {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const retrievedFocusAreaOne = getPlannerFocusArea(plannerIDs[0]);
 
@@ -96,7 +97,7 @@ describe('planner', function () {
   });
 
   it ('get planner name', function ()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
     const planner = Planner.findOne(plannerIDs[0]);
 
     const plannerName = getPlannerName(plannerIDs[0]);
@@ -105,7 +106,7 @@ describe('planner', function () {
   });
 
   it ('get planner userID', function()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const plannerUserID = getPlannerUserID(plannerIDs[0]);
     expect(plannerUserID).to.be.a('string');
@@ -113,7 +114,7 @@ describe('planner', function () {
   });
 
   it ('set new planner focus area', function()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const newFocusArea = ['Computer Graphics And Games'];
     const numOfDocumentsUpdatedWithSemester = setPlannerFocusArea(plannerIDs[0], newFocusArea);
@@ -126,7 +127,7 @@ describe('planner', function () {
   });
 
   it ('set new planner name', function()  {
-    const plannerIDs = getPlannerIDs(userID);
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
 
     const newPlannerName = 'testNewPlanner';
     const numOfDocumentsUpdatedWithSemester = setPlannerName(plannerIDs[0], newPlannerName);
