@@ -5,6 +5,8 @@ import Dashboard from './Dashboard.jsx';
 
 export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');
+    Meteor.subscribe('Student');
+    Meteor.subscribe('Modules');
     //const userID = '9f91pejfj912ras';
     const plannerIDs = getPlannerIDs();
 
