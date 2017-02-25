@@ -1,8 +1,6 @@
 import React from 'react';
-import SemModulesCardContainer from './SemModulesCardContainer';
-import SemSpecialModulesCard from './SemSpecialModulesCard';
-
-import Util from '../../../../api/util';
+import SemModulesCardContainer from './SemModulesCardContainer.js';
+import SemSpecialModulesCard from './SemSpecialModulesCard.jsx';
 
 export default class AcadYrRow extends React.Component {
   render() {

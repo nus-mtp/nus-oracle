@@ -1,5 +1,6 @@
 import { Modules } from '../database-controller/module/module';
-import { retrieveAllModule } from '../database-controller/module/methods';
+import { insertToModuleCollection,
+         retrieveAllModule } from '../database-controller/module/methods';
 
 export const populateModuleFixture = function populateModuleFixture() {
   const moduleCodes = ['CS1010', 'CS1010E', 'CS1010J', 'CS1010S', 'CS1010X', 'CS1020', 'CS2010', 'CS3230'];
@@ -15,15 +16,15 @@ export const populateModuleFixture = function populateModuleFixture() {
       moduleMC: 4,
       termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
     };
-    Modules.insert(testModule);
+    insertToModuleCollection(testModule);
   }
   return retrieveAllModule();
 };
 
 export const dePopulateModuleFixture = function dePopulateModuleFixture() {
-  const modules = retrieveAllModule();
-  for (var i = 0; i < modules.length; i++)  {
-    Modules.remove({_id: modules[i]._id});
+  const allModules = retrieveAllModule();
+  for (var i = 0; i < allModules.length; i++)  {
+    Modules.remove(allModules[i]._id);
   }
   return retrieveAllModule();
 }

@@ -1,16 +1,6 @@
 import React from 'react';
 import Sidebar from '../components/sidebar_menu/Sidebar';
-import StudyPlan2 from '../components/StudyPlan2';
 import StudyPlan from '../components/StudyPlan';
-
-/*export default function Dashboard() {
-  return (
-    <div className="with-side-menu">
-      <Sidebar />
-      <StudyPlan2 />
-    </div>
-  );
-}*/
 
 export default class Dashboard extends React.Component {
   render() {
@@ -30,3 +20,5 @@ export default class Dashboard extends React.Component {
 Dashboard.propTypes = {
   plannerIDs: React.PropTypes.array
 }
+//<Sidebar />
+//<StudyPlan2 />

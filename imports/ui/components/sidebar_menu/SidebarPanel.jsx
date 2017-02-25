@@ -1,4 +1,5 @@
 import React from 'react';
+import * as constants from '../common/Constants.js';
 
 export default class SidebarPanel extends React.Component {
 constructor(){
@@ -15,7 +16,7 @@ toggleCollapse() {
 
 render(){
   return(
-    <nav className="side-menu-addl">
+    <nav className="side-menu-addl" style={styles.Panel}>
       <header className="side-menu-addl-title">
         <div className="caption">Filter by Type</div>
         <i className="font-icon font-icon-burger"></i>
@@ -139,5 +140,11 @@ render(){
     </nav>
   );
 }
-
 }
+
+const styles = ({
+  Panel: {
+    width: constants.SIDEBAR_PANEL_WIDTH +'px',
+    left: constants.SIDEBAR_MENU_WIDTH + 'px'
+  }
+});
