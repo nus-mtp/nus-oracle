@@ -1,7 +1,7 @@
-
 import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
+// The following component handles the available method of interaction with the Module Collections
 
 // to check if the reference to module collection has been made
 export const isExistModuleCollection = function checkForCollection() {
