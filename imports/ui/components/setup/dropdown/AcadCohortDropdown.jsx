@@ -6,11 +6,11 @@ Temporary course option.
 @todo: Transfer Course array into another admin database
 */
 const AcadCohort =[
-  { label: 'AY 2012/2013', value:'12/13' },
-  { label: 'AY 2013/2014', value:'13/14' },
-  { label: 'AY 2014/2015', value:'14/15' },
-  { label: 'AY 2015/2016', value:'15/16' },
-  { label: 'AY 2016/2017', value:'16/17' }
+  { label: 'AY 2012/2013', value:'AY 2012/2013' },
+  { label: 'AY 2013/2014', value:'AY 2013/2014' },
+  { label: 'AY 2014/2015', value:'AY 2014/2015' },
+  { label: 'AY 2015/2016', value:'AY 2015/2016' },
+  { label: 'AY 2016/2017', value:'AY 2016/2017' }
 ]
 
 var AcadCohortDropdown = React.createClass({
