@@ -12,16 +12,20 @@ import { searchByModuleCode } from '../module/methods';
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function(name, listOfPrimary, listOfFourThousands, listOfNonPrimary){
-  checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
-  checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
-  checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
+export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, listOfFourThousands, listOfNonPrimary){
+  //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
+  //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
+  //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
 
+  primaryToBeStored = createModuleListObject(listOfPrimary);
+  fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
+  nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
   const newFocusAreaObject = {
     name : name,
-    moduleListPrimary : checkedListPrimary,
-    moduleListFourThousands: checkedListFourThousands,
-    moduleListNonPrimary: checkedListNonPrimary
+    academicYearList: listOfAcadYear,
+    moduleListPrimary : primaryToBeStored,
+    moduleListFourThousands: fourThousandsToBeStored,
+    moduleListNonPrimary: nonPrimaryToBeStored
   }
 
   FocusArea.insert(newFocusAreaObject);
@@ -52,4 +56,15 @@ export const consolidateModuleArrayValidity = function(moduleArray) {
       moduleArray.splice(moduleIndex,1);
     }
   }
+}
+
+export const createModuleListObject = function(moduleList) {
+  // TO-DO: Check for module validity
+  const moduleToBeStored = {};
+
+  for (module in moduleList){
+    moduleToBeStored[module] = DEFAULT_MODULE_STATE;
+  }
+
+  return moduleToBeStored;
 }

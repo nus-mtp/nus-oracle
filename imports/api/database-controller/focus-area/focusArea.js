@@ -12,6 +12,9 @@ const focusAreaSchema = {
   name: {
     type: String
   },
+  academicYearList: {
+    type: [String]
+  },
   moduleListPrimary: {
     type: Object
   },
@@ -21,7 +24,7 @@ const focusAreaSchema = {
   moduleListNonPrimary: {
     type: Object
   }
-}
+};
 
 const FocusArea = new FocusAreaCollection('focusArea');
 FocusArea.attachSchema(focusAreaSchema);
