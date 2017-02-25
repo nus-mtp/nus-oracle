@@ -16,7 +16,11 @@ const gradRequirementSchema = {
     type: String
   },
   requirementModules: {
-    type: [Object],
+    type: Object,
+    optional: true
+  },
+  academicYearList: {
+    type: [String],
     optional: true
   }
 }
