@@ -1,6 +1,6 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from './planner';
-import { createPlanner,
+import { createPlannerGivenUserID,
          getPlannerFocusArea,
          getPlannerName,
          getPlannerUserID,
@@ -27,9 +27,9 @@ describe('planner', function () {
     const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
     const semesterIndex = [0, 1, 2, 3, 4, 5, 6, 7];
 
-    const plannerIDOne = createPlanner(plannerNames[0], focusArea[0], userID);
-    const plannerIDTwo = createPlanner(plannerNames[1], focusArea[1], userID);
-    const plannerIDThree = createPlanner(plannerNames[2], focusArea[2], userID);
+    const plannerIDOne = createPlannerGivenUserID(plannerNames[0], focusArea[0], userID);
+    const plannerIDTwo = createPlannerGivenUserID(plannerNames[1], focusArea[1], userID);
+    const plannerIDThree = createPlannerGivenUserID(plannerNames[2], focusArea[2], userID);
 
     done();
 

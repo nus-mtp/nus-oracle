@@ -5,10 +5,37 @@ import { getStudentID } from '../../database-controller/student/methods';
  * creates a planner
  * @param  {string}    name of planner
  * @param  {[string]}  array of focus area
+ * @return {string}    id of planner
+ */
+ export const createPlanner = function createPlanner(plannerName, focusArea) {
+  let name = plannerName;
+  if (name === '') {
+    name = 'Untitled';
+  }
+  
+  if (getStudentID() === '')  {
+    return '';
+  }
+
+  const newPlanner = {
+    name: name,
+    semesters: [],
+    focusArea: focusArea,
+    userID: getStudentID(),
+  };
+
+  const id = Planner.insert(newPlanner);
+  return id;
+};
+
+/**
+ * creates a planner given user ID, DO NOT USE IN PRODUCTION, ONLY FOR TESTING PURPOSES!
+ * @param  {string}    name of planner
+ * @param  {[string]}  array of focus area
  * @param {string}     id of user
  * @return {string}    id of planner
  */
- export const createPlanner = function createPlanner(plannerName, focusArea, userID) {
+ export const createPlannerGivenUserID = function createPlanner(plannerName, focusArea, userID) {
   let name = plannerName;
   if (name === '') {
     name = 'Untitled';
@@ -59,10 +86,8 @@ export const getPlannerFocusArea = function getPlannerFocusArea(plannerID) {
  * @return {string}    id of planner
  */
  export const getPlannerIDs = function getPlannerIDs() {
-  let id = '';
-  if (getStudentID()) {
-    id = getStudentID();
-  }
+  const id = getStudentID();
+
   const planners = Planner.find({userID: id}).fetch();
   const plannerIDs = [];
 
