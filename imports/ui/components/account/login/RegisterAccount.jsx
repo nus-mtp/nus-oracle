@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 //import verfification from '../../server/send-verification'
 /*
@@ -34,7 +35,10 @@ export default class RegisterAccount extends React.Component {
     let user = {
       username: this.state.email,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      profile:  {
+        hasSetup: false,
+      }
     }
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
       console.log(validEmail);
@@ -51,7 +55,8 @@ export default class RegisterAccount extends React.Component {
                   console.log('verification error');
                   Bert.alert( error.reason, 'danger' );
                 } else {
-                  Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                  Bert.alert('Welcome! Please log in with your new account below!', 'success');
+                  //Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
                   Meteor.logout();
                 }
               });

@@ -13,7 +13,6 @@ import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
 import { removePlanner } from '../../../api/crud-controller/planner/methods.js';
 
 // TEMPORARY
-const plannerID = '9f91pejfj912ras';
 const focusArea = ['dunnoWhatFocusArea'];
 
 /**
@@ -39,7 +38,7 @@ export default class TabbedContainer extends React.Component {
       let userInputStudyPlanName = event.target.value;
       if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
         this.setState({ isAddingNewModule: false });
-        createPlanner(userInputStudyPlanName, focusArea, plannerID);
+        createPlanner(userInputStudyPlanName, focusArea);
       }
     }
   }
@@ -51,7 +50,7 @@ export default class TabbedContainer extends React.Component {
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
       if (userInputStudyPlanName) {
-        createPlanner(userInputStudyPlanName, focusArea, plannerID);
+        createPlanner(userInputStudyPlanName, focusArea);
       }
     }
   }

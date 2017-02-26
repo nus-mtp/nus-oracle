@@ -1,5 +1,7 @@
 import { Planner } from '../planner/planner';
 import { increaseAcadYearByOne } from '../../../utils/util';
+import { getStudentAcademicCohort,
+         getStudentID } from '../../database-controller/student/methods';
 
 /**
  * insert academic year into planner
@@ -12,12 +14,14 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
     return {};
   }
 
-  // make sure to get the acad year from Student here
   let previousAcademicYear = '';
 
   const retrievedSemester = planner.semesters;
   if (retrievedSemester.length > 0) {
     previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+  } else {
+    // make sure to get the acad year from Student here
+    previousAcademicYear = getStudentAcademicCohort(getStudentID())
   }
 
   const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);

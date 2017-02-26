@@ -26,7 +26,11 @@ class StudentCollection extends Mongo.Collection{
 export const Students = new StudentCollection("Student");
 StudentSchema = {
   studentExemptedModule: {
-    type: [String],
+    type: Object,
+    optional: true,
+  },
+  studentWaivedModule:  {
+    type: Object,
     optional: true,
   },
   studentAcademicCohort: {
@@ -43,6 +47,6 @@ StudentSchema = {
 Students.attachSchema(StudentSchema);
 if (Meteor.isServer) {
   Meteor.publish('Student', function taskPublication () {
-    return Students.find();
+    return Students.find({'accountID': this.userId});
   });
 }

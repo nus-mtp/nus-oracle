@@ -7,8 +7,8 @@
 # meteor libraries
 meteor-base@1.0.4             # Packages every Meteor app needs to have
 es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
-ecmascript@0.6.1              # Enable ECMAScript2015+ syntax in app code
-tracker@1.1.1                 # Meteor's client-side reactive programming library
+ecmascript@0.6.3              # Enable ECMAScript2015+ syntax in app code
+tracker@1.1.2                 # Meteor's client-side reactive programming library
 
 # standard libraries
 jquery@1.11.10                  # Helpful client-side library
@@ -18,10 +18,10 @@ blaze-html-templates@1.0.4 # Compile .html files into Meteor Blaze views
 reactive-var@1.0.11            # Reactive variable for tracker
 react-meteor-data              # Meteor React package
 #okgrow:accounts-ui-react       # React package for accounts
-less@2.7.8                           # Alternative to CSS
+less@2.7.9                           # Alternative to CSS
 
 # accounts
-accounts-password@1.3.3
+accounts-password@1.3.4
 accounts-ui@1.1.9
 thereactivestack:blazetoreact
 email@1.1.18
@@ -29,26 +29,26 @@ themeteorchef:bert
 kadira:flow-router
 
 # data
-mongo@1.1.14                   # The database Meteor supports right now
+mongo@1.1.15                   # The database Meteor supports right now
 aldeed:collection2-core
 aldeed:simple-schema
 harrison:papa-parse             # parsing csv to json
 mdg:validated-method            # wrapper for meteor methods
 
 # production
-standard-minifier-css@1.3.2   # CSS minifier run for production mode
-standard-minifier-js@1.2.1    # JS minifier run for production mode
-shell-server@0.2.1            # Server-side component of the `meteor shell` command
+standard-minifier-css@1.3.3   # CSS minifier run for production mode
+standard-minifier-js@1.2.2    # JS minifier run for production mode
+shell-server@0.2.2            # Server-side component of the `meteor shell` command
 
 # mobile
 mobile-experience@1.0.4       # Packages for a great mobile UX
 
 # Unsafe for production
-autopublish@1.0.7             # Publish all data to the clients (for prototyping)
+# autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 
 # tests
 practicalmeteor:mocha
 dispatch:mocha
 aldeed:browser-tests
-http
+http@1.2.11
