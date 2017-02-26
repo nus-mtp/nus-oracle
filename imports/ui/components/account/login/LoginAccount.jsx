@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 //import verfification from '../../server/send-verification'
 /*
@@ -6,7 +7,6 @@ import React from 'react';
  2) db.users.remove({_id:db.users.find()[0]._id})
 
  */
-
 
 export default class LoginAccount extends React.Component {
   constructor(props) {
@@ -39,16 +39,16 @@ export default class LoginAccount extends React.Component {
         }
       } else {
         this.state.passwordErr = 0;
-        if (Meteor.user().emails[0].verified) {
-          if (!Meteor.user().profile.hasSetup)  {
-            FlowRouter.go('/setup');
+        if (Meteor.user().emails[0].verified && Meteor.user()._id) {
+          if (Meteor.user().profile.hasSetup) {
+            FlowRouter.go('/app');
           } else {
-            FlowRouter.go('/userDashboard');
+            FlowRouter.go('/acadDetails');
           }
-          //FlowRouter.reload();
           Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
         } else {
           Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
+          FlowRouter.go('/');
           Meteor.logout();
         }
       }

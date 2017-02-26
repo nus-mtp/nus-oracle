@@ -23,7 +23,7 @@ export default class LogoutAccount extends React.Component {
         console.log(error.reason);
       } else {
         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
-        FlowRouter.reload();
+        FlowRouter.go('/');
       }
     });
 

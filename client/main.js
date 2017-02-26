@@ -1,1 +1,1 @@
-import '../imports/startup/client/fixtures';
+import '../imports/startup/client/Router';
