@@ -67,6 +67,11 @@ export default class TabbedContainer extends React.Component {
     removePlanner(studyPlanIDToDelete);
   }
 
+  handleEditStudyPlan(index) {
+    console.log("EDITING MY STUDY PLAN NOW!");
+    
+  }
+
   render() {
     var tabTitleList = this.props.tabTitleList;
     var plannerIDs = this.props.plannerIDs;
@@ -94,6 +99,7 @@ export default class TabbedContainer extends React.Component {
                        isFirstTab={(index === 0) ? true : false}
                        onClickTab={this.handleClickTab.bind(this, index)}
                        onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+                       onClickEditTab={this.handleEditStudyPlan.bind(this, index)}
                        isActiveTab={(this.state.tabSelectedIndex === index)} />
                 )
               })}
@@ -174,7 +180,7 @@ class Tab extends React.Component {
   }
 
   handleEditClick() {
-    console.log("Editing!!");
+    this.props.onClickEditTab();
     this.setState({ onClickDropdown: false });
   }
 
@@ -198,6 +204,7 @@ class Tab extends React.Component {
           <a className={'nav-link' + (this.props.isActiveTab ? ' active' : '')} role='tab'>
             <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
 
+              {/* The label of this Tab is rendered here */}
               {this.props.tabTitle}
 
               {/* Only want the delete button rendered if activated or on hover,
@@ -212,27 +219,26 @@ class Tab extends React.Component {
                 null}
 
               {/* Toggle Dropdown menu for this tab */}
+              {this.state.onClickDropdown ?
+                <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
+                     style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
 
-                {this.state.onClickDropdown ?
-                  <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
-                       style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
+                  {/* A single dropdown selection */}
+                	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
+                    <i className="fa fa-edit"
+                       style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
+                		<div>Edit</div>
+                	</div>
 
-                    {/* A single dropdown selection */}
-                  	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
-                      <i className="fa fa-edit"
-                         style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
-                  		<div>Edit</div>
-                  	</div>
-
-                    {/* A single dropdown selection */}
-                  	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
-                      <i className="fa fa-trash"
-                         style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
-                  		<div>Delete</div>
-                  	</div>
-                  </div> :
-                  null
-                }
+                  {/* A single dropdown selection */}
+                	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
+                    <i className="fa fa-trash"
+                       style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
+                		<div>Delete</div>
+                	</div>
+                </div> :
+                null
+              }
 
             </span>
           </a>
