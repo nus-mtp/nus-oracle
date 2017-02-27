@@ -1,10 +1,12 @@
 /* Import common utilities */
 import { ENTER_CHAR_KEY_CODE } from './Constants.js';
 import { isDefinedObj } from '../../../utils/util.js';
+import { getFirstNChars } from '../../../utils/util.js';
 
 /* import React components */
 import React from 'react';
 import Select from 'react-select';
+import ReactClickOut from 'react-onclickout';
 import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer.js';
 import Button from './Button.jsx';
 import IconButton from './IconButton.jsx';
@@ -87,7 +89,7 @@ export default class TabbedContainer extends React.Component {
                 return (
                   <Tab key={index} tabWidth="9em"
                        navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-                       tabTitle={tabTitle}
+                       tabTitle={getFirstNChars(tabTitle, 12) + "..."}
                        enabledMouseOver={true}
                        isFirstTab={(index === 0) ? true : false}
                        onClickTab={this.handleClickTab.bind(this, index)}
@@ -181,54 +183,61 @@ class Tab extends React.Component {
     this.setState({ onClickDropdown: false });
   }
 
+  onClickOutDropdown() {
+    this.setState({ onClickDropdown: false });
+  }
+
   render() {
     return (
-      <li className='nav-item'
-          style={{float: "left", width: this.props.tabWidth}}
-          onClick={this.props.onClickTab}
-          onMouseEnter={this.handleOnMouseEnter.bind(this)}
-          onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-        <a className={'nav-link' + (this.props.isActiveTab ? ' active' : '')} role='tab'>
-          <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
+      <ReactClickOut onClickOut={this.onClickOutDropdown.bind(this)} >
+        <li className='nav-item'
+            style={{float: "left", width: this.props.tabWidth}}
+            onClick={this.props.onClickTab}
+            onMouseEnter={this.handleOnMouseEnter.bind(this)}
+            onMouseLeave={this.handleOnMouseLeave.bind(this)}>
+          <a className={'nav-link' + (this.props.isActiveTab ? ' active' : '')} role='tab'>
+            <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
 
-            {this.props.tabTitle}
+              {this.props.tabTitle}
 
-            {/* Only want the delete button rendered if activated or on hover,
-                if not, we don't render anything. */}
-            {this.props.enabledMouseOver && this.state.onMouseOver ?
-              <IconButton
-                icon="fa fa-sort-down"
-                style={{position: 'absolute', top:'0.3em', right: '0.5em',
-                        paddingTop: '0.15em', opacity: '0.8'}}
-                displayColor="#505050" onMouseOverColor="#ff9100"
-                onButtonClick={this.handleToggleDropdown.bind(this)} /> :
-              null}
+              {/* Only want the delete button rendered if activated or on hover,
+                  if not, we don't render anything. */}
+              {this.props.enabledMouseOver && this.state.onMouseOver ?
+                <IconButton
+                  icon="fa fa-sort-down"
+                  style={{position: 'absolute', top:'0.3em', right: '0.5em',
+                          paddingTop: '0.15em', opacity: '0.8'}}
+                  displayColor="#505050" onMouseOverColor="#ff9100"
+                  onButtonClick={this.handleToggleDropdown.bind(this)} /> :
+                null}
 
-            {/* Toggle Dropdown menu for this tab */}
-            {this.state.onClickDropdown ?
-              <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
-                   style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
+              {/* Toggle Dropdown menu for this tab */}
 
-                {/* A single dropdown selection */}
-              	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
-                  <i className="fa fa-edit"
-                     style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
-              		<div>Edit</div>
-              	</div>
+                {this.state.onClickDropdown ?
+                  <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
+                       style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
 
-                {/* A single dropdown selection */}
-              	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
-                  <i className="fa fa-trash"
-                     style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
-              		<div>Delete</div>
-              	</div>
-              </div> :
-              null
-            }
+                    {/* A single dropdown selection */}
+                  	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
+                      <i className="fa fa-edit"
+                         style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
+                  		<div>Edit</div>
+                  	</div>
 
-          </span>
-        </a>
-      </li>
+                    {/* A single dropdown selection */}
+                  	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
+                      <i className="fa fa-trash"
+                         style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
+                  		<div>Delete</div>
+                  	</div>
+                  </div> :
+                  null
+                }
+
+            </span>
+          </a>
+        </li>
+      </ReactClickOut>
     )
   }
 }
