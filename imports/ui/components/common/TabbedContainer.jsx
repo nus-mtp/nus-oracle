@@ -28,7 +28,8 @@ export default class TabbedContainer extends React.Component {
     super();
     this.state = {
       tabSelectedIndex: 0,
-      isAddingNewModule: false
+      isAddingNewPlan: false,
+      isEditingPlanName: false
     }
   }
 
@@ -40,14 +41,14 @@ export default class TabbedContainer extends React.Component {
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
       if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
-        this.setState({ isAddingNewModule: false });
+        this.setState({ isAddingNewPlan: false });
         createPlanner(userInputStudyPlanName, focusArea);
       }
     }
   }
 
   handleCancelAddStudyPlan(event) {
-    this.setState({isAddingNewModule: false});
+    this.setState({isAddingNewPlan: false});
 
     // If the user already entered a name, add study plan for convenience
     if (isDefinedObj(event)) {
@@ -59,7 +60,7 @@ export default class TabbedContainer extends React.Component {
   }
 
   handleAddStudyPlanClick() {
-    this.setState({isAddingNewModule : true});
+    this.setState({isAddingNewPlan : true});
   }
 
   handleDeleteStudyPlanClick(index) {
@@ -73,10 +74,16 @@ export default class TabbedContainer extends React.Component {
   }
 
   renderTab(tabTitle, index) {
+    let trimmedTabTitle =  getFirstNChars(tabTitle, 12);
+
+    if (trimmedTabTitle.length < tabTitle.length) {
+      trimmedTabTitle += "...";
+    }
+
     return (
       <Tab key={index} tabWidth="9em"
            navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-           tabTitle={getFirstNChars(tabTitle, 12) + "..."}
+           tabTitle={trimmedTabTitle}
            enabledMouseOver={true}
            isFirstTab={(index === 0) ? true : false}
            onClickTab={this.handleClickTab.bind(this, index)}
@@ -138,7 +145,7 @@ export default class TabbedContainer extends React.Component {
 
               {/* Renders the tab used to enter a new study plan's name when
                   user clicks on "Add" study plan button */}
-              {this.state.isAddingNewModule ? this.renderAddPlanTab : null}
+                  {this.state.isAddingNewPlan ? this.renderAddPlanTab() : null}
 
               {/* "Add" study plan button with a "+" symbol */}
               {this.renderAddPlanButton()}
@@ -149,8 +156,10 @@ export default class TabbedContainer extends React.Component {
         <div className='tab-content' style={{padding: '8px'}}>
           <div role='tabpanel' className='tab-pane fade in active'
                id={ 'tab' + this.state.tabSelectedIndex}>
+
             {/* Renders a Academic Year content panel under each tab. */}
             {contentPanels[this.state.tabSelectedIndex]}
+
           </div>
         </div>
       </section>
