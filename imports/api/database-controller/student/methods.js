@@ -70,17 +70,7 @@ export const updateStudentAcademicCohort = function updateStudentCohort(StudentI
   }
   return Students.update(StudentID, { $set: { studentAcademicCohort: newCohort} });
 }
-// create new Student using the userID from the accountDB right after the sign up
-export const createNewStudent = function createNewStudent(studentData){
-  let result = true;
-  try {
-    Students.insert(studentData);
-  } catch (error) {
-    result = false
-    console.log('there is an error while attempting to insert data to Students');
-  }
 
-<<<<<<< HEAD
 export const updateStudentPreviousEducation = function updateStudentEducation(StudentID, prevEdu) {
   //TO-DO: Check if the prevEdu exists in the previousEducationDatabase
   // find the studentID
@@ -155,7 +145,3 @@ export const deleteStudentWaivedModule = function deleteStudentWaivedModule(Stud
 
   return Students.update(StudentID, { $set: { studentWaivedModule: studentWaivedModules } });
 }
-=======
-  return result;
-};
->>>>>>> REFACTOR student.js and its method
