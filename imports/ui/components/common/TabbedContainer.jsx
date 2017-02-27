@@ -69,7 +69,49 @@ export default class TabbedContainer extends React.Component {
 
   handleEditStudyPlan(index) {
     console.log("EDITING MY STUDY PLAN NOW!");
-    
+
+  }
+
+  renderTab(tabTitle, index) {
+    return (
+      <Tab key={index} tabWidth="9em"
+           navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
+           tabTitle={getFirstNChars(tabTitle, 12) + "..."}
+           enabledMouseOver={true}
+           isFirstTab={(index === 0) ? true : false}
+           onClickTab={this.handleClickTab.bind(this, index)}
+           onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+           onClickEditTab={this.handleEditStudyPlan.bind(this, index)}
+           isActiveTab={(this.state.tabSelectedIndex === index)} />
+    )
+  }
+
+  renderAddPlanTab() {
+    return (
+      <Tab tabWidth="9em"
+           navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
+           enabledMouseOver={false} isFirstTab={false}
+           tabTitle={
+             <input autoFocus type="text" className="form-control"
+                    style={{height: "1.5em"}}
+                    onKeyPress={this.handleEnterStudyPlanName.bind(this)}
+                    onBlur={this.handleCancelAddStudyPlan.bind(this)} />}
+      />
+    )
+  }
+
+  renderAddPlanButton() {
+    return (
+      <Tab tabWidth="3em" isFirstTab={false}
+           tabTitle={
+             <IconButton
+               icon="glyphicon glyphicon-plus"
+               style={{margin: '0.75em 0.25em'}}
+               displayColor="#505050" onMouseOverColor="#00a8ff"
+               onButtonClick={this.handleAddStudyPlanClick.bind(this)}
+               enabledMouseOver={false} />}
+      />
+    )
   }
 
   render() {
@@ -91,44 +133,15 @@ export default class TabbedContainer extends React.Component {
 
               {/* Render the Tabs on the top of the TabbedContainer */}
               {tabTitleList.map((tabTitle, index) => {
-                return (
-                  <Tab key={index} tabWidth="9em"
-                       navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-                       tabTitle={getFirstNChars(tabTitle, 12) + "..."}
-                       enabledMouseOver={true}
-                       isFirstTab={(index === 0) ? true : false}
-                       onClickTab={this.handleClickTab.bind(this, index)}
-                       onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
-                       onClickEditTab={this.handleEditStudyPlan.bind(this, index)}
-                       isActiveTab={(this.state.tabSelectedIndex === index)} />
-                )
+                return this.renderTab(tabTitle, index);
               })}
 
               {/* Renders the tab used to enter a new study plan's name when
                   user clicks on "Add" study plan button */}
-              {this.state.isAddingNewModule ?
-                <Tab tabWidth="9em"
-                     navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
-                     enabledMouseOver={false}
-                     isFirstTab={false}
-                     tabTitle={
-                       <input autoFocus type="text" className="form-control"
-                              style={{height: "1.5em"}}
-                              onKeyPress={this.handleEnterStudyPlanName.bind(this)}
-                              onBlur={this.handleCancelAddStudyPlan.bind(this)}
-                       />} /> :
-                null}
+              {this.state.isAddingNewModule ? this.renderAddPlanTab : null}
 
               {/* "Add" study plan button with a "+" symbol */}
-              <Tab tabWidth="3em"
-                   isFirstTab={false}
-                   tabTitle={
-                     <IconButton
-                       icon="glyphicon glyphicon-plus"
-                       style={{margin: '0.75em 0.25em'}}
-                       displayColor="#505050" onMouseOverColor="#00a8ff"
-                       onButtonClick={this.handleAddStudyPlanClick.bind(this)}
-                       enabledMouseOver={false} />} />
+              {this.renderAddPlanButton()}
             </ul>
           </div>
         </div>
@@ -136,6 +149,7 @@ export default class TabbedContainer extends React.Component {
         <div className='tab-content' style={{padding: '8px'}}>
           <div role='tabpanel' className='tab-pane fade in active'
                id={ 'tab' + this.state.tabSelectedIndex}>
+            {/* Renders a Academic Year content panel under each tab. */}
             {contentPanels[this.state.tabSelectedIndex]}
           </div>
         </div>
