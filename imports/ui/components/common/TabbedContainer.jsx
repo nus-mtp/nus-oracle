@@ -4,6 +4,7 @@ import { isDefinedObj } from '../../../utils/util.js';
 
 /* import React components */
 import React from 'react';
+import Select from 'react-select';
 import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer.js';
 import Button from './Button.jsx';
 import IconButton from './IconButton.jsx';
@@ -84,14 +85,15 @@ export default class TabbedContainer extends React.Component {
               {/* Render the Tabs on the top of the TabbedContainer */}
               {tabTitleList.map((tabTitle, index) => {
                 return (
-                    <Tab key={index} tabWidth="9em"
-                         navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-                         tabTitle={tabTitle}
-                         enabledMouseOver={true}
-                         isFirstTab={(index === 0) ? true : false}
-                         onClickTab={this.handleClickTab.bind(this, index)}
-                         onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
-                         isActiveTab={(this.state.tabSelectedIndex === index)} />)
+                  <Tab key={index} tabWidth="9em"
+                       navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
+                       tabTitle={tabTitle}
+                       enabledMouseOver={true}
+                       isFirstTab={(index === 0) ? true : false}
+                       onClickTab={this.handleClickTab.bind(this, index)}
+                       onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+                       isActiveTab={(this.state.tabSelectedIndex === index)} />
+                )
               })}
 
               {/* Renders the tab used to enter a new study plan's name when
@@ -147,7 +149,8 @@ class Tab extends React.Component {
   constructor() {
     super();
     this.state = {
-      onMouseOver: false
+      onMouseOver: false,
+      onClickDropdown: false
     }
   }
 
@@ -159,8 +162,23 @@ class Tab extends React.Component {
     this.setState({ onMouseOver: false });
   }
 
+  handleToggleDropdown(event) {
+    this.setState({ onClickDropdown: !this.state.onClickDropdown });
+  }
+
+  handleOnBlurDropdown(event) {
+    console.log("On Blur!!");
+    this.setState({ onClickDropdown: false });
+  }
+
+  handleEditClick() {
+    console.log("Editing!!");
+    this.setState({ onClickDropdown: false });
+  }
+
   handleDeleteClick() {
     this.props.onClickDeleteTab();
+    this.setState({ onClickDropdown: false });
   }
 
   render() {
@@ -179,12 +197,34 @@ class Tab extends React.Component {
                 if not, we don't render anything. */}
             {this.props.enabledMouseOver && this.state.onMouseOver ?
               <IconButton
-                icon="font-icon font-icon-trash"
-                style={{position: 'absolute', top:'0.5em', right: '0.5em',
+                icon="fa fa-sort-down"
+                style={{position: 'absolute', top:'0.3em', right: '0.5em',
                         paddingTop: '0.15em', opacity: '0.8'}}
-                displayColor="#505050" onMouseOverColor="#8b2a2a"
-                onButtonClick={this.handleDeleteClick.bind(this)} /> :
-            null}
+                displayColor="#505050" onMouseOverColor="#ff9100"
+                onButtonClick={this.handleToggleDropdown.bind(this)} /> :
+              null}
+
+            {/* Toggle Dropdown menu for this tab */}
+            {this.state.onClickDropdown ?
+              <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
+                   style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
+
+                {/* A single dropdown selection */}
+              	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
+                  <i className="fa fa-edit"
+                     style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
+              		<div>Edit</div>
+              	</div>
+
+                {/* A single dropdown selection */}
+              	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
+                  <i className="fa fa-trash"
+                     style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
+              		<div>Delete</div>
+              	</div>
+              </div> :
+              null
+            }
 
           </span>
         </a>
