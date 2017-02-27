@@ -2,7 +2,6 @@ import React from 'react';
 import TabbedContainer from './common/TabbedContainer.jsx';
 import { getPlannerName,
          getPlannerUserID } from '../../api/crud-controller/planner/methods.js';
-import * as constants from './common/Constants.js';
 
 export default class StudyPlan extends React.Component {
   render() {
@@ -15,8 +14,7 @@ export default class StudyPlan extends React.Component {
 
     return (
           <TabbedContainer tabTitleList={plannerNames}
-                           plannerIDs={this.props.plannerIDs}
-                           style={styles.StudyPlan} />
+                           plannerIDs={this.props.plannerIDs}/>
     );
   }
 }
@@ -24,9 +22,3 @@ export default class StudyPlan extends React.Component {
 StudyPlan.propTypes = {
   plannerIDs: React.PropTypes.array,
 }
-
-const styles = ({
-  StudyPlan: {
-    paddingLeft: constants.SIDEBAR_WIDTH +'px'
-  }
-});
