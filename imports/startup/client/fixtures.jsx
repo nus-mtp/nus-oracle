@@ -18,13 +18,14 @@ import SetUpAcadDetail from '../../ui/components/setup/SetUpAcadDetail';
 
 const LoginButtons = BlazeToReact('loginButtons')
 
-// Routing details should be added inside "../lib/Router.jsx"
+// Routing details should be added inside "./Router.jsx"
 // Main Skeleton component for the other components to attach on
 MainLayout = React.createClass({
   render() {
+    document.body.style.backgroundColor = "#595959";
     return(
       <div>
-        <main>{this.props.content}</main>
+        {this.props.content}
       </div>
     );
   }
@@ -35,7 +36,7 @@ AppComponent = React.createClass({
   render() {
     return(
       <div>
-        <App />
+        {<App />}
       </div>
     );
   }

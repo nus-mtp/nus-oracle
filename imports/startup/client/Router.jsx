@@ -5,11 +5,23 @@ import { Meteor } from 'meteor/meteor';
 /* Import for FlowRouter */
 import { mount } from 'react-mounter';
 
+// Import all entry points needed for rendering the Login account
+import RegisterAccount from '../../ui/components/login/RegisterAccount';
+import LoginAccount from '../../ui/components/login/LoginAccount';
+import LogoutAccount from '../../ui/components/login/LogoutAccount';
+import ForgetAccount from '../../ui/components/login/ForgetAccount';
+
+// Components for the Initial Set Up Phase
+import SetUpAcadDetail from '../../ui/components/setup/SetUpAcadDetail';
+
+// The Main App component
+import App from '../../ui/pages/App';
+
 /**
  * Implements routes throughout the project
  *
  * MainLayout represents the skeleton component for all our React components
- * found in fixtures.jsx in ./imports/startup/client/fixtures.jsx
+ * found in fixtures.jsx in ./fixtures.jsx
  */
 
 /**
@@ -17,15 +29,23 @@ import { mount } from 'react-mounter';
  */
 FlowRouter.route('/', {
   action() {
-    mount(MainLayout, {content: <AppComponent />});
+    mount(MainLayout, { content: <LoginAccount /> });
   }
 });
+
+FlowRouter.route('/setupPage', {
+  action() {
+    mount(MainLayout, { content: <RegisterAccount /> });
+  }
+});
+
 
 /**
  * Routes to the main index page with login + initial setup + dashboard
  */
 FlowRouter.route('/LogIn', {
   action() {
+    console.log(Meteor.user()); //TODO: a123@u.nus.edu hello
     if (!Meteor.userId()) {
       console.log("User is logged out."); // User is logged out.
       mount(MainLayout, {content: <LogInComponent />});
