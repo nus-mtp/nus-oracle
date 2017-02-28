@@ -42,7 +42,7 @@ export default class IconButton extends React.Component {
   render() {
     // Toggles mouseover colors
     let iconColor = this.state.mouseHoverColor;
-    
+
     // Clone a new object since we cannot mutate a state directly in React
     let style = JSON.parse(JSON.stringify(this.props.style));
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import TabbedContainer from './common/TabbedContainer.jsx';
+import TabbedContainer from './TabbedContainer.jsx';
 import { getPlannerName,
-         getPlannerUserID } from '../../api/crud-controller/planner/methods.js';
+         getPlannerUserID } from '../../../api/crud-controller/planner/methods.js';
 
 export default class StudyPlan extends React.Component {
   render() {
@@ -20,5 +20,6 @@ export default class StudyPlan extends React.Component {
 }
 
 StudyPlan.propTypes = {
+  // Planner IDs to render on user's Study Plan Dashboard
   plannerIDs: React.PropTypes.array,
 }
