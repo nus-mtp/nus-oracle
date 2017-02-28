@@ -1,14 +1,16 @@
 /* Import common utilities */
 import { ENTER_CHAR_KEY_CODE } from '../common/Constants.js';
+import { MAX_STUDY_PLAN_NAME_LENGTH } from '../common/Constants.js';
 import { isDefinedObj } from '../../../utils/util.js';
 import { getFirstNChars } from '../../../utils/util.js';
 
-/* import React components */
+/* Import React components */
 import React from 'react';
 import Select from 'react-select';
 import ReactClickOut from 'react-onclickout';
 import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
+import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
 
 /* Import server-side methods */
@@ -35,10 +37,24 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  //======================================================
+  // EVENT HANDLERS WITHIN THIS TAB
+  //======================================================
+  /**
+   * Handler for when user clicks on a tab
+   *
+   * @param {[int]} index    Index of the tab the user clicked on. From the
+   *                         left onscreen, the indices start from 0.
+   */
   handleClickTab(index) {
     this.setState({tabSelectedIndex: index});
   }
 
+  /**
+   * Handler for when user is entering a new study plan's name
+   *
+   * @param {[Object]} event    Event object of this HTML object
+   */
   handleEnterStudyPlanName(event) {
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
@@ -52,6 +68,12 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  /**
+   * Handler for when user clicks outside of the input field when adding a
+   * study plan and entering a new study plan's name
+   *
+   * @param {[Object]} event    Event object of this HTML object
+   */
   handleCancelAddStudyPlan(event) {
     this.setState({ isAddingNewPlan: false });
 
@@ -64,15 +86,31 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  /**
+   * Handler for add study plan button on the right hand side of all tabs
+   */
   handleAddStudyPlanClick() {
     this.setState({ isAddingNewPlan : true });
   }
 
+  /**
+   * Handler for deleting study plan.
+   *
+   * @param {[int]} index    Index of the study plan to delete represented by
+   *                         the tab's index from the left. From the
+   *                         left onscreen, the indices start from 0.
+   */
   handleDeleteStudyPlanClick(index) {
     let studyPlanIDToDelete = this.props.plannerIDs[index];
     removePlanner(studyPlanIDToDelete);
   }
 
+  /**
+   * Handler for editing a study plan's name
+   *
+   * @param {[String]} plannerID    Planner ID of the planner the user is going
+   *                                to edit.
+   */
   handleEditStudyPlan(plannerID) {
     this.setState({
       isEditingPlanName: true,
@@ -80,6 +118,11 @@ export default class TabbedContainer extends React.Component {
     });
   }
 
+  /**
+   * Handler for editing a study plan's name
+   * @param {[String]} plannerID    Planner ID of study plan to be edited
+   * @event {[Object]} event    Event object of this HTML object
+   */
   handleEditStudyPlanName(plannerID, event) {
     if (isDefinedObj(event)) {
       let userInput = event.target.value;
@@ -93,6 +136,13 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  /**
+   * Handler for when user clicks outside of the input field when editing a
+   * study plan and entering a new name for this
+   *
+   * @param {[String]} plannerID    Planner ID of study plan to be edited
+   * @event {[Object]} event    Event object of this HTML object
+   */
   handleCancelEditStudyPlan(plannerID, event) {
     this.setState({ isEditingPlanName: false });
 
@@ -105,24 +155,20 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
-  renderTabTitle(tabTitle, plannerID) {
-    let trimmedTabTitle =  getFirstNChars(tabTitle, 12);
-    if (trimmedTabTitle.length < tabTitle.length) {
-      // If the tab title was so long that it got trimmed
-      trimmedTabTitle += "...";
-    }
-    return trimmedTabTitle
-  }
-
-  renderTabTitleInput(plannerID) {
-    return(
-      <input autoFocus type="text" className="form-control"
-             style={{height: "1.5em"}}
-             onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
-             onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
-    )
-  }
-
+  //===================================================================
+  // RENDER FUNCTIONS FOR DISTINCT UI PARTS WITHIN THE TABBEDCONTAINER
+  //===================================================================
+  /**
+   * Renders a tab with its internal UI components and event handlers.
+   * Tabs contain a caret that activates a dropdown menu and event handlers
+   * for selecting an active tab, editing or deleting a study plan.
+   *
+   * @param {[String]} tabTitle    Text of tab's title
+   * @param {[int]} index    Index of this tab. From the left onscreen, the
+   *                         indices start from 0.
+   * @param {[String]} plannerID     ID of this tab's study plan
+   * @return    React component representing a Tab.
+   */
   renderTab(tabTitle, index, plannerID) {
     let enabledMouseOver = true;
     let tabTitleComponent = tabTitle;
@@ -148,6 +194,47 @@ export default class TabbedContainer extends React.Component {
     )
   }
 
+  /**
+   * Renders the title of a tab. If the number of characters for this tab
+   * is too long (>MAX_STUDY_PLAN_NAME_LENGTH chars), it will be sliced so
+   * that tab titles don't contain Strings that are too long to fit in a tab.
+   *
+   * @param {[String]} tabTitle    Text of tab's title
+   * @param {[String]} plannerID     ID of this tab's study plan
+   * @return    Shortened String representation of this tab title.
+   */
+  renderTabTitle(tabTitle, plannerID) {
+    let trimmedTabTitle =  getFirstNChars(tabTitle, MAX_STUDY_PLAN_NAME_LENGTH);
+    if (trimmedTabTitle.length < tabTitle.length) {
+      // If the tab title was so long that it got trimmed
+      trimmedTabTitle += "...";
+    }
+    return trimmedTabTitle
+  }
+
+  /**
+   * Renders the input field title of a tab. This renders the input field
+   * used for editing a study plan's name.
+   *
+   * @param {[String]} plannerID     ID of this tab's study plan
+   * @return    Input field for editing this study plan's name
+   */
+  renderTabTitleInput(plannerID) {
+    return(
+      <input autoFocus type="text" className="form-control"
+             style={{height: "1.5em"}}
+             onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
+             onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
+    )
+  }
+
+  /**
+   * Renders tab that contains the input field for users to add another
+   * new study plan. This tab is anchored to the right of every study plan tab.
+   *
+   * @return    React component Tab representing a Tab with an input field for
+   *            users to input new study plan's name.
+   */
   renderAddPlanTab() {
     return (
       <Tab tabWidth="9em"
@@ -157,11 +244,19 @@ export default class TabbedContainer extends React.Component {
              <input autoFocus type="text" className="form-control"
                     style={{height: "1.5em"}}
                     onKeyPress={this.handleEnterStudyPlanName.bind(this)}
-                    onBlur={this.handleCancelAddStudyPlan.bind(this)} />}
+                    onBlur={this.handleCancelAddStudyPlan.bind(this)} />
+           }
       />
     )
   }
 
+  /**
+   * Renders tab that contains the add icon button for users to add another
+   * study plan.
+   *
+   * @return    React component Tab representing a Tab with the add new
+   *            study plan button
+   */
   renderAddPlanButton() {
     return (
       <Tab tabWidth="3em" isFirstTab={false}
@@ -180,16 +275,9 @@ export default class TabbedContainer extends React.Component {
     var tabTitleList = this.props.tabTitleList;
     var plannerIDs = this.props.plannerIDs;
 
-    // Accumulate content panels to render under each Tab
-    let contentPanels = [];
-    for (var i = 0; i < plannerIDs.length; i++) {
-      contentPanels.push(<AcadYrSectionContainer plannerID={plannerIDs[i]} />);
-    }
-
     return (
       <section className='tabs-section' style={{margin: 0}}>
-        <div className='tabs-section-nav tabs-section-nav-icons'
-             style={{border: 0}}>
+        <div className='tabs-section-nav tabs-section-nav-icons' style={{border: 0}}>
           <div className='tbl'>
             <ul className='nav' role='tablist'>
 
@@ -204,16 +292,23 @@ export default class TabbedContainer extends React.Component {
 
               {/* "Add" study plan button with a "+" symbol */}
               {this.renderAddPlanButton()}
+
             </ul>
           </div>
         </div>
 
         <div className='tab-content' style={{padding: '8px'}}>
           <div role='tabpanel' className='tab-pane fade in active'
-               id={ 'tab' + this.state.tabSelectedIndex}>
+               id={'tab' + this.state.tabSelectedIndex}>
 
             {/* Renders a Academic Year content panel under each tab. */}
-            {contentPanels[this.state.tabSelectedIndex]}
+            {plannerIDs.map((plannerID, index) => {
+              if (this.state.tabSelectedIndex == index) {
+                // Only render acad year of the study tab the user selected
+                // This is known by looking at which tab index is active
+                return <AcadYrSectionContainer key={index} plannerID={plannerID} />
+              }
+            })}
 
           </div>
         </div>
@@ -223,133 +318,10 @@ export default class TabbedContainer extends React.Component {
 }
 
 TabbedContainer.propTypes = {
+  // List of all the tab titles to render
+  // (max: MAX_STUDY_PLAN_NAME_LENGTH chars, or "..." will be added to the back)
   tabTitleList: React.PropTypes.node,
+
+  // List of all plannerIDs to render
   plannerIDs: React.PropTypes.array
-}
-
-/**
- * React Component for each Tab in the TabbedContainer. Click on this Tab to
- * select a study plan.
- */
-class Tab extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      onMouseOver: false,
-      onClickDropdown: false
-    }
-  }
-
-  handleOnMouseEnter(event) {
-    this.setState({ onMouseOver: true });
-  }
-
-  handleOnMouseLeave(event) {
-    this.setState({ onMouseOver: false });
-  }
-
-  handleToggleDropdown(event) {
-    this.setState({ onClickDropdown: !this.state.onClickDropdown });
-  }
-
-  handleOnBlurDropdown(event) {
-    this.setState({ onClickDropdown: false });
-  }
-
-  handleEditClick() {
-    this.props.onClickEditTab();
-    this.setState({ onClickDropdown: false });
-  }
-
-  handleDeleteClick() {
-    this.props.onClickDeleteTab();
-    this.setState({ onClickDropdown: false });
-  }
-
-  onClickOutDropdown() {
-    this.setState({ onClickDropdown: false });
-  }
-
-  render() {
-    return (
-      <ReactClickOut onClickOut={this.onClickOutDropdown.bind(this)} >
-        <li className='nav-item'
-            style={{float: "left", width: this.props.tabWidth}}
-            onClick={this.props.onClickTab}
-            onMouseEnter={this.handleOnMouseEnter.bind(this)}
-            onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-          <a className={'nav-link' + (this.props.isActiveTab ? ' active' : '')} role='tab'>
-            <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
-
-              {/* The label of this Tab is rendered here */}
-              {this.props.tabTitle}
-
-              {/* Only want the delete button rendered if activated or on hover,
-                  if not, we don't render anything. */}
-              {this.props.enabledMouseOver && this.state.onMouseOver ?
-                <IconButton
-                  icon="fa fa-sort-down"
-                  style={{position: 'absolute', top:'0.3em', right: '0.5em',
-                          paddingTop: '0.15em', opacity: '0.8'}}
-                  displayColor="#505050" onMouseOverColor="#ff9100"
-                  onButtonClick={this.handleToggleDropdown.bind(this)} /> :
-                null}
-
-              {/* Toggle Dropdown menu for this tab */}
-              {this.state.onClickDropdown ?
-                <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
-                     style={{position: 'fixed', zIndex: '300', top: '7.3em', width: '7.75em'}}>
-
-                  {/* A single dropdown selection */}
-                	<div onClick={this.handleEditClick.bind(this)} className="dropdown-item">
-                    <i className="fa fa-edit"
-                       style={{position: 'relative', float: 'left', paddingTop: '0.35em', left: '1.5em'}}></i>
-                		<div>Edit</div>
-                	</div>
-
-                  {/* A single dropdown selection */}
-                	<div onClick={this.handleDeleteClick.bind(this)} className="dropdown-item">
-                    <i className="fa fa-trash"
-                       style={{position: 'relative', float: 'left', paddingTop: '0.25em', left: '1em'}}></i>
-                		<div>Delete</div>
-                	</div>
-                </div> :
-                null
-              }
-
-            </span>
-          </a>
-        </li>
-      </ReactClickOut>
-    )
-  }
-}
-
-Tab.propTypes = {
-  // Title of the tab (max: 15 chars, or a "..." will be rendered in place)
-  tabTitle: React.PropTypes.node,
-
-  // String representation of the width of each tab. Recommended to be in em
-  // units like: "9em"
-  tabWidth: React.PropTypes.string,
-
-  // String representation of the class of the span tag within a Tab
-  navSpanClass: React.PropTypes.string,
-
-  // String representation of the style of the span tag within a Tab
-  // If you don't want to use the style tag, simply pass in an empty object
-  // like: {}
-  navSpanStyle: React.PropTypes.object,
-
-  // Handler for when a user clicks on this Tab
-  onClickTab: React.PropTypes.func,
-
-  // Handler for when a user clicks on delete button on the Tab
-  onClickDeleteTab: React.PropTypes.func,
-
-  // Boolean true means this Tab is currently selected, false otherwise
-  isActiveTab: React.PropTypes.bool,
-
-  // Boolean true means this Tab will deactivate mouse over events, false otherwise
-  enabledMouseOver: React.PropTypes.bool
 }
