@@ -2,6 +2,8 @@ import React from 'react';
 import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
 import PanelListItem from '../common/PanelListItem.jsx'
+import IconButton from '../common/IconButton.jsx'
+import LogoutAccount from '../login/LogoutAccount.jsx'
 import * as constants from '../common/Constants.js';
 
 export default class PanelProfile extends React.Component {
@@ -23,8 +25,8 @@ export default class PanelProfile extends React.Component {
           <PanelListItem type="header" text="Exempted Modules" />
           {/* Waived Modules list */}
           <PanelListItem type="header" text="Waived Modules" />
-
-
+          {/* Logout Button */}
+          <LogoutAccount />
         </ul>
       </nav>
     );
