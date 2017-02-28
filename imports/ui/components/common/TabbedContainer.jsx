@@ -14,6 +14,7 @@ import IconButton from './IconButton.jsx';
 /* Import server-side methods */
 import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
 import { removePlanner } from '../../../api/crud-controller/planner/methods.js';
+import { setPlannerName } from '../../../api/crud-controller/planner/methods.js';
 
 // TEMPORARY
 const focusArea = ['dunnoWhatFocusArea'];
@@ -29,7 +30,8 @@ export default class TabbedContainer extends React.Component {
     this.state = {
       tabSelectedIndex: 0,
       isAddingNewPlan: false,
-      isEditingPlanName: false
+      isEditingPlanName: false,
+      planNameToEdit: false
     }
   }
 
@@ -40,15 +42,18 @@ export default class TabbedContainer extends React.Component {
   handleEnterStudyPlanName(event) {
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
+
       if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
-        this.setState({ isAddingNewPlan: false });
-        createPlanner(userInputStudyPlanName, focusArea);
+        if (this.state.isAddingNewPlan) {
+          this.setState({ isAddingNewPlan: false });
+          createPlanner(userInputStudyPlanName, focusArea);
+        }
       }
     }
   }
 
   handleCancelAddStudyPlan(event) {
-    this.setState({isAddingNewPlan: false});
+    this.setState({ isAddingNewPlan: false });
 
     // If the user already entered a name, add study plan for convenience
     if (isDefinedObj(event)) {
@@ -60,7 +65,7 @@ export default class TabbedContainer extends React.Component {
   }
 
   handleAddStudyPlanClick() {
-    this.setState({isAddingNewPlan : true});
+    this.setState({ isAddingNewPlan : true });
   }
 
   handleDeleteStudyPlanClick(index) {
@@ -68,27 +73,77 @@ export default class TabbedContainer extends React.Component {
     removePlanner(studyPlanIDToDelete);
   }
 
-  handleEditStudyPlan(index) {
-    console.log("EDITING MY STUDY PLAN NOW!");
-
+  handleEditStudyPlan(plannerID) {
+    this.setState({
+      isEditingPlanName: true,
+      planNameToEdit: plannerID
+    });
   }
 
-  renderTab(tabTitle, index) {
-    let trimmedTabTitle =  getFirstNChars(tabTitle, 12);
+  handleEditStudyPlanName(plannerID, event) {
+    if (isDefinedObj(event)) {
+      let userInput = event.target.value;
 
+      if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
+        if (this.state.isEditingPlanName) {
+          this.setState({ isEditingPlanName: false });
+          setPlannerName(plannerID, userInput);
+        }
+      }
+    }
+  }
+
+  handleCancelEditStudyPlan(plannerID, event) {
+    this.setState({ isEditingPlanName: false });
+
+    // If the user already entered a name, add study plan for convenience
+    if (isDefinedObj(event)) {
+      let userInput = event.target.value;
+      if (userInput) {
+        setPlannerName(plannerID, userInput);
+      }
+    }
+  }
+
+  renderTabTitle(tabTitle, plannerID) {
+    let trimmedTabTitle =  getFirstNChars(tabTitle, 12);
     if (trimmedTabTitle.length < tabTitle.length) {
+      // If the tab title was so long that it got trimmed
       trimmedTabTitle += "...";
+    }
+    return trimmedTabTitle
+  }
+
+  renderTabTitleInput(plannerID) {
+    return(
+      <input autoFocus type="text" className="form-control"
+             style={{height: "1.5em"}}
+             onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
+             onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
+    )
+  }
+
+  renderTab(tabTitle, index, plannerID) {
+    let enabledMouseOver = true;
+    let tabTitleComponent = tabTitle;
+
+    if (this.state.planNameToEdit == plannerID && this.state.isEditingPlanName) {
+      // Enable the input field only for the study plan the user wants to edit
+      enabledMouseOver = false;
+      tabTitleComponent = this.renderTabTitleInput(plannerID);
+    } else {
+      tabTitleComponent = this.renderTabTitle(tabTitle, plannerID)
     }
 
     return (
       <Tab key={index} tabWidth="9em"
            navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-           tabTitle={trimmedTabTitle}
+           tabTitle={tabTitleComponent}
            enabledMouseOver={true}
            isFirstTab={(index === 0) ? true : false}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
-           onClickEditTab={this.handleEditStudyPlan.bind(this, index)}
+           onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
            isActiveTab={(this.state.tabSelectedIndex === index)} />
     )
   }
@@ -140,7 +195,7 @@ export default class TabbedContainer extends React.Component {
 
               {/* Render the Tabs on the top of the TabbedContainer */}
               {tabTitleList.map((tabTitle, index) => {
-                return this.renderTab(tabTitle, index);
+                return this.renderTab(tabTitle, index, plannerIDs[index]);
               })}
 
               {/* Renders the tab used to enter a new study plan's name when
@@ -198,7 +253,6 @@ class Tab extends React.Component {
   }
 
   handleOnBlurDropdown(event) {
-    console.log("On Blur!!");
     this.setState({ onClickDropdown: false });
   }
 
