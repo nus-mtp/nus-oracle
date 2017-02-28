@@ -25,7 +25,6 @@ MainLayout = React.createClass({
     return(
       <div>
         <main>{this.props.content}</main>
-        <AccountDebug/>
       </div>
     );
   }
