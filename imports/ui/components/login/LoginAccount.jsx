@@ -31,7 +31,10 @@ export default class LoginAccount extends React.Component {
 
   handleSubmit(event) {
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
+      console.log("LOGGING IN WITH PASSWORD...")
       if (error) { //Log in error
+        console.log("ERRROR " + error.reason);
+
         if (error.reason == 'Incorrect password') { //Incorrect password
           Bert.alert(error.reason, 'danger');
           this.state.passwordErr += 1;
@@ -43,6 +46,10 @@ export default class LoginAccount extends React.Component {
         }
       } else {
         this.state.passwordErr = 0;
+
+        console.log(Meteor.user());
+        console.log(Meteor.user().emails[0]);
+
         if (Meteor.user().emails[0].verified) {
           if (!Meteor.user().profile.hasSetup) {
             FlowRouter.go('/setup');
@@ -57,7 +64,6 @@ export default class LoginAccount extends React.Component {
         }
       }
     });
-    event.preventDefault();
   }
 
   handleReset(event) {
@@ -76,37 +82,48 @@ export default class LoginAccount extends React.Component {
     Meteor.call('resetpassword', userId)
   }
 
-  // Move image down a bit more
-  // How to make col-md-6 center?
   render() {
     return (
-      <div className="page-center page-center-in">
+      <div className="container-fluid" style={{width: "70%"}}>
+        <div className="page-center page-center-in">
 
-        <div className="gallery-picture">
-          <img style={{height: '100%', width: '100%', marginTop: '2em'}}
-               src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
-        </div>
+          <div className="gallery-picture">
+            <img style={{height: '100%', width: '100%', marginTop: '2em'}}
+                 src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
+          </div>
 
-        <div className="col-md-6 blockui-element-container-default"
-            style={{float: 'none', margin: '3.5em auto'}}>
-          <form className="form-group" style={{textAlign: 'center'}}>
+          <div className="col-md-6 blockui-element-container-default"
+              style={{float: 'none', margin: '3.5em auto'}}>
+            <form className="form-group" style={{textAlign: 'center'}}>
 
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="Your NUS Email Address" value={this.state.value}
-                onChange={this.handleEmailChange.bind(this)} />
-            </div>
+              <div className="form-group">
+                <input className="form-control" type="text"
+                  placeholder="NUS E-mail" value={this.state.value}
+                  onChange={this.handleEmailChange.bind(this)} />
+              </div>
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Password" value={this.state.value}
-                onChange={this.handlePasswordChange.bind(this)} />
-            </div>
+              <div className="form-group">
+                <input className="form-control" type="password"
+                  placeholder="Password" value={this.state.value}
+                  onChange={this.handlePasswordChange.bind(this)} />
+              </div>
 
-            <Button buttonText="Sign in" buttonClass="btn btn-rounded"
-              onButtonClick={this.handleSubmit.bind(this)} />
+              <div className='form-group' style={{margin: '2em'}}>
+                <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                        buttonText="LOGIN"
+                        onButtonClick={this.handleSubmit.bind(this)} />
 
-          </form>
+                <a className="dropdown-item">
+                  CREATE ACCOUNT
+                </a>
+                <a className="dropdown-item">
+                  FORGOT PASSWORD?
+                </a>
+              </div>
+
+            </form>
+          </div>
+
         </div>
       </div>
     );
