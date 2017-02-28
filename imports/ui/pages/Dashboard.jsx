@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../components/sidebar_menu/Sidebar';
-import StudyPlan from '../components/StudyPlan';
+import StudyPlan from '../components/study_plan/StudyPlan';
 import * as constants from '../components/common/Constants.js';
 
 export default class Dashboard extends React.Component {
