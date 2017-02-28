@@ -1,5 +1,5 @@
 import React from 'react';
-import TabbedContainer from './common/TabbedContainer.jsx';
+import TabbedContainer from './study_plan/TabbedContainer.jsx';
 import { getPlannerName,
          getPlannerUserID } from '../../api/crud-controller/planner/methods.js';
 

@@ -1,5 +1,5 @@
 /* Import common utilities */
-import { ENTER_CHAR_KEY_CODE } from './Constants.js';
+import { ENTER_CHAR_KEY_CODE } from '../common/Constants.js';
 import { isDefinedObj } from '../../../utils/util.js';
 import { getFirstNChars } from '../../../utils/util.js';
 
@@ -7,9 +7,9 @@ import { getFirstNChars } from '../../../utils/util.js';
 import React from 'react';
 import Select from 'react-select';
 import ReactClickOut from 'react-onclickout';
-import AcadYrSectionContainer from '../study_plan/AcadYrSectionContainer.js';
-import Button from './Button.jsx';
-import IconButton from './IconButton.jsx';
+import Button from '../common/Button.jsx';
+import IconButton from '../common/IconButton.jsx';
+import AcadYrSectionContainer from './AcadYrSectionContainer.js';
 
 /* Import server-side methods */
 import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
