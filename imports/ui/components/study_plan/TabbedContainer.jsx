@@ -176,7 +176,7 @@ export default class TabbedContainer extends React.Component {
     if (this.state.planNameToEdit == plannerID && this.state.isEditingPlanName) {
       // Enable the input field only for the study plan the user wants to edit
       enabledMouseOver = false;
-      tabTitleComponent = this.renderTabTitleInput(plannerID);
+      tabTitleComponent = this.renderTabTitleInput(tabTitle, plannerID);
     } else {
       tabTitleComponent = this.renderTabTitle(tabTitle, plannerID)
     }
@@ -219,10 +219,10 @@ export default class TabbedContainer extends React.Component {
    * @param {[String]} plannerID     ID of this tab's study plan
    * @return    Input field for editing this study plan's name
    */
-  renderTabTitleInput(plannerID) {
+  renderTabTitleInput(tabTitle, plannerID) {
     return(
-      <input autoFocus type="text" className="form-control"
-             style={{height: "1.5em"}}
+      <input autoFocus type="text" defaultValue={tabTitle}
+             className="form-control" style={{height: "1.5em"}}
              onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
              onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
     )
