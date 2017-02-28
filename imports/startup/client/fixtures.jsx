@@ -36,7 +36,7 @@ AppComponent = React.createClass({
   render() {
     return(
       <div>
-        {<App />}
+        <App />
       </div>
     );
   }

@@ -108,19 +108,21 @@ export default class LoginAccount extends React.Component {
                   onChange={this.handlePasswordChange.bind(this)} />
               </div>
 
-              <div className='form-group' style={{margin: '2em'}}>
+              <div className='form-group' style={{margin: '4em'}}>
                 <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                         buttonText="LOGIN"
                         onButtonClick={this.handleSubmit.bind(this)} />
-
-                <a className="dropdown-item">
-                  CREATE ACCOUNT
-                </a>
-                <a className="dropdown-item">
-                  FORGOT PASSWORD?
-                </a>
+                <div className='row'>
+                  <a className="dropdown-item">
+                    CREATE ACCOUNT
+                  </a>
+                </div>
+                <div className='row'>
+                  <a className="dropdown-item">
+                    Forgot Password?
+                  </a>
+                </div>
               </div>
-
             </form>
           </div>
 
