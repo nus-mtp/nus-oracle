@@ -5,12 +5,10 @@ import { getStudentWaivedModules } from '../../../api/database-controller/studen
 import ModulesCard from './ModulesCard.jsx';
 
 export default ModulesCardContainer = createContainer((props) => {
-  Meteor.subscribe('Student');
-
   const listType = props.listType;
   // const modules = getStudentExemptedModules();
   var modules = {};
-  if(listType == 'exempted'){
+  if(listType == 'Exempted'){
     modules = getStudentExemptedModules();
     // modules = {
     //   CS1010: "CS1010"

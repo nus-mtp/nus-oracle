@@ -23,7 +23,7 @@ export default class ModulesCard extends React.Component {
   handleAddModule(moduleCode) {
     var isExemptedList = this.props.listType == "Exempted";
     if(isExemptedList){
-      addStudentExemptedModule(moduleCode, function() {console.log("add exempted module")});
+      addStudentExemptedModule(moduleCode);
       // console.log("add exempted module");
     }
     else {

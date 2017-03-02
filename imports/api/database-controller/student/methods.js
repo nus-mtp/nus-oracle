@@ -99,7 +99,9 @@ export const addStudentExemptedModule = function addStudentExemptedModule(exempt
   const studentExemptedModules = student.studentExemptedModule;
   studentExemptedModules[exemptedModule] = exemptedModule;
 
-  return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } }, callback);
+  const doc = Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } }, callback);
+
+  return doc;
 }
 
 export const deleteStudentExemptedModule = function deleteStudentExemptedModule(exemptedModule)  {
@@ -126,7 +128,7 @@ export const getStudentWaivedModules = function getStudentAcademicCohort() {
   return student.studentWaivedModule;
 }
 
-export const addStudentWaviedModule = function addStudentWaviedModule(waivedModule, callback)  {
+export const addStudentWaivedModule = function addStudentWaivedModule(waivedModule, callback)  {
   const studentID = getStudentID();
   const student = getCurrentStudentDocument(studentID);
   if (Object.keys(searchByModuleCode(waivedModule)).length === 0) {
@@ -229,7 +231,7 @@ export const deleteStudentExemptedModuleGivenStudentID = function deleteStudentE
   return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const addStudentWaviedModuleGivenStudentID = function addStudentWaviedModuleGivenStudentID(waivedModule, studentID, callback)  {
+export const addStudentWaivedModuleGivenStudentID = function addStudentWaivedModuleGivenStudentID(waivedModule, studentID, callback)  {
   const student = getCurrentStudentDocument(studentID);
   if (Object.keys(searchByModuleCode(waivedModule)).length === 0) {
     return 0;
