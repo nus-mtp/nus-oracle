@@ -23,26 +23,16 @@ export default class LoginAccount extends React.Component {
   }
 
   handleEmailChange(event) {
-    if (event) {
-      this.setState({email: event.target.value});
-    }
+    this.setState({email: event.target.value});
   }
 
   handlePasswordChange(event) {
-    if (event) {
-      this.setState({password: event.target.value});
-    }
+    this.setState({password: event.target.value});
   }
 
-  handleSubmit(event) {
-    console.log("HANDLE SUBMIT");
-
+  handleSubmit() {
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      console.log("loginWithPasswor: " + error);
-
       if (error) { //Log in error
-        console.log("ERROR! " + error);
-
         if (error.reason == 'Incorrect password') { //Incorrect password
           Bert.alert( error.reason, 'danger');
           this.state.passwordErr += 1;
@@ -53,8 +43,6 @@ export default class LoginAccount extends React.Component {
           Bert.alert( error.reason, 'danger' );
         }
       } else {
-        console.log("NO ERROR logging in");
-
         this.state.passwordErr = 0;
         if (Meteor.user().emails[0].verified && Meteor.user()._id) {
           if (Meteor.user().profile.hasSetup) {
@@ -101,7 +89,7 @@ export default class LoginAccount extends React.Component {
           <div className="col-md-6 blockui-element-container-default"
                style={{float: 'none', margin: '3.5em auto'}}>
 
-            <form className="form-group" style={{textAlign: 'center'}}>
+            <div className="form-group" style={{textAlign: 'center'}}>
               <div className="form-group">
                 <input className="form-control" type="text"
                   placeholder="NUS E-mail" value={this.state.value}
@@ -115,21 +103,25 @@ export default class LoginAccount extends React.Component {
               </div>
 
               <div className='form-group' style={{margin: '4em'}}>
+
                 <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                         buttonText="LOGIN"
                         onButtonClick={this.handleSubmit.bind(this)} />
+
                 <div className='row'>
                   <a className="dropdown-item">
                     CREATE ACCOUNT
                   </a>
                 </div>
+
                 <div className='row'>
                   <a className="dropdown-item">
                     Forgot Password?
                   </a>
                 </div>
+
               </div>
-            </form>
+            </div>
 
           </div>
 
