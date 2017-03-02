@@ -16,20 +16,21 @@ import { getStudentAcademicCohort,
 *
 */
 export const csGradChecker = function csGradChecker() {
-  const moduleRequirementTitle = ['Math and Science',  'IT-professionalism', 'foundation'];
-  const cohortInformation = getCohortByName(getStudentAcademicCohort());
+  const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Breadth and Depth', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
 
-  // find foundation requireent modules objects
-  const foundation = cohortInformation.cohortGradRequirementID;
+  const studentAcademicCohort = getStudentAcademicCohort();
 
-  tempGradList = getGradRequirementModulesByID(foundation[i], name);
+  const cohortInformation = getCohortByName(studentAcademicCohort);
 
-  // find IT-professionaism requirement modules objects
+  const requirementModules = cohortInformation.cohortGradRequirementID;
 
+  // find foundation requirement modules objects and call function from relevant academic year
+  
+  // find breadth and depth requirement modules objects
+
+  // find IT-professionalism requirement modules objects
 
   // find math-science requirement modules objects
-
-  // find breadth and depth requirement modules objects
 
   // find unrestricted-electives requirement modules objects
 

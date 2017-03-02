@@ -33,10 +33,12 @@ export const createModuleListObject = function(moduleList) {
   return moduleToBeStored;
 }
 
-/** This method handles the creation of object list that is  going to be stored in the graduation Requirement Document
-  * The module that is stored in the graduation requirement need to be present in the module database
-  * @param {[String]} moduleList: list of module that is going to be stored
+/**
+  * Retrieves requirement modules given graduation id and name of requirement
+  * @param {string}   unique id of graduation requirement document
+  * @param {string}   name of graduation requirement document
+  * @return {Object}  object of mappedModuleName-boolean key-pair values
   */
-export const getGradRequirementModulesByID = function getGradRequirementsByID(gradRequirementID) {
-  return GraduationRequirements.findOne(gradRequirementID).requirementModules;
+export const getGradRequirementModules = function getGradRequirements(gradRequirementID, name) {
+  return GraduationRequirements.findOne(gradRequirementID, {requirementName: name}).requirementModules;
 }

@@ -3,7 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 class ModuleFulfillmentCollection extends Mongo.Collection {}
 
-const ModuleFulfillments = new ModuleFulfillmentCollection("modfulfillment");
+export const ModuleFulfillments = new ModuleFulfillmentCollection("modfulfillment");
 
 const fulfillmentSchema = {
   acadYearList: {

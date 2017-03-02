@@ -9,7 +9,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 class GraduationRequirementCollection extends Mongo.Collection {}
 
-const GraduationRequirements = new GraduationRequirementCollection('graduationRequirement');
+export const GraduationRequirements = new GraduationRequirementCollection('graduationRequirement');
 
 const gradRequirementSchema = {
   requirementName: {
