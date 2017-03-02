@@ -5,12 +5,20 @@ class ModuleFulfillmentCollection extends Mongo.Collection {}
 
 const ModuleFulfillments = new ModuleFulfillmentCollection("modfulfillment");
 
+/** Schema for the
+  * Object in the module Fulfillments
+  * [{acadYear:,
+      areaFulfilled:},
+  *  {acadYear:,
+      areaFulfilled:}]
+  */
+
 const fulfillmentSchema = {
-  acadYearList: {
-    type: [String]
+  moduleCode: {
+    type: String
   },
   moduleMapping: {
-    type: String
+    type: [object]
   }
 }
 

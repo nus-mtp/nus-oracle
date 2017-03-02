@@ -45,8 +45,8 @@ if(Meteor.isServer){
      insertFocusAreaToCohort('AY 2015/2016','dfdfd');
      const editedCohort = AcademicCohort.findOne({_id:result});
      const focusAreaArray = editedCohort.cohortFocusAreaID;
-     assert.equal(focusAreaArray.length, 2);
-     assert.equal(focusAreaArray[1],'dfdfd');
+     assert.equal(focusAreaArray.length, 1);
+     assert.equal(focusAreaArray[0],'dfdfd');
    })
 
   });
