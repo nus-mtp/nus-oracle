@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 // Import React components
@@ -46,6 +47,7 @@ export default class LoginAccount extends React.Component {
         }
       } else {
         this.state.passwordErr = 0;
+<<<<<<< HEAD:imports/ui/components/login/LoginAccount.jsx
 
         console.log(Meteor.user());
         console.log(Meteor.user().emails[0]);
@@ -53,13 +55,25 @@ export default class LoginAccount extends React.Component {
         if (Meteor.user().emails[0].verified) {
           if (!Meteor.user().profile.hasSetup) {
             FlowRouter.go('/setup');
+=======
+        if (Meteor.user().emails[0].verified && Meteor.user()._id) {
+          if (Meteor.user().profile.hasSetup) {
+            FlowRouter.go('/app');
+>>>>>>> 0e271b5cf106ffe1fb6f7647017e1d2bb2899b38:imports/ui/components/account/login/LoginAccount.jsx
           } else {
-            FlowRouter.go('/userDashboard');
+            FlowRouter.go('/acadDetails');
           }
+<<<<<<< HEAD:imports/ui/components/login/LoginAccount.jsx
           //FlowRouter.reload();
           Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success');
         } else {
           Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0], 'danger');
+=======
+          Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
+        } else {
+          Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
+          FlowRouter.go('/');
+>>>>>>> 0e271b5cf106ffe1fb6f7647017e1d2bb2899b38:imports/ui/components/account/login/LoginAccount.jsx
           Meteor.logout();
         }
       }

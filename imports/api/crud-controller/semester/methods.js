@@ -21,7 +21,7 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
     previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
   } else {
     // make sure to get the acad year from Student here
-    previousAcademicYear = getStudentAcademicCohort(getStudentID())
+    previousAcademicYear = getStudentAcademicCohort(getStudentID());
   }
 
   const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);
