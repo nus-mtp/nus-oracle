@@ -4,6 +4,7 @@ import Nestable from '../common/Nestable.jsx'
 import PanelListItem from '../common/PanelListItem.jsx'
 import IconButton from '../common/IconButton.jsx'
 import LogoutAccount from '../account/logout/LogoutAccount.jsx'
+import ModulesCardContainer from './ModulesCardContainer.js'
 import * as constants from '../common/Constants.js';
 
 export default class PanelProfile extends React.Component {
