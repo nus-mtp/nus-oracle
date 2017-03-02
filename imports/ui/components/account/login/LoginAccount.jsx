@@ -1,9 +1,5 @@
-import React from 'react';
 import { Meteor } from 'meteor/meteor';
-
-// Import React components
-import Button from '../../common/Button.jsx';
-
+import React from 'react';
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -15,34 +11,23 @@ import Button from '../../common/Button.jsx';
 export default class LoginAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-      passwordErr: 0
-    };
-  }
+    this.state = {email: '', password:'', passwordErr: 0};
 
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
   handleEmailChange(event) {
-    if (event) {
-      this.setState({email: event.target.value});
-    }
+    this.setState({email: event.target.value});
   }
 
   handlePasswordChange(event) {
-    if (event) {
-      this.setState({password: event.target.value});
-    }
+    this.setState({password: event.target.value});
   }
 
   handleSubmit(event) {
-    console.log("HANDLE SUBMIT");
-
-    Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      console.log("loginWithPasswor: " + error);
-
-      if (error) { //Log in error
-        console.log("ERROR! " + error);
-
+    Meteor.loginWithPassword(this.state.email, this.state.password, ( error ) => {
+      if ( error ) { //Log in error
         if (error.reason == 'Incorrect password') { //Incorrect password
           Bert.alert( error.reason, 'danger');
           this.state.passwordErr += 1;
@@ -53,8 +38,6 @@ export default class LoginAccount extends React.Component {
           Bert.alert( error.reason, 'danger' );
         }
       } else {
-        console.log("NO ERROR logging in");
-
         this.state.passwordErr = 0;
         if (Meteor.user().emails[0].verified && Meteor.user()._id) {
           if (Meteor.user().profile.hasSetup) {
@@ -70,18 +53,17 @@ export default class LoginAccount extends React.Component {
         }
       }
     });
+    event.preventDefault();
   }
 
   handleReset(event) {
-    const options = {};
+    const options ={};
     options.email = this.state.email;
-    Accounts.forgotPassword(options, (error) => {
-      if (error) {
-        Bert.alert(error.reason, 'danger');
+    Accounts.forgotPassword(options, ( error ) => {
+      if ( error ) {
+        Bert.alert( error.reason, 'danger' );
       } else {
-        Bert.alert('Exceeded log in attempt, password has been reset. Please che' +
-            'ck email to set new password',
-        'danger');
+        Bert.alert('Exceeded log in attempt, password has been reset. Please check email to set new password', 'danger' );
       }
     });
     const userId = Accounts.users.findOne({username: this.state.email})._id;
@@ -90,51 +72,20 @@ export default class LoginAccount extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid" style={{width: "70%"}}>
-        <div className="page-center page-center-in">
-
-          <div className="gallery-picture">
-            <img style={{height: '100%', width: '100%', marginTop: '2em'}}
-                 src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
-          </div>
-
-          <div className="col-md-6 blockui-element-container-default"
-               style={{float: 'none', margin: '3.5em auto'}}>
-
-            <form className="form-group" style={{textAlign: 'center'}}>
-              <div className="form-group">
-                <input className="form-control" type="text"
-                  placeholder="NUS E-mail" value={this.state.value}
-                  onChange={this.handleEmailChange.bind(this)} />
-              </div>
-
-              <div className="form-group">
-                <input className="form-control" type="password"
-                  placeholder="Password" value={this.state.value}
-                  onChange={this.handlePasswordChange.bind(this)} />
-              </div>
-
-              <div className='form-group' style={{margin: '4em'}}>
-                <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                        buttonText="LOGIN"
-                        onButtonClick={this.handleSubmit.bind(this)} />
-                <div className='row'>
-                  <a className="dropdown-item">
-                    CREATE ACCOUNT
-                  </a>
-                </div>
-                <div className='row'>
-                  <a className="dropdown-item">
-                    Forgot Password?
-                  </a>
-                </div>
-              </div>
-            </form>
-
-          </div>
-
-        </div>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Log in below
+        </label>
+        <label>
+          Email:
+          <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
+        </label>
+        <label>
+          Password:
+          <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
+        </label>
+        <input type="submit" value="Login" />
+      </form>
     );
   }
 }

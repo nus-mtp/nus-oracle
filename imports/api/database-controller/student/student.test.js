@@ -68,7 +68,8 @@ if (Meteor.isServer){
       const exemptedModule = 'CS1010';
       const numberOfDocsUpdated = addStudentExemptedModuleGivenStudentID(exemptedModule, studentID, function(error, affectDocs) {
         assert.equal(numberOfDocsUpdated, 1);
-        assert.equal(Students.findOne(studentID).studentExemptedModule[exemptedModule], exemptedModule);
+        const module = Students.findOne(studentID).studentExemptedModule[exemptedModule];
+        assert.equal(module, exemptedModule);
       });
     });
 

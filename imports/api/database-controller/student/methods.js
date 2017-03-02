@@ -53,11 +53,6 @@ export const getStudentAcademicCohort = function getCohort() {
   return getCurrentStudentDocument(studentID).studentAcademicCohort;
 }
 
-export const getStudentExemptedModules = function getExemptedModule() {
-  const studentID = getStudentID();
-  return getCurrentStudentDocument(studentID).studentExemptedModule;
-}
-
 export const getStudentPreviousEducation = function getPrevEducation() {
   const studentID = getStudentID();
   return getCurrentStudentDocument(studentID).studentPreviousHighestEducation;
@@ -85,10 +80,9 @@ export const updateStudentPreviousEducation = function updateStudentEducation(pr
   return Students.update(studentID, { $set: { studentPreviousHighestEducation: prevEdu} });
 }
 
-export const getStudentExemptedModule = function getStudentAcademicCohort() {
+export const getStudentExemptedModules = function getExemptedModule() {
   const studentID = getStudentID();
-  const student = getCurrentStudentDocument(studentID);
-  return student.studentExemptedModule;
+  return getCurrentStudentDocument(studentID).studentExemptedModule;
 }
 
 export const addStudentExemptedModule = function addStudentExemptedModule(exemptedModule, callback) {
@@ -126,7 +120,7 @@ export const deleteStudentExemptedModule = function deleteStudentExemptedModule(
   return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const getStudentWaivedModule = function getStudentAcademicCohort() {
+export const getStudentWaivedModules = function getStudentAcademicCohort() {
   const studentID = getStudentID();
   const student = getCurrentStudentDocument(studentID);
   return student.studentWaivedModule;

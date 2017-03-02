@@ -45,4 +45,4 @@ import App from '../../ui/pages/App.jsx';
    action()  {
      mount(MainLayout, {content: <App />});
    }
- })
+ });
