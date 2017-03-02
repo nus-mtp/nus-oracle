@@ -8,8 +8,10 @@ import { Students } from '../../api/database-controller/student/student';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
+import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
 Meteor.startup(() => {
+  //parseJSONFileAndStoreToDB();
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
   }
