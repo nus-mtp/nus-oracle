@@ -1,5 +1,5 @@
 import React from 'react';
-import ModuleButton from './ModuleButton.jsx'
+import IconButton from '../common/IconButton.jsx';
 
 export default class Module extends React.Component {
   constructor() {
@@ -18,20 +18,10 @@ export default class Module extends React.Component {
   }
 
   /**
-   * Handles button clicks on this component DIfferent types of
-   * buttons can execute different callbacks passed in through
-   * this component's props.
-   *
-   * @param {[string]} buttonPressType    Type of button click
+   * Handles button clicks on the delete icon button
    */
-  handleButtonClick(buttonPressType) {
-    switch(buttonPressType) {
-      case "DELETE":
-        this.props.handleDeleteModule();
-        break;
-      default:
-        console.log("NO VALID BUTTON PRESS TYPE DETECTED.")
-    }
+  handleDeleteClick() {
+    this.props.handleDeleteModule();
   }
 
   render() {
@@ -43,11 +33,11 @@ export default class Module extends React.Component {
 
           {/* Only want the delete button rendered on hover */}
           {this.state.onMouseOver ?
-            <ModuleButton
+            <IconButton
               icon="font-icon font-icon-trash"
+              style={{float:'right', paddingTop: '0.15em'}}
               displayColor="#505050" onMouseOverColor="#8b2a2a"
-              buttonType="DELETE"
-              onButtonClick={this.handleButtonClick.bind(this)}/> :
+              onButtonClick={this.handleDeleteClick.bind(this)} /> :
             null
           }
           {this.props.moduleCode}

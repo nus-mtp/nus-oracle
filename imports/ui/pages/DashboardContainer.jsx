@@ -5,8 +5,10 @@ import Dashboard from './Dashboard.jsx';
 
 export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');
-    const userID = '9f91pejfj912ras';
-    const plannerIDs = getPlannerIDs(userID);
+    Meteor.subscribe('Student');
+    Meteor.subscribe('Modules');
+    //const userID = '9f91pejfj912ras';
+    const plannerIDs = getPlannerIDs();
 
     return { plannerIDs };
 }, Dashboard);

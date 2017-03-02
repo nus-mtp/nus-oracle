@@ -11,7 +11,9 @@ before_install:
 
 script:
   # Run all tests:  Unit test, Integration test, Package test
-  - meteor npm run test
+  - meteor npm run local-add-drivers
+  - meteor npm run ci-remove-drivers
+  - meteor npm run ci-test
 
 notifications:
   slack:
