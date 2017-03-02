@@ -1,8 +1,8 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 
 // Import React components
-import Button from '../common/Button.jsx';
+import Button from '../../common/Button.jsx';
 
 //import verfification from '../../server/send-verification'
 /*
@@ -32,52 +32,33 @@ export default class LoginAccount extends React.Component {
 
   handleSubmit(event) {
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      console.log("LOGGING IN WITH PASSWORD...")
-      if (error) { //Log in error
-        console.log("ERRROR " + error.reason);
-
+      if ( error ) { //Log in error
         if (error.reason == 'Incorrect password') { //Incorrect password
-          Bert.alert(error.reason, 'danger');
+          Bert.alert( error.reason, 'danger');
           this.state.passwordErr += 1;
-          if (this.state.passwordErr >= 5) {
+          if (this.state.passwordErr >=5) {
             this.handleReset();
           }
-        } else { //Incorrect email, etc.
-          Bert.alert(error.reason, 'danger');
+        } else {//Incorrect email, etc.
+          Bert.alert( error.reason, 'danger' );
         }
       } else {
         this.state.passwordErr = 0;
-<<<<<<< HEAD:imports/ui/components/login/LoginAccount.jsx
-
-        console.log(Meteor.user());
-        console.log(Meteor.user().emails[0]);
-
-        if (Meteor.user().emails[0].verified) {
-          if (!Meteor.user().profile.hasSetup) {
-            FlowRouter.go('/setup');
-=======
         if (Meteor.user().emails[0].verified && Meteor.user()._id) {
           if (Meteor.user().profile.hasSetup) {
             FlowRouter.go('/app');
->>>>>>> 0e271b5cf106ffe1fb6f7647017e1d2bb2899b38:imports/ui/components/account/login/LoginAccount.jsx
           } else {
             FlowRouter.go('/acadDetails');
           }
-<<<<<<< HEAD:imports/ui/components/login/LoginAccount.jsx
-          //FlowRouter.reload();
-          Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success');
-        } else {
-          Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0], 'danger');
-=======
           Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
         } else {
           Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
           FlowRouter.go('/');
->>>>>>> 0e271b5cf106ffe1fb6f7647017e1d2bb2899b38:imports/ui/components/account/login/LoginAccount.jsx
           Meteor.logout();
         }
       }
     });
+    event.preventDefault();
   }
 
   handleReset(event) {

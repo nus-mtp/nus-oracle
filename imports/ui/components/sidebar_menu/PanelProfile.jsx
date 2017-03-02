@@ -3,8 +3,9 @@ import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
 import PanelListItem from '../common/PanelListItem.jsx'
 import IconButton from '../common/IconButton.jsx'
-import LogoutAccount from '../login/LogoutAccount.jsx'
 import * as constants from '../common/Constants.js';
+
+import LogoutAccount from '../account/logout/LogoutAccount.jsx'
 
 export default class PanelProfile extends React.Component {
   constructor(){

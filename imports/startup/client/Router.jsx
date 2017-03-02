@@ -1,21 +1,15 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-
-/* Import for FlowRouter */
 import { mount } from 'react-mounter';
 
-// Import all entry points needed for rendering the Login account
-import RegisterAccount from '../../ui/components/login/RegisterAccount';
-import LoginAccount from '../../ui/components/login/LoginAccount';
-import LogoutAccount from '../../ui/components/login/LogoutAccount';
-import ForgetAccount from '../../ui/components/login/ForgetAccount';
-
-// Components for the Initial Set Up Phase
-import SetUpAcadDetail from '../../ui/components/setup/SetUpAcadDetail';
+// Import React Components
+import MainLayout from '../../ui/components/account/main-layout/MainLayout.jsx';
+import LoginAccount from '../../ui/components/account/login/LoginAccount.jsx';
+import AcadDetailComponent from '../../ui/components/account/acad-details/AcadDetail.jsx';
+import SetUpAcadDetail from '../../ui/components/account/acad-details/SetUpAcadDetail.jsx';
 
 // The Main App component
-import App from '../../ui/pages/App';
+import App from '../../ui/pages/App.jsx';
 
 /**
  * Implements routes throughout the project
@@ -24,65 +18,23 @@ import App from '../../ui/pages/App';
  * found in fixtures.jsx in ./fixtures.jsx
  */
 
-/**
- * Routes to only the dashboard
- */
-FlowRouter.route('/', {
-  action() {
-    mount(MainLayout, { content: <LoginAccount /> });
-  }
-});
-
-FlowRouter.route('/setupPage', {
-  action() {
-    mount(MainLayout, { content: <RegisterAccount /> });
-  }
-});
-
-
-/**
- * Routes to the main index page with login + initial setup + dashboard
- */
-FlowRouter.route('/LogIn', {
-  action() {
-    console.log(Meteor.user()); //TODO: a123@u.nus.edu hello
-    if (!Meteor.userId()) {
-      console.log("User is logged out."); // User is logged out.
-      mount(MainLayout, {content: <LogInComponent />});
-    } else if (true) { //placeholder to redirect to InitialSetUp
-      console.log("User is logged IN."); // User is logged out.
-      mount(MainLayout, {content: <AppComponent />});
-    } else {
-      //Redirect to setup
-    }
-  }
-});
-
-/**
- * Routes to the initial setup
- */
-FlowRouter.route('/setup', {
-  action() {
-    console.log("User is logged out."); // User is logged out.
-    mount(AccountSetUpLayout, {content: <AcadDetailComponent />});
-  }
-});
-
-/**
- * Routes to the user dashboard
- */
- FlowRouter.route('/userDashboard', {
+ /**
+  * Routes to the main index page with login + initial setup + dashboard
+  */
+ FlowRouter.route('/', {
    action() {
-     console.log("User enters dashboard."); // User is logged out.
-     mount(AccountSetUpLayout, {content: <DashboardContainer />});
+     mount(MainLayout, {content: <LoginAccount />});
    }
  });
 
-/**
- * A template for anyone to redirect if you want to have html extension
- */
-FlowRouter.route('/:postId', {
-  action(params) {
-    mount(MainLayout, {content: <BlogPost {...params} />});
-  }
-});
+ FlowRouter.route('/acadDetails',  {
+   action()  {
+     mount(MainLayout, {content: <AcadDetailComponent />});
+   }
+ });
+
+ FlowRouter.route('/app',  {
+   action()  {
+     mount(MainLayout, {content: <App />});
+   }
+ })
