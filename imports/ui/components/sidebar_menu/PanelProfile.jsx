@@ -5,6 +5,8 @@ import PanelListItem from '../common/PanelListItem.jsx'
 import IconButton from '../common/IconButton.jsx'
 import LogoutAccount from '../account/logout/LogoutAccount.jsx'
 import ModulesCardContainer from './ModulesCardContainer.js'
+import InlineEdit from 'react-edit-inline';
+
 import * as constants from '../common/Constants.js';
 
 export default class PanelProfile extends React.Component {
@@ -12,19 +14,29 @@ export default class PanelProfile extends React.Component {
     super();
   }
 
+  datachanged(data){
+    console.log(data);
+  }
+
   render() {
     return (
       <nav className="side-menu-addl">
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
-          <PanelListItem type="header" text="Chan Seng Tat" />
+          <PanelListItem type="header" editable=
+            {<InlineEdit text="Chan Seng Tat" paramName="message" change={this.datachanged}/>}
+          />
           <PanelListItem type="" text="chanstat@u.nus.edu" />
           <ModulesCardContainer studentID="" listType="Exempted"/>
           <ModulesCardContainer studentID="" listType="Waived" />
           <PanelListItem type="header" text="Previous Education" />
-          <PanelListItem type="" text="(getStudentPreviousEducation)" />
+          <PanelListItem type="" editable=
+            {<InlineEdit text="(getStudentPreviousEducation)" paramName="message" change={this.datachanged}/>}
+          />
           <PanelListItem type="header" text="Academic Cohort" />
-          <PanelListItem type="" text="(getStudentAcademicCohort)" />
+          <PanelListItem type="" editable=
+            {<InlineEdit text="(getStudentAcademicCohort)" paramName="message" change={this.datachanged}/>}
+          />
           {/* Logout Button */}
           <LogoutAccount style={{padding: 1 + 'em'}}/>
         </ul>
