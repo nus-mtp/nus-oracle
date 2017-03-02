@@ -16,7 +16,7 @@ toggleCollapse() {
 
 render(){
   return(
-    <nav className="side-menu-addl" style={styles.Panel}>
+    <nav className="side-menu-addl">
       <header className="side-menu-addl-title">
         <div className="caption">Filter by Type</div>
         <i className="font-icon font-icon-burger"></i>
@@ -141,10 +141,3 @@ render(){
   );
 }
 }
-
-const styles = ({
-  Panel: {
-    width: constants.SIDEBAR_PANEL_WIDTH +'px',
-    left: constants.SIDEBAR_MENU_WIDTH + 'px'
-  }
-});

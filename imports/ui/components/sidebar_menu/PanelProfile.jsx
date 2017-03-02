@@ -13,9 +13,8 @@ export default class PanelProfile extends React.Component {
 
   render() {
     return (
-      <nav className="side-menu-addl" style={styles.PanelProfile}>
+      <nav className="side-menu-addl">
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
-
         <ul className="side-menu-addl-list">
           <PanelListItem type="header" text="Chan Seng Tat" />
           <PanelListItem type="" text="chanstat@u.nus.edu" />
@@ -32,10 +31,3 @@ export default class PanelProfile extends React.Component {
     );
   }
 }
-
-const styles = ({
-  PanelProfile: {
-    width: constants.SIDEBAR_PANEL_WIDTH +'px',
-    left: constants.SIDEBAR_MENU_WIDTH + 'px'
-  }
-});
