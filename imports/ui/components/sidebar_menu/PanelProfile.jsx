@@ -2,7 +2,7 @@ import React from 'react';
 import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
 import PanelListItem from '../common/PanelListItem.jsx'
-import LogoutAccount from '../login/LogoutAccount.jsx'
+import LogoutAccount from '../account/logout/LogoutAccount.jsx'
 import ModulesCardContainer from './ModulesCardContainer.js'
 import * as constants from '../common/Constants.js';
 
