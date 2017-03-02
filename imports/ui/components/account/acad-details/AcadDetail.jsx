@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import SetUpAcadDetail from './SetUpAcadDetail';
+import SetUpAcadDetail from './SetUpAcadDetail.jsx';
 
-export class AcadDetailComponent extends React.Component {
+export default class AcadDetailComponent extends React.Component {
   render() {
     return(
       <div>

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
-export class MainLayout extends React.Component {
+export default class MainLayout extends React.Component {
   render() {
     return(
       <div>
