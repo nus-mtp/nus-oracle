@@ -1,7 +1,7 @@
 import { createPlannerGivenUserID } from '../../api/crud-controller/planner/methods';
 import { insertNewSemesterInPlanner } from '../../api/crud-controller/semester/methods';
 import { insertOneModuleInSemester } from '../../api/crud-controller/module/methods';
-import { populateModuleFixture } from '../../api/integration-tests/fixtures';
+import { populateModuleFixture } from '../../api/test-fixtures/modules';
 import { Modules } from '../../api/database-controller/module/module';
 import { Planner } from '../../api/crud-controller/planner/planner';
 import { Students } from '../../api/database-controller/student/student';
