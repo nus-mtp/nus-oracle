@@ -21,24 +21,25 @@ export default class PanelProfile extends React.Component {
   render() {
     return (
       <nav className="side-menu-addl">
+        {/* Logout Button */}
+        <LogoutAccount style={{padding: 1 + 'em'}}/>
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
           <PanelListItem type="header" editable=
-            {<InlineEdit text="Chan Seng Tat" paramName="message" change={this.datachanged}/>}
+            {<InlineEdit text="Chan Seng Tat" paramName="changed" change={this.datachanged}/>}
           />
           <PanelListItem type="" text="chanstat@u.nus.edu" />
           <ModulesCardContainer studentID="" listType="Exempted"/>
           <ModulesCardContainer studentID="" listType="Waived" />
           <PanelListItem type="header" text="Previous Education" />
           <PanelListItem type="" editable=
-            {<InlineEdit text="(getStudentPreviousEducation)" paramName="message" change={this.datachanged}/>}
+            {<InlineEdit text="(getStudentPreviousEducation)" paramName="changed" change={this.datachanged}/>}
           />
           <PanelListItem type="header" text="Academic Cohort" />
           <PanelListItem type="" editable=
-            {<InlineEdit text="(getStudentAcademicCohort)" paramName="message" change={this.datachanged}/>}
+            {<InlineEdit text="(getStudentAcademicCohort)" paramName="changed" change={this.datachanged}/>}
           />
-          {/* Logout Button */}
-          <LogoutAccount style={{padding: 1 + 'em'}}/>
+          <PanelListItem type="header" text="Change Password" />
         </ul>
       </nav>
     );

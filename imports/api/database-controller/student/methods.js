@@ -126,7 +126,7 @@ export const deleteStudentExemptedModule = function deleteStudentExemptedModule(
   return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const getStudentWaivedModule = function getStudentAcademicCohort() {
+export const getStudentWaivedModules = function getStudentAcademicCohort() {
   const studentID = getStudentID();
   const student = getCurrentStudentDocument(studentID);
   return student.studentWaivedModule;

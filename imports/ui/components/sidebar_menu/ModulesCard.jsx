@@ -23,11 +23,11 @@ export default class ModulesCard extends React.Component {
   handleAddModule(moduleCode) {
     var isExemptedList = this.props.listType == "Exempted";
     if(isExemptedList){
-      // addStudentExemptedModule(getStudentID,moduleCode);
-      console.log("add exempted module");
+      addStudentExemptedModule(moduleCode, function() {console.log("add exempted module")});
+      // console.log("add exempted module");
     }
     else {
-      // addStudentWaivedModule(getStudentID,moduleCode);
+      addStudentWaivedModule(moduleCode);
       console.log("add waived module");
     }
   }
@@ -38,11 +38,11 @@ export default class ModulesCard extends React.Component {
   handleDeleteModule(moduleCode) {
     var isExemptedList = this.props.listType == "Exempted";
     if(isExemptedList){
-      // deleteStudentExemptedModule(getStudentID,moduleCode);
+      deleteStudentExemptedModule(moduleCode);
       console.log("delete exempted module");
     }
     else{
-      // deleteStudentWaivedModule(getStudentID,moduleCode);
+      deleteStudentWaivedModule(moduleCode);
       console.log("delete waived module");
     }
   }
