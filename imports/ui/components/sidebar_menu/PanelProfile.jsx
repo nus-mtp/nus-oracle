@@ -6,8 +6,6 @@ import LogoutAccount from '../login/LogoutAccount.jsx'
 import ModulesCardContainer from './ModulesCardContainer.js'
 import * as constants from '../common/Constants.js';
 
-import LogoutAccount from '../account/logout/LogoutAccount.jsx'
-
 export default class PanelProfile extends React.Component {
   constructor(){
     super();
