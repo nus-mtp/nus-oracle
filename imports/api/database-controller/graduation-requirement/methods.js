@@ -13,7 +13,7 @@ export const createNewGradRequirement = function(name, listOfAcadYear, listOfReq
     requirementName : name,
     requirementModules: moduleObject,
     academicYearList: listOfAcadYear
-  }
+  };
 
   GraduationRequirements.insert(gradRequirement);
 }
@@ -26,8 +26,8 @@ export const createModuleListObject = function(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
-  for (module in moduleList){
-    moduleToBeStored[module] = DEFAULT_MODULE_STATE;
+  for (var i = 0; i < moduleList.length; i++){
+    moduleToBeStored[moduleList[i]] = DEFAULT_MODULE_STATE;
   }
 
   return moduleToBeStored;
