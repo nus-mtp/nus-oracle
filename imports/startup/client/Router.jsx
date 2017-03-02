@@ -5,6 +5,8 @@ import { mount } from 'react-mounter';
 // Import React Components
 import MainLayout from '../../ui/components/account/main-layout/MainLayout.jsx';
 import LoginAccount from '../../ui/components/account/login/LoginAccount.jsx';
+import RegisterAccount from '../../ui/components/account/login/RegisterAccount.jsx';
+
 import AcadDetailComponent from '../../ui/components/account/acad-details/AcadDetail.jsx';
 import SetUpAcadDetail from '../../ui/components/account/acad-details/SetUpAcadDetail.jsx';
 
@@ -23,7 +25,13 @@ import App from '../../ui/pages/App.jsx';
   */
  FlowRouter.route('/', {
    action() {
-     mount(MainLayout, {content: <LoginAccount />});
+     mount(MainLayout, {
+       content:
+       <div>
+         <LoginAccount />
+         <RegisterAccount />
+       </div>
+     });
    }
  });
 
