@@ -12,14 +12,28 @@ const ModuleFulfillments = new ModuleFulfillmentCollection("modfulfillment");
   *  {acadYear:,
       areaFulfilled:}]
   */
-
+const moduleMappingSchema = {
+  acadYear: {
+    type: string,
+    optional: false
+  },
+  areaFulfilled: {
+    type: string,
+    optional: false
+  },
+  moduleEquivalent: {
+    type: [string],
+    optional: true
+  }
+};
 const fulfillmentSchema = {
   moduleCode: {
     type: String
   },
   moduleMapping: {
-    type: [object]
+    type: [moduleMappingSchema],
+    blackbox: true
   }
-}
+};
 
 ModuleFulfillments.attachSchema(fulfillmentSchema);
