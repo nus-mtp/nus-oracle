@@ -1,8 +1,8 @@
-import { getCohortByName } from '../database-controller/AcademicCohort/methods';
-import { getGradRequirementModulesByID } from '../database-controller/graduation-requirement/methods';
+import { getCohortByName } from '../../../../../../database-controller/AcademicCohort/methods';
+import { getGradRequirementModulesByID } from '../../../../../../database-controller/graduation-requirement/methods';
 import { getStudentAcademicCohort,
          getStudentExemptedModules,
-         getStudentWaivedModules } from '../database-controller/student/methods';
+         getStudentWaivedModules } from '../../../../../../database-controller/student/methods';
 
 /*
  * Check student's
@@ -15,17 +15,25 @@ import { getStudentAcademicCohort,
 * @return {{objects}}  object of all graduation
 *
 */
-export const csGradChecker = function csGradChecker() {
+export const csGradChecker = function csGradChecker(studentPlanner) {
   const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Breadth and Depth', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
 
   const studentAcademicCohort = getStudentAcademicCohort();
 
+  // retrieve foundation, IT-professionalism, Math-Sci and Breadth and Depth requirements here
   const cohortInformation = getCohortByName(studentAcademicCohort);
-
   const requirementModules = cohortInformation.cohortGradRequirementID;
 
+  //retrieve focus area requirements here
+
+  /*
+   * Send all planner information to every requirement check
+   */
+
+  // find university-level-requirements here 
+
   // find foundation requirement modules objects and call function from relevant academic year
-  
+
   // find breadth and depth requirement modules objects
 
   // find IT-professionalism requirement modules objects
