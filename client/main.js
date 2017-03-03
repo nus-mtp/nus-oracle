@@ -1,1 +1,1 @@
-import '../imports/startup/client/Router';
+import '../imports/startup/client/Router.jsx';
