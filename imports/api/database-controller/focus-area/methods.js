@@ -62,7 +62,8 @@ export const createModuleListObject = function(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
-  for (module in moduleList){
+  for (var i=0; i < moduleList.length; i++){
+    let module = moduleList[i];
     moduleToBeStored[module] = DEFAULT_MODULE_STATE;
   }
 

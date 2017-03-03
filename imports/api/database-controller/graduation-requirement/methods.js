@@ -35,9 +35,17 @@ export const createModuleListObject = function(moduleList) {
 /**
   * Retrieves requirement modules given graduation id and name of requirement
   * @param {string}   unique id of graduation requirement document
-  * @param {string}   name of graduation requirement document
   * @return {Object}  object of mappedModuleName-boolean key-pair values
+  * WRITE TEST CASE
   */
-export const getGradRequirementModules = function getGradRequirements(gradRequirementID, name) {
-  return GraduationRequirements.findOne(gradRequirementID, {requirementName: name}).requirementModules;
+export const getGradRequirementModules = function getGradRequirementModules(gradRequirementIDArray) {
+  const gradRequirements = {};
+  let tempGradDoc = {};
+  for (var i=0; i<gradRequirementIDArray.length; i++) {
+    tempGradDoc = GraduationRequirements.findOne(gradRequirementIDArray[i]);
+    if (tempGradDoc)  {
+      gradRequirements[tempGradDoc.requirementName] = tempGradDoc.requirementModules;
+    }
+  }
+  return gradRequirements;
 }

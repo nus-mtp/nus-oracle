@@ -8,7 +8,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // elements are governed in the method.
 class FocusAreaCollection extends Mongo.Collection {}
 
-const FocusArea = new FocusAreaCollection('focusArea');
+export const FocusArea = new FocusAreaCollection('focusArea');
 
 const focusAreaSchema = {
   name: {
@@ -18,13 +18,16 @@ const focusAreaSchema = {
     type: [String]
   },
   moduleListPrimary: {
-    type: Object
+    type: Object,
+    blackbox: true,
   },
   moduleListFourThousands: {
-    type: Object
+    type: Object,
+    blackbox: true,
   },
   moduleListNonPrimary: {
-    type: Object
+    type: Object,
+    blackbox: true,
   }
 };
 
