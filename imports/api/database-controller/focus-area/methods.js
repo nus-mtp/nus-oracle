@@ -1,6 +1,7 @@
 import { FocusArea } from './focusArea';
 import { searchByModuleCode } from '../module/methods';
 
+const DEFAULT_MODULE_STATE = false;
 
 /** This Method handles the creation of new Focus Area Document
   *@param {String} name : Name of the Focus Area
