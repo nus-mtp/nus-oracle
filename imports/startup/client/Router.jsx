@@ -4,14 +4,19 @@ import { mount } from 'react-mounter';
 
 // Import React Components
 import MainLayout from '../../ui/components/account/main-layout/MainLayout.jsx';
+import AccountManager from '../../ui/components/account/login/AccountManager.jsx';
 import LoginAccount from '../../ui/components/account/login/LoginAccount.jsx';
 import RegisterAccount from '../../ui/components/account/login/RegisterAccount.jsx';
-
-import AcadDetailComponent from '../../ui/components/account/acad-details/AcadDetail.jsx';
 import SetUpAcadDetail from '../../ui/components/account/acad-details/SetUpAcadDetail.jsx';
 
 // The Main App component
 import App from '../../ui/pages/App.jsx';
+
+// Paths to route to
+export const pathToLogin = "/";
+export const pathToSignUp = "/signup";
+export const pathToAcadDetailsSetup = "/acadSetup";
+export const pathToUserDashboard = "/userDashboard";
 
 /**
  * Implements routes throughout the project
@@ -23,25 +28,25 @@ import App from '../../ui/pages/App.jsx';
  /**
   * Routes to the main index page with login + initial setup + dashboard
   */
- FlowRouter.route('/', {
+ FlowRouter.route(pathToLogin, {
    action() {
-     mount(MainLayout, {
-       content:
-       <div>
-         <LoginAccount />
-         <RegisterAccount />
-       </div>
-     });
+     mount(MainLayout, {content: <AccountManager />});
    }
  });
 
- FlowRouter.route('/acadDetails',  {
+ FlowRouter.route(pathToSignUp,  {
    action()  {
-     mount(MainLayout, {content: <AcadDetailComponent />});
+     mount(MainLayout, {content: <RegisterAccount />});
    }
  });
 
- FlowRouter.route('/app',  {
+ FlowRouter.route(pathToAcadDetailsSetup,  {
+   action()  {
+     mount(MainLayout, {content: <SetUpAcadDetail />});
+   }
+ });
+
+ FlowRouter.route(pathToUserDashboard,  {
    action()  {
      mount(MainLayout, {content: <App />});
    }
