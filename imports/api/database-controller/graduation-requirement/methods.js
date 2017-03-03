@@ -6,16 +6,15 @@ const DEFAULT_MODULE_STATE = false;
   * @param {String} name: name of the graduation requirement
   * @param {[String]} listOfRequiredModule: list of module that will fulfill the gradRequirement.
   */
-export const createNewGradRequirement = function(name, listOfAcadYear, listOfRequiredModule) {
+export const createNewGradRequirement = function(name,  listOfRequiredModule) {
   const moduleObject = createModuleListObject(listOfRequiredModule);
 
   const gradRequirement = {
     requirementName : name,
     requirementModules: moduleObject,
-    academicYearList: listOfAcadYear
   };
 
-  GraduationRequirements.insert(gradRequirement);
+  return GraduationRequirements.insert(gradRequirement);
 }
 
 /** This method handles the creation of object list that is  going to be stored in the graduation Requirement Document
@@ -26,10 +25,10 @@ export const createModuleListObject = function(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
-  for (var i = 0; i < moduleList.length; i++){
-    moduleToBeStored[moduleList[i]] = DEFAULT_MODULE_STATE;
+  for (var i = 0; i< moduleList.length; i++){
+    let module = moduleList[i];
+    moduleToBeStored[module] = DEFAULT_MODULE_STATE;
   }
-
   return moduleToBeStored;
 }
 

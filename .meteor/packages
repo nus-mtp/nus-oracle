@@ -52,3 +52,5 @@ practicalmeteor:mocha
 dispatch:mocha
 aldeed:browser-tests
 http@1.2.11
+dispatch:mocha-phantomjs
+dispatch:phantomjs-tests@=0.0.5
