@@ -1,15 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
+// Import success and error notifications
 import { successMsgs } from './AccountAlerts.js';
 import { errorMsgs } from './AccountAlerts.js';
+
+// Import React components
+import Button from '../../common/Button.jsx';
 
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
  1) meteor mongo
  2) db.users.remove({_id:db.users.find()[0]._id})
-
  */
 
 export default class ForgetAccount extends React.Component {
@@ -18,44 +21,52 @@ export default class ForgetAccount extends React.Component {
     this.state = {
       email: ''
     };
-
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleReset = this.handleReset.bind(this);
   }
 
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
 
-
-  handleReset(event) {
-    console.log(this.state.email);
-    const options ={};
-    options.email = this.state.email;
-    Accounts.forgotPassword(options, ( error ) => {
-      if ( error ) {
-        console.log('error in resetting password');
-        Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
+  handleReset() {
+    Accounts.forgotPassword({
+      email: this.state.email
+    }, (error) => {
+      if (error) {
+        // Variety of errors when entering email
+        Bert.alert(error.reason, 'danger');
       } else {
-        Bert.alert('New password sent', 'success' );
+        Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
+        this.props.onSuccess();
       }
     });
-    event.preventDefault();
   }
 
   render() {
     return (
-      <form onSubmit={this.handleReset}>
-        <label>
-          Forgot your email? Fill in your email below
-        </label>
-        <label>
-          Email:
-          <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
-        </label>
-        <input type="submit" value="Reset" />
-      </form>
+      <div className="container-fluid">
+        <div className="box-typical box-typical-padding" style={{textAlign: 'center'}}>
+
+          <h5 className="m-t-lg">
+            <p>Forgot your password?</p>
+            <p><strong>Fill in your NUS e-mail below:</strong></p>
+          </h5>
+
+          <div className="form-group">
+            <div className="form-group">
+              <input className="form-control" type="text"
+                placeholder="NUS E-mail" value={this.state.value}
+                onChange={this.handleEmailChange.bind(this)} />
+            </div>
+
+            <div className='form-group'>
+              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                      buttonText="RESET PASSWORD"
+                      onButtonClick={this.handleReset.bind(this)} />
+            </div>
+          </div>
+
+        </div>
+      </div>
     );
   }
 }
