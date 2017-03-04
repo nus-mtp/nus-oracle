@@ -12,7 +12,8 @@ import { getStudentAcademicCohort,
 
 /**
 * retrieves an object of string boolean objects for each graduation requirement
-* @return {{objects}}  object of all graduation
+*  @param {objects}  a full appended object list of all the modules in a student planner 
+*  @return {{objects}}  object of all graduation
 *
 */
 export const csGradChecker = function csGradChecker(studentPlanner) {

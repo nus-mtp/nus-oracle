@@ -36,7 +36,6 @@ export const createModuleListObject = function(moduleList) {
   * Retrieves requirement modules given graduation id and name of requirement
   * @param {string}   unique id of graduation requirement document
   * @return {Object}  object of mappedModuleName-boolean key-pair values
-  * WRITE TEST CASE
   */
 export const getGradRequirementModules = function getGradRequirementModules(gradRequirementIDArray) {
   const gradRequirements = {};
