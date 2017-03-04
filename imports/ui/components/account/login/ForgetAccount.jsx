@@ -1,5 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+
+import { successMsgs } from './AccountAlerts.js';
+import { errorMsgs } from './AccountAlerts.js';
+
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -8,11 +12,12 @@ import React from 'react';
 
  */
 
-
 export default class ForgetAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: ''};
+    this.state = {
+      email: ''
+    };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleReset = this.handleReset.bind(this);

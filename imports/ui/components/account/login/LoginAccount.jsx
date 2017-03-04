@@ -1,6 +1,15 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
+// Import success and error notifications
+import { successMsgs } from './AccountAlerts.js'
+import { errorMsgs } from './AccountAlerts.js'
+import { successMsgLoginName } from './AccountAlerts.js'
+import { errorMsgIncorrectPassword } from './AccountAlerts.js'
+import { errorMsgUnverifiedEmail } from './AccountAlerts.js'
+import { errorMsgUnrecognizedEmail } from './AccountAlerts.js'
+import { errorMsgExceededLoginAttempts } from './AccountAlerts.js'
+
 // Import React components
 import Button from '../../common/Button.jsx';
 
@@ -17,6 +26,8 @@ import { pathToUserDashboard } from '../../../../startup/client/Router.jsx';
  2) db.users.remove({_id:db.users.find()[0]._id})
 
  */
+
+const MAX_PASSWORD_TRIES = 5;
 
 export default class LoginAccount extends React.Component {
   constructor(props) {
@@ -36,33 +47,61 @@ export default class LoginAccount extends React.Component {
     this.setState({password: event.target.value});
   }
 
-  resetUserPassword() {
-    this.props.onForgetPassword(this.state.email);
+  handleSignUp() {
+    this.props.onHandleSignUp();
+  }
+
+  handleForgetPassword() {
+    let email = this.state.email;
+
+    Accounts.forgotPassword({
+      email: email
+    }, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      } else {
+        Bert.alert(errorMsgExceededLoginAttempts(email), 'danger');
+      }
+    });
+
+    let user = Accounts.users.findOne({ username: email });
+    if (user) { // In case the user can't be found
+      Meteor.call('resetpassword', user._id);
+    } else {
+      Bert.alert(errorMsgUnrecognizedEmail(email), 'danger');
+    }
   }
 
   handleSubmit() {
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      if (error) { //Log in error
-        if (error.reason == 'Incorrect password') { //Incorrect password
-          Bert.alert( error.reason, 'danger');
-          this.state.passwordErr += 1;
-          if (this.state.passwordErr >=5) {
-            this.resetUserPassword();
+      if (error) { // Login error
+        if (error.reason == 'Incorrect password') {
+          // Incorrect password entered by user
+          let numPasswordTries = this.state.passwordErr + 1;
+          this.setState({ passwordErr: numPasswordTries });
+          Bert.alert(errorMsgIncorrectPassword(numPasswordTries), 'danger');
+          if (numPasswordTries >= 5) {
+            this.handleForgetPassword();
           }
-        } else {//Incorrect email, etc.
-          Bert.alert( error.reason, 'danger' );
+        } else { // Incorrect email, etc.
+          Bert.alert(error.reason, 'danger');
         }
       } else {
-        this.state.passwordErr = 0;
+        this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
+
         if (Meteor.user().emails[0].verified && Meteor.user()._id) {
+          // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
+            // Return users
             FlowRouter.go(pathToUserDashboard);
           } else {
+            // Newly-signed-up users
             FlowRouter.go(pathToAcadDetailsSetup);
           }
-          Bert.alert('Welcome back, ' + Meteor.user().username + '!', 'success' );
+          Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
         } else {
-          Bert.alert('Email is not verified, please check email, ' + Meteor.user().emails[0] , 'danger' );
+          // Refresh login page if this email isn't verified yet
+          Bert.alert(errorMsgUnverifiedEmail(Meteor.user().emails[0]), 'danger' );
           FlowRouter.go(pathToLogin);
           Meteor.logout();
         }
@@ -101,13 +140,15 @@ export default class LoginAccount extends React.Component {
                       onButtonClick={this.handleSubmit.bind(this)} />
 
               <div className='row'>
-                <a className="dropdown-item">
+                <a className="dropdown-item"
+                   onClick={this.handleSignUp.bind(this)}>
                   CREATE ACCOUNT
                 </a>
               </div>
 
               <div className='row'>
-                <a className="dropdown-item">
+                <a className="dropdown-item"
+                   onClick={this.handleForgetPassword.bind(this)}>
                   Forgot Password?
                 </a>
               </div>
