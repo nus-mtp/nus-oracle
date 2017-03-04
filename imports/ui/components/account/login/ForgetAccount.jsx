@@ -48,7 +48,7 @@ export default class ForgetAccount extends React.Component {
 
           <h5 className="m-t-lg">
             <p>Forgot your password?</p>
-            <p><strong>Fill in your NUS e-mail below:</strong></p>
+            <p><strong>Fill in your NUS E-mail below:</strong></p>
           </h5>
 
           <div className="form-group">

@@ -90,18 +90,24 @@ export default class RegisterAccount extends React.Component {
           </h4>
 
           <div className="form-group">
-            <input className="form-control" type="text"
-                   placeholder="NUS E-mail" value={this.state.value}
-                   onChange={this.handleEmailChange.bind(this)} />
+            <div className="form-group">
+              <input className="form-control" type="text"
+                placeholder="NUS E-mail" value={this.state.value}
+                onChange={this.handleEmailChange.bind(this)} />
+            </div>
 
-            <input className="form-control" type="password"
-                   placeholder="Password" value={this.state.value}
-                   onChange={this.handlePasswordChange.bind(this)} />
+            <div className="form-group">
+              <input className="form-control" type="password"
+                placeholder="Password" value={this.state.value}
+                onChange={this.handlePasswordChange.bind(this)} />
+            </div>
 
-            <input className="form-control" type="password"
-                   placeholder="Re-enter password" value={this.state.value}
-                   onChange={this.handleRePasswordChange.bind(this)} />
-        </div>
+            <div className="form-group">
+              <input className="form-control" type="password"
+                placeholder="Re-enter password" value={this.state.value}
+                onChange={this.handleRePasswordChange.bind(this)} />
+            </div>
+          </div>
 
           <div className='form-group'>
             <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
