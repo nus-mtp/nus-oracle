@@ -47,8 +47,12 @@ export default class LoginAccount extends React.Component {
     this.setState({password: event.target.value});
   }
 
-  handleSignUp() {
-    this.props.onHandleSignUp();
+  handleClickOnSignUp() {
+    this.props.onSignUp();
+  }
+
+  handleClickOnForgetPassword() {
+    this.props.onForgetPassword();
   }
 
   handleForgetPassword() {
@@ -141,15 +145,15 @@ export default class LoginAccount extends React.Component {
 
               <div className='row'>
                 <a className="dropdown-item"
-                   onClick={this.handleSignUp.bind(this)}>
-                  CREATE ACCOUNT
+                   onClick={this.handleClickOnSignUp.bind(this)}>
+                  Create account using your NUS E-mail
                 </a>
               </div>
 
               <div className='row'>
                 <a className="dropdown-item"
-                   onClick={this.handleForgetPassword.bind(this)}>
-                  Forgot Password?
+                   onClick={this.handleClickOnForgetPassword.bind(this)}>
+                  [WORK IN PROGRESS] Forgot Password?
                 </a>
               </div>
 

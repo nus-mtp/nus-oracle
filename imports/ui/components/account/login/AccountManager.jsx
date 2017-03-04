@@ -18,37 +18,50 @@ export default class AccountManager extends React.Component {
     }
   }
 
-  handleForgetPassword(email) {
-    console.log("handleForgetPassword: " + email);
-
-    Accounts.forgotPassword({
-      email: email
-    }, (error) => {
-      if (error) {
-        Bert.alert(error.reason, 'danger');
-      } else {
-        Bert.alert('Exceeded 5 login attempts. Password has been reset. ' +
-                   'Please check your email to reset your password.',
-                   'danger');
-      }
+  handleSignUp() {
+    this.setState({
+      isSigningUp: true
     });
-    let userId = Accounts.users.findOne({ username: email })._id;
-    Meteor.call('resetpassword', userId)
+  }
+
+  handleHideSignUp() {
+    this.setState({
+      isSigningUp: false
+    });
+  }
+
+  handleForgetPassword() {
+    this.setState({
+      isForgetPassword: true
+    });
+  }
+
+  handleHideForgetPassword() {
+    this.setState({
+      isForgetPassword: false
+    });
+  }
+
+  handleCloseAllWindows() {
+    this.setState({
+      isSigningUp: false,
+      isForgetPassword: false
+    });
   }
 
   render() {
-    console.log("isLoggingIn: " + this.state.isLoggingIn);
-    console.log("isSigningUp: " + this.state.isSigningUp);
-    console.log("isForgetPassword: " + this.state.isForgetPassword);
-
     return (
       <div className="container-fluid" style={{width: "70%"}}>
         <div className="page-center page-center-in">
           {this.state.isLoggingIn ?
-            <LoginAccount onForgetPassword={this.handleForgetPassword.bind(this)}/> : null}
+            <LoginAccount onForgetPassword={this.handleForgetPassword.bind(this)}
+                          onSignUp={this.handleSignUp.bind(this)} /> : null}
           {this.state.isSigningUp ?
-            <ModalContainer content={<RegisterAccount />} /> : null}
-          {this.state.isForgetPassword ? <ForgetAccount /> : null}
+            <ModalContainer onHidden={this.handleHideSignUp.bind(this)}
+                            content={<RegisterAccount onSuccess={this.handleCloseAllWindows.bind(this)}/>} /> : null}
+          {this.state.isForgetPassword ?
+            <ModalContainer onHidden={this.handleHideForgetPassword.bind(this)}
+                            content={<ForgetAccount onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
         </div>
       </div>
     );
