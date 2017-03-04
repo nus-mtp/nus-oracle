@@ -1,20 +1,27 @@
 // import fulfilment methods here
+import { getModuleFulfilment } from '../../../../../../../module-fulfilment/methods';
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentPlanner, foundationModules, exemptedModules, waivedModules) {
   let markedFoundationModules = foundationModules;
+  const keyNames = Object.keys(foundationModules);
   // loop through markedFoundationModules
-    for (var i=0; i<Object.keys(foundationModules).length; i++) {
-
+    for (var key in keyNames) {
     // check equivalent module fulfilment if available
-    
-    // check if equivalent module exists in studentPlanner
+    let moduleFulfilmentMappingEquivalent = getModuleFulfilment(key).moduleMapping[academicCohort].moduleEquivalent;
 
-    // check if equivalent module exists in exemptedModules
+    if (moduleFulfilmentMappingEquivalent.length !== 0) {
+      for (var i = 0; i < moduleFulfilmentMappingEquivalent.length; i++)  {
+          // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
+        if (studentPlanner[moduleFulfilmentMappingEquivalent[i]] ||
+            exemptedModules[moduleFulfilmentMappingEquivalent[i]] ||
+            waivedModules[moduleFulfilmentMappingEquivalent[i]]) {
 
-    // check if equivalent module exists in waivedModules
-
-    // mark markedFoundationModules as true or false depending on whether module exists in studentPlanner/exemptedModules/waivedModules
-
+          // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
+          markedFoundationModules[key] = true;
+        }
+      }
+    }
   }
   // return { moduleCode: boolean } object
+  return markedFoundationModules;
 }

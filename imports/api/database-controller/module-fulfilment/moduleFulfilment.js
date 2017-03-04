@@ -30,9 +30,6 @@ export const ModuleFulfilments = new ModuleFulfilmentCollection("modfulfilment")
       areaFulfilled:}]
   */
 const moduleMappingSchema = {
-  acadYear: {
-    type: String
-  },
   moduleEquivalent: {
     type: [String]
   },
@@ -42,12 +39,17 @@ const moduleMappingSchema = {
   }
 }
 
+/*
+ * moduleMapping type,
+ * @key academicYear
+ * @value moduleMapping object
+ */
 const fulfilmentSchema = {
   moduleCode: {
     type: String
   },
   moduleMapping: {
-    type: [moduleMappingSchema],
+    type: {moduleMappingSchema},
     blackbox: true
   }
 }

@@ -7,7 +7,6 @@ import {ModuleFulfilments} from './moduleFulfilment';
   */
 export const createNewModuleFulfilment = function createNewModuleFulfilment(academicYear, moduleCode, moduleEquivalentList) {
   const moduleMapping = {
-    acadYear: academicYear,
     moduleEquivalent: moduleEquivalentList
   }
 
@@ -15,17 +14,17 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
   let docsUpdated = 0;
 
   if (Object.keys(fulfilment).length === 0) {
-    mappingArray = []
-    mappingArray.push(moduleMapping);
+    mappingObject = {};
+    mappingObject[academicYear] = moduleMapping;
     fulfilment = {
       moduleCode: moduleCode,
-      moduleMapping: mappingArray
+      moduleMapping: mappingObject
     }
     docsUpdated = ModuleFulfilments.insert(fulfilment);
   } else {
-    const mappingArray = fulfilment.moduleMapping;
-    mappingArray.push(moduleMapping);
-    docsUpdated = ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingArray}});
+    const mappingObject = fulfilment.moduleMapping;
+    mappingObject[academicYear] = moduleMapping;
+    docsUpdated = ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
   }
 
   return docsUpdated;
