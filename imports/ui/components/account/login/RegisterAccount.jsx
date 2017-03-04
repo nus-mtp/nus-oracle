@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
+// Import success and error notifications
+import { successMsgs } from './AccountAlerts.js'
+import { errorMsgs } from './AccountAlerts.js'
+
 // Import React components
 import Button from '../../common/Button.jsx';
 
@@ -15,7 +19,11 @@ import Button from '../../common/Button.jsx';
 export default class RegisterAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: '', email: '', password:'', repassword:''};
+    this.state = {
+      username: '',
+      email: '',
+      password:'',
+      repassword:''};
   }
 
   handleEmailChange(event) {
@@ -30,7 +38,9 @@ export default class RegisterAccount extends React.Component {
   handleRePasswordChange(event) {
     this.setState({repassword: event.target.value});
   }
-  handleSubmit(event) {// to verify registration
+
+  handleSubmit() {// to verify registration
+    console.log("CLICKED ON SIGN UP IN RegisterAccount");
     let user = {
       username: this.state.email,
       email: this.state.email,
@@ -42,6 +52,7 @@ export default class RegisterAccount extends React.Component {
 
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
       console.log(validEmail);
+
       if (validEmail) {
         if (this.state.password == this.state.repassword) {
           Accounts.createUser( user, (error) => {
@@ -55,18 +66,18 @@ export default class RegisterAccount extends React.Component {
                   console.log('verification error');
                   Bert.alert(error.reason, 'danger');
                 } else {
-                  Bert.alert('Welcome! Please log in with your new account below!', 'success');
-                  //Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                  Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
+                  // Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
                   Meteor.logout();
                 }
               });
             }
           });
         } else {
-            Bert.alert("Password does not match re-entered password", 'danger');
+            Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
         }
       } else {
-        Bert.alert("Invalid nus email, please end your email address with \"@u.nus.edu\"", 'danger');
+        Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
       }
     });
   }
@@ -76,16 +87,35 @@ export default class RegisterAccount extends React.Component {
     return (
         <div className="container-fluid">
           <div className="box-typical box-typical-padding">
-            <h5 className="m-t-lg with-border">
+            <h4 className="m-t-lg with-border" style={{textAlign: 'center'}}>
               <strong>SIGN UP</strong>
-            </h5>
+            </h4>
 
-            Hello
+            <div className="form-group" style={{textAlign: 'center'}}>
+              <div className="form-group">
+                <input className="form-control" type="text"
+                  placeholder="NUS E-mail" value={this.state.value}
+                  onChange={this.handleEmailChange.bind(this)} />
+              </div>
 
-            <button type="button" className="btn btn-rounded"
-                    onClick={ this.saveAndContinue.bind(this) } >
-              SIGN UP
-            </button>
+              <div className="form-group">
+                <input className="form-control" type="password"
+                  placeholder="Password" value={this.state.value}
+                  onChange={this.handlePasswordChange.bind(this)} />
+              </div>
+
+              <div className="form-group">
+                <input className="form-control" type="password"
+                  placeholder="Re-enter Password" value={this.state.value}
+                  onChange={this.handleRePasswordChange.bind(this)} />
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                      buttonText="SIGN UP"
+                      onButtonClick={this.handleSubmit.bind(this)} />
+            </div>
           </div>
         </div>
     );
