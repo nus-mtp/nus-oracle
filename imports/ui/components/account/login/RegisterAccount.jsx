@@ -39,7 +39,7 @@ export default class RegisterAccount extends React.Component {
     this.setState({repassword: event.target.value});
   }
 
-  handleSubmit() {// to verify registration
+  handleSubmit() { // to verify registration
     console.log("CLICKED ON SIGN UP IN RegisterAccount");
     let user = {
       username: this.state.email,
@@ -51,23 +51,19 @@ export default class RegisterAccount extends React.Component {
     }
 
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
-      console.log(validEmail);
-
       if (validEmail) {
         if (this.state.password == this.state.repassword) {
           Accounts.createUser( user, (error) => {
             if (error) {
-              console.log('error in creating user');
+              // Variety of errors when signing up
               Bert.alert(error.reason, 'danger');
-              console.log(error.reason);
             } else {
               Meteor.call('sendVerificationLink', (error, response) => {
                 if (error) {
-                  console.log('verification error');
                   Bert.alert(error.reason, 'danger');
                 } else {
                   Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
-                  // Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                  this.props.onSuccess();
                   Meteor.logout();
                 }
               });
@@ -85,39 +81,36 @@ export default class RegisterAccount extends React.Component {
 
   render() {
     return (
-        <div className="container-fluid">
-          <div className="box-typical box-typical-padding">
-            <h4 className="m-t-lg with-border" style={{textAlign: 'center'}}>
-              <strong>SIGN UP</strong>
-            </h4>
+      <div className="container-fluid">
+        <div className="box-typical box-typical-padding"
+             style={{textAlign: 'center'}}>
 
-            <div className="form-group" style={{textAlign: 'center'}}>
-              <div className="form-group">
-                <input className="form-control" type="text"
-                  placeholder="NUS E-mail" value={this.state.value}
-                  onChange={this.handleEmailChange.bind(this)} />
-              </div>
+          <h4 className="m-t-lg">
+            <strong>Sign Up for NUS Oracle</strong>
+          </h4>
 
-              <div className="form-group">
-                <input className="form-control" type="password"
-                  placeholder="Password" value={this.state.value}
-                  onChange={this.handlePasswordChange.bind(this)} />
-              </div>
+          <div className="form-group">
+            <input className="form-control" type="text"
+                   placeholder="NUS E-mail" value={this.state.value}
+                   onChange={this.handleEmailChange.bind(this)} />
 
-              <div className="form-group">
-                <input className="form-control" type="password"
-                  placeholder="Re-enter Password" value={this.state.value}
-                  onChange={this.handleRePasswordChange.bind(this)} />
-              </div>
-            </div>
+            <input className="form-control" type="password"
+                   placeholder="Password" value={this.state.value}
+                   onChange={this.handlePasswordChange.bind(this)} />
 
-            <div className='form-group'>
-              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                      buttonText="SIGN UP"
-                      onButtonClick={this.handleSubmit.bind(this)} />
-            </div>
-          </div>
+            <input className="form-control" type="password"
+                   placeholder="Re-enter password" value={this.state.value}
+                   onChange={this.handleRePasswordChange.bind(this)} />
         </div>
+
+          <div className='form-group'>
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                    buttonText="SIGN UP"
+                    onButtonClick={this.handleSubmit.bind(this)} />
+          </div>
+
+        </div>
+      </div>
     );
   }
 }
