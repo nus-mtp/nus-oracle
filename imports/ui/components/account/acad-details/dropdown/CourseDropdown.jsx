@@ -24,12 +24,12 @@ var CourseDropdown = React.createClass({
 		};
 	},
 	handleSelectChange (value) {
-		console.log('You\'ve selected:', value);
+		//console.log('You\'ve selected:', value);
 		this.setState({ value });
     this.props.onValueClick(value);
 	},
   handleValueClick(value, event) {
-    console.log(value);
+    //console.log(value);
 
   },
 

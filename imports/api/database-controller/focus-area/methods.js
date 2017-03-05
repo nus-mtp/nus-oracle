@@ -52,7 +52,7 @@ export const consolidateModuleArrayValidity = function(moduleArray) {
     const isValidModule = consolidateModuleCodeValidity(moduleCode);
 
     if(!isValidModule){
-      console.log('The following module cannot be found in database: ' + moduleCode);
+      //console.log('The following module cannot be found in database: ' + moduleCode);
       moduleIndex  = moduleArray.indexOf(moduleCode);
       moduleArray.splice(moduleIndex,1);
     }

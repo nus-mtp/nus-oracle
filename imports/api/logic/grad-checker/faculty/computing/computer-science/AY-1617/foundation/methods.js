@@ -1,29 +1,29 @@
 // import fulfilment methods here
-import { getModuleFulfilment } from '../../../../../../../module-fulfilment/methods';
+import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
 
-export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentPlanner, foundationModules, exemptedModules, waivedModules) {
+export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules) {
   let markedFoundationModules = foundationModules;
+  let moduleFulfilment = {};
+  let moduleFulfilmentMappingEquivalent = [];
   const keyNames = Object.keys(foundationModules);
-  const studentSemesters = studentPlanner.semesters;
 
   // loop through markedFoundationModules
-    for (var key in keyNames) {
+    for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
-    let moduleFulfilmentMappingEquivalent = getModuleFulfilment(key).moduleMapping[academicCohort].moduleEquivalent;
-    markedFoundationModules = markModules(markedFoundationModules, studentSemesters, key);
+    moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
-    if (!markedFoundationModules[key] && moduleFulfilmentMappingEquivalent.length !== 0) {
-      for (var i = 0; i < moduleFulfilmentMappingEquivalent.length; i++)  {
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
+
+    markedFoundationModules = markModules(markedFoundationModules, studentSemesters, keyNames[i], keyNames[i]);
+
+    if (!markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
+      for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
-        markedFoundationModules = markModules(markedFoundationModules, studentSemesters, moduleFulfilmentMappingEquivalent[i], key);
+        // checks if in exempted or waived modules
+        markedFoundationModules = markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModules = markModules(markedFoundationModules, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         break;
       }
-    }
-
-    // checks if in exempted or waived modules
-    if (exemptedModules[moduleFulfilmentMappingEquivalent[i]] ||
-        waivedModules[moduleFulfilmentMappingEquivalent[i]]) {
-      markedFoundationModules[key] = true;
     }
   }
   // return { moduleCode: boolean } object
@@ -31,11 +31,25 @@ export const findFoundationRequirementModules = function findFoundationRequireme
 }
 
 const markModules = function markModules(markedFoundationModules, studentSemesters, equivalentModule, originalModule) {
-  for (var j = 0; j < studentSemesters.length; j++) {
-    if (studentSemesters[j].moduleMapping[equivalentModule]) {
+  for (var i = 0; i < studentSemesters.length; i++) {
+    if (studentSemesters[i].moduleHashmap[equivalentModule]) {
       // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
       markedFoundationModules[originalModule] = true;
       break;
+    }
+  }
+  return markedFoundationModules;
+}
+
+const markExemptedWaivedModules = function markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, equivalentModule, originalModule) {
+  if (Object.keys(exemptedModules).length !== 0)  {
+    if (exemptedModules[equivalentModule])  {
+      markedFoundationModules[originalModule] = true;
+    }
+  }
+  if (Object.keys(waivedModules).length !== 0)  {
+    if (waivedModules[equivalentModule]) {
+      markedFoundationModules[originalModule] = true;
     }
   }
   return markedFoundationModules;

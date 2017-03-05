@@ -1,4 +1,5 @@
-import { createPlannerGivenUserID } from '../crud-controller/planner/methods';
+import { createPlannerGivenUserID,
+         removePlanner } from '../crud-controller/planner/methods';
 import { insertNewSemesterInPlanner } from '../crud-controller/semester/methods';
 import { insertOneModuleInSemester } from '../crud-controller/module/methods';
 
@@ -14,29 +15,39 @@ export const populatePlannerFixture = function populatePlannerFixture() {
   const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
   const modulesTwo = ['CS1010X', 'CS1020', 'CS2010'];
 
-  const plannerIDOne = createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs);
-  const plannerIDTwo = createPlannerGivenUserID(plannerNames[1], focusAreas[1], userIDs);
+  const plannerIDs = [];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[1], focusAreas[1], userIDs));
 
   // create semesters
   for (var i=0; i< semesterIndex.length; i++) {
-    insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDOne);
+    insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDs[0]);
   }
 
   for (var i=0; i< semesterIndex.length; i++) {
-    insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDTwo);
+    insertNewSemesterInPlanner(academicYear[i], semesterNum[i], plannerIDs[1]);
   }
 
   // for each semester, insert a module into the semester
   for (var i = 0; i< semesterIndex.length; i++) {
     for (var j = 0; j < modules.length; j++)  {
-      insertOneModuleInSemester(i, modules[j], plannerIDOne);
+      insertOneModuleInSemester(i, modules[j], plannerIDs[0]);
     }
   }
 
   // for each semester, insert a module into the semester
   for (var i = 0; i< semesterIndex.length; i++) {
     for (var j = 0; j < modulesTwo.length; j++)  {
-      insertOneModuleInSemester(i, modulesTwo[j], plannerIDTwo);
+      insertOneModuleInSemester(i, modulesTwo[j], plannerIDs[1]);
     }
+  }
+  
+  return plannerIDs;
+}
+
+export const dePopulatePlannerFixture = function dePopulatePlannerFixture(plannerIDs) {
+  for (var i = 0; i<plannerIDs.length; i++)  {
+    removePlanner(plannerIDs[i]);
   }
 }

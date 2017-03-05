@@ -11,7 +11,7 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
   }
 
   let fulfilment = getModuleFulfilment(moduleCode);
-  let docsUpdated = 0;
+  let docsID = '';
 
   if (Object.keys(fulfilment).length === 0) {
     mappingObject = {};
@@ -20,22 +20,27 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
       moduleCode: moduleCode,
       moduleMapping: mappingObject
     }
-    docsUpdated = ModuleFulfilments.insert(fulfilment);
+    docsID = ModuleFulfilments.insert(fulfilment);
   } else {
     const mappingObject = fulfilment.moduleMapping;
     mappingObject[academicYear] = moduleMapping;
-    docsUpdated = ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
+    ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
+    docsID = fulfilment._id;
   }
 
-  return docsUpdated;
+  return docsID;
 }
 
 export const getModuleFulfilment = function getModuleFulfilment(moduleCode) {
-  let moduleFulfilment = ModuleFulfilments.findOne(moduleCode);
+  let moduleFulfilment = ModuleFulfilments.findOne({moduleCode: moduleCode});
 
   if (!moduleFulfilment) {
     moduleFulfilment = {};
   }
 
   return moduleFulfilment;
+}
+
+export const removeOneModuleFulfilment = function removeOneModuleFulfilment(fulfilmentID) {
+  ModuleFulfilments.remove(fulfilmentID);
 }

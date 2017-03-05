@@ -48,3 +48,7 @@ export const getGradRequirementModules = function getGradRequirementModules(grad
   }
   return gradRequirements;
 }
+
+export const removeOneGradRequirementModule = function removeGradRequirementModules(gradRequirementID)  {
+  GraduationRequirements.remove(gradRequirementID);
+}

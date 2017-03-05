@@ -5,9 +5,9 @@ Meteor.methods({
     let length = emailAddress.length;
     let domain = emailAddress.slice(-10,length);
     let correctDomain = "@u.nus.edu";
-    console.log(domain);
-    console.log(correctDomain);
-    console.log(correctDomain == domain);
+    //console.log(domain);
+    //console.log(correctDomain);
+    //console.log(correctDomain == domain);
     return correctDomain == domain;
   }
 });
