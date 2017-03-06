@@ -1,5 +1,6 @@
 // import fulfilment methods here
 import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
+import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules) {
   let markedFoundationModules = foundationModules;
@@ -13,8 +14,8 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-
     markedFoundationModules = markModules(markedFoundationModules, studentSemesters, keyNames[i], keyNames[i]);
+    markedFoundationModules = markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
 
     if (!markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {

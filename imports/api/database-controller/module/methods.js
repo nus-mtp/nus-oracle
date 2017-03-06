@@ -33,6 +33,8 @@ export const searchByModuleCode = function retrieveMod(modCode) {
   const returnPackage = {
     moduleCode: searchResult.moduleCode,
     moduleID: searchResult._id,
+    moduleMC: searchResult.moduleMC,
+    moduleDescription: searchResult.moduleDescription
   };
 
   return returnPackage;

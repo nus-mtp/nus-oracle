@@ -1,4 +1,5 @@
 // import fulfilment methods here
+import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
 
 export const findITProfessionalismModules = function findITProfessionalismModules(academicCohort, studentPlanner, ITProfessionalismModules, exemptedModules, waivedModules)  {
   let markedITProfessionalismModules = ITProfessionalismModules;

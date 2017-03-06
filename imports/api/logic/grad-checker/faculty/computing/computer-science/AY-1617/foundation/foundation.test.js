@@ -46,6 +46,7 @@ describe('grad-checker-foundation', function()  {
     assert.isTrue(markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModules[modules[2]], 'CS2010 fulfiled');
     assert.isTrue(markedFoundationModules[modules[3]], 'CS3230 fulfiled');
+    assert.isFalse(markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
   })
 
 });
