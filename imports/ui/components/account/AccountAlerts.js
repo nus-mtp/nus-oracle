@@ -7,22 +7,28 @@
 const MAX_PASSWORD_TRIES = 5;
 
 export const successMsgs = {
-  SUCCESS_LOGIN: "Welcome back",
+  SUCCESS_LOGIN: "Welcome back!",
   SUCCESS_SIGNUP: "Welcome! Please log in with your new account below!",
+  SUCCESS_SETUP: "Setup is all done. Welcome to NUS Oracle!",
   SUCCESS_NEW_PASSWORD_SENT: "New password sent to your email!"
+}
+
+export const warningMsgs = {
+  WARNING_CANCEL_SETUP: "Click again to leave this page"
 }
 
 export const errorMsgs = {
   ERR_INCORRECT_PASSWORD: "Incorrect password entered",
+  ERR_PASSWORDS_NOT_MATCH: "Passwords do not match",
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
-  ERR_EMAIL_UNVERIFIED: "Your email has not been verified yet. Please check",
-  ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'.",
-  ERR_PASSWORDS_NOT_MATCH: "Passwords do not match."
+  ERR_EMAIL_UNVERIFIED: "Your email has not been verified. Please check",
+  ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'",
+  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing",
 }
 
 //=====================================================
-// SUCCESS MESSAGES
+// CUSTOM SUCCESS MESSAGES
 //=====================================================
 /**
  * SUCCESSFUL Login Message
@@ -30,11 +36,11 @@ export const errorMsgs = {
  * @return {[String]}    Welcome message
  */
 export const successMsgLoginName = function(username) {
-  return successMsg.SUCCESS_LOGIN + " " + username;
+  return successMsgs.SUCCESS_LOGIN + " " + username;
 }
 
 //=====================================================
-// ERROR MESSAGES
+// CUSTOM ERROR MESSAGES
 //=====================================================
 /**
  * ERROR Incorrect Password with Number of Tries Message
@@ -52,7 +58,7 @@ export const errorMsgIncorrectPassword = function(numOfTries) {
  * @return {[String]}    Error message
  */
 export const errorMsgExceededLoginAttempts = function(email) {
-  return this.errorMsgs.ERR_EXCEEDED_LOGIN_ATTEMPTS + " " + email;
+  return errorMsgs.ERR_EXCEEDED_LOGIN_ATTEMPTS + " " + email;
 }
 
 /**
@@ -61,7 +67,7 @@ export const errorMsgExceededLoginAttempts = function(email) {
  * @return {[String]}    Error message
  */
 export const errorMsgUnverifiedEmail = function(email) {
-  return this.errorMsgs.ERR_EMAIL_UNVERIFIED + " " + email;
+  return errorMsgs.ERR_EMAIL_UNVERIFIED + " " + email;
 }
 
 /**
@@ -71,5 +77,6 @@ export const errorMsgUnverifiedEmail = function(email) {
  * @return {[String]}    Error message
  */
 export const errorMsgUnrecognizedEmail = function(email) {
-  return email + " " + this.errorMsgs.ERR_EMAIL_UNRECOGNIZED;
+  console.log(errorMsgs.ERR_EMAIL_UNRECOGNIZED);
+  return email + " " + errorMsgs.ERR_EMAIL_UNRECOGNIZED;
 }

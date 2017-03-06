@@ -5,7 +5,7 @@ export default class MainLayout extends React.Component {
   render() {
     return(
       <div>
-        <main>{this.props.content}</main>
+        {this.props.content}
       </div>
     );
   }
