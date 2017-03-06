@@ -1,5 +1,5 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
-import { ModuleFulfillments } from './moduleFulfillment';
+import { ModuleFulfilments } from './moduleFulfilment';
 import { createNewModuleFulfilment,
         getModuleFulfilment,
         updateModuleMappingOfModuleFulfilment,
