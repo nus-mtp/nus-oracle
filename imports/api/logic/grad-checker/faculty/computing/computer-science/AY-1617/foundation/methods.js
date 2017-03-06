@@ -59,7 +59,6 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
   if (Object.keys(waivedModules).length !== 0)  {
     if (waivedModules[equivalentModule]) {
       markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
-      markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
     }
   }
   return markedFoundationModulesAndMCs;

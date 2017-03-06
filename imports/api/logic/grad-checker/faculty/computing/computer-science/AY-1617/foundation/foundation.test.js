@@ -91,7 +91,8 @@ describe('grad-checker-foundation', function()  {
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS3230'], 'CS3230 fulfiled');
 
-    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 20);
+    // 16 because waived module does not count to MCs
+    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
   })
 
 });
