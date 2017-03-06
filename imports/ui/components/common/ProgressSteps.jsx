@@ -18,6 +18,9 @@ export default class ProgressSteps extends React.Component {
 					<li>
             <div className="icon"></div>
           </li>
+          <li>
+            <div className="icon"></div>
+          </li>
 				</ul>
 			</div>
     );

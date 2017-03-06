@@ -3,18 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import { mount } from 'react-mounter';
 
 // Import React Components
+import App from '../../ui/pages/App.jsx';
 import MainLayout from '../../ui/components/account/main-layout/MainLayout.jsx';
 import AccountManager from '../../ui/components/account/login/AccountManager.jsx';
-import LoginAccount from '../../ui/components/account/login/LoginAccount.jsx';
-import RegisterAccount from '../../ui/components/account/login/RegisterAccount.jsx';
 import SetUpAcadDetail from '../../ui/components/account/acad-details/SetUpAcadDetail.jsx';
-
-// The Main App component
-import App from '../../ui/pages/App.jsx';
 
 // Paths to route to
 export const pathToLogin = "/";
-export const pathToSignUp = "/signup";
 export const pathToAcadDetailsSetup = "/acadSetup";
 export const pathToUserDashboard = "/userDashboard";
 
@@ -31,12 +26,6 @@ export const pathToUserDashboard = "/userDashboard";
  FlowRouter.route(pathToLogin, {
    action() {
      mount(MainLayout, {content: <AccountManager />});
-   }
- });
-
- FlowRouter.route(pathToSignUp,  {
-   action()  {
-     mount(MainLayout, {content: <RegisterAccount />});
    }
  });
 

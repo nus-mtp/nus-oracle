@@ -40,7 +40,6 @@ export default class RegisterAccount extends React.Component {
   }
 
   handleSubmit() { // to verify registration
-    console.log("CLICKED ON SIGN UP IN RegisterAccount");
     let user = {
       username: this.state.email,
       email: this.state.email,

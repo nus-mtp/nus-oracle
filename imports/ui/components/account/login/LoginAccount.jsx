@@ -15,7 +15,6 @@ import Button from '../../common/Button.jsx';
 
 // Import file paths
 import { pathToLogin } from '../../../../startup/client/Router.jsx';
-import { pathToSignUp } from '../../../../startup/client/Router.jsx';
 import { pathToAcadDetailsSetup } from '../../../../startup/client/Router.jsx';
 import { pathToUserDashboard } from '../../../../startup/client/Router.jsx';
 
@@ -98,11 +97,11 @@ export default class LoginAccount extends React.Component {
           if (Meteor.user().profile.hasSetup) {
             // Return users
             FlowRouter.go(pathToUserDashboard);
+            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
           } else {
             // Newly-signed-up users
             FlowRouter.go(pathToAcadDetailsSetup);
           }
-          Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
         } else {
           // Refresh login page if this email isn't verified yet
           Bert.alert(errorMsgUnverifiedEmail(Meteor.user().emails[0]), 'danger' );
