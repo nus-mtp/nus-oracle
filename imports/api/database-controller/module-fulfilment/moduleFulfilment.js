@@ -32,7 +32,7 @@ const fulfilmentSchema = {
     type: String
   },
   moduleMapping: {
-    type: object,
+    type: Object,
     blackbox: true
   }
 }
