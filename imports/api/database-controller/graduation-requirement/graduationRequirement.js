@@ -14,7 +14,6 @@ class GraduationRequirementCollection extends Mongo.Collection {
     //validate document
     return super.insert( gradDocument, callBack);
   };
-
   update(selector, modifier){
     const result = super.update(selector, modifier);
 

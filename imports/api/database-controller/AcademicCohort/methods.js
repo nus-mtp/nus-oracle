@@ -12,7 +12,7 @@ export const createNewCohort = function createCohort(cohortName) {
 
   if (isValid) {
     const result = AcademicCohort.insert(newCohortDocument);
-    console.log(result);
+    //console.log(result);
     return result;
   }
 

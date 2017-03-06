@@ -1,73 +1,46 @@
-import {ModuleFulfilments} from './moduleFulfilments';
+import {ModuleFulfilments} from './moduleFulfilment';
 
-/**
- * New Schema Reference:
-  moduleCode: {
-    type: String
-  },
-  academicYearList: {
-    type: [String],
-    blackbox: true
-  },
-  moduleEquivalent: {
-    type: [String],
-    optional: true
+/** This method handles the creation of new module fulfilment document. It takes in three arguments
+  * @param {String} academicYear: academic year of moduleEquivalence
+  * @param {String} moduleCode: module code
+  * @param {[String]} moduleEquivalentList: list of module that will fulfill the same moduleCode.
+  */
+export const createNewModuleFulfilment = function createNewModuleFulfilment(academicYear, moduleCode, moduleEquivalentList) {
+  const moduleMapping = {
+    moduleEquivalent: moduleEquivalentList
   }
- */
 
-/** Old Schema Reference :
--- ModuleFulfilmentsSchema
- moduleCode: {
-   type: String
- },
- moduleMapping: {
-  type: [moduleMappingSchema],
-  blackbox: true
- }
--- ModuleMappingSchema
-  acadYear: {
-    type: string,
-    optional: false
-  },
-  areaFulfilled: {
-    type: string,
-    optional: false
-  },
-  moduleEquivalent: {
-    type: [string],
-    optional: true
+  let fulfilment = getModuleFulfilment(moduleCode);
+  let docsID = '';
+
+  if (Object.keys(fulfilment).length === 0) {
+    mappingObject = {};
+    mappingObject[academicYear] = moduleMapping;
+    fulfilment = {
+      moduleCode: moduleCode,
+      moduleMapping: mappingObject
+    }
+    docsID = ModuleFulfilments.insert(fulfilment);
+  } else {
+    const mappingObject = fulfilment.moduleMapping;
+    mappingObject[academicYear] = moduleMapping;
+    ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
+    docsID = fulfilment._id;
   }
-*/
-export const createNewModuleFulfilment = function createNewModuleFulfilmentDocument(moduleCode, academicYearList, equivalentModuleList) {
 
-const newModuleFulfilmentDocument = {
-  moduleCode: moduleCode,
-  academicYearList:academicYearList,
-  moduleEquivalent: equivalentModuleList
-};
-
-const isValidSchema = Match.test(newModuleFulfilmentDocument, ModuleFulfilments.simpleSchema());
-
-let result = '';
-if (isValidSchema){
-  result = ModuleFulfilments.insert(newModuleFulfilmentDocument);
+  return docsID;
 }
 
-return result;
+export const getModuleFulfilment = function getModuleFulfilment(moduleCode) {
+  let moduleFulfilment = ModuleFulfilments.findOne({moduleCode: moduleCode});
+
+  if (!moduleFulfilment) {
+    moduleFulfilment = {};
+  }
+
+  return moduleFulfilment;
 }
 
-export const findModuleMappingByModuleCode = function findMappingByCode(moduleCode, studentAcadCohort) {
-  const result = ModuleFulfilments.find({moduleCode:moduleCode}, {limit:1}).fetch();
-
-  if (result = {}) {
-    return result
-  }
-
-  const isValidForStudentCohort = result.academicYearList.indexOf(studentAcademicCohort);
-
-  if (isValidForStudentCohort == -1){
-    return {};
-  }
-
-  return result;
+export const removeOneModuleFulfilment = function removeOneModuleFulfilment(fulfilmentID) {
+  ModuleFulfilments.remove(fulfilmentID);
 }

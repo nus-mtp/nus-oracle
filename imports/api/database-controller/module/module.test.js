@@ -128,7 +128,7 @@ if(Meteor.isServer){
       assert.equal(retrieveAllModule().length, 2);
       const moduleWithoutTest= Modules.findOne({moduleCode: 'CS1111'});
       assert.equal(moduleWithoutTest.moduleCode, 'CS1111');
-      console.log(moduleWithoutTest.termOffered);
+      //console.log(moduleWithoutTest.termOffered);
     });
 
     it('should accept module data without corequisite', function () {

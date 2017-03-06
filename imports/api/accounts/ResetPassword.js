@@ -2,7 +2,7 @@
 Meteor.methods({
   resetpassword(userId) {
     let newPassword = generatePassword();
-    console.log(newPassword);
+    //console.log(newPassword);
       return Accounts.setPassword(userId, newPassword);
   }
 });

@@ -1,6 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { GraduationRequirements} from './graduationRequirement';
-import { createNewGradRequirement } from './methods';
+import { createNewGradRequirement,
+         getGradRequirementModules } from './methods';
 
 describe(" graduation requirement test", function() {
   const graduationName = ['Foundation', 'IT professionalism'];
@@ -32,8 +33,19 @@ describe(" graduation requirement test", function() {
 
   it('should not have an empty moduleListing', function() {
     const foundationList = GraduationRequirements.findOne({_id:storeID[0]});
+<<<<<<< HEAD
+=======
+    //console.log("foundation list: " + JSON.stringify(foundationList));
+>>>>>>> 7562b2194f1d6ee95122e3f63bcf02e0b226a005
     assert.equal(Object.keys(foundationList.requirementModules).length, foundationModuleList.length);
     const professionalList = GraduationRequirements.findOne({_id:storeID[1]});
     assert.equal(Object.keys(professionalList.requirementModules).length, ITProfModuleList.length);
+  });
+
+  it ('should return list of graduation requirement mapping', function()  {
+    const gradRequirements = getGradRequirementModules(storeID);
+    assert.equal(Object.keys(gradRequirements).length, storeID.length);
+    assert.equal(Object.keys(gradRequirements[graduationName[0]]).length, foundationModuleList.length);
+    assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
   });
 });

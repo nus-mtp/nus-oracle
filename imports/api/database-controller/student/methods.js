@@ -48,41 +48,46 @@ export const getCurrentStudentDocument = function getCurrentStudentDocument(stud
   return Students.findOne({_id: studentID});
 }
 
-// get the academic cohort of the current student
-export const getStudentAcademicCohort = function getCohort(studentID) {
+export const getStudentAcademicCohort = function getCohort() {
+  const studentID = getStudentID();
   return getCurrentStudentDocument(studentID).studentAcademicCohort;
 }
 
-export const getStudentExemptedModules = function getExemptedModule(studentID) {
-  return getCurrentStudentDocument(studentID).studentExemptedModule;
-}
-
-export const getStudentPreviousEducation = function getPrevEducation(studentID) {
+export const getStudentPreviousEducation = function getPrevEducation() {
+  const studentID = getStudentID();
   return getCurrentStudentDocument(studentID).studentPreviousHighestEducation;
 }
 
-export const updateStudentAcademicCohort = function updateStudentCohort(StudentID, newCohort) {
-  // TO-DO: Check if the cohort exists in the acadCohortDataBase
+export const updateStudentAcademicCohort = function updateStudentCohort(newCohort) {
+  //TO-DO: Check if the cohort exists in the acadCohortDataBase
   // find the studentID
-  const student = getCurrentStudentDocument(StudentID);
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   if(student == {}){
     return false;
   }
-  return Students.update(StudentID, { $set: { studentAcademicCohort: newCohort} });
+  return Students.update(studentID, { $set: { studentAcademicCohort: newCohort} });
 }
 
-export const updateStudentPreviousEducation = function updateStudentEducation(StudentID, prevEdu) {
-  // TO-DO: Check if the prevEdu exists in the previousEducationDatabase
+export const updateStudentPreviousEducation = function updateStudentEducation(prevEdu) {
+  //TO-DO: Check if the prevEdu exists in the previousEducationDatabase
   // find the studentID
-  const student = getCurrentStudentDocument(StudentID);
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   if(student == {}){
     return false;
   }
-  return Students.update(StudentID, { $set: { studentPreviousHighestEducation: prevEdu} });
+  return Students.update(studentID, { $set: { studentPreviousHighestEducation: prevEdu} });
 }
 
-export const addStudentExemptedModule = function addStudentExemptedModule(StudentID, exemptedModule, callback) {
-  const student = getCurrentStudentDocument(StudentID);
+export const getStudentExemptedModules = function getExemptedModule() {
+  const studentID = getStudentID();
+  return getCurrentStudentDocument(studentID).studentExemptedModule;
+}
+
+export const addStudentExemptedModule = function addStudentExemptedModule(exemptedModule, callback) {
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   // check if added modules are legit modules
   if (Object.keys(searchByModuleCode(exemptedModule)).length === 0) {
     return 0;
@@ -94,11 +99,14 @@ export const addStudentExemptedModule = function addStudentExemptedModule(Studen
   const studentExemptedModules = student.studentExemptedModule;
   studentExemptedModules[exemptedModule] = exemptedModule;
 
-  return Students.update(StudentID, { $set: { studentExemptedModule: studentExemptedModules } }, callback);
+  const doc = Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } }, callback);
+
+  return doc;
 }
 
-export const deleteStudentExemptedModule = function deleteStudentExemptedModule(StudentID, exemptedModule)  {
-  const student = getCurrentStudentDocument(StudentID);
+export const deleteStudentExemptedModule = function deleteStudentExemptedModule(exemptedModule)  {
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   if (student == {})  {
     return 0;
   }
@@ -111,11 +119,18 @@ export const deleteStudentExemptedModule = function deleteStudentExemptedModule(
 
   delete studentExemptedModules[exemptedModule];
 
-  return Students.update(StudentID, { $set: { studentExemptedModule: studentExemptedModules } });
+  return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const addStudentWaviedModule = function addStudentWaviedModule(StudentID, waivedModule, callback)  {
-  const student = getCurrentStudentDocument(StudentID);
+export const getStudentWaivedModules = function getStudentAcademicCohort() {
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
+  return student.studentWaivedModule;
+}
+
+export const addStudentWaivedModule = function addStudentWaivedModule(waivedModule, callback)  {
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   if (Object.keys(searchByModuleCode(waivedModule)).length === 0) {
     return 0;
   }
@@ -126,11 +141,12 @@ export const addStudentWaviedModule = function addStudentWaviedModule(StudentID,
   const studentWaivedModules = student.studentWaivedModule;
   studentWaivedModules[waivedModule] = waivedModule;
 
-  return Students.update(StudentID, { $set: { studentWaivedModule: studentWaivedModules } }, callback);
+  return Students.update(studentID, { $set: { studentWaivedModule: studentWaivedModules } }, callback);
 }
 
-export const deleteStudentWaivedModule = function deleteStudentWaivedModule(StudentID, waivedModule)  {
-  const student = getCurrentStudentDocument(StudentID);
+export const deleteStudentWaivedModule = function deleteStudentWaivedModule(waivedModule)  {
+  const studentID = getStudentID();
+  const student = getCurrentStudentDocument(studentID);
   if (student == {})  {
     return 0;
   }
@@ -143,5 +159,104 @@ export const deleteStudentWaivedModule = function deleteStudentWaivedModule(Stud
 
   delete studentWaivedModules[waivedModule];
 
-  return Students.update(StudentID, { $set: { studentWaivedModule: studentWaivedModules } });
+  return Students.update(studentID, { $set: { studentWaivedModule: studentWaivedModules } });
+}
+
+/*
+ * All methods below are for TESTING PURPOSES ONLY, DO NOT USE IN PRODUCTION
+ */
+
+export const getStudentAcademicCohortGivenStudentID = function getCohortGivenStudentID(studentID) {
+  return getCurrentStudentDocument(studentID).studentAcademicCohort;
+}
+
+export const getStudentExemptedModulesGivenStudentID = function getExemptedModuleGivenStudentID(studentID) {
+  return getCurrentStudentDocument(studentID).studentExemptedModule;
+}
+
+export const getStudentPreviousEducationGivenStudentID = function getPrevEducationGivenStudentID(studentID) {
+  return getCurrentStudentDocument(studentID).studentPreviousHighestEducation;
+}
+
+export const updateStudentAcademicCohortGivenStudentID = function updateStudentCohortGivenStudentID(newCohort, studentID) {
+  //TO-DO: Check if the cohort exists in the acadCohortDataBase
+  const student = getCurrentStudentDocument(studentID);
+  if(student == {}){
+    return false;
+  }
+  return Students.update(studentID, { $set: { studentAcademicCohort: newCohort} });
+}
+
+export const updateStudentPreviousEducationGivenStudentID = function updateStudentEducationGivenStudentID(prevEdu, studentID) {
+  //TO-DO: Check if the prevEdu exists in the previousEducationDatabase
+  const student = getCurrentStudentDocument(studentID);
+  if(student == {}){
+    return false;
+  }
+  return Students.update(studentID, { $set: { studentPreviousHighestEducation: prevEdu} });
+}
+
+export const addStudentExemptedModuleGivenStudentID = function addStudentExemptedModuleGivenStudentID(exemptedModule, studentID, callback) {
+  const student = getCurrentStudentDocument(studentID);
+  // check if added modules are legit modules
+  if (Object.keys(searchByModuleCode(exemptedModule)).length === 0) {
+    return 0;
+  }
+
+  if (student == {})  {
+    return 0;
+  }
+  const studentExemptedModules = student.studentExemptedModule;
+  studentExemptedModules[exemptedModule] = exemptedModule;
+
+  return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } }, callback);
+}
+
+export const deleteStudentExemptedModuleGivenStudentID = function deleteStudentExemptedModuleGivenStudentID(exemptedModule, studentID)  {
+  const student = getCurrentStudentDocument(studentID);
+  if (student == {})  {
+    return 0;
+  }
+  const studentExemptedModules = student.studentExemptedModule;
+
+  // check if there are any modules to delete
+  if (Object.keys(studentExemptedModules).length === 0) {
+    return 0;
+  }
+
+  delete studentExemptedModules[exemptedModule];
+
+  return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
+}
+
+export const addStudentWaivedModuleGivenStudentID = function addStudentWaivedModuleGivenStudentID(waivedModule, studentID, callback)  {
+  const student = getCurrentStudentDocument(studentID);
+  if (Object.keys(searchByModuleCode(waivedModule)).length === 0) {
+    return 0;
+  }
+
+  if (student == {})  {
+    return 0;
+  }
+  const studentWaivedModules = student.studentWaivedModule;
+  studentWaivedModules[waivedModule] = waivedModule;
+
+  return Students.update(studentID, { $set: { studentWaivedModule: studentWaivedModules } }, callback);
+}
+
+export const deleteStudentWaivedModuleGivenStudentID = function deleteStudentWaivedModuleGivenStudentID(waivedModule, studentID)  {
+  const student = getCurrentStudentDocument(studentID);
+  if (student == {})  {
+    return 0;
+  }
+  const studentWaivedModules = student.studentWaivedModule;
+
+  // check if there are any modules to delete
+  if (Object.keys(studentWaivedModules).length === 0) {
+    return 0;
+  }
+
+  delete studentWaivedModules[waivedModule];
+
+  return Students.update(studentID, { $set: { studentWaivedModule: studentWaivedModules } });
 }

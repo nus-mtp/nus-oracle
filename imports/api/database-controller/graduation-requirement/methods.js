@@ -31,3 +31,24 @@ export const createModuleListObject = function(moduleList) {
   }
   return moduleToBeStored;
 }
+
+/**
+  * Retrieves requirement modules given graduation id and name of requirement
+  * @param {string}   unique id of graduation requirement document
+  * @return {Object}  object of mappedModuleName-boolean key-pair values
+  */
+export const getGradRequirementModules = function getGradRequirementModules(gradRequirementIDArray) {
+  const gradRequirements = {};
+  let tempGradDoc = {};
+  for (var i=0; i<gradRequirementIDArray.length; i++) {
+    tempGradDoc = GraduationRequirements.findOne(gradRequirementIDArray[i]);
+    if (tempGradDoc)  {
+      gradRequirements[tempGradDoc.requirementName] = tempGradDoc.requirementModules;
+    }
+  }
+  return gradRequirements;
+}
+
+export const removeOneGradRequirementModule = function removeGradRequirementModules(gradRequirementID)  {
+  GraduationRequirements.remove(gradRequirementID);
+}
