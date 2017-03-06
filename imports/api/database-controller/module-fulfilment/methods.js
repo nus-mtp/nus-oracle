@@ -26,7 +26,7 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
   return docsID;
 }
 
-export const updateModuleMappingOfModule = function updateModuleMMapping(academicYear, moduleCode, updatedModuleMapping){
+export const updateModuleMappingOfModuleFulfilment = function updateModuleMapping(academicYear, moduleCode, updatedModuleMapping){
   const moduleMapping = {
     moduleEquivalent: updatedModuleMapping
   }
