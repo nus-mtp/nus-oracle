@@ -8,11 +8,13 @@ describe(" graduation requirement test", function() {
   const foundationModuleList = ['CS1010', 'CS1020', 'CS1231', 'CS2105', 'CS2106', 'CS2100', 'CS2102','CS2010'];
   const ITProfModuleList = ['IS1103','CS2101', 'ES2660'];
   const storeID = [];
+  const foundationRequirementMCs = 36;
+  const ITRequirementMCs = 12;
 
   beforeEach( function() {
-    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList);
+    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
-    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList);
+    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
     storeID.push(result2);
 
     assert.equal(GraduationRequirements.find({}).fetch().length, 2);

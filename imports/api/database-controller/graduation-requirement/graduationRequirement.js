@@ -38,6 +38,9 @@ const gradRequirementSchema = {
     blackbox: true,
     optional: true
   },
+  requirementMCs: {
+    type: Number,
+  }
 }
 
 GraduationRequirements.attachSchema(gradRequirementSchema);

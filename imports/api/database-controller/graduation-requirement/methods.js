@@ -6,12 +6,13 @@ const DEFAULT_MODULE_STATE = false;
   * @param {String} name: name of the graduation requirement
   * @param {[String]} listOfRequiredModule: list of module that will fulfill the gradRequirement.
   */
-export const createNewGradRequirement = function(name,  listOfRequiredModule) {
+export const createNewGradRequirement = function(name,  listOfRequiredModule, requirementMCs) {
   const moduleObject = createModuleListObject(listOfRequiredModule);
 
   const gradRequirement = {
     requirementName : name,
     requirementModules: moduleObject,
+    requirementMCs: requirementMCs,
   };
 
   return GraduationRequirements.insert(gradRequirement);
