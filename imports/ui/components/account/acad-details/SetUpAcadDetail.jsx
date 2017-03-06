@@ -3,7 +3,6 @@ import Select from 'react-select';
 
 // Import React Components
 import Button from '../../common/Button.jsx';
-import ProgressSteps from '../../common/ProgressSteps.jsx';
 
 // Student-database methods
 import { createNewStudent } from '../../../../api/database-controller/student/methods';
@@ -63,11 +62,11 @@ export default class SetUpAcadDetail extends React.Component {
   }
 
   handleClickNext() {
-    console.log("Clicked Next!");
+    // console.log("Clicked Next!");
   }
 
   handleClickBack() {
-    console.log("Clicked Back!");
+    // console.log("Clicked Back!");
   }
 
   handleCancel(event) {
@@ -92,7 +91,7 @@ export default class SetUpAcadDetail extends React.Component {
         // set hasSetup to true
         Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
       }
-      Bert.alert( 'Setup completed!' , 'success' );
+      Bert.alert('Setup completed!' , 'success');
       FlowRouter.go(pathToUserDashboard);
     }
   }
@@ -139,17 +138,14 @@ export default class SetUpAcadDetail extends React.Component {
                     onChange={this.handleEduValueChange.bind(this)} />
   			  </div>
 
-          <div className="row">
+          <div className="blockui-element-container-default">
             <Button buttonClass="btn btn-rounded btn-inline btn-secondary-outline"
-              buttonText="← Back"
-              onButtonClick={this.handleClickBack.bind(this)} />
+              buttonText="Cancel Setup"
+              onButtonClick={this.handleCancel.bind(this)} />
 
             <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-              buttonText="Next →"
-              onButtonClick={this.handleClickNext.bind(this)} />
-          </div>
-          <div className="row">
-            <ProgressSteps />
+              buttonText="Get Started"
+              onButtonClick={this.handleSubmit.bind(this)} />
           </div>
 
         </div>
