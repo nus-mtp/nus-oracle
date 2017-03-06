@@ -7,6 +7,18 @@ import React from 'react';
 
  */
 
+ export const logout = function logout() {
+     Meteor.logout(( error ) => {
+       if ( error ) {
+         console.log('error in logging out  user');
+         Bert.alert( error.reason, 'danger' );
+         console.log(error.reason);
+       } else {
+         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
+         FlowRouter.go('/');
+       }
+     })
+ }
 
 export default class LogoutAccount extends React.Component {
   constructor(props) {
@@ -16,18 +28,7 @@ export default class LogoutAccount extends React.Component {
   }
 
   handleSubmit(event) {
-    Meteor.logout(( error ) => {
-      if ( error ) {
-        console.log('error in logging out  user');
-        Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
-      } else {
-        FlowRouter.go('/');
-        Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
-      }
-    });
-
-
+    logout();
     event.preventDefault();
   }
 
@@ -39,8 +40,8 @@ export default class LogoutAccount extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="submit" value="Logout" />
+      <form onSubmit={this.handleSubmit} style={this.props.style}>
+        <input type="submit" value="Logout"/>
       </form>
     );
   }

@@ -30,6 +30,10 @@ const acadCohortSchema ={
   cohortFocusAreaID:{
     type: [String],
     optional: true
+  },
+  cohortGradRequirementID: {
+    type: [String],
+    optional: true
   }
 }
 
