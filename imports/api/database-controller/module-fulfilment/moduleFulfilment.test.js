@@ -38,26 +38,26 @@ describe('moduleFulfillment test', function() {
 
   it('return empty object if the object does not exist in DB', function() {
     const result = getModuleFulfilment('CS2020');
-    assert.equal(result, {});
+    assert.equal(Object.keys(result).length, 0);
   })
 
-  it('should be able to remove module from ModuleFulfilment by ID', function() {
+  it('should not remove any module if supplied wrong input', function() {
     removeOneModuleFulfilment('CS1010');
-    assert.equal(ModuleFulfilments.find({}).fetch().length, 1);
+    assert.equal(ModuleFulfilments.find({}).fetch().length, 2);
   })
 
   it('should be able to rewrite existing moduleListing in a moduleFulfilment Document', function() {
     const newModuleListing = [];
     updateModuleMappingOfModuleFulfilment('AY 2015/2016', 'CS1010', newModuleListing);
     const result = getModuleFulfilment('CS1010');
-    assert.equal(result.moduleMapping['AY 2015/2016'],[]);
+    assert.equal(result.moduleMapping['AY 2015/2016'].moduleEquivalent,newModuleListing.length);
   })
 
   it('should be able to add new moduleListing in a moduleFulfilment Document', function() {
-    const newModuleListing = ['CS1010E', 'CS1010S', 'CS1010X'];
+    const newModuleListing = ['CS1010E', 'CS1010S', 'CS1010X','CS1010J'];
     updateModuleMappingOfModuleFulfilment('AY 2016/2017', 'CS1010', newModuleListing);
     const result = getModuleFulfilment('CS1010');
-    assert.equal(result.moduleMapping['AY 2016/2017'],newModuleListing) ;
+    assert.equal(result.moduleMapping['AY 2016/2017'].moduleEquivalent,newModuleListing.length) ;
   })
 
 });
