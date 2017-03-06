@@ -9,6 +9,9 @@ describe(" graduation requirement test", function() {
   const storeID = [];
 
   beforeEach( function() {
+    const result = GraduationRequirements.find();
+    console.log(result);
+
     let result1 = createNewGradRequirement(graduationName[0], foundationModuleList);
     storeID.push(result1);
     let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList);
@@ -29,7 +32,6 @@ describe(" graduation requirement test", function() {
 
   it('should not have an empty moduleListing', function() {
     const foundationList = GraduationRequirements.findOne({_id:storeID[0]});
-    console.log("foundation list: " + JSON.stringify(foundationList));
     assert.equal(Object.keys(foundationList.requirementModules).length, foundationModuleList.length);
     const professionalList = GraduationRequirements.findOne({_id:storeID[1]});
     assert.equal(Object.keys(professionalList.requirementModules).length, ITProfModuleList.length);
