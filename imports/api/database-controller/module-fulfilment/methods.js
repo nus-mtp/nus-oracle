@@ -21,14 +21,28 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
       moduleMapping: mappingObject
     }
     docsID = ModuleFulfilments.insert(fulfilment);
-  } else {
-    const mappingObject = fulfilment.moduleMapping;
-    mappingObject[academicYear] = moduleMapping;
-    ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
-    docsID = fulfilment._id;
   }
 
   return docsID;
+}
+
+export const updateModuleMappingOfModule = function updateModuleMMapping(academicYear, moduleCode, updatedModuleMapping){
+  const moduleMapping = {
+    moduleEquivalent: updatedModuleMapping
+  }
+
+  let fulfilment = getModuleFulfilment(moduleCode);
+  let result = '';
+  if(Object.keys(fulfilment).length === 0){
+    return;
+  } else {
+    const mappingObject = fulfilment.moduleMapping;
+    mappingObject[academicYear] = moduleMapping;
+    result = ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
+
+    return result;
+  }
+
 }
 
 export const getModuleFulfilment = function getModuleFulfilment(moduleCode) {
