@@ -19,6 +19,7 @@
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-autosuggest": "^8.0.1",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "react-edit-inline": "^1.0.8",
     "react-mounter": "^1.2.0",
