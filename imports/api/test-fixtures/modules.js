@@ -5,14 +5,18 @@ import { insertToModuleCollection,
 export const populateModuleFixture = function populateModuleFixture() {
   const moduleCodes = ['CS1010', 'CS1010E', 'CS1010J', 'CS1010S', 'CS1010X',
                        'CS1020', 'CS2010', 'CS3230', 'CS1231', 'IS1103',
-                       'CS2101', 'ES2660'];
+                       'CS2101', 'ES2660', 'MA1301', 'MA1521', 'MA1101R',
+                       'ST2334', 'PC1221', 'CM1121', 'CM1131', 'CM1417'];
   const moduleNames = ['Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Data Structures and Algorithms I',
                        'Data Structures and Algorithms II',
                        'Design and Analysis of Algorithms', 'Discrete Structures',
                        'Computing and Society', 'Effective Communication for Computing Professionals',
-                       'Communicating in the Information Age'];
+                       'Communicating in the Information Age', 'Introductory Mathematics',
+                       'Calculus for Computing', 'Linear Algebra I', 'Probability and Statistics',
+                       'Fundamental of Physics I', 'ORGANIC CHEMISTRY 1', 'PHYSICAL CHEMISTRY 1',
+                       'FUNDAMENTALS OF CHEMISTRY'];
 
   for (var i = 0; i < moduleCodes.length; i++)  {
     const testModule = {
