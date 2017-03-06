@@ -17,13 +17,9 @@ export const pathToUserDashboard = "/userDashboard";
  * Implements routes throughout the project
  *
  * MainLayout represents the skeleton component for all our React components
-<<<<<<< HEAD
  * found in fixtures.jsx in ./fixtures.jsx
  */
 
- /**
-  * Routes to the main index page with login + initial setup + dashboard
-  */
  FlowRouter.route(pathToLogin, {
    action() {
      mount(MainLayout, {content: <AccountManager />});
@@ -41,27 +37,3 @@ export const pathToUserDashboard = "/userDashboard";
      mount(MainLayout, {content: <App />});
    }
  })
-=======
- */
-
-/**
- * Routes to the main index page with login + initial setup + dashboard
- */
-FlowRouter.route('/', {
-  action() {
-    mount(MainLayout, {content: <LogInComponent />});
-  }
-});
-
-FlowRouter.route('/acadDetails',  {
-  action()  {
-    mount(MainLayout, {content: <AcadDetailComponent />});
-  }
-});
-
-FlowRouter.route('/app',  {
-  action()  {
-    mount(MainLayout, {content: <App />});
-  }
-})
->>>>>>> 31d321190195dd08a616ba662bfdd6537e7a71b5

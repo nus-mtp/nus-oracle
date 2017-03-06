@@ -94,7 +94,8 @@ export default class LoginAccount extends React.Component {
       } else {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
-        if (Meteor.user().username.verified && Meteor.userId()) {
+        let isVerified = Meteor.user().username.verified; // TODO EMAIL VERIFICATION FUNCTION WORK-IN-PROGRESS ADRIAN
+        if (Meteor.userId()) {
           // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
             // Return users
@@ -106,7 +107,7 @@ export default class LoginAccount extends React.Component {
           }
         } else {
           // Refresh login page if this email isn't verified yet
-          Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger' );
+          Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
         }
