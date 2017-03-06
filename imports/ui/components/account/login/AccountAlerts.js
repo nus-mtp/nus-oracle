@@ -30,7 +30,7 @@ export const errorMsgs = {
  * @return {[String]}    Welcome message
  */
 export const successMsgLoginName = function(username) {
-  return successMsg.SUCCESS_LOGIN + " " + username;
+  return successMsgs.SUCCESS_LOGIN + " " + username;
 }
 
 //=====================================================
