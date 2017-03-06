@@ -57,7 +57,7 @@ describe('moduleFulfillment test', function() {
     const newModuleListing = ["CS1010E", "CS1010S", "CS1010X"];
     updateModuleMappingOfModuleFulfilment("AY 2016/2017", "CS1010", newModuleListing);
     const result = getModuleFulfilment("CS1010");
-    assert.equal(result.moduleMapping["AY 2016/2017"],newModuleListing);
+    assert.equal(result.moduleMapping["AY 2016/2017"],newModuleListing) ;
   })
 
 });
