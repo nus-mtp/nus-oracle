@@ -2,13 +2,13 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
 // Import success and error notifications
-import { successMsgs } from './AccountAlerts.js'
-import { errorMsgs } from './AccountAlerts.js'
-import { successMsgLoginName } from './AccountAlerts.js'
-import { errorMsgIncorrectPassword } from './AccountAlerts.js'
-import { errorMsgUnverifiedEmail } from './AccountAlerts.js'
-import { errorMsgUnrecognizedEmail } from './AccountAlerts.js'
-import { errorMsgExceededLoginAttempts } from './AccountAlerts.js'
+import { successMsgs,
+         errorMsgs,
+         successMsgLoginName,
+         errorMsgIncorrectPassword,
+         errorMsgUnverifiedEmail,
+         errorMsgUnrecognizedEmail,
+         errorMsgExceededLoginAttempts } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
@@ -86,13 +86,15 @@ export default class LoginAccount extends React.Component {
           if (numPasswordTries >= 5) {
             this.handleForgetPassword();
           }
+        } else if (error.reason == 'User not found') {
+          Bert.alert(errorMsgUnrecognizedEmail(this.state.email), 'danger');
         } else { // Incorrect email, etc.
           Bert.alert(error.reason, 'danger');
         }
       } else {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
-        if (Meteor.user().emails[0].verified && Meteor.user()._id) {
+        if (Meteor.user().username.verified && Meteor.userId()) {
           // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
             // Return users
@@ -104,7 +106,7 @@ export default class LoginAccount extends React.Component {
           }
         } else {
           // Refresh login page if this email isn't verified yet
-          Bert.alert(errorMsgUnverifiedEmail(Meteor.user().emails[0]), 'danger' );
+          Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger' );
           FlowRouter.go(pathToLogin);
           Meteor.logout();
         }

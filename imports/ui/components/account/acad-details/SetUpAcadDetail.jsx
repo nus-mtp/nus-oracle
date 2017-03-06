@@ -4,6 +4,11 @@ import Select from 'react-select';
 // Import React Components
 import Button from '../../common/Button.jsx';
 
+// Import success and error notifications
+import { successMsgs } from '../AccountAlerts.js';
+import { warningMsgs } from '../AccountAlerts.js';
+import { errorMsgs } from '../AccountAlerts.js';
+
 // Student-database methods
 import { createNewStudent } from '../../../../api/database-controller/student/methods';
 
@@ -71,10 +76,9 @@ export default class SetUpAcadDetail extends React.Component {
 
   handleCancel(event) {
     if (this.state.doubleCancel) {
-      Bert.alert( 'Click again to leave page' , 'warning');
+      Bert.alert(warningMsgs.WARNING_CANCEL_SETUP , 'warning');
       this.state.doubleCancel = false;
     } else {
-      Bert.alert( 'Returning to main page' , 'danger');
       Meteor.logout();
       FlowRouter.go(pathToLogin);
     }
@@ -82,7 +86,7 @@ export default class SetUpAcadDetail extends React.Component {
 
   handleSubmit(event) {
     if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {
-      Bert.alert( 'Please enter all three fields before continuing' , 'danger');
+      Bert.alert(successMsgs.SUCCESS_SETUP, 'danger');
     } else {
       const userId = Meteor.user()._id;
       if (userId) {
@@ -91,7 +95,7 @@ export default class SetUpAcadDetail extends React.Component {
         // set hasSetup to true
         Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
       }
-      Bert.alert('Setup completed!' , 'success');
+      Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
       FlowRouter.go(pathToUserDashboard);
     }
   }

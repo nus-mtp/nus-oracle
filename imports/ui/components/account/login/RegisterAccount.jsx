@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 // Import success and error notifications
-import { successMsgs } from './AccountAlerts.js'
-import { errorMsgs } from './AccountAlerts.js'
+import { successMsgs } from '../AccountAlerts.js'
+import { errorMsgs } from '../AccountAlerts.js'
 
 // Import React components
 import Button from '../../common/Button.jsx';
