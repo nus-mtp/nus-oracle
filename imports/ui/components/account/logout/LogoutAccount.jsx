@@ -22,8 +22,8 @@ export default class LogoutAccount extends React.Component {
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        FlowRouter.go('/');
         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
+        FlowRouter.go('/');
       }
     });
 
@@ -39,8 +39,8 @@ export default class LogoutAccount extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="submit" value="Logout" />
+      <form onSubmit={this.handleSubmit} style={this.props.style}>
+        <input type="submit" value="Logout"/>
       </form>
     );
   }

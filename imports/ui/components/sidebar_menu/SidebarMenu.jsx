@@ -23,8 +23,7 @@ render(){
 
   return(
     <div>
-    <nav className="side-menu side-menu-compact"
-         style={styles} >
+    <nav className="side-menu side-menu-compact">
       <ul className="side-menu-list">
         {tabTitleList.map((buttonTitle, index) => {
           return (
@@ -43,16 +42,35 @@ render(){
 }
 
 class SidebarMenuButton extends SidebarMenu {
+  constructor() {
+    super();
+    this.state = {
+      onMouseOver: false
+    }
+  }
+
+ handleOnMouseEnter(event) {
+   this.setState({ onMouseOver: true });
+ }
+
+ handleOnMouseLeave(event) {
+   this.setState({ onMouseOver: false });
+ }
+
   render() {
     var buttonIcon = this.props.buttonIcon;
     return (
         <li className={'brown' + (this.props.isActiveTab ? ' opened' : '')}
             onClick={this.props.onSwitchTab}
+            onMouseEnter={this.handleOnMouseEnter.bind(this)}
+            onMouseLeave={this.handleOnMouseLeave.bind(this)}
             // calls function props onSwitchTab passed from parent componenet
             >
           <a href="#">
             <i className={"font-icon font-icon-" + buttonIcon}></i>
-            <span className="lbl">{this.props.buttonTitle}</span>
+            <span className={"lbl" + (this.state.onMouseOver ? " hovered" : "")}>
+              {this.props.buttonTitle}
+            </span>
           </a>
         </li>
     );
@@ -71,7 +89,3 @@ SidebarMenuButton.propTypes = {
   buttonTitle: React.PropTypes.string,
   buttonIcon: React.PropTypes.node
 }
-
-const styles = ({
-    width: constants.SIDEBAR_MENU_WIDTH +'px'
-});
