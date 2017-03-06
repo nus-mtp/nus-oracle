@@ -39,8 +39,8 @@ export default class LogoutAccount extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="submit" value="Logout" />
+      <form onSubmit={this.handleSubmit} style={this.props.style}>
+        <input type="submit" value="Logout"/>
       </form>
     );
   }

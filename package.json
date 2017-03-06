@@ -21,6 +21,7 @@
     "react-autosuggest": "^8.0.1",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
+    "react-edit-inline": "^1.0.8",
     "react-mounter": "^1.2.0",
     "react-onclickout": "^2.0.5",
     "react-select": "^1.0.0-rc.3",
