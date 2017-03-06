@@ -5,6 +5,7 @@ import { createNewModuleFulfilment,
 export const populateModuleFulfilmentFixture = function populateModuleFulfilmentFixture() {
   const foundationModules = ['CS1010', 'CS1020', 'CS2010', 'CS1231', 'CS2100', 'CS2103T', 'CS2105', 'CS2106', 'CS3230'];
   const ITProfessionalismModules = ['IS1103', 'CS2101', 'ES2660'];
+  const mathSciModules = [''];
 
   const CS1010Equivalent = ['CS1010X', 'CS1010E', 'CS1010S', 'CS1101'];
   const CS1020Equivalent = ['CS2020'];
