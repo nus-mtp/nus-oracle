@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
     return (
       <div className="with-side-menu">
           <Sidebar />
-        <div className="page-content" style={styles.Planner} >
+        <div className="page-content">
           <div className="container-fluid">
             <StudyPlan plannerIDs={this.props.plannerIDs}/>
           </div>
@@ -23,9 +23,3 @@ Dashboard.propTypes = {
 }
 //<Sidebar />
 //<StudyPlan2 />
-
-const styles = ({
-  Planner: {
-    paddingLeft: constants.SIDEBAR_WIDTH +'px'
-  }
-});

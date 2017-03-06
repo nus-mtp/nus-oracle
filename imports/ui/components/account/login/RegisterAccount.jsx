@@ -1,5 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+
+// Import success and error notifications
+import { successMsgs } from './AccountAlerts.js'
+import { errorMsgs } from './AccountAlerts.js'
+
+// Import React components
+import Button from '../../common/Button.jsx';
+
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -8,15 +16,14 @@ import React from 'react';
  db.users.find({username:"3@gmail.com"}).userId
  */
 
-
 export default class RegisterAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: '', email: '', password:'', repassword:''};
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleRePasswordChange = this.handleRePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      username: '',
+      email: '',
+      password:'',
+      repassword:''};
   }
 
   handleEmailChange(event) {
@@ -31,7 +38,9 @@ export default class RegisterAccount extends React.Component {
   handleRePasswordChange(event) {
     this.setState({repassword: event.target.value});
   }
-  handleSubmit(event) {// to verify registration
+
+  handleSubmit() { // to verify registration
+    console.log("CLICKED ON SIGN UP IN RegisterAccount");
     let user = {
       username: this.state.email,
       email: this.state.email,
@@ -40,60 +49,68 @@ export default class RegisterAccount extends React.Component {
         hasSetup: false,
       }
     }
+
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
-      console.log(validEmail);
       if (validEmail) {
         if (this.state.password == this.state.repassword) {
-          Accounts.createUser( user, ( error ) => {
-            if ( error ) {
-              console.log('error in creating user');
-              Bert.alert( error.reason, 'danger' );
-              console.log(error.reason);
+          Accounts.createUser( user, (error) => {
+            if (error) {
+              // Variety of errors when signing up
+              Bert.alert(error.reason, 'danger');
             } else {
-              Meteor.call( 'sendVerificationLink', ( error, response ) => {
-                if ( error ) {
-                  console.log('verification error');
-                  Bert.alert( error.reason, 'danger' );
+              Meteor.call('sendVerificationLink', (error, response) => {
+                if (error) {
+                  Bert.alert(error.reason, 'danger');
                 } else {
-                  Bert.alert('Welcome! Please log in with your new account below!', 'success');
-                  //Bert.alert( 'Welcome! Please check email to verify before logging in', 'success' );
+                  Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
+                  this.props.onSuccess();
                   Meteor.logout();
                 }
               });
             }
           });
         } else {
-            Bert.alert( "Password does not match re-entered password", 'danger' );
+            Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
         }
       } else {
-        Bert.alert( "Invalid nus email, please end your email address with \"@u.nus.edu\"", 'danger' );
+        Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
       }
     });
-
-    event.preventDefault();
   }
 
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Register account below
-        </label>
-        <label>
-          New Email:
-          <input type="text" value={this.state.value} onChange={this.handleEmailChange} />
-        </label>
-        <label>
-          Password:
-          <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
-        </label>
-        <label>
-          Re-enter Password:
-          <input type="password" value={this.state.value} onChange={this.handleRePasswordChange} />
-        </label>
-        <input type="submit" value="Register" />
-      </form>
+      <div className="container-fluid">
+        <div className="box-typical box-typical-padding"
+             style={{textAlign: 'center'}}>
+
+          <h4 className="m-t-lg">
+            <strong>Sign Up for NUS Oracle</strong>
+          </h4>
+
+          <div className="form-group">
+            <input className="form-control" type="text"
+                   placeholder="NUS E-mail" value={this.state.value}
+                   onChange={this.handleEmailChange.bind(this)} />
+
+            <input className="form-control" type="password"
+                   placeholder="Password" value={this.state.value}
+                   onChange={this.handlePasswordChange.bind(this)} />
+
+            <input className="form-control" type="password"
+                   placeholder="Re-enter password" value={this.state.value}
+                   onChange={this.handleRePasswordChange.bind(this)} />
+        </div>
+
+          <div className='form-group'>
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                    buttonText="SIGN UP"
+                    onButtonClick={this.handleSubmit.bind(this)} />
+          </div>
+
+        </div>
+      </div>
     );
   }
 }

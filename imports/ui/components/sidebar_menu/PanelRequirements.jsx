@@ -49,17 +49,10 @@ export default class PanelRequirements extends React.Component {
     ];
 
     return (
-      <nav className="side-menu-addl" style={styles.PanelRequirements}>
+      <nav className="side-menu-addl">
         <PanelHeader  title="Degree Requirements" icon="font-icon font-icon-page" />
         <Nestable items={items} />
       </nav>
     );
   }
 }
-
-const styles = ({
-  PanelRequirements: {
-    width: constants.SIDEBAR_PANEL_WIDTH +'px',
-    left: constants.SIDEBAR_MENU_WIDTH + 'px'
-  }
-});

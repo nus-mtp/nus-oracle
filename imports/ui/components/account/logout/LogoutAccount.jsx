@@ -22,7 +22,6 @@ export default class LogoutAccount extends React.Component {
         Bert.alert( error.reason, 'danger' );
         console.log(error.reason);
       } else {
-        FlowRouter.go('/');
         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
         FlowRouter.go('/');
       }
