@@ -10,9 +10,6 @@ describe(" graduation requirement test", function() {
   const storeID = [];
 
   beforeEach( function() {
-    const result = GraduationRequirements.find();
-    console.log(result);
-
     let result1 = createNewGradRequirement(graduationName[0], foundationModuleList);
     storeID.push(result1);
     let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList);
