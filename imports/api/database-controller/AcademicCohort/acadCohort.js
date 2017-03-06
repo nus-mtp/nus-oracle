@@ -39,3 +39,8 @@ const acadCohortSchema ={
 
 export const AcademicCohort = new AcadCohortCollection("AcademicCohort");
 AcademicCohort.attachSchema(acadCohortSchema);
+if (Meteor.isServer) {
+  Meteor.publish('AcademicCohort', function taskPublication () {
+    return AcademicCohort.find({});
+  });
+}
