@@ -35,18 +35,63 @@ describe('grad-checker-foundation', function()  {
   });
 
   it ('checks if find modules correct boolean values', function() {
-    modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
+    const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Foundation';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
 
-    const markedFoundationModules = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
-    assert.isTrue(markedFoundationModules[modules[0]], 'CS1010 fulfiled');
-    assert.isTrue(markedFoundationModules[modules[1]], 'CS1020 fulfiled');
-    assert.isTrue(markedFoundationModules[modules[2]], 'CS2010 fulfiled');
-    assert.isTrue(markedFoundationModules[modules[3]], 'CS3230 fulfiled');
-    assert.isFalse(markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[3]], 'CS3230 fulfiled');
+    assert.isFalse(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
+
+    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
+  })
+
+  it ('checks if equivalent modules return correct boolean values', function() {
+    // planner[1] contains 1010X instead of 1010
+    const modules = ['CS1010', 'CS1020', 'CS2010'];
+    const academicCohort = 'AY 2016/2017';
+    const requirementName = 'Computer Science Foundation';
+    const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
+    const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
+
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
+    assert.isFalse(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
+
+    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 12);
+  })
+
+  it ('checks if waived and exempted modules return correct boolean values', function() {
+    // planner[1] contains 1010X instead of 1010
+    const modules = ['CS1010', 'CS1020', 'CS2010'];
+    const academicCohort = 'AY 2016/2017';
+    const requirementName = 'Computer Science Foundation';
+    const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
+    const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
+
+    const exemptedModules = {
+      CS1231: 'CS1231'
+    }
+
+    const waivedModules = {
+      CS3230: 'CS3230'
+    }
+
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, exemptedModules, waivedModules);
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS3230'], 'CS3230 fulfiled');
+
+    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 20);
   })
 
 });

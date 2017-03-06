@@ -3,7 +3,11 @@ import { getModuleFulfilment } from '../../../../../../../database-controller/mo
 import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules) {
-  let markedFoundationModules = foundationModules;
+  let markedFoundationModulesAndMCs = {
+    markedFoundationModules: foundationModules,
+    totalModuleMCs: 0
+  };
+
   let moduleFulfilment = {};
   let moduleFulfilmentMappingEquivalent = [];
   const keyNames = Object.keys(foundationModules);
@@ -14,44 +18,49 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedFoundationModules = markModules(markedFoundationModules, studentSemesters, keyNames[i], keyNames[i]);
-    markedFoundationModules = markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+    markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-    if (!markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
+    if (!markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedFoundationModules = markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedFoundationModules = markModules(markedFoundationModules, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         break;
       }
     }
+
   }
   // return { moduleCode: boolean } object
-  return markedFoundationModules;
+  return markedFoundationModulesAndMCs;
 }
 
-const markModules = function markModules(markedFoundationModules, studentSemesters, equivalentModule, originalModule) {
+const markModules = function markModules(markedFoundationModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
   for (var i = 0; i < studentSemesters.length; i++) {
     if (studentSemesters[i].moduleHashmap[equivalentModule]) {
       // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
-      markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
       break;
     }
   }
-  return markedFoundationModules;
+
+  return markedFoundationModulesAndMCs;
 }
 
-const markExemptedWaivedModules = function markExemptedWaivedModules(markedFoundationModules, exemptedModules, waivedModules, equivalentModule, originalModule) {
+const markExemptedWaivedModules = function markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
   if (Object.keys(exemptedModules).length !== 0)  {
     if (exemptedModules[equivalentModule])  {
-      markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
     }
   }
   if (Object.keys(waivedModules).length !== 0)  {
     if (waivedModules[equivalentModule]) {
-      markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
     }
   }
-  return markedFoundationModules;
+  return markedFoundationModulesAndMCs;
 }
