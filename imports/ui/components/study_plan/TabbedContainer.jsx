@@ -120,6 +120,7 @@ export default class TabbedContainer extends React.Component {
 
   /**
    * Handler for editing a study plan's name
+   *
    * @param {[String]} plannerID    Planner ID of study plan to be edited
    * @event {[Object]} event    Event object of this HTML object
    */
@@ -170,12 +171,10 @@ export default class TabbedContainer extends React.Component {
    * @return    React component representing a Tab.
    */
   renderTab(tabTitle, index, plannerID) {
-    let enabledMouseOver = true;
     let tabTitleComponent = tabTitle;
 
+    // Enable the input field only for the study plan the user wants to edit
     if (this.state.planNameToEdit == plannerID && this.state.isEditingPlanName) {
-      // Enable the input field only for the study plan the user wants to edit
-      enabledMouseOver = false;
       tabTitleComponent = this.renderTabTitleInput(tabTitle, plannerID);
     } else {
       tabTitleComponent = this.renderTabTitle(tabTitle, plannerID)
@@ -190,6 +189,7 @@ export default class TabbedContainer extends React.Component {
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
            onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
+           isEditingPlanName={this.state.isEditingPlanName}
            isActiveTab={(this.state.tabSelectedIndex === index)} />
     )
   }

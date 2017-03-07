@@ -172,7 +172,8 @@ export default class Tab extends React.Component {
               {this.props.tabTitle}
 
               {/* Render dropdown caret */}
-              {this.props.enabledMouseOver && this.state.onMouseOver ?
+              {this.props.enabledMouseOver && this.state.onMouseOver &&
+               !this.props.isEditingPlanName ?
                 this.renderDropdownCaret() : null
               }
 
