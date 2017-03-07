@@ -26,17 +26,18 @@ export default class Module extends React.Component {
 
   render() {
     return (
-      <li className="dd-grey dd-item"
+      <li className="dd-item"
           onMouseEnter={this.handleOnMouseEnter.bind(this)}
           onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-        <div className="dd-handle" style={{cursor: 'pointer'}}>
+        <div className="dd-handle"
+             style={{backgroundColor: '#fbcb83', cursor: 'pointer', border: '0'}}>
 
           {/* Only want the delete button rendered on hover */}
           {this.state.onMouseOver ?
             <IconButton
               icon="font-icon font-icon-trash"
               style={{float:'right', paddingTop: '0.15em'}}
-              displayColor="#505050" onMouseOverColor="#8b2a2a"
+              displayColor="#505050" onMouseOverColor="#b11919"
               onButtonClick={this.handleDeleteClick.bind(this)} /> :
             null
           }
