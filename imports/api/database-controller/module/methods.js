@@ -2,6 +2,16 @@ import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
 // The following component handles the available method of interaction with the Module Collections
+export const createNewModuleDocument = function createModuleDocument() {
+}
+
+export const addNewTermFromModuleDocument = function updateTermModule(moduleCode, newTermOffered) {
+  const a = searchByModuleCode(moduleCode);
+  const termArray = a.termOffered;
+
+  termArray.push(newTermOffered);
+  Modules.update({moduleCode: moduleCode},{$set: {termOffered: termArray}});
+}
 
 // to check if the reference to module collection has been made
 export const isExistModuleCollection = function checkForCollection() {
@@ -23,6 +33,8 @@ export const searchByModuleCode = function retrieveMod(modCode) {
   const returnPackage = {
     moduleCode: searchResult.moduleCode,
     moduleID: searchResult._id,
+    moduleMC: searchResult.moduleMC,
+    moduleDescription: searchResult.moduleDescription
   };
 
   return returnPackage;

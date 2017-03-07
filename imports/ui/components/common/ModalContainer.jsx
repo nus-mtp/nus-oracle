@@ -38,5 +38,5 @@ export default class ModalContainer extends React.Component {
 
 ModalContainer.propTypes = {
   content: React.PropTypes.node,
-  onHiden: React.PropTypes.func
+  onHidden: React.PropTypes.func
 }

@@ -10,6 +10,26 @@ export default class PanelListItem extends React.Component{
 
   }
 
+  render(){
+    return(
+        <li className={this.props.type}>
+          <a href="#">
+            <span className="tbl-row">
+              <span className="tbl-cell tbl-cell-caption">
+                {this.props.text}
+                {this.props.editable}
+              </span>
+            </span>
+          </a>
+        </li>
+    );
+  }
+}
+
+PanelListItem.propTypes ={
+}
+
+
   /**
    * Handler for when user is entering a new study plan's name
    *
@@ -73,22 +93,3 @@ export default class PanelListItem extends React.Component{
   //       <span className="tbl-cell tbl-cell-caption">{this.props.text}</span>
   //   );
   // }
-
-  render(){
-    return(
-        <li className={this.props.type}>
-          <a href="#">
-            <span className="tbl-row">
-              <span className="tbl-cell tbl-cell-caption">
-                {this.props.text}
-                {this.props.editable}
-              </span>
-            </span>
-          </a>
-        </li>
-    );
-  }
-}
-
-PanelListItem.propTypes ={
-}

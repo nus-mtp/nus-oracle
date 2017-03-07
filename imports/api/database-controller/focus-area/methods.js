@@ -1,6 +1,7 @@
 import { FocusArea } from './focusArea';
 import { searchByModuleCode } from '../module/methods';
 
+const DEFAULT_MODULE_STATE = false;
 
 /** This Method handles the creation of new Focus Area Document
   *@param {String} name : Name of the Focus Area
@@ -51,7 +52,7 @@ export const consolidateModuleArrayValidity = function(moduleArray) {
     const isValidModule = consolidateModuleCodeValidity(moduleCode);
 
     if(!isValidModule){
-      console.log('The following module cannot be found in database: ' + moduleCode);
+      //console.log('The following module cannot be found in database: ' + moduleCode);
       moduleIndex  = moduleArray.indexOf(moduleCode);
       moduleArray.splice(moduleIndex,1);
     }
@@ -62,7 +63,8 @@ export const createModuleListObject = function(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
-  for (module in moduleList){
+  for (var i=0; i < moduleList.length; i++){
+    let module = moduleList[i];
     moduleToBeStored[module] = DEFAULT_MODULE_STATE;
   }
 
