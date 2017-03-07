@@ -49,6 +49,8 @@ export default class SemModulesCard extends React.Component {
   }
 
   render() {
+    console.log(Object.keys(this.props.modules));
+
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
@@ -63,11 +65,10 @@ export default class SemModulesCard extends React.Component {
               })}
 
               {/* <ModuleSearchBar handleAddModule={this.handleAddModule.bind(this)} /> */}
-              <VirtualizedSelect simpleValue searchable
-                name="Module Code" labelKey="name" valueKey="name"
-                value={this.state.selectedModule}
-                onChange={this.updateValue.bind(this)}
-                clearable={false} options={CITIES} />
+              <VirtualizedSelect simpleValue searchable clearable={false} options={CITIES}
+                labelKey="name" placeholder="Add Module..."
+                value={this.state.selectedModule} focusedOption={{ cursor: 'pointer' }}
+                onChange={this.updateValue.bind(this)} />
 
             </div>
   					<div className="card-typical-section">
@@ -75,6 +76,7 @@ export default class SemModulesCard extends React.Component {
                 {this.props.sem}
               </div>
   					</div>
+
   				</article>
   			</div>
       </div>
