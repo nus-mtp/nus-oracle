@@ -39,8 +39,6 @@ export default class SemModulesCard extends React.Component {
    *
    * @param input {[String]}    User's input. Updates as the user types.
    * @param callback {[func]}    Callback to invoke once async call is done.
-   *
-   * TODO: This might not work for large >7000 modules list
    */
   getModulesListFromDB(input, callback) {
     input = input.trim().toLowerCase();
@@ -49,10 +47,6 @@ export default class SemModulesCard extends React.Component {
     if (input.length !== 0) { // Only fetch if user typed in something
       // Get suggestions from modules DB which best matches input
       fetchedListOfModulesFromDB = sendQuery(input);
-
-      // Check to see what fetchedListOfModulesFromDB contains
-      // console.log("listOfModulesFromDB: " +
-      //   fetchedListOfModulesFromDB.map((module) => {return JSON.stringify(module);}));
     }
 
     // Callback for an async call. This tells us we're done with the call,
@@ -82,24 +76,32 @@ export default class SemModulesCard extends React.Component {
     return (
       <div className="col-md-4">
         <div className="card-grid-col">
-  				<article className="card-typical">
-  					<div className="card-typical-section card-typical-content">
+  				<article className="card-typical"
+                   style={{
+                     WebkitBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
+                     MozBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
+                     BoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)'}}>
+  					<div className="card-typical-section card-typical-content"
+                 style={{padding: '0.75em'}}>
+              <div style={{paddingBottom: '0.75em'}}>
+                {/* Renders all modules from the user's study plan */}
+                {Object.keys(modules).map((moduleCode, index) => {
+                  return <Module key={index} moduleCode={moduleCode}
+                                 handleDeleteModule={
+                                   this.handleDeleteModule.bind(this, moduleCode)} />;
+                })}
+              </div>
 
-              {/* Renders all modules from the user's study plan */}
-              {Object.keys(modules).map((moduleCode, index) => {
-                return <Module key={index} moduleCode={moduleCode}
-                               handleDeleteModule={
-                                 this.handleDeleteModule.bind(this, moduleCode)} />;
-              })}
-
+              {/* Async Search bar to retrieve thousands of records  */}
               <VirtualizedSelect searchable async clearable={false}
                 labelKey="moduleCode" placeholder="Add a module..."
                 loadOptions={this.getModulesListFromDB.bind(this)}
                 onChange={this.handleSelectModuleCode.bind(this)} />
-                
+
             </div>
 
-  					<div className="card-typical-section">
+  					<div className="card-typical-section"
+                 style={{padding: '0.5em 1em 0.5em 1em'}}>
   						<div className="card-typical-linked">
                 {this.props.sem}
               </div>
