@@ -1,7 +1,8 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { GraduationRequirements} from './graduationRequirement';
 import { createNewGradRequirement,
-         getGradRequirementModules } from './methods';
+         getGradRequirementModules,
+         getGradRequirementMCs } from './methods';
 
 describe(" graduation requirement test", function() {
   const graduationName = ['Foundation', 'IT professionalism'];
@@ -43,5 +44,12 @@ describe(" graduation requirement test", function() {
     assert.equal(Object.keys(gradRequirements).length, storeID.length);
     assert.equal(Object.keys(gradRequirements[graduationName[0]]).length, foundationModuleList.length);
     assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
+  });
+
+  it ('should return requirment MCS', function()  {
+    const gradRequirementMCs = getGradRequirementMCs(storeID);
+    assert.equal(Object.keys(gradRequirementMCs).length, storeID.length);
+    assert.equal(gradRequirementMCs[graduationName[0]], foundationRequirementMCs);
+    assert.equal(gradRequirementMCs[graduationName[1]], ITRequirementMCs);
   });
 });

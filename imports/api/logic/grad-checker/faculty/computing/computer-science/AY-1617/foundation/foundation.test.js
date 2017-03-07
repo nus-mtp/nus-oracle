@@ -8,7 +8,8 @@ import { populateModuleFulfilmentFixture,
 import { populateGraduationRequirementsFixture,
          dePopulateGraduationRequirementsFixture } from '../../../../../../../test-fixtures/graduationRequirements';
 
-import { getGradRequirementModules } from '../../../../../../../database-controller/graduation-requirement/methods';
+import { getGradRequirementModules,
+         getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
 import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
 
 import { findFoundationRequirementModules } from './methods';
@@ -39,7 +40,9 @@ describe('grad-checker-foundation', function()  {
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Foundation';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
+
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
     const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
@@ -57,7 +60,9 @@ describe('grad-checker-foundation', function()  {
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Foundation';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
+
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
     const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
@@ -74,7 +79,9 @@ describe('grad-checker-foundation', function()  {
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Foundation';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
+
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
     const exemptedModules = {
       CS1231: 'CS1231'

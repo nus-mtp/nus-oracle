@@ -30,7 +30,11 @@ export const findFoundationRequirementModules = function findFoundationRequireme
         break;
       }
     }
+    // if requiredMCs is equal to totalMCs accumulated
+    /*if (requiredMCs === markedFoundationModulesAndMCs.totalModuleMCs) {
 
+      break;
+    }*/
   }
   // return { moduleCode: boolean } object
   return markedFoundationModulesAndMCs;

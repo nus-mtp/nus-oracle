@@ -50,6 +50,18 @@ export const getGradRequirementModules = function getGradRequirementModules(grad
   return gradRequirements;
 }
 
+export const getGradRequirementMCs = function getGradRequirementMCs(gradRequirementIDArray) {
+  const gradMCs = {};
+  let tempGradDoc = {};
+  for (var i=0; i<gradRequirementIDArray.length; i++) {
+    tempGradDoc = GraduationRequirements.findOne(gradRequirementIDArray[i]);
+    if (tempGradDoc)  {
+      gradMCs[tempGradDoc.requirementName] = tempGradDoc.requirementMCs;
+    }
+  }
+  return gradMCs;
+}
+
 export const removeOneGradRequirementModule = function removeGradRequirementModules(gradRequirementID)  {
   GraduationRequirements.remove(gradRequirementID);
 }
