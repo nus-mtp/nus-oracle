@@ -1,7 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Students } from './student';
 import { populateModuleFixture,
-         dePopulateModuleFixture } from '../../integration-tests/fixtures';
+         dePopulateModuleFixture } from '../../test-fixtures/modules';
 import { createNewStudent,
          getStudentAcademicCohortGivenStudentID,
          getStudentPreviousEducationGivenStudentID,

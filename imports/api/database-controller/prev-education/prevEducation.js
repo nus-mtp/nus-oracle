@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 class PrevEducationCollection extends Mongo.Collection{};
 
-const PreviousEducation = new PrevEducationCollection('previousEducation');
+export const PreviousEducation = new PrevEducationCollection('previousEducation');
 
 const prevEducationSchema = {
   educationTitle: {
