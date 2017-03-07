@@ -32,7 +32,7 @@ export default class AcadYrSection extends React.Component {
             }
           })}
 
-          <div style={{position: "relative", left: "30%"}}>
+          <div style={{position: "relative", left: "30%", marginTop: '5em'}}>
             <Button buttonClass="btn btn-inline btn-primary"
                     style={{position: "relative"}}
                     buttonText="Add new Acad Year"
