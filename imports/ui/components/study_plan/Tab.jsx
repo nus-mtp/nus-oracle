@@ -1,7 +1,11 @@
-/* Import React components */
 import React from 'react';
+
+/* Import React components */
 import ReactClickOut from 'react-onclickout';
 import IconButton from '../common/IconButton.jsx';
+import ModalContainer from '../common/ModalContainer.jsx';
+import DialogContainer from '../common/DialogContainer.jsx';
+import Button from '../common/Button.jsx';
 
 /**
  * React Component for each Tab in the TabbedContainer.
@@ -15,7 +19,9 @@ export default class Tab extends React.Component {
     super();
     this.state = {
       onMouseOver: false,
-      onClickDropdown: false
+      onClickDropdown: false,
+      deleteIsConfirmed: false,
+      launchConfirmDelete: false
     }
   }
 
@@ -57,8 +63,22 @@ export default class Tab extends React.Component {
   }
 
   handleDeleteClick() {
+    this.setState({
+      launchConfirmDelete: true
+    });
+  }
+
+  handleConfirmDelete() {
     this.props.onClickDeleteTab();
     this.handleClickDropdown();
+    this.resetDeleteState();
+  }
+
+  resetDeleteState() {
+    this.setState({
+      launchConfirmDelete: false,
+      deleteIsConfirmed: false
+    });
   }
 
   /**
@@ -120,19 +140,36 @@ export default class Tab extends React.Component {
 
         {/* Edit study plan name dropdown selection */}
         {this.renderDropDownMenuSelection(
-          "dropdown-item", "fa fa-edit",
-          {position: 'relative', float: 'left',
-           paddingTop: '0.35em', marginRight: '0.8em'},
-          "Delete", this.handleDeleteClick
+          "dropdown-item",
+          "fa fa-trash",
+          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '1em'},
+          "Edit",
+          this.handleEditClick
         )}
 
         {/* Delete study plan dropdown selection */}
         {this.renderDropDownMenuSelection(
-          "dropdown-item", "fa fa-trash",
-          {position: 'relative', float: 'left',
-           paddingTop: '0.25em', marginRight: '1em'},
-          "Edit", this.handleEditClick
+          "dropdown-item",
+          "fa fa-edit",
+          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '0.8em'},
+          "Delete",
+          this.handleDeleteClick
         )}
+
+        {this.state.launchConfirmDelete ?
+          <ModalContainer
+            onHidden={this.resetDeleteState.bind(this)}
+            content={
+              <DialogContainer
+                title={"Are you sure you want to delete this study plan, '" +
+                       this.props.tabTitle + "'?"}
+                content={
+                  <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+                          buttonText="Yes"
+                          onButtonClick={this.handleConfirmDelete.bind(this)}
+                  />}
+              /> }
+          /> : null}
       </div>
     )
   }
@@ -140,9 +177,9 @@ export default class Tab extends React.Component {
   /**
    * Renders the dropdown menu anchored below a tab
    *
-   * @param {[String]} String rep of class of this dropdown selection
-   * @param {[String]} String rep of class of icon
-   * @param {[Object]} Object rep of style of icon
+   * @param {[String]} CSS Class of this dropdown selection
+   * @param {[String]} CSS Class of icon
+   * @param {[Object]} Style prop of icon
    * @param {[String]} Dropdown selection text
    * @param {[Func]} Handler for click events on this dropdown menu item
    *
