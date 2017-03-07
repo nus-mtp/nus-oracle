@@ -96,6 +96,7 @@ export default class SemModulesCard extends React.Component {
                 labelKey="moduleCode" placeholder="Add a module..."
                 loadOptions={this.getModulesListFromDB.bind(this)}
                 onChange={this.handleSelectModuleCode.bind(this)} />
+                
             </div>
 
   					<div className="card-typical-section">

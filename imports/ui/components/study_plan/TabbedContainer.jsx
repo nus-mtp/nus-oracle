@@ -297,7 +297,7 @@ export default class TabbedContainer extends React.Component {
           </div>
         </div>
 
-        <div className='tab-content' style={{padding: '8px'}}>
+        <div className='tab-content' style={{padding: '8px', marginTop: '-1px'}}>
           <div role='tabpanel' className='tab-pane fade in active'
                id={'tab' + this.state.tabSelectedIndex}>
 
