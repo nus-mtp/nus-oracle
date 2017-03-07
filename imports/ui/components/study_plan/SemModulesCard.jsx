@@ -49,8 +49,6 @@ export default class SemModulesCard extends React.Component {
   }
 
   render() {
-    console.log(Object.keys(this.props.modules));
-
     return (
       <div className="col-md-4">
         <div className="card-grid-col">

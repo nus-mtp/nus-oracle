@@ -112,8 +112,11 @@ export default class Tab extends React.Component {
     return (
       <div className="card-typical"
            onBlur={this.handleOnBlurDropdown.bind(this)}
-           style={{position: 'fixed', zIndex: '300', top: '7.3em',
-                   width: '7.75em', textAlign: 'left'}}>
+           style={{position: 'fixed', zIndex: '300', top: '3.3em',
+                   width: '7.75em', textAlign: 'left',
+                   webkitBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
+                   mozBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
+                   boxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)'}}>
 
         {/* Edit study plan name dropdown selection */}
         {this.renderDropDownMenuSelection(
