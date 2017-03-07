@@ -41,8 +41,8 @@ export const getStudentID = function getStudentID(userId) {
     return '';
   }
   return student._id;
-}
 
+}
 // helper function
 export const getCurrentStudentDocument = function getCurrentStudentDocument(studentID) {
   return Students.findOne({_id: studentID});
@@ -180,7 +180,6 @@ export const getStudentPreviousEducationGivenStudentID = function getPrevEducati
 
 export const updateStudentAcademicCohortGivenStudentID = function updateStudentCohortGivenStudentID(newCohort, studentID) {
   //TO-DO: Check if the cohort exists in the acadCohortDataBase
-  // find the studentID
   const student = getCurrentStudentDocument(studentID);
   if(student == {}){
     return false;
@@ -190,7 +189,6 @@ export const updateStudentAcademicCohortGivenStudentID = function updateStudentC
 
 export const updateStudentPreviousEducationGivenStudentID = function updateStudentEducationGivenStudentID(prevEdu, studentID) {
   //TO-DO: Check if the prevEdu exists in the previousEducationDatabase
-  // find the studentID
   const student = getCurrentStudentDocument(studentID);
   if(student == {}){
     return false;

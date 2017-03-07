@@ -6,7 +6,6 @@ import LogoutAccount from '../account/logout/LogoutAccount.jsx'
 import ModulesCardContainer from './ModulesCardContainer.js'
 import ProfileDetailsContainer from './ProfileDetailsContainer.jsx'
 import InlineEdit from 'react-edit-inline';
-
 import * as constants from '../common/Constants.js';
 
 export default class PanelProfile extends React.Component {

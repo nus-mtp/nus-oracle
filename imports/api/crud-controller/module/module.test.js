@@ -1,7 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Planner } from '../planner/planner';
 import { populateModuleFixture,
-         dePopulateModuleFixture } from '../../integration-tests/fixtures';
+         dePopulateModuleFixture } from '../../test-fixtures/modules';
 import { createPlannerGivenUserID,
          removePlanner,
          getPlannerIDsGivenUserID } from '../planner/methods';
