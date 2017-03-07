@@ -27,7 +27,9 @@ export const findITProfessionalismModules = function findITProfessionalismModule
         // checks if in exempted or waived modules
         markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        break;
+        if (markedITProfessionalismModulesAndMCs[keyNames[i]])  {
+          break;
+        }
       }
     }
 

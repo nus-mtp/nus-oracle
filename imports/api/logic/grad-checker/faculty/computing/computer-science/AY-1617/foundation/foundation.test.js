@@ -44,36 +44,23 @@ describe('grad-checker-foundation', function()  {
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {}, requiredMCs);
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[3]], 'CS3230 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[0]], 'CS1010 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[1]], 'CS1020 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[2]], 'CS2010 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[3]], 'CS3230 fulfiled');
     assert.isFalse(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
 
     assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
+    assert.equal(markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue, 4);
+
   })
 
-  it ('checks if equivalent modules return correct boolean values', function() {
-    // planner[1] contains 1010X instead of 1010
-    const modules = ['CS1010', 'CS1020', 'CS2010'];
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'Computer Science Foundation';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
-
-    const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
-
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {});
-    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
-    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
-    assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
-    assert.isFalse(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
-
-    assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 12);
-  })
-
-  it ('checks if waived and exempted modules return correct boolean values', function() {
+  it ('checks if equivalent, waived and exempted modules return correct boolean values', function() {
     // planner[1] contains 1010X instead of 1010
     const modules = ['CS1010', 'CS1020', 'CS2010'];
     const academicCohort = 'AY 2016/2017';
@@ -97,9 +84,15 @@ describe('grad-checker-foundation', function()  {
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules['CS3230'], 'CS3230 fulfiled');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked['CS1010X'], 'CS1010X checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[1]], 'CS1020 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[2]], 'CS2010 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked['CS1231'], 'CS1231 checked');
+    assert.isTrue(markedFoundationModulesAndMCs.moduleChecked['CS3230'], 'CS3230 checked');
 
     // 16 because waived module does not count to MCs
     assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
+    assert.equal(markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue, 5);
   })
 
 });

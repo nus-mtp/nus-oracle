@@ -26,7 +26,9 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
         // checks if in exempted or waived modules
         markedMathSciModulesModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedMathSciModulesModulesAndMCs = markModules(markedMathSciModulesModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        break;
+        if (markedMathSciModulesModulesAndMCs.mathSciModulesModules[keyNames[i]]) {
+          break;
+        }
       }
     }
 
