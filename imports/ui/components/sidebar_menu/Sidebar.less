@@ -9,6 +9,10 @@
 .side-menu.side-menu-compact{
   width: @sidebar-menu-width;
   overflow-x: hidden;
+
+  @media (max-width: 991px){
+    left: 0;
+  }
 }
 .side-menu.side-menu-compact .side-menu-list .lbl{
   display: none;
@@ -38,11 +42,22 @@
 .sidemenuIcon{
   font-size: 3.5em;
 }
-
 .side-menu.side-menu-compact .side-menu-list a {
   padding: 1em 0;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+// PROFILE PANEL
+
+.editIcon{
+  font-size: 1.5em;
+  float: right;
+}
+
+.side-menu-addl .Select.Select--single.has-value {
+    width: 80%;
+    float: left;
 }
