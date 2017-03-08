@@ -7,6 +7,7 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
   const ITProfessionalismModules = ['IS1103', 'CS2101', 'ES2660'];
   const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science Two', 'PC1221', 'Science One'];
   const teamProjectModules = ['Project I', 'Project II'];
+  const industrialExperienceModules = ['ATAP/SIP/Industry Course/NOC', 'CP4101'];
 
   const CS1010Equivalent = ['CS1010X', 'CS1010E', 'CS1010S', 'CS1101'];
   const CS1020Equivalent = ['CS2020'];
@@ -24,6 +25,8 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
 
   const teamProjectIEquivalent = ['CS3201', 'CS3216', 'CS3281', 'CS3283'];
   const teamProjectIIEquivalent = ['CS3202', 'CS3217', 'CS3282', 'CS3284'];
+
+  const internshipEquivalent = ['CP3880', 'CP3200', 'CP3202'];
 
   const academicYear = 'AY 2016/2017';
 
@@ -59,10 +62,18 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
     }
   }
   for (var i=0; i<teamProjectModules.length; i++)  {
-    if (teamProjectModules[i] == 'Project I') {
+    if (teamProjectModules[i] === 'Project I') {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, teamProjectModules[i], teamProjectIEquivalent));
     } else if (teamProjectModules[i] == 'Project II') {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, teamProjectModules[i], teamProjectIIEquivalent));
+    }
+  }
+
+  for (var i=0; i<industrialExperienceModules.length; i++)  {
+    if (industrialExperienceModules[i] === 'ATAP/SIP/Industry Course/NOC') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, industrialExperienceModules[i], internshipEquivalent));
+    } else {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, industrialExperienceModules[i], []));
     }
   }
 

@@ -54,7 +54,7 @@ const populateTeamProjectFixture = function populateTeamProjectFixure() {
 
 const populateIndustrialExperienceFixture = function populateIndustrialExperienceFixture()  {
   const requirementName = 'Industrial Experience Training';
-  const modules = ['CP3880'];
+  const modules = ['ATAP/SIP/Industry Course/NOC', 'CP4101'];
   const requirementMCs = 12;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);
