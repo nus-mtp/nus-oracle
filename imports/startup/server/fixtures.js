@@ -15,6 +15,7 @@ Meteor.startup(() => {
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
   }
+  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
 
   if (Planner.find({}).count() === 0) {
     const userIDs = '9f91pejfj912ras';
