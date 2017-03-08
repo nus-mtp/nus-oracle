@@ -52,4 +52,5 @@ export const pathToUserDashboard = "/userDashboard";
    action()  {
      mount(MainLayout, {content: <App />});
    }
- })
+ });
+ 

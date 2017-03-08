@@ -46,12 +46,12 @@ Schemas.Module = new SimpleSchema({
   },
   moduleDescription: {
     type: String,
-    optional:true,
+    optional: true,
   },
 
   modulePrerequisite: {
     type: String,
-    optional:true,
+    optional: true,
   },
   moduleCorequisite: {
     type: String,

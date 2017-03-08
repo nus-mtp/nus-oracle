@@ -1,7 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { Students } from './student';
 import { populateModuleFixture,
-         dePopulateModuleFixture } from '../../integration-tests/fixtures';
+         dePopulateModuleFixture } from '../../test-fixtures/modules';
 import { createNewStudent,
          getStudentAcademicCohortGivenStudentID,
          getStudentPreviousEducationGivenStudentID,
@@ -9,7 +9,7 @@ import { createNewStudent,
          updateStudentPreviousEducationGivenStudentID,
          addStudentExemptedModuleGivenStudentID,
          deleteStudentExemptedModuleGivenStudentID,
-         addStudentWaviedModuleGivenStudentID,
+         addStudentWaivedModuleGivenStudentID,
          deleteStudentWaivedModuleGivenStudentID } from './methods';
 
 if (Meteor.isServer){
@@ -68,7 +68,8 @@ if (Meteor.isServer){
       const exemptedModule = 'CS1010';
       const numberOfDocsUpdated = addStudentExemptedModuleGivenStudentID(exemptedModule, studentID, function(error, affectDocs) {
         assert.equal(numberOfDocsUpdated, 1);
-        assert.equal(Students.findOne(studentID).studentExemptedModule[exemptedModule], exemptedModule);
+        const module = Students.findOne(studentID).studentExemptedModule[exemptedModule];
+        assert.equal(module, exemptedModule);
       });
     });
 
@@ -92,7 +93,7 @@ if (Meteor.isServer){
     it ('Add one waived modules if the ID exists', function() {
       const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
       const waivedModule = 'CS1020';
-      const numberOfDocsUpdated = addStudentWaviedModuleGivenStudentID(waivedModule, studentID, function(error, affectDocs) {
+      const numberOfDocsUpdated = addStudentWaivedModuleGivenStudentID(waivedModule, studentID, function(error, affectDocs) {
         assert.equal(numberOfDocsUpdated, 1);
         assert.equal(Students.findOne(studentID).studentWaivedModule[waivedModule], waivedModule);
       });
@@ -101,7 +102,7 @@ if (Meteor.isServer){
     it ('Does not add waived module if module does not exists', function()  {
       const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
       const waivedModule = 'CS0000';
-      const numberOfDocsUpdated = addStudentWaviedModuleGivenStudentID(waivedModule, studentID);
+      const numberOfDocsUpdated = addStudentWaivedModuleGivenStudentID(waivedModule, studentID);
 
       assert.equal(numberOfDocsUpdated, 0);
     });
@@ -110,7 +111,7 @@ if (Meteor.isServer){
     it ('Delete one waived modules if the ID exists', function()  {
       const studentID = createNewStudent('a12345', 'AY 2015/2016', 'SchoolDontHave');
       const waivedModule = 'CS1020';
-      addStudentWaviedModuleGivenStudentID(waivedModule, studentID, function(error, affectDocs)  {
+      addStudentWaivedModuleGivenStudentID(waivedModule, studentID, function(error, affectDocs)  {
         const numberOfDocsUpdated = deleteStudentWaivedModuleGivenStudentID(waivedModule, studentID);
         assert.equal(numberOfDocsUpdated, 1);
       });

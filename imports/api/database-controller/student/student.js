@@ -28,10 +28,12 @@ StudentSchema = {
   studentExemptedModule: {
     type: Object,
     optional: true,
+    blackbox: true
   },
   studentWaivedModule:  {
     type: Object,
     optional: true,
+    blackbox: true
   },
   studentAcademicCohort: {
     type: String,
