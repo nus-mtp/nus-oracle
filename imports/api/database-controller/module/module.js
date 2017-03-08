@@ -46,11 +46,12 @@ Schemas.Module = new SimpleSchema({
   },
   moduleDescription: {
     type: String,
-    optional:false,
+    optional:true,
   },
+
   modulePrerequisite: {
     type: String,
-    optional:false,
+    optional:true,
   },
   moduleCorequisite: {
     type: String,
@@ -58,11 +59,11 @@ Schemas.Module = new SimpleSchema({
   },
   modulePreclusion: {
     type: String,
-    optional:false,
+    optional:true,
   },
   moduleMC: {
     type: Number,
-    optional:false,
+    optional:true,
   },
   termOffered: {
     type: [Object],

@@ -8,11 +8,14 @@ import { Students } from '../../api/database-controller/student/student';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
+import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
 Meteor.startup(() => {
+  //parseJSONFileAndStoreToDB();
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
   }
+  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
 
   if (Planner.find({}).count() === 0) {
     const userIDs = '9f91pejfj912ras';
