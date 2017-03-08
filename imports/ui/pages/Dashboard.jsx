@@ -8,8 +8,8 @@ export default class Dashboard extends React.Component {
     return (
       <div className="with-side-menu">
           <Sidebar />
-        <div className="page-content">
-          <div className="container-fluid">
+        <div className="page-content" style={{padding: '0 0 0 350px'}}>
+          <div className="container-fluid" style={{padding: '0px'}}>
             <StudyPlan plannerIDs={this.props.plannerIDs}/>
           </div>
         </div>
@@ -21,5 +21,3 @@ export default class Dashboard extends React.Component {
 Dashboard.propTypes = {
   plannerIDs: React.PropTypes.array
 }
-//<Sidebar />
-//<StudyPlan2 />

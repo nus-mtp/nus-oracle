@@ -20,19 +20,35 @@ export const pathToUserDashboard = "/userDashboard";
  * found in fixtures.jsx in ./fixtures.jsx
  */
 
- FlowRouter.route(pathToLogin, {
+ // The routes before logging n
+ exposedRouterGroup = FlowRouter.group();
+
+ exposedRouterGroup.route(pathToLogin, {
    action() {
      mount(MainLayout, {content: <AccountManager />});
    }
  });
 
- FlowRouter.route(pathToAcadDetailsSetup,  {
+// The routes after logging in
+ loggedinRouterGroup = FlowRouter.group(
+   /*
+   triggersEnter: [() =>
+     unless Meteor.loggingIn() or Meteor.userId()
+       route = FlowRouter.current()
+       unless route.route.name is 'login'
+         Session.set 'redirectAfterLogin', route.path
+       FlowRouter.go ‘login’
+   ]
+   */
+ );
+
+ loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
    action()  {
      mount(MainLayout, {content: <SetUpAcadDetail />});
    }
  });
 
- FlowRouter.route(pathToUserDashboard,  {
+ loggedinRouterGroup.route(pathToUserDashboard,  {
    action()  {
      mount(MainLayout, {content: <App />});
    }
