@@ -1,7 +1,7 @@
 import { HTTP } from 'meteor/http';
 
 export const moduleInformationParser = function() {
-  const moduleInfo = HTTP.get('http://api.nusmods.com/2016-2017/moduleInformation.json');
+  const moduleInfo = HTTP.get('http://api.nusmods.com/2016-2017/modules/');
   //console.log(moduleInfo);
 };
 
