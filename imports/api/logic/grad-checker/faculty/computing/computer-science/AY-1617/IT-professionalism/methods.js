@@ -53,7 +53,7 @@ const markModules = function markModules(markedITProfessionalismModulesAndMCs, s
       markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue += 1;
       if (!markedITProfessionalismModulesAndMCs.moduleChecked[equivalentModule])  {
         markedITProfessionalismModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedITProfessionalismModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+        markedITProfessionalismModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       }
       break;
     }
@@ -69,7 +69,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedITPro
       markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue += 1;
       if (!markedITProfessionalismModulesAndMCs.moduleChecked[equivalentModule])  {
         markedITProfessionalismModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedITProfessionalismModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+        markedITProfessionalismModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       }
     }
   }

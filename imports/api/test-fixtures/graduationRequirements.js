@@ -46,7 +46,7 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
 
 const populateTeamProjectFixture = function populateTeamProjectFixure() {
   const requirementName = 'Computer Systems Team Project';
-  const modules = ['CS3201', 'CS3202'];
+  const modules = ['Project I', 'Project II'];
   const requirementMCs = 8;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);

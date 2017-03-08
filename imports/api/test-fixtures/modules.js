@@ -9,7 +9,8 @@ export const populateModuleFixture = function populateModuleFixture() {
                        'ST2334', 'CM1121', 'CM1131', 'CM1417', 'LSM1301',
                        'LSM1302', 'PC1141', 'PC1142', 'PC1143', 'PC1144',
                        'PC1221', 'PC1221X', 'PC1221FC', 'PC1222', 'PC1222X',
-                       'PC1432', 'MA2213', 'MA2214', 'ST2131', 'ST2132'];
+                       'PC1432', 'MA2213', 'MA2214', 'ST2131', 'ST2132', 'CS3283',
+                       'CS3284', 'CS3216', 'CS3217', 'CS3281', 'CS3282', 'CS3201', 'CS3202'];
   const moduleNames = ['Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Data Structures and Algorithms I',
@@ -23,7 +24,10 @@ export const populateModuleFixture = function populateModuleFixture() {
                        'PHYSICS I', 'PHYSICS II', 'PHYSICS III', 'PHYSICS IV', 'FUNDAMENTALS OF PHYSICS I',
                        'FUNDAMENTALS OF PHYSICS I', 'FUNDAMENTALS OF PHYSICS I', 'FUNDAMENTALS OF PHYSICS II',
                        'FUNDAMENTALS OF PHYSICS II', 'PHYSICS IIE', 'NUMERICAL ANALYSIS I',
-                       'COMBINATORICS AND GRAPHS I', 'Probability', 'Mathematical Statistics'];
+                       'COMBINATORICS AND GRAPHS I', 'Probability', 'Mathematical Statistics',
+                       'Media Technology Project I', 'Media Technology Project II', 'Software Product Engineering for Digital Markets',
+                       'Software Engineering on Modern Application Platforms', 'Thematic Systems Project I', 'Thematic Systems Project II',
+                       'Software Engineering Project I', 'Software Engineering Project II'];
 
   for (var i = 0; i < moduleCodes.length; i++)  {
     const testModule = {
