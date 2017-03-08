@@ -17,7 +17,7 @@ import { findTeamProjectRequirementModules } from './breadth-depth/team-project/
 *  @return {{objects}}  object of all graduation
 *
 */
-export const AY1617CSGradChecker = function AY1617CSGradChecker(studentPlanner, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
+export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
   const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Focus Area', 'Computer Systems Team Project', 'Industrial Experience Training', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
 
   // retrieve foundation, IT-professionalism, Math-Sci and Breadth and Depth requirements here
@@ -42,7 +42,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentPlanner, 
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationDoc = allGradRequirements[moduleRequirementTitle[0]];
   const requiredMCsFoundation = allGradRequirements[moduleRequirementTitle[0]];
-  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentPlanner.semesters, foundationDoc, studentExemptedModules, studentWaivedModules, requiredMCsFoundation);
+  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, foundationDoc, studentExemptedModules, studentWaivedModules, requiredMCsFoundation);
 
   // find computer science breadth and depth requirement modules
     // find focus area primary requirement modules objects
@@ -52,7 +52,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentPlanner, 
     // find computer systems team project requirement modules
     const teamProjectDoc = allGradRequirements[moduleRequirementTitle[2]];
     const requiredMCsTeamProject = allGradRequirements[moduleRequirementTitle[2]];
-    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentPlanner.semesters, teamProjectDoc, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
+    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectDoc, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
 
     // find Industrial experience training requirement modules
     //const industrialExperienceDoc = allGradRequirements[moduleRequirementTitle[3]];
@@ -61,12 +61,12 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentPlanner, 
   // find IT-professionalism requirement modules objects
   const ITDoc = allGradRequirements[moduleRequirementTitle[4]];
   const requiredMCsIT = allGradRequirements[moduleRequirementTitle[4]];
-  graduationRequirements[moduleRequirementTitle[4]] = findTeamProjectRequirementModules(studentAcademicCohort, studentPlanner.semesters, ITDoc, studentExemptedModules, studentWaivedModules, requiredMCsIT);
+  graduationRequirements[moduleRequirementTitle[4]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, ITDoc, studentExemptedModules, studentWaivedModules, requiredMCsIT);
 
   // find math-science requirement modules objects
   const mathScienceDoc = allGradRequirements[moduleRequirementTitle[5]];
   const requiredMCsMathSci = allGradRequirements[moduleRequirementTitle[5]];
-  graduationRequirements[moduleRequirementTitle[5]] = findTeamProjectRequirementModules(studentAcademicCohort, studentPlanner.semesters, mathScienceDoc, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
+  graduationRequirements[moduleRequirementTitle[5]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, mathScienceDoc, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
 
   // find unrestricted-electives requirement modules objects
 
