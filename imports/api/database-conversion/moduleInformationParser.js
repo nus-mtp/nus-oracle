@@ -6,6 +6,6 @@ export const moduleInformationParser = function() {
 };
 
 export const moduleListParser = function()  {
-  const moduleList = HTTP.get('http://api.nusmods.com/2016-2017/modules/ACC3602/index.json');
-  console.log(moduleList['data']);
+  const moduleList = HTTP.get('http://api.nusmods.com/2016-2017/moduleList.json');
+  //console.log(moduleList);
 };

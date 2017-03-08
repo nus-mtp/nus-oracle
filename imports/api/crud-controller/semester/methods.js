@@ -18,7 +18,7 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
 
   const retrievedSemester = planner.semesters;
   if (retrievedSemester.length > 0) {
-    previousAcademicYear = retrievedSemester[retrievedSemester.length-1].academicYear;
+    previousAcademicYear = increaseAcadYearByOne(retrievedSemester[retrievedSemester.length-1].academicYear);
   } else {
     // make sure to get the acad year from Student here
     previousAcademicYear = getStudentAcademicCohort(getStudentID());
@@ -61,18 +61,13 @@ export const insertNewSemesterInPlanner = function insertNewSemesterInPlanner(ac
   const planner = Planner.findOne(plannerID);
   const retrievedSemester = planner.semesters;
 
-  // retrieve previous academic year as student's academic year
-  //let previousAcademicYear = getCurrentAcademicCohort();
-
-  const newAcadYear = increaseAcadYearByOne(academicYear);
-
   // retrieve previous academic year
   //if (retrievedSemester.length > 0) {
     //
   //}
 
   const semesterObject = {
-    academicYear: newAcadYear,
+    academicYear: academicYear,
     semesterNum: semesterNum,
     moduleHashmap: {},
   }

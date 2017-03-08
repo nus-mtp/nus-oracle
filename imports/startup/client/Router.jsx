@@ -19,18 +19,41 @@ export const pathToUserDashboard = "/userDashboard";
  * MainLayout represents the skeleton component for all our React components
  * found in fixtures.jsx in ./fixtures.jsx
  */
+ function checkLoggedIn (ctx, redirect) {
+   if (!Meteor.userId()) {
+     redirect('pathToLogin');
+   }
+ }
 
+ function redirectIfLoggedIn (ctx, redirect) {
+   if (Meteor.userId()) {
+     if (Meteor.user().profile.hasSetup) {
+        redirect(pathToUserDashboard)
+     } else {
+       redirect(pathToAcadDetailsSetup)
+     }
+   }
+ }
  // The routes before logging n
- exposedRouterGroup = FlowRouter.group();
+ publicRouterGroup = FlowRouter.group({
+   name: 'private',
+   triggersEnter: [
+     redirectIfLoggedIn
+   ]
+ });
 
- exposedRouterGroup.route(pathToLogin, {
+ publicRouterGroup.route(pathToLogin, {
    action() {
      mount(MainLayout, {content: <AccountManager />});
    }
  });
 
 // The routes after logging in
- loggedinRouterGroup = FlowRouter.group(
+ loggedinRouterGroup = FlowRouter.group({
+   name: 'private',
+   triggersEnter: [
+     checkLoggedIn
+   ]
    /*
    triggersEnter: [() =>
      unless Meteor.loggingIn() or Meteor.userId()
@@ -40,7 +63,8 @@ export const pathToUserDashboard = "/userDashboard";
        FlowRouter.go ‘login’
    ]
    */
- );
+ });
+
 
  loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
    action()  {
@@ -49,7 +73,9 @@ export const pathToUserDashboard = "/userDashboard";
  });
 
  loggedinRouterGroup.route(pathToUserDashboard,  {
+   name: 'dashboard',
+   triggersEnter: [checkLoggedIn],
    action()  {
      mount(MainLayout, {content: <App />});
    }
- })
+ });

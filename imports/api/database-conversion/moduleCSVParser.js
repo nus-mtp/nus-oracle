@@ -62,7 +62,7 @@ const setFileAcademicYear = function setAcademicYear(xxyy) {
 const parseCSVFileAndStoreToDB = function parseAndStore() {
   const rawModuleJSON = parseCSVModuleFileToJSON();
   const newModuleJSONArray = rearrangeJSONToModuleSchema(rawModuleJSON);
-  console.log(newModuleJSONArray);
+  //console.log(newModuleJSONArray);
   storeJSONArrayToDB(newModuleJSONArray);
 };
 
@@ -72,7 +72,7 @@ const parseCSVModuleFileToJSON = function openingCSVFile() {
     const FileContentInString = Assets.getText(csvFile);
     // parse to JSON by using Papa.parse
     const JSONParsedResult = Papa.parse(FileContentInString, papaConfig);
-    console.log(JSONParsedResult);
+    //console.log(JSONParsedResult);
     // The new JSON file is stored in data
     return JSONParsedResult.data;
   }
