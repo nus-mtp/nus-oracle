@@ -22,7 +22,7 @@ export default class PanelProfile extends React.Component {
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
           <PanelListItem type="header" text="E-mail"  isEditable={false}/>
-          <PanelListItem type="" text={ Meteor.user().username ? Meteor.user().username : "" }  isEditable={false}/>
+          <PanelListItem type="" text={ (Meteor.user()) ? Meteor.user().username : "" }  isEditable={false}/>
           <ModulesCardContainer studentID="" listType="Exempted"/>
           <ModulesCardContainer studentID="" listType="Waived" />
           <PanelListItem type="header" text="Previous Education" isEditable={false}/>
