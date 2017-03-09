@@ -1,18 +1,21 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { GraduationRequirements} from './graduationRequirement';
 import { createNewGradRequirement,
-         getGradRequirementModules } from './methods';
+         getGradRequirementModules,
+         getGradRequirementMCs } from './methods';
 
 describe(" graduation requirement test", function() {
   const graduationName = ['Foundation', 'IT professionalism'];
   const foundationModuleList = ['CS1010', 'CS1020', 'CS1231', 'CS2105', 'CS2106', 'CS2100', 'CS2102','CS2010'];
   const ITProfModuleList = ['IS1103','CS2101', 'ES2660'];
   const storeID = [];
+  const foundationRequirementMCs = 36;
+  const ITRequirementMCs = 12;
 
   beforeEach( function() {
-    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList);
+    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
-    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList);
+    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
     storeID.push(result2);
 
     assert.equal(GraduationRequirements.find({}).fetch().length, 2);
@@ -40,5 +43,12 @@ describe(" graduation requirement test", function() {
     assert.equal(Object.keys(gradRequirements).length, storeID.length);
     assert.equal(Object.keys(gradRequirements[graduationName[0]]).length, foundationModuleList.length);
     assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
+  });
+
+  it ('should return requirment MCS', function()  {
+    const gradRequirementMCs = getGradRequirementMCs(storeID);
+    assert.equal(Object.keys(gradRequirementMCs).length, storeID.length);
+    assert.equal(gradRequirementMCs[graduationName[0]], foundationRequirementMCs);
+    assert.equal(gradRequirementMCs[graduationName[1]], ITRequirementMCs);
   });
 });

@@ -1,13 +1,14 @@
 import React from 'react';
 import * as constants from '../common/Constants.js';
 import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
+import { logout } from '../account/logout/LogoutAccount.jsx';
 
 export default class SidebarMenu extends React.Component {
 constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 1
+    tabSelectedIndex: 0
   }
 }
 
@@ -26,6 +27,15 @@ render(){
     <nav className="side-menu side-menu-compact">
       <ul className="side-menu-list">
         {tabTitleList.map((buttonTitle, index) => {
+          if(buttonTitle=="Logout"){
+            return(
+                <SidebarMenuButton key={index}
+                     buttonTitle={buttonTitle}
+                     onSwitchTab={logout}
+                     isActiveTab={(this.state.tabSelectedIndex === index)}
+                     buttonIcon={iconList[index]}/>
+            )
+          }
           return (
               <SidebarMenuButton key={index}
                    buttonTitle={buttonTitle}
@@ -67,7 +77,7 @@ class SidebarMenuButton extends SidebarMenu {
             // calls function props onSwitchTab passed from parent componenet
             >
           <a href="#">
-            <i className={"font-icon font-icon-" + buttonIcon}></i>
+            <i className={"sidebarIcon fa fa-" + buttonIcon}></i>
             <span className={"lbl" + (this.state.onMouseOver ? " hovered" : "")}>
               {this.props.buttonTitle}
             </span>

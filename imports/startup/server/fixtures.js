@@ -15,11 +15,15 @@ import { AcademicCohort } from '../../api/database-controller/AcademicCohort/aca
 import { createNewCohort } from '../../api/database-controller/AcademicCohort/methods';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
+import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
 Meteor.startup(() => {
+  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
+  //parseJSONFileAndStoreToDB();
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
   }
+  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
   if (AcademicCohort.find({}).count() === 0) {
     const academicYear = ['AY 2013/2014','AY 2014/2015', 'AY 2015/2016','AY 2016/2017'];
     let i = 0 ;

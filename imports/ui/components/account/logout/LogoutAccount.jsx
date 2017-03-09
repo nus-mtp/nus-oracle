@@ -7,6 +7,18 @@ import React from 'react';
 
  */
 
+ export const logout = function logout() {
+     Meteor.logout(( error ) => {
+       if ( error ) {
+         console.log('error in logging out  user');
+         Bert.alert( error.reason, 'danger' );
+         console.log(error.reason);
+       } else {
+         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
+         FlowRouter.go('/');
+       }
+     })
+ }
 
 export default class LogoutAccount extends React.Component {
   constructor(props) {
@@ -16,18 +28,7 @@ export default class LogoutAccount extends React.Component {
   }
 
   handleSubmit(event) {
-    Meteor.logout(( error ) => {
-      if ( error ) {
-        console.log('error in logging out  user');
-        Bert.alert( error.reason, 'danger' );
-        console.log(error.reason);
-      } else {
-        Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
-        FlowRouter.go('/');
-      }
-    });
-
-
+    logout();
     event.preventDefault();
   }
 

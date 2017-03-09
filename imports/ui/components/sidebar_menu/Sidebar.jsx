@@ -6,9 +6,11 @@ import PanelProfile from './PanelProfile.jsx'
 
 export default class Sidebar extends React.Component {
   render() {
-    var menuPanelsList = [<PanelProfile />, <PanelRequirements />, <SidebarPanel />, <SidebarPanel />, <SidebarPanel />];
-    var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me"];
-    var iconList = ["user", "learn", "view-cascade", "notebook-bird", "lamp"];
+    // var menuPanelsList = [<PanelProfile />, <PanelRequirements />, <SidebarPanel />, <SidebarPanel />, <SidebarPanel />];   
+    // var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me", "Logout"];
+    var menuPanelsList = [<PanelProfile />, <PanelRequirements />];    
+    var tabTitleList = ["My Profile", "Requirements", "Logout"];
+    var iconList = ["user", "tasks", "power-off"];
     return (
       <div className="my-side-menu">
         <SidebarMenu tabTitleList={tabTitleList}

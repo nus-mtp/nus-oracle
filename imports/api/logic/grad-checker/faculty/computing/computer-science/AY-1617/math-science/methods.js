@@ -1,17 +1,104 @@
-// import fulfilment methods here
+import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
+import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
-export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentPlanner, mathSciModules, exemptedModules, waivedModules) {
-  let markedMathSciModules = mathSciModules;
+export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules, requiredMCs) {
+  let markedMathSciModulesAndMCs = {
+    markedMathSciModules: mathSciModules,
+    numberOfMathSciModulesMarkedTrue: 0,
+    totalModuleMCs: 0,
+    moduleChecked: {},
+    requiredMCs: requiredMCs
+  };
+
+  let moduleFulfilment = {};
+  let moduleFulfilmentMappingEquivalent = [];
+  const keyNames = Object.keys(mathSciModules);
+
   // loop through markedMathSciModules
+    for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
+    moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
-    // check if equivalent module exists in studentPlanner
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-    // check if equivalent module exists in exemptedModules
-
-    // check if equivalent module exists in waivedModules
-
-    // mark markedMathSciModules as true or false depending on whether module exists in studentPlanner/exemptedModules/waivedModules
-
+    if (!markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
+      for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
+        // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
+        // checks if in exempted or waived modules
+        markedMathSciModulesAndMCs = markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        // early termination here
+        if (markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]]) {
+          break;
+        }
+        markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+      }
+    }
+    if (markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue === keyNames.length) {
+      markedMathSciModulesAndMCs.requiredMCs = markedMathSciModulesAndMCs.totalModuleMCs;
+      break;
+    }
+  }
   // return { moduleCode: boolean } object
+  return markedMathSciModulesAndMCs;
+}
+
+const markModules = function markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
+  for (var i = 0; i < studentSemesters.length; i++) {
+    if (studentSemesters[i].moduleHashmap[equivalentModule]) {
+      // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
+      }
+      break;
+    }
+  }
+
+  return markedMathSciModulesAndMCs;
+}
+
+const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
+  if (Object.keys(exemptedModules).length !== 0)  {
+    if (exemptedModules[equivalentModule])  {
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
+      }
+    }
+  }
+  if (Object.keys(waivedModules).length !== 0)  {
+    if (waivedModules[equivalentModule]) {
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+      }
+    }
+  }
+  return markedMathSciModulesAndMCs;
+}
+
+const markExceptions = function markExceptions(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  if (originalModule === 'Science Two' && markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+  }
+  return markedMathSciModulesAndMCs;
+}
+
+//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
+const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  if (originalModule === 'Science Two' && markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
+  }
+  return markedMathSciModulesAndMCs;
 }
