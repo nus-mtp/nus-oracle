@@ -18,8 +18,8 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedIndustrialExperienceTrainingModulesAndMCs = markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedModules(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
     if (!markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
@@ -83,6 +83,16 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedIndus
 }
 
 const markExceptions = function markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  if (originalModule === 'ATAP/SIP/Industry Course/NOC'
+      && markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CS3200'])  {
+    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, 'CS3202', originalModule);
+  } else if (originalModule === 'ATAP/SIP/Industry Course/NOC'
+      && markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CS3202'])   {
+    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, 'CS3200', originalModule);
+  }
+  else {
+    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+  }
   return markedIndustrialExperienceTrainingModulesAndMCs;
 }
 
