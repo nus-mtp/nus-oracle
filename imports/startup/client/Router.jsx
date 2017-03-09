@@ -17,7 +17,7 @@ export const pathToUserDashboard = "/userDashboard";
 * Help to triggersEnter to authenticate and redirect if user is not logged in
 */
 function checkLoggedIn (ctx, redirect) {
-  if (!Meteor.userId()) {
+  if (!Meteor.userId() || !Meteor.user().username.verified) {
     redirect('pathToLogin');
   }
 }

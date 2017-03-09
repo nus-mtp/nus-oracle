@@ -95,7 +95,7 @@ export default class LoginAccount extends React.Component {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
         let isVerified = Meteor.user().username.verified; // TODO EMAIL VERIFICATION FUNCTION WORK-IN-PROGRESS ADRIAN
-        if (Meteor.userId()) {
+        if (isVerified) {
           // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
             // Return users
