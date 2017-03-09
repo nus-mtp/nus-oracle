@@ -12,8 +12,12 @@ export const getGraduationRequirements = function getGraduationRequirements(stud
   const studentSemesters = getAllSemestersInPlanner(studentPlannerID);
   let graduationRequirements = {};
 
-  if (studentAcademicCohort === 'AY 2016/2017') {
+  // currently assumes only computing students
+  switch (studentAcademicCohort)  {
+    case 'AY 2016/2017':
     graduationRequirements = AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules);
+    break;
   }
+
   return graduationRequirements;
 }
