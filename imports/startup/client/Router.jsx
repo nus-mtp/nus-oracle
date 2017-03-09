@@ -21,7 +21,7 @@ export const pathToUserDashboard = "/userDashboard";
  */
  function checkLoggedIn (ctx, redirect) {
    if (!Meteor.userId()) {
-     redirect('pathToLogin');
+     redirect(pathToLogin);
    }
  }
 
