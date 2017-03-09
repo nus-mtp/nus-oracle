@@ -37,7 +37,7 @@ describe('search-controller', function() {
       const code = 'cs';
       const moduleArrayResults = sendQuery(code);
 
-      assert.equal(moduleArrayResults.length, 10);
+      assert.equal(moduleArrayResults.length, 18);
     });
 
     it ('no matching string returns no module', function()  {
