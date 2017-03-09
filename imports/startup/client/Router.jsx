@@ -17,7 +17,7 @@ export const pathToUserDashboard = "/userDashboard";
 * Help to triggersEnter to authenticate and redirect if user is not logged in
 */
 function checkLoggedIn (ctx, redirect) {
-  if (!Meteor.user()){// || !Meteor.user().emails[0].verified) {
+  if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
     redirect(pathToLogin);
   /*} else if (!Meteor.user().emails[0].verified) {
       redirect(pathToLogin);
@@ -29,7 +29,7 @@ function checkLoggedIn (ctx, redirect) {
 * Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
 */
 function redirectIfLoggedIn (ctx, redirect) {
-  if (Meteor.user()) {
+  if (Meteor.userId()) {
     redirect(pathToUserDashboard)
     //console.log(Meteor.user().profile.hasSetup);
     //if (Meteor.user().profile.hasSetup) {
