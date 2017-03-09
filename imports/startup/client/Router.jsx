@@ -30,7 +30,7 @@ function checkLoggedIn (ctx, redirect) {
 */
 function redirectIfLoggedIn (ctx, redirect) {
   if (Meteor.userId()) {
-    redirect(pathToUserDashboard)
+    redirect(pathToUserDashboard);
     //console.log(Meteor.user().profile.hasSetup);
     //if (Meteor.user().profile.hasSetup) {
     /* if (Meteor.user().profile.hasSetup) {
@@ -40,7 +40,6 @@ function redirectIfLoggedIn (ctx, redirect) {
     }*/
   }
 }
-
 /**
  * Implements routes throughout the project
  *
@@ -50,7 +49,7 @@ function redirectIfLoggedIn (ctx, redirect) {
 
  // The routes before logging in, will be redirected accordingly if account has been previously logged in
  publicRouterGroup = FlowRouter.group({
-   name: 'private',
+   name: 'public',
    triggersEnter: [
      redirectIfLoggedIn
    ]
@@ -81,6 +80,8 @@ function redirectIfLoggedIn (ctx, redirect) {
 
 
  loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
+   name: 'acadSetup',
+   triggersEnter: [checkLoggedIn],
    action()  {
      mount(MainLayout, {content: <SetUpAcadDetail />});
    }
