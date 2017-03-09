@@ -50,11 +50,17 @@ export const getCurrentStudentDocument = function getCurrentStudentDocument(stud
 
 export const getStudentAcademicCohort = function getCohort() {
   const studentID = getStudentID();
+  if (!studentID) {
+    return '';
+  }
   return getCurrentStudentDocument(studentID).studentAcademicCohort;
 }
 
 export const getStudentPreviousEducation = function getPrevEducation() {
   const studentID = getStudentID();
+  if (!student) {
+    return '';
+  }
   return getCurrentStudentDocument(studentID).studentPreviousHighestEducation;
 }
 

@@ -21,7 +21,6 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    console.log(moduleFulfilmentMappingEquivalent);
     markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
