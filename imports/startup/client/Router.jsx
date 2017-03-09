@@ -17,22 +17,27 @@ export const pathToUserDashboard = "/userDashboard";
 * Help to triggersEnter to authenticate and redirect if user is not logged in
 */
 function checkLoggedIn (ctx, redirect) {
-  if (!Meteor.userId() || !Meteor.user().username.verified) {
-    redirect('pathToLogin');
-  }
+  if (!Meteor.user()){// || !Meteor.user().emails[0].verified) {
+    redirect(pathToLogin);
+  /*} else if (!Meteor.user().emails[0].verified) {
+      redirect(pathToLogin);
+    } else if (!Meteor.user().profile.hasSetup) {
+      redirect(pathToAcadDetailsSetup)*/
+    }
 }
-
-
 /*
 * Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
 */
 function redirectIfLoggedIn (ctx, redirect) {
-  if (Meteor.userId()) {
-    if (Meteor.user().profile.hasSetup) {
+  if (Meteor.user()) {
+    redirect(pathToUserDashboard)
+    //console.log(Meteor.user().profile.hasSetup);
+    //if (Meteor.user().profile.hasSetup) {
+    /* if (Meteor.user().profile.hasSetup) {
        redirect(pathToUserDashboard)
     } else {
       redirect(pathToAcadDetailsSetup)
-    }
+    }*/
   }
 }
 

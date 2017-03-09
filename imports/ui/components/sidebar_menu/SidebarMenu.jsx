@@ -8,7 +8,7 @@ constructor(){
   super();
 
   this.state = {
-    tabSelectedIndex: 1
+    tabSelectedIndex: 0
   }
 }
 

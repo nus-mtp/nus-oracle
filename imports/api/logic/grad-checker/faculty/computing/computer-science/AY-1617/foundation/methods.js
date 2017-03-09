@@ -21,6 +21,7 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
+    console.log(moduleFulfilmentMappingEquivalent);
     markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
@@ -51,7 +52,7 @@ const markModules = function markModules(markedFoundationModulesAndMCs, studentS
       markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue += 1;
       if (!markedFoundationModulesAndMCs.moduleChecked[equivalentModule])  {
         markedFoundationModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+        markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       }
       break;
     }
@@ -67,7 +68,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
       markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue += 1;
       if (!markedFoundationModulesAndMCs.moduleChecked[equivalentModule])  {
         markedFoundationModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+        markedFoundationModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       }
     }
   }
