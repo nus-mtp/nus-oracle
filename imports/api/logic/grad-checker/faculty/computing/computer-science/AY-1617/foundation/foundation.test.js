@@ -20,6 +20,7 @@ describe('grad-checker-foundation', function()  {
   let fulfilmentIDs = [];
 
   beforeEach(function (done)  {
+    this.timeout(10000);
     populateModuleFixture();
     plannerIDs = populatePlannerFixture();
     graduationIDs = populateGraduationRequirementsFixture();

@@ -94,8 +94,10 @@ export default class LoginAccount extends React.Component {
       } else {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
-        let isVerified = Meteor.user().username.verified; // TODO EMAIL VERIFICATION FUNCTION WORK-IN-PROGRESS ADRIAN
-        if (Meteor.userId()) {
+        let isVerified = Meteor.user().emails[0].verified; // TODO EMAIL VERIFICATION FUNCTION
+        console.log(isVerified)
+        // WORK-IN-PROGRESS ADRIAN
+        if (isVerified) {
           // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
             // Return users
@@ -150,7 +152,7 @@ export default class LoginAccount extends React.Component {
 
                 <a className="dropdown-item"
                    onClick={this.handleClickOnForgetPassword.bind(this)}>
-                  [WORK IN PROGRESS] Forgot Password?
+                  Forgot Password?
                 </a>
 
           </div>

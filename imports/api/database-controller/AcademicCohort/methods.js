@@ -4,7 +4,8 @@ import { Match } from 'meteor/check';
 export const createNewCohort = function createCohort(cohortName) {
   const newCohortDocument = {
     cohortName: cohortName,
-    cohortFocusAreaID: []
+    cohortFocusAreaID: [],
+    cohortGradRequirementID: []
   };
 
   const cohortSchema = AcademicCohort.simpleSchema();
@@ -17,6 +18,15 @@ export const createNewCohort = function createCohort(cohortName) {
   }
 
   return {};
+}
+
+export const insertGradRequirementToCohort = function insertGradRequirementToCohort(cohortName, newGradRequirementID)  {
+  const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
+  const gradRequirementArray = targetCohort.cohortFocusAreaID;
+  const cohortID = targetCohort._id;
+  // TO-DO : Check if the focus area exists
+  focusAreaArray.push(newFocusAreaID);
+  AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }
 
 export const insertFocusAreaToCohort  = function(cohortName, newFocusAreaID ) {

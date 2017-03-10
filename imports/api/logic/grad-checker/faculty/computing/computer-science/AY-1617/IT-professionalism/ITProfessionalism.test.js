@@ -14,12 +14,13 @@ import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/s
 
 import { findITProfessionalismModules } from './methods';
 
-describe('grad-checker-foundation', function()  {
+describe('grad-checker-ITProfessionalism', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];
 
   beforeEach(function (done)  {
+    this.timeout(10000);
     populateModuleFixture();
     plannerIDs = populatePlannerFixture();
     graduationIDs = populateGraduationRequirementsFixture();
