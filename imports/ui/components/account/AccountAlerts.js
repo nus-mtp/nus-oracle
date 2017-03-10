@@ -24,7 +24,7 @@ export const errorMsgs = {
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your email has not been verified. Please check",
   ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'",
-  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing",
+  ERR_SETUP_INCOMPLETE: "Please enter all four fields before continuing",
 }
 
 //=====================================================
