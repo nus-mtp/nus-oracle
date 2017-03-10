@@ -4,7 +4,8 @@ import { Match } from 'meteor/check';
 export const createNewCohort = function createCohort(cohortName) {
   const newCohortDocument = {
     cohortName: cohortName,
-    cohortFocusAreaID: ['dummy']
+    cohortFocusAreaID: [],
+    cohortGradRequirementID: []
   };
 
   const cohortSchema = AcademicCohort.simpleSchema();
@@ -12,11 +13,20 @@ export const createNewCohort = function createCohort(cohortName) {
 
   if (isValid) {
     const result = AcademicCohort.insert(newCohortDocument);
-    console.log(result);
+    //console.log(result);
     return result;
   }
 
   return {};
+}
+
+export const insertGradRequirementToCohort = function insertGradRequirementToCohort(cohortName, newGradRequirementID)  {
+  const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
+  const gradRequirementArray = targetCohort.cohortFocusAreaID;
+  const cohortID = targetCohort._id;
+  // TO-DO : Check if the focus area exists
+  focusAreaArray.push(newFocusAreaID);
+  AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }
 
 export const insertFocusAreaToCohort  = function(cohortName, newFocusAreaID ) {
@@ -54,4 +64,17 @@ export const getCohortByName = function getCohortByName(cohortName) {
 // obtain cohort by ID
 export const getCohortByID = function getCohortByID(cohortID) {
   return AcademicCohort.findOne({_id: cohortID});
+}
+
+export const getAcadCohortDataForSetup = function getCohortAndRepackaged() {
+  const acadCohortData = AcademicCohort.find({}).fetch();
+  const repackagedValue = [];
+  // repackaged them following the label and value pattern for the UI
+  for (var i = 0; i < acadCohortData.length;i++){
+    let acadCohortYear = acadCohortData[i].cohortName;
+    repackagedValue.push({label: acadCohortYear,
+                          value: acadCohortYear});
+  }
+
+  return repackagedValue;
 }

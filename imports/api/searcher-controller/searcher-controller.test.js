@@ -1,7 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { sendQuery } from '../searcher-controller/controller';
 import  { populateModuleFixture,
-          dePopulateModuleFixture } from './fixtures';
+          dePopulateModuleFixture } from '../test-fixtures/modules';
 
 
 describe('search-controller', function() {
@@ -37,7 +37,7 @@ describe('search-controller', function() {
       const code = 'cs';
       const moduleArrayResults = sendQuery(code);
 
-      assert.equal(moduleArrayResults.length, 8);
+      assert.equal(moduleArrayResults.length, 18);
     });
 
     it ('no matching string returns no module', function()  {
