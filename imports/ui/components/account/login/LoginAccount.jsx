@@ -152,7 +152,7 @@ export default class LoginAccount extends React.Component {
 
                 <a className="dropdown-item"
                    onClick={this.handleClickOnForgetPassword.bind(this)}>
-                  [WORK IN PROGRESS] Forgot Password?
+                  Forgot Password?
                 </a>
 
           </div>
