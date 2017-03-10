@@ -8,7 +8,7 @@ const MAX_PASSWORD_TRIES = 5;
 
 export const successMsgs = {
   SUCCESS_LOGIN: "Welcome back!",
-  SUCCESS_SIGNUP: "Welcome! Please log in with your new account below!",
+  SUCCESS_SIGNUP: "Thanks for signing up! Please check your email to verify your NUS Oracle account!",
   SUCCESS_SETUP: "Setup is all done. Welcome to NUS Oracle!",
   SUCCESS_NEW_PASSWORD_SENT: "New password sent to your email!"
 }
