@@ -13,30 +13,43 @@ export const pathToLogin = "/";
 export const pathToAcadDetailsSetup = "/acadSetup";
 export const pathToUserDashboard = "/userDashboard";
 
+/*
+* Help to triggersEnter to authenticate and redirect if user is not logged in
+*/
+function checkLoggedIn (ctx, redirect) {
+  if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
+    redirect(pathToLogin);
+  /*} else if (!Meteor.user().emails[0].verified) {
+      redirect(pathToLogin);
+    } else if (!Meteor.user().profile.hasSetup) {
+      redirect(pathToAcadDetailsSetup)*/
+    }
+}
+/*
+* Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
+*/
+function redirectIfLoggedIn (ctx, redirect) {
+  if (Meteor.userId()) {
+    redirect(pathToUserDashboard);
+    //console.log(Meteor.user().profile.hasSetup);
+    //if (Meteor.user().profile.hasSetup) {
+    /* if (Meteor.user().profile.hasSetup) {
+       redirect(pathToUserDashboard)
+    } else {
+      redirect(pathToAcadDetailsSetup)
+    }*/
+  }
+}
 /**
  * Implements routes throughout the project
  *
  * MainLayout represents the skeleton component for all our React components
  * found in fixtures.jsx in ./fixtures.jsx
  */
- function checkLoggedIn (ctx, redirect) {
-   if (!Meteor.userId()) {
-     redirect(pathToLogin);
-   }
- }
 
- function redirectIfLoggedIn (ctx, redirect) {
-   if (Meteor.userId()) {
-     if (Meteor.user().profile.hasSetup) {
-        redirect(pathToUserDashboard)
-     } else {
-       redirect(pathToAcadDetailsSetup)
-     }
-   }
- }
- // The routes before logging n
+ // The routes before logging in, will be redirected accordingly if account has been previously logged in
  publicRouterGroup = FlowRouter.group({
-   name: 'private',
+   name: 'public',
    triggersEnter: [
      redirectIfLoggedIn
    ]
@@ -48,7 +61,7 @@ export const pathToUserDashboard = "/userDashboard";
    }
  });
 
-// The routes after logging in
+// The private routes after logging in, will be redirected to log in page if no account is present
  loggedinRouterGroup = FlowRouter.group({
    name: 'private',
    triggersEnter: [
@@ -67,6 +80,8 @@ export const pathToUserDashboard = "/userDashboard";
 
 
  loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
+   name: 'acadSetup',
+   triggersEnter: [checkLoggedIn],
    action()  {
      mount(MainLayout, {content: <SetUpAcadDetail />});
    }
