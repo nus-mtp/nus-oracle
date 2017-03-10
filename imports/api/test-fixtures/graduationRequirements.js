@@ -46,7 +46,7 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
 
 const populateTeamProjectFixture = function populateTeamProjectFixure() {
   const requirementName = 'Computer Systems Team Project';
-  const modules = ['CS3201', 'CS3202'];
+  const modules = ['Project I', 'Project II'];
   const requirementMCs = 8;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);
@@ -54,7 +54,7 @@ const populateTeamProjectFixture = function populateTeamProjectFixure() {
 
 const populateIndustrialExperienceFixture = function populateIndustrialExperienceFixture()  {
   const requirementName = 'Industrial Experience Training';
-  const modules = ['CP3880'];
+  const modules = ['ATAP/SIP/Industry Course/NOC', 'CP4101'];
   const requirementMCs = 12;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);

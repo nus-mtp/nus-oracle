@@ -13,6 +13,33 @@ export const pathToLogin = "/";
 export const pathToAcadDetailsSetup = "/acadSetup";
 export const pathToUserDashboard = "/userDashboard";
 
+/*
+* Help to triggersEnter to authenticate and redirect if user is not logged in
+*/
+function checkLoggedIn (ctx, redirect) {
+  if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
+    redirect(pathToLogin);
+  /*} else if (!Meteor.user().emails[0].verified) {
+      redirect(pathToLogin);
+    } else if (!Meteor.user().profile.hasSetup) {
+      redirect(pathToAcadDetailsSetup)*/
+    }
+}
+/*
+* Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
+*/
+function redirectIfLoggedIn (ctx, redirect) {
+  if (Meteor.userId()) {
+    redirect(pathToUserDashboard);
+    //console.log(Meteor.user().profile.hasSetup);
+    //if (Meteor.user().profile.hasSetup) {
+    /* if (Meteor.user().profile.hasSetup) {
+       redirect(pathToUserDashboard)
+    } else {
+      redirect(pathToAcadDetailsSetup)
+    }*/
+  }
+}
 /**
  * Implements routes throughout the project
  *
@@ -20,21 +47,50 @@ export const pathToUserDashboard = "/userDashboard";
  * found in fixtures.jsx in ./fixtures.jsx
  */
 
- FlowRouter.route(pathToLogin, {
+ // The routes before logging in, will be redirected accordingly if account has been previously logged in
+ publicRouterGroup = FlowRouter.group({
+   name: 'public',
+   triggersEnter: [
+     redirectIfLoggedIn
+   ]
+ });
+
+ publicRouterGroup.route(pathToLogin, {
    action() {
      mount(MainLayout, {content: <AccountManager />});
    }
  });
 
- FlowRouter.route(pathToAcadDetailsSetup,  {
+// The private routes after logging in, will be redirected to log in page if no account is present
+ loggedinRouterGroup = FlowRouter.group({
+   name: 'private',
+   triggersEnter: [
+     checkLoggedIn
+   ]
+   /*
+   triggersEnter: [() =>
+     unless Meteor.loggingIn() or Meteor.userId()
+       route = FlowRouter.current()
+       unless route.route.name is 'login'
+         Session.set 'redirectAfterLogin', route.path
+       FlowRouter.go ‘login’
+   ]
+   */
+ });
+
+
+ loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
+   name: 'acadSetup',
+   triggersEnter: [checkLoggedIn],
    action()  {
      mount(MainLayout, {content: <SetUpAcadDetail />});
    }
  });
 
- FlowRouter.route(pathToUserDashboard,  {
+ loggedinRouterGroup.route(pathToUserDashboard,  {
+   name: 'dashboard',
+   triggersEnter: [checkLoggedIn],
    action()  {
      mount(MainLayout, {content: <App />});
    }
  });
- 
