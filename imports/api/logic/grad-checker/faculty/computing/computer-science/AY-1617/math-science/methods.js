@@ -1,64 +1,104 @@
-// import fulfilment methods here
+import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
+import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
-export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules) {
-  let markedMathSciModules = mathSciModules;
-  let markedMathSciModulesModulesAndMCs = {
-    mathSciModulesModules: mathSciModules,
-    totalModuleMCs: 0
+export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules, requiredMCs) {
+  let markedMathSciModulesAndMCs = {
+    markedMathSciModules: mathSciModules,
+    numberOfMathSciModulesMarkedTrue: 0,
+    totalModuleMCs: 0,
+    moduleChecked: {},
+    requiredMCs: requiredMCs
   };
 
   let moduleFulfilment = {};
   let moduleFulfilmentMappingEquivalent = [];
   const keyNames = Object.keys(mathSciModules);
 
-  // loop through markedITProfessionalismModules
+  // loop through markedMathSciModules
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedMathSciModulesModulesAndMCs = markModules(markedMathSciModulesModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedMathSciModulesModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-    if (!markedMathSciModulesModulesAndMCs.mathSciModulesModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
+    if (!markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedMathSciModulesModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedMathSciModulesModulesAndMCs = markModules(markedMathSciModulesModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        break;
+        markedMathSciModulesAndMCs = markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        // early termination here
+        if (markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]]) {
+          break;
+        }
+        markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
-
+    if (markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue === keyNames.length) {
+      markedMathSciModulesAndMCs.requiredMCs = markedMathSciModulesAndMCs.totalModuleMCs;
+      break;
+    }
   }
   // return { moduleCode: boolean } object
-  return markedMathSciModulesModulesAndMCs;
+  return markedMathSciModulesAndMCs;
 }
 
-const markModules = function markModules(markedMathSciModulesModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
+const markModules = function markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
   for (var i = 0; i < studentSemesters.length; i++) {
     if (studentSemesters[i].moduleHashmap[equivalentModule]) {
       // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
-      markedMathSciModulesModulesAndMCs.mathSciModulesModules[originalModule] = true;
-      markedMathSciModulesModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
+      }
       break;
     }
   }
 
-  return markedMathSciModulesModulesAndMCs;
+  return markedMathSciModulesAndMCs;
 }
 
-const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathSciModulesModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
+const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
   if (Object.keys(exemptedModules).length !== 0)  {
     if (exemptedModules[equivalentModule])  {
-      markedMathSciModulesModulesAndMCs.mathSciModulesModules[originalModule] = true;
-      markedMathSciModulesModulesAndMCs.totalModuleMCs += searchByModuleCode(originalModule).moduleMC;
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
+      }
     }
   }
   if (Object.keys(waivedModules).length !== 0)  {
     if (waivedModules[equivalentModule]) {
-      markedMathSciModulesModulesAndMCs.mathSciModulesModules[originalModule] = true;
+      markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
+      markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
+      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
+        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+      }
     }
   }
-  return markedMathSciModulesModulesAndMCs;
+  return markedMathSciModulesAndMCs;
+}
+
+const markExceptions = function markExceptions(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  if (originalModule === 'Science Two' && markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+  }
+  return markedMathSciModulesAndMCs;
+}
+
+//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
+const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  if (originalModule === 'Science Two' && markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
+  }
+  return markedMathSciModulesAndMCs;
 }

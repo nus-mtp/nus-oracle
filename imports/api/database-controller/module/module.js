@@ -48,6 +48,7 @@ Schemas.Module = new SimpleSchema({
     type: String,
     optional: true,
   },
+
   modulePrerequisite: {
     type: String,
     optional: true,

@@ -9,7 +9,8 @@ export const populateModuleFixture = function populateModuleFixture() {
                        'ST2334', 'CM1121', 'CM1131', 'CM1417', 'LSM1301',
                        'LSM1302', 'PC1141', 'PC1142', 'PC1143', 'PC1144',
                        'PC1221', 'PC1221X', 'PC1221FC', 'PC1222', 'PC1222X',
-                       'PC1432', 'MA2213', 'MA2214', 'ST2131', 'ST2132'];
+                       'PC1432', 'MA2213', 'MA2214', 'ST2131', 'ST2132', 'CS3283',
+                       'CS3284', 'CS3216', 'CS3217', 'CS3281', 'CS3282', 'CS3201', 'CS3202'];
   const moduleNames = ['Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Programming Methodology',
                        'Programming Methodology', 'Data Structures and Algorithms I',
@@ -23,7 +24,14 @@ export const populateModuleFixture = function populateModuleFixture() {
                        'PHYSICS I', 'PHYSICS II', 'PHYSICS III', 'PHYSICS IV', 'FUNDAMENTALS OF PHYSICS I',
                        'FUNDAMENTALS OF PHYSICS I', 'FUNDAMENTALS OF PHYSICS I', 'FUNDAMENTALS OF PHYSICS II',
                        'FUNDAMENTALS OF PHYSICS II', 'PHYSICS IIE', 'NUMERICAL ANALYSIS I',
-                       'COMBINATORICS AND GRAPHS I', 'Probability', 'Mathematical Statistics'];
+                       'COMBINATORICS AND GRAPHS I', 'Probability', 'Mathematical Statistics',
+                       'Media Technology Project I', 'Media Technology Project II', 'Software Product Engineering for Digital Markets',
+                       'Software Engineering on Modern Application Platforms', 'Thematic Systems Project I', 'Thematic Systems Project II',
+                       'Software Engineering Project I', 'Software Engineering Project II'];
+
+  const intershipModules = ['CP3880', 'CP3200', 'CP3202', 'CP4101'];
+  const intershipNames = ['Advanced Technology Attachment Programme',
+                          'Internship', 'Internship II', 'BComp Dissertation'];
 
   for (var i = 0; i < moduleCodes.length; i++)  {
     const testModule = {
@@ -40,6 +48,52 @@ export const populateModuleFixture = function populateModuleFixture() {
   }
   return retrieveAllModule();
 };
+
+export const populateIndustrialAttachmentModuleFixture = function populateIndustrialAttachmentModuleFixture() {
+  const intershipModules = ['CP3880', 'CP3200', 'CP3202', 'CP4101'];
+  const intershipNames = ['Advanced Technology Attachment Programme',
+                          'Internship', 'Internship II', 'BComp Dissertation'];
+  const moduleMCs = [12, 6, 6, 12];
+
+  for (var i = 0; i < intershipModules.length; i++)  {
+    const testModule = {
+      moduleCode: intershipModules[i],
+      moduleName: intershipNames[i],
+      moduleDescription: 'Lorem ipsum',
+      modulePrerequisite: 'Lorem ipsum',
+      moduleCorequisite: 'Lorem ipsum',
+      modulePreclusion: 'Lorem ipsum',
+      moduleMC: moduleMCs[i],
+      termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
+    };
+    insertToModuleCollection(testModule);
+  }
+}
+
+export const populateULRModuleFixture = function populateULRModuleFixture()  {
+  const ULRModules = ['GEH1008', 'GEH1015', 'GEH1001',
+                      'GEQ1000', 'GEQ1917', 'GER1000',
+                      'GES1002', 'GES1003', 'GES1010',
+                      'GET1006', 'GET1014', 'GET1006'];
+  const ULRNames = ['GEH1', 'GEH2', 'GEH3',
+                    'GEQ1', 'GEQ2', 'GER1',
+                    'GES1', 'GES2', 'GES3',
+                    'GET1', 'GET2', 'GET3'];
+
+  for (var i = 0; i < ULRModules.length; i++)  {
+    const testModule = {
+      moduleCode: ULRModules[i],
+      moduleName: ULRNames[i],
+      moduleDescription: 'Lorem ipsum',
+      modulePrerequisite: 'Lorem ipsum',
+      moduleCorequisite: 'Lorem ipsum',
+      modulePreclusion: 'Lorem ipsum',
+      moduleMC: 4,
+      termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
+    };
+    insertToModuleCollection(testModule);
+  }
+}
 
 export const dePopulateModuleFixture = function dePopulateModuleFixture() {
   const allModules = retrieveAllModule();

@@ -8,17 +8,19 @@ import { populateModuleFulfilmentFixture,
 import { populateGraduationRequirementsFixture,
          dePopulateGraduationRequirementsFixture } from '../../../../../../../test-fixtures/graduationRequirements';
 
-import { getGradRequirementModules } from '../../../../../../../database-controller/graduation-requirement/methods';
+import { getGradRequirementModules,
+         getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
 import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
 
 import { findITProfessionalismModules } from './methods';
 
-describe('grad-checker-foundation', function()  {
+describe('grad-checker-ITProfessionalism', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];
 
   beforeEach(function (done)  {
+    this.timeout(10000);
     populateModuleFixture();
     plannerIDs = populatePlannerFixture();
     graduationIDs = populateGraduationRequirementsFixture();
@@ -40,12 +42,16 @@ describe('grad-checker-foundation', function()  {
     const requirementName = 'IT Professionalism';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[2]);
     const ITProfessionalismModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {});
+    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {}, requiredMCs);
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[0]], 'IS1103 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[1]], 'CS2101 fulfiled');
     assert.isFalse(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[2]], 'ES2660 not fulfiled');
+    assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');
+    assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[1]], 'CS2101 checked');
 
+    assert.equal(markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue, 2);
     assert.equal(markedITProfessionalismModulesAndMCs.totalModuleMCs, 8);
   })
 

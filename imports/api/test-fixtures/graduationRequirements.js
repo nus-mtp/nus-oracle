@@ -10,6 +10,7 @@ export const populateGraduationRequirementsFixture = function populateGraduation
   gradRequirementIDs.push(populateComSciMathScienceFixture());
   gradRequirementIDs.push(populateTeamProjectFixture());
   gradRequirementIDs.push(populateIndustrialExperienceFixture());
+  gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
 
   return gradRequirementIDs;
 };
@@ -46,7 +47,7 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
 
 const populateTeamProjectFixture = function populateTeamProjectFixure() {
   const requirementName = 'Computer Systems Team Project';
-  const modules = ['CS3201', 'CS3202'];
+  const modules = ['Project I', 'Project II'];
   const requirementMCs = 8;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);
@@ -54,8 +55,17 @@ const populateTeamProjectFixture = function populateTeamProjectFixure() {
 
 const populateIndustrialExperienceFixture = function populateIndustrialExperienceFixture()  {
   const requirementName = 'Industrial Experience Training';
-  const modules = ['CP3880'];
+  const modules = ['ATAP/SIP/Industry Course/NOC/FYP'];
   const requirementMCs = 12;
+
+  return createNewGradRequirement(requirementName, modules, requirementMCs);
+}
+
+const populateUniversityLevelRequirementFixture = function populateUniversityLevelRequirementFixture()  {
+  const requirementName = 'University Level Requirement';
+  const modules = ['Human Cultures', 'Asking Questions', 'Quantitative Reasoning',
+                   'Singapore Studies', 'Thinking and Expression'];
+  const requirementMCs = 20;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);
 }
