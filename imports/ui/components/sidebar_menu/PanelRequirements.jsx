@@ -1,6 +1,7 @@
 import React from 'react';
 import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
+import GradCheckerContainer from './GradCheckerContainer.js'
 import * as constants from '../common/Constants.js';
 
 export default class PanelRequirements extends React.Component {
@@ -10,47 +11,6 @@ export default class PanelRequirements extends React.Component {
 
   render() {
     const items = [
-      { name: 'Open me 1', children: [
-        { name: 'Open me 2', children: [
-          { name: 'Open me 3', children: [
-            { name: 'Open me 4', children: [
-              { name: 'Open me 5', children: [
-                { name: 'Open me 6', children: [
-                  { name: 'Open me 7', children: [
-                    { name: 'Open me 8', children: [
-                      { name: 'Open me 9', children: [
-                        { name: 'Open me 10', children: [
-                          { name: 'Open me 11', children: [
-                            { name: 'Open me 12', children: [
-                              { name: 'Open me 13', children: [
-                                { name: 'Open me 14', children: [
-                                  { name: 'Open me 15', children: [
-                                    { name: 'Open me 16', children: [
-                                      { name: 'Open me 17', children: [
-                                        { name: 'Open me 18', children: [
-                                          { name: 'Open me 19', children: [
-                                            { name: 'Open me 20', children: [
-                                              { name: 'Hi' }
-                                            ]}
-                                          ]}
-                                        ]}
-                                      ]}
-                                    ]}
-                                  ]}
-                                ]}
-                              ]}
-                            ]}
-                          ]}
-                        ]}
-                      ]}
-                    ]}
-                  ]}
-                ]}
-              ]}
-            ]}
-          ]}
-        ]}
-      ]},
       { name: 'University Level Requirements' },
       { name: 'Computer Science Foundation', children:[
         { name: 'CS1010' },
@@ -89,9 +49,12 @@ export default class PanelRequirements extends React.Component {
       { name: 'UNRESTRICTED ELECTIVES'}
     ];
 
+    console.log(this.props.activePlannerId);
+
     return (
       <nav className="side-menu-addl">
         <PanelHeader  title="CS Degree Requirements" icon="font-icon font-icon-page" />
+        <GradCheckerContainer activePlannerId={this.props.activePlannerId}/>
         <Nestable items={items} />
       </nav>
     );
