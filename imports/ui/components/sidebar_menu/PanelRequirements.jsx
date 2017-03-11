@@ -91,7 +91,7 @@ export default class PanelRequirements extends React.Component {
 
     return (
       <nav className="side-menu-addl">
-        <PanelHeader  title="Degree Requirements" icon="font-icon font-icon-page" />
+        <PanelHeader  title="CS Degree Requirements" icon="font-icon font-icon-page" />
         <Nestable items={items} />
       </nav>
     );
