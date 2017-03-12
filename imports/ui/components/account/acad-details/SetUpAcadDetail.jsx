@@ -118,7 +118,7 @@ export default class SetUpAcadDetail extends React.Component {
   }
 
   handleSubmit(event) {
-    if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {
+    if (!this.state.cohort || !this.state.prevEdu) {
       Bert.alert(errorMsgs.ERR_SETUP_INCOMPLETE, 'danger');
     } else {
       Meteor.loginWithPassword(this.state.username, this.state.password, (error) => {
@@ -171,7 +171,15 @@ export default class SetUpAcadDetail extends React.Component {
 
         <div className="col-md-6 blockui-element-container-default"
              style={{float: 'none', margin: '3.5em auto'}}>
-  				<div className="form-group"
+
+           <div className="form-group"
+                style={{color: '#ffffff', marginBottom: '2.5em'}}>
+             <h4 style={{marginBottom: '0.3em'}}>
+               <strong>Course Major: </strong>Computer Science
+             </h4>
+   				</div>
+
+          <div className="form-group"
                style={{color: '#ffffff', marginBottom: '2.5em'}}>
             <h5 style={{marginBottom: '0.3em'}}>
               <strong>Academic Cohort</strong>
@@ -180,17 +188,6 @@ export default class SetUpAcadDetail extends React.Component {
                     multi={false} clearable={false} searchable={false}
                     options={ACAD_COHORT} value={this.state.cohort}
                     onChange={this.handleAcadValueChange.bind(this)} />
-  				</div>
-
-  				<div className="form-group"
-               style={{color: '#ffffff', marginBottom: '2.5em'}}>
-            <h5 style={{marginBottom: '0.3em'}}>
-              <strong>Course Major</strong>
-            </h5>
-            <Select placeholder="Select"
-                    multi={false} clearable={false} searchable={false}
-                    options={COURSE_MAJORS} value={this.state.course}
-                    onChange={this.handleCourseValueChange.bind(this)} />
   				</div>
 
   				<div className="form-group"
