@@ -207,7 +207,7 @@ export default class SetUpAcadDetail extends React.Component {
           <div className="form-group"
                style={{color: '#ffffff', marginBottom: '2.5em'}}>
             <h5 style={{marginBottom: '0.3em'}}>
-              <strong>Re-enter Password:</strong>
+              <strong>Please re-enter your password to confirm your details again:</strong>
             </h5>
             <input placeholder="Password"
               type="password"
