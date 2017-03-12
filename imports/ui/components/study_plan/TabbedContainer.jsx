@@ -47,6 +47,7 @@ export default class TabbedContainer extends React.Component {
    *                         left onscreen, the indices start from 0.
    */
   handleClickTab(index) {
+    this.props.handleSelectTab(index);
     this.setState({tabSelectedIndex: index});
   }
 
@@ -321,6 +322,7 @@ TabbedContainer.propTypes = {
   // List of all the tab titles to render
   // (max: MAX_STUDY_PLAN_NAME_LENGTH chars, or "..." will be added to the back)
   tabTitleList: React.PropTypes.node,
+  handleSelectTab: React.PropTypes.func,
 
   // List of all plannerIDs to render
   plannerIDs: React.PropTypes.array

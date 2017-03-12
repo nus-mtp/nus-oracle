@@ -1,11 +1,19 @@
 @import '../common/Constants.less';
 
-.side-menu-addl{
-  z-index: 0;
-  width:  @sidebar-panel-width;
-  left: @sidebar-menu-width;
+// ==================================
+//  Study Plan Styles
+// ==================================
+
+.with-side-menu .page-content{
+  padding-left: @sidebar-width;
+  overflow-x: hidden;
 }
 
+// ==================================
+//  Navbar Styles
+// ==================================
+
+// Navbar Width
 .side-menu.side-menu-compact{
   width: @sidebar-menu-width;
   overflow-x: hidden;
@@ -14,6 +22,8 @@
     left: 0;
   }
 }
+
+// Hide nav button text on mouse out
 .side-menu.side-menu-compact .side-menu-list .lbl{
   display: none;
   position: fixed;
@@ -21,6 +31,7 @@
   opacity: 0;
 }
 
+// Show nav button text on hover
 .side-menu.side-menu-compact .side-menu-list .lbl.hovered{
   left: @sidebar-menu-width;
   padding: 1em;
@@ -34,9 +45,16 @@
   opacity: 1;
 }
 
-.with-side-menu .page-content{
-  padding-left: @sidebar-width;
-  overflow-x: hidden;
+// ==================================
+//  Panels Styles
+// ==================================
+
+// Panel width
+.side-menu-addl{
+  z-index: 10;
+  width:  @sidebar-panel-width;
+  left: @sidebar-menu-width;
+  padding: 1em;
 }
 
 .sidemenuIcon{
