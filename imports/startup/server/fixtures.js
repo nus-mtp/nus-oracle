@@ -1,7 +1,11 @@
-import { populateModuleFixture } from '../../api/test-fixtures/modules';
+import { populateModuleFixture,
+         populateIndustrialAttachmentModuleFixture,
+         populateULRModuleFixture,
+         populateFocusAreaModuleFixture } from '../../api/test-fixtures/modules';
 import { populatePlannerFixture } from '../../api/test-fixtures/planner';
-import { populateFocusAreaRequirementsFixture } from '../../api/test-fixtures/focusArea';
-import { populateModuleFulfilmentFixture } from '../../api/test-fixtures/moduleFulfilment';
+import { populateComputerGraphicsFocusAreaRequirementsFixture } from '../../api/test-fixtures/focusArea';
+import { populateModuleFulfilmentFixture,
+         populateULRModuleFulfilment } from '../../api/test-fixtures/moduleFulfilment';
 import { populateAY1617AcademicCohortFixture } from '../../api/test-fixtures/academicCohort';
 
 import { Modules } from '../../api/database-controller/module/module';
@@ -20,6 +24,9 @@ Meteor.startup(() => {
   //parseJSONFileAndStoreToDB();
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
+    populateIndustrialAttachmentModuleFixture();
+    populateULRModuleFixture();
+    populateFocusAreaModuleFixture();
   }
   if (AcademicCohort.find({}).count() === 0) {
     populateAY1617AcademicCohortFixture();
@@ -28,9 +35,10 @@ Meteor.startup(() => {
     populatePlannerFixture();
   }
   if (FocusArea.find({}).count() === 0) {
-    populateFocusAreaRequirementsFixture();
+    populateComputerGraphicsFocusAreaRequirementsFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();
+    populateULRModuleFulfilment();
   }
 });
