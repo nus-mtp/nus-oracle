@@ -18,12 +18,10 @@ export default class AcadYrRow extends React.Component {
   }
 
   handleMouseEnterDel() {
-    console.log("Mouse enter")
     this.setState({ isHover: true });
   }
 
   handleMouseLeaveDel() {
-    console.log("Mouse leave")
     this.setState({ isHover: false });
   }
 
@@ -41,8 +39,6 @@ export default class AcadYrRow extends React.Component {
   }
 
   render() {
-    console.log(this.getAcadYrHoverColor());
-
     return (
       <section className="activity-line-action"
                style={{backgroundColor: this.getAcadYrHoverColor()}}>
