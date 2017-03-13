@@ -22,14 +22,21 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Focus Area', 'Computer Systems Team Project', 'Industrial Experience Training', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
   const universityLevelTitle = 'University Level Requirement';
 
+  const graduationRequirements = {};
+
   const cohortInformation = getCohortByName(studentAcademicCohort);
+  if (!cohortInformation) {
+    return graduationRequirements;
+  }
+
   // retrieve foundation, IT-professionalism, Math-Sci and Breadth and Depth requirements here
   //const cohortInformation = getCohortByName(studentAcademicCohort);
   const cohortGradRequirementIDs = cohortInformation.cohortGradRequirementID;
   const allGradRequirements = getGradRequirementModules(cohortGradRequirementIDs);
-
+  if (!allGradRequirements) {
+    return graduationRequirements;
+  }
   // append objects of string:bool objects into a list of objects and return to UI
-  const graduationRequirements = {};
   for (var i=0; i<moduleRequirementTitle.length; i++) {
     graduationRequirements[moduleRequirementTitle[i]] = {};
   }
@@ -76,7 +83,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   graduationRequirements[moduleRequirementTitle[5]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, mathScienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
 
   // find unrestricted-electives requirement modules objects
-  
+
 
   return graduationRequirements;
 }

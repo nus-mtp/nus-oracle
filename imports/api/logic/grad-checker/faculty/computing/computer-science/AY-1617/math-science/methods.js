@@ -18,6 +18,9 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
