@@ -5,6 +5,13 @@ import React from 'react';
  * Check out the PropTypes below to see how to set your own styles
  */
 export default class Button extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHover: false
+    }
+  }
+
   /**
    * Handles button clicks on this button
    */
@@ -12,10 +19,23 @@ export default class Button extends React.Component {
     this.props.onButtonClick();
   }
 
+  /**
+   * Handles button hovers on this button
+   */
+  handleMouseEnter() {
+    this.props.onMouseEnter();
+  }
+
+  handleMouseLeave() {
+    this.props.onMouseLeave();
+  }
+
   render() {
     return (
       <button className={this.props.buttonClass} style={this.props.style}
-              onClick={this.handleClick.bind(this)}>
+              onClick={this.handleClick.bind(this)}
+              onMouseEnter={this.handleMouseEnter.bind(this)}
+              onMouseLeave={this.handleMouseLeave.bind(this)}>
         {this.props.buttonIcon}
         {this.props.buttonText}
       </button>
