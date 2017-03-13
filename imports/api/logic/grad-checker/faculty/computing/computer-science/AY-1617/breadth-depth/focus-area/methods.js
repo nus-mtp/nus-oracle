@@ -18,16 +18,16 @@ export const findFocusAreaPrimaryModules = function findFocusAreaPrimaryModules(
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedFocusAreaPrimaryModulesAndMCs = markExceptions(markedFocusAreaPrimaryModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedFocusAreaPrimaryModulesAndMCs = markExemptedWaivedExceptions(markedFocusAreaPrimaryModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    markedFocusAreaPrimaryModulesAndMCs = markPrimaryExceptions(markedFocusAreaPrimaryModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedFocusAreaPrimaryModulesAndMCs = markPrimaryExemptedWaivedExceptions(markedFocusAreaPrimaryModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
     if (!markedFocusAreaPrimaryModulesAndMCs.markedFocusAreaPrimaryModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedFocusAreaPrimaryModulesAndMCs = markExemptedWaivedExceptions(markedFocusAreaPrimaryModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedFocusAreaPrimaryModulesAndMCs = markExceptions(markedFocusAreaPrimaryModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFocusAreaPrimaryModulesAndMCs = markPrimaryExemptedWaivedExceptions(markedFocusAreaPrimaryModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFocusAreaPrimaryModulesAndMCs = markPrimaryExceptions(markedFocusAreaPrimaryModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     if (markedFocusAreaPrimaryModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue === keyNames.length) {
@@ -95,10 +95,18 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFocus
   return markedFocusAreaModulesAndMCs;
 }
 
-const markExceptions = function markExceptions(markedFocusAreaModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+const markPrimaryExceptions = function markExceptions(markedFocusAreaModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
 
 }
 
-const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+const markPrimaryExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+
+}
+
+const mark4KExceptions = function markExceptions(markedFocusAreaModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+
+}
+
+const mark4KExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
 
 }
