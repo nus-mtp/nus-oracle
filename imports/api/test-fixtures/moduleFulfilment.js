@@ -7,7 +7,7 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
   const ITProfessionalismModules = ['IS1103', 'CS2101', 'ES2660'];
   const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science Two', 'PC1221', 'Science One'];
   const teamProjectModules = ['Project I', 'Project II'];
-  const industrialExperienceModules = ['ATAP/SIP/Industry Course/NOC', 'CP4101'];
+  const industrialExperienceModules = ['ATAP/SIP/Industry Course/NOC/FYP'];
 
   const CS1010Equivalent = ['CS1010X', 'CS1010E', 'CS1010S', 'CS1101'];
   const CS1020Equivalent = ['CS2020'];
@@ -26,7 +26,7 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
   const teamProjectIEquivalent = ['CS3201', 'CS3216', 'CS3281', 'CS3283'];
   const teamProjectIIEquivalent = ['CS3202', 'CS3217', 'CS3282', 'CS3284'];
 
-  const internshipEquivalent = ['CP3880', 'CP3200', 'CP3202'];
+  const internshipEquivalent = ['CP3880', 'CP3200', 'CP3202', 'CP4101'];
 
   const academicYear = 'AY 2016/2017';
 
@@ -70,12 +70,30 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
   }
 
   for (var i=0; i<industrialExperienceModules.length; i++)  {
-    if (industrialExperienceModules[i] === 'ATAP/SIP/Industry Course/NOC') {
-      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, industrialExperienceModules[i], internshipEquivalent));
-    } else {
-      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, industrialExperienceModules[i], []));
-    }
+    moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, industrialExperienceModules[i], internshipEquivalent));
   }
+
+  return moduleFulfilmentIDs;
+}
+
+export const populateULRModuleFulfilment = function populateULRModuleFulfilment() {
+  const moduleFulfilmentIDs = [];
+
+  const ULRModules = ['Human Cultures', 'Asking Questions', 'Quantitative Reasoning',
+                   'Singapore Studies', 'Thinking and Expression'];
+  const GEHEquivalent = ['GEH1008', 'GEH1015', 'GEH1001'];
+  const GEQEquivalent = ['GEQ1000', 'GEQ1917'];
+  const GEREquivalent = ['GER1000'];
+  const GESEquivalent = ['GES1002', 'GES1003', 'GES1010'];
+  const GETEquivalent = ['GET1006', 'GET1014', 'GET1006'];
+
+  const academicYear = 'AY 2016/2017';
+
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[0], GEHEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[1], GEQEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[2], GEREquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[3], GESEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[4], GETEquivalent));
 
   return moduleFulfilmentIDs;
 }

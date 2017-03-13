@@ -24,9 +24,9 @@ export default class AcadYrSection extends React.Component {
 
           {listOfSemesters.map((semester, rank) => {
             // renders only an academic year which contains 2 semesters
-            if (rank % 2 == 0)  {
+            if (rank % 4 == 0)  {
               return <AcadYrRow key={rank}
-                                semesterIndex={[rank, rank + 1]}
+                                semesterIndex={[rank, rank + 1, rank + 2, rank + 3]}
                                 acadYr={semester.academicYear}
                                 plannerID={plannerID} />;
             }

@@ -22,11 +22,25 @@ export const createNewCohort = function createCohort(cohortName) {
 
 export const insertGradRequirementToCohort = function insertGradRequirementToCohort(cohortName, newGradRequirementID)  {
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
-  const gradRequirementArray = targetCohort.cohortFocusAreaID;
+  const gradRequirementArray = targetCohort.cohortGradRequirementID;
   const cohortID = targetCohort._id;
   // TO-DO : Check if the focus area exists
-  focusAreaArray.push(newFocusAreaID);
-  AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
+  gradRequirementArray.push(newGradRequirementID);
+  AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
+}
+
+export const removeGradRequirementFromCohort  = function(cohortName, gradRequirementIDToRemove ) {
+  const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
+  const gradRequirementArray = targetCohort.cohortGradRequirementID;
+  const cohortID = targetCohort._id
+
+  const IDindex = gradRequirementArray.indexOf(gradRequirementIDToRemove);
+
+  if (IDindex == -1){
+    return false;
+  }
+  gradRequirementArray.splice(IDindex,1);
+  AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
 }
 
 export const insertFocusAreaToCohort  = function(cohortName, newFocusAreaID ) {

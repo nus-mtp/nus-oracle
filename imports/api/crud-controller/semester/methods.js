@@ -15,6 +15,7 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
   }
 
   let previousAcademicYear = '';
+  let semLength = 0;
 
   const retrievedSemester = planner.semesters;
   if (retrievedSemester.length > 0) {
@@ -24,10 +25,11 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
     previousAcademicYear = getStudentAcademicCohort(getStudentID());
   }
 
-  const firstSemLength = insertNewSemesterInPlanner(previousAcademicYear, 1, plannerID);
-  const secondSemLength = insertNewSemesterInPlanner(previousAcademicYear, 2, plannerID);
+  for (var i=0; i<4; i++) {
+    semLength = insertNewSemesterInPlanner(previousAcademicYear, i+1, plannerID);
+  }
 
-  return secondSemLength;
+  return semLength;
 };
 
 /**
@@ -37,17 +39,17 @@ export const insertNewAcademicYearInPlanner = function insertNewAcademicYearInPl
  */
 export const deleteAcademicYearInPlanner = function deleteAcademicYearInPlanner(plannerID) {
   const planner = Planner.findOne(plannerID);
+  let semLength = 0;
 
-  const firstSemLength = deleteSemesterInPlanner(plannerID);
-
-  // checks if after first sem is the 0th index, and if so, no more deleting can be done so return -1
-  if (firstSemLength < 0)  {
-    return firstSemLength;
+  for (var i=0; i<4; i++) {
+    semLength = deleteSemesterInPlanner(plannerID);
+    // checks if after first sem is the 0th index, and if so, no more deleting can be done so return -1
+    if (semLength < 0)  {
+      return semLength;
+    }
   }
 
-  const secondSemLength = deleteSemesterInPlanner(plannerID);
-
-  return secondSemLength;
+  return semLength;
 }
 
 /**

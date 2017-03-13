@@ -18,8 +18,11 @@ import { findTeamProjectRequirementModules } from './breadth-depth/team-project/
 *
 */
 export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
+  const graduationMCs = 160;
   const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Focus Area', 'Computer Systems Team Project', 'Industrial Experience Training', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
+  const universityLevelTitle = 'University Level Requirement';
 
+  const cohortInformation = getCohortByName(studentAcademicCohort);
   // retrieve foundation, IT-professionalism, Math-Sci and Breadth and Depth requirements here
   //const cohortInformation = getCohortByName(studentAcademicCohort);
   const cohortGradRequirementIDs = cohortInformation.cohortGradRequirementID;
@@ -38,11 +41,14 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
    */
 
   // find university-level-requirements here
+  const ULRRequirements = allGradRequirements[universityLevelTitle].requirementModules;
+  const requiredMCsULR = allGradRequirements[universityLevelTitle].requirementMCs;
+  graduationRequirements[universityLevelTitle] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
 
   // find foundation requirement modules objects and call function from relevant academic year
-  const foundationDoc = allGradRequirements[moduleRequirementTitle[0]];
-  const requiredMCsFoundation = allGradRequirements[moduleRequirementTitle[0]];
-  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, foundationDoc, studentExemptedModules, studentWaivedModules, requiredMCsFoundation);
+  const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]].requirementModules;
+  const requiredMCsFoundation = allGradRequirements[moduleRequirementTitle[0]].requirementMCs;
+  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, foundationRequirements, studentExemptedModules, studentWaivedModules, requiredMCsFoundation);
 
   // find computer science breadth and depth requirement modules
     // find focus area primary requirement modules objects
@@ -50,25 +56,27 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     // find focus area 4000 requirement modules objects
 
     // find computer systems team project requirement modules
-    const teamProjectDoc = allGradRequirements[moduleRequirementTitle[2]];
-    const requiredMCsTeamProject = allGradRequirements[moduleRequirementTitle[2]];
-    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectDoc, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
+    const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]].requirementModules;
+    const requiredMCsTeamProject = allGradRequirements[moduleRequirementTitle[2]].requirementMCs;
+    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectRequirements, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
 
     // find Industrial experience training requirement modules
-    //const industrialExperienceDoc = allGradRequirements[moduleRequirementTitle[3]];
-
+    const industrialExperienceRequirements = allGradRequirements[moduleRequirementTitle[3]].requirementModules;
+    const requiredMCsIndustrialExperience = allGradRequirements[moduleRequirementTitle[3]].requirementMCs;
+    graduationRequirements[moduleRequirementTitle[3]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
 
   // find IT-professionalism requirement modules objects
-  const ITDoc = allGradRequirements[moduleRequirementTitle[4]];
-  const requiredMCsIT = allGradRequirements[moduleRequirementTitle[4]];
-  graduationRequirements[moduleRequirementTitle[4]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, ITDoc, studentExemptedModules, studentWaivedModules, requiredMCsIT);
+  const ITRequirements = allGradRequirements[moduleRequirementTitle[4]].requirementModules;
+  const requiredMCsIT = allGradRequirements[moduleRequirementTitle[4]].requirementMCs;
+  graduationRequirements[moduleRequirementTitle[4]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, ITRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIT);
 
   // find math-science requirement modules objects
-  const mathScienceDoc = allGradRequirements[moduleRequirementTitle[5]];
-  const requiredMCsMathSci = allGradRequirements[moduleRequirementTitle[5]];
-  graduationRequirements[moduleRequirementTitle[5]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, mathScienceDoc, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
+  const mathScienceRequirements = allGradRequirements[moduleRequirementTitle[5]].requirementModules;
+  const requiredMCsMathSci = allGradRequirements[moduleRequirementTitle[5]].requirementMCs;
+  graduationRequirements[moduleRequirementTitle[5]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, mathScienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
 
   // find unrestricted-electives requirement modules objects
+  
 
   return graduationRequirements;
 }

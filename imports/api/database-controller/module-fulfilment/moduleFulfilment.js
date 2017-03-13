@@ -39,3 +39,8 @@ const fulfilmentSchema = {
 
 
 ModuleFulfilments.attachSchema(fulfilmentSchema);
+if (Meteor.isServer) {
+  Meteor.publish('ModuleFulfilments', function taskPublication () {
+    return ModuleFulfilments.find({});
+  });
+}
