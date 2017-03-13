@@ -4,10 +4,14 @@ import { getGraduationRequirements } from '../../../api/gradchecker-controller/m
 import Nestable from '../common/Nestable.jsx';
 
 export default GradCheckerContainer = createContainer((props) => {
+  Meteor.subscribe('AcademicCohort');
+  Meteor.subscribe('FocusArea');
+  Meteor.subscribe('GraduationRequirements');
+  Meteor.subscribe('ModuleFulfilments');
   const listType = props.listType;
-  // var requirements = getGraduationRequirements(props.activePlannerId);
+  var requirements = getGraduationRequirements(props.activePlannerId);
 
-  // console.log(requirements);
+  console.log(requirements);
   const items = [
     // { name: 'Open me 1', children: [
     //   { name: 'Open me 2', children: [
