@@ -44,3 +44,8 @@ const gradRequirementSchema = {
 }
 
 GraduationRequirements.attachSchema(gradRequirementSchema);
+if (Meteor.isServer) {
+  Meteor.publish('GraduationRequirements', function taskPublication () {
+    return GraduationRequirements.find({});
+  });
+}

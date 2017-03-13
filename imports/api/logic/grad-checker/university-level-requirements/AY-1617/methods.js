@@ -18,6 +18,9 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
