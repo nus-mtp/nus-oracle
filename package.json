@@ -27,6 +27,7 @@
     "react-mounter": "^1.2.0",
     "react-onclickout": "^2.0.5",
     "react-select": "^1.0.0-rc.3",
+    "react-tooltip": "^3.2.7",
     "react-virtualized-select": "^2.3.0",
     "underscore": "^1.8.3"
   },

@@ -4,26 +4,13 @@ import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
 import { logout } from '../account/logout/LogoutAccount.jsx';
 
 export default class SidebarMenu extends React.Component {
-constructor(){
-  super();
-
-  this.state = {
-    tabSelectedIndex: 0
-  }
-}
-
-handleSwitchTab(index) {
-  this.setState({tabSelectedIndex: index});
-}
 
 render(){
   var tabTitleList = this.props.tabTitleList;
-  var activeMenuPanelIndex = this.state.tabSelectedIndex;
-  var menuPanels = this.props.menuPanelsList;
   var iconList = this.props.iconList;
+  var activeMenuPanelIndex = this.props.activeMenuPanelIndex;
 
   return(
-    <div>
     <nav className="side-menu side-menu-compact">
       <ul className="side-menu-list">
         {tabTitleList.map((buttonTitle, index) => {
@@ -32,21 +19,21 @@ render(){
                 <SidebarMenuButton key={index}
                      buttonTitle={buttonTitle}
                      onSwitchTab={logout}
-                     isActiveTab={(this.state.tabSelectedIndex === index)}
+                     isActiveTab={(activeMenuPanelIndex === index)}
                      buttonIcon={iconList[index]}/>
-            )
+            );
           }
           return (
               <SidebarMenuButton key={index}
                    buttonTitle={buttonTitle}
-                   onSwitchTab={this.handleSwitchTab.bind(this, index)}
-                   isActiveTab={(this.state.tabSelectedIndex === index)}
-                   buttonIcon={iconList[index]}/>)
+                   onSwitchTab={this.props.onSwitchTab}
+                   index={index}
+                   isActiveTab={(activeMenuPanelIndex === index)}
+                   buttonIcon={iconList[index]}/>
+          );
         })}
       </ul>
     </nav>
-    {menuPanels[activeMenuPanelIndex]}
-  </div>
   );
 }
 }
@@ -67,11 +54,16 @@ class SidebarMenuButton extends SidebarMenu {
    this.setState({ onMouseOver: false });
  }
 
+ handeOnClick(event){
+   this.props.onSwitchTab(this.props.index);
+ }
+
   render() {
     var buttonIcon = this.props.buttonIcon;
+    var index = this.props.index;
     return (
         <li className={'brown' + (this.props.isActiveTab ? ' opened' : '')}
-            onClick={this.props.onSwitchTab}
+            onClick={this.handeOnClick.bind(this)}
             onMouseEnter={this.handleOnMouseEnter.bind(this)}
             onMouseLeave={this.handleOnMouseLeave.bind(this)}
             // calls function props onSwitchTab passed from parent componenet
@@ -89,12 +81,14 @@ class SidebarMenuButton extends SidebarMenu {
 
 SidebarMenu.propTypes = {
   tabTitleList: React.PropTypes.node,
-  menuPanelsList: React.PropTypes.node,
+  activeMenuPanelIndex: React.PropTypes.number,
+  onSwitchTab: React.PropTypes.func,
   iconList: React.PropTypes.node
 }
 
 SidebarMenuButton.propTypes = {
   isActiveTab: React.PropTypes.bool,
+  index: React.PropTypes.number,
   onSwitchTab: React.PropTypes.func,
   buttonTitle: React.PropTypes.string,
   buttonIcon: React.PropTypes.node

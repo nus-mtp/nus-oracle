@@ -63,7 +63,7 @@ class OrderedList extends Nestable{
             {
               items.map((item, index) => {
               if(item.children == null){
-                //item is a single entry
+                //item is a single entry 
                 return <Item itemName={item.name} key={index}/>;
               }
               else {

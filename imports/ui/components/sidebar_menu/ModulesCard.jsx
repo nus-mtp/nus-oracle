@@ -2,6 +2,7 @@ import _ from 'underscore';
 import React from 'react';
 import Module from '../study_plan/Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
+import IconButton from '../common/IconButton.jsx'
 
 import { addStudentExemptedModule } from '../../../api/database-controller/student/methods.js';
 import { deleteStudentExemptedModule } from '../../../api/database-controller/student/methods.js';
@@ -87,14 +88,21 @@ export default class ModulesCard extends React.Component {
 
   render() {
     const modules = this.props.modules;
-
     return (
-      <div className="" style={{padding: 1+"em"}}>
+      <div className="">
   			<article className="card-typical">
-          <div className="card-typical-section">
+          <div className="card-typical-section" data-tip data-for={this.props.listType}>
             <div className="card-typical-linked">
               {this.props.listType + " modules"}
             </div>
+            <div>
+              <IconButton style={{float: "right"}}
+                          icon={"fa fa-info-circle"}
+                          displayColor= {"#A0A0A0"}
+                          onMouseOverColor= {"#505050"}
+                          onButtonClick={this.props.handleInfoClick}/>
+            </div>
+            { this.props.tooltip }
           </div>
   				<div className="card-typical-section card-typical-content">
             {/* Renders all modules from the user's study plan */}
