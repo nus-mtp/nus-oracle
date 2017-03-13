@@ -11,7 +11,7 @@ export default GradCheckerContainer = createContainer((props) => {
   const listType = props.listType;
   var requirements = getGraduationRequirements(props.activePlannerId);
 
-  console.log(requirements);
+  console.log(JSON.stringify(requirements));
   const items = [
     // { name: 'Open me 1', children: [
     //   { name: 'Open me 2', children: [
