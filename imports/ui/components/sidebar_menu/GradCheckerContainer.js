@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { getGraduationRequirements } from '../../../api/gradchecker-controller/methods.js';
+import { getAllSemestersInPlanner } from '../../../api/crud-controller/semester/methods';
 import Nestable from '../common/Nestable.jsx';
 
 export default GradCheckerContainer = createContainer((props) => {
@@ -8,10 +9,12 @@ export default GradCheckerContainer = createContainer((props) => {
   Meteor.subscribe('FocusArea');
   Meteor.subscribe('GraduationRequirements');
   Meteor.subscribe('ModuleFulfilments');
-  const listType = props.listType;
-  var requirements = getGraduationRequirements(props.activePlannerId);
 
-  console.log(JSON.stringify(requirements));
+  const semesters = getAllSemestersInPlanner(props.activePlannerId);
+  const requirements = getGraduationRequirements(semesters);
+  //console.log(JSON.stringify(requirements));
+  const listType = props.listType;
+
   const items = [
     // { name: 'Open me 1', children: [
     //   { name: 'Open me 2', children: [
