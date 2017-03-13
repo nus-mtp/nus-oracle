@@ -23,11 +23,15 @@ export default class Button extends React.Component {
    * Handles button hovers on this button
    */
   handleMouseEnter() {
-    this.props.onMouseEnter();
+    if (this.props.onMouseEnter) {
+      this.props.onMouseEnter();
+    }
   }
 
   handleMouseLeave() {
-    this.props.onMouseLeave();
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave();
+    }
   }
 
   render() {
