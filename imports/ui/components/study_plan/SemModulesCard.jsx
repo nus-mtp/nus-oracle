@@ -46,6 +46,14 @@ export default class SemModulesCard extends React.Component {
     let fetchedListOfModulesFromDB = [];
     if (input.length !== 0) { // Only fetch if user typed in something
       // Get suggestions from modules DB which best matches input
+      /* Returns module object in the following format:
+      {
+        moduleCodeAndName: moduleCode + " " + moduleName,
+        moduleCode: moduleCode,
+        moduleName: moduleName,
+        moduleID: _id,
+      }
+       */
       fetchedListOfModulesFromDB = sendQuery(input);
     }
 
@@ -68,6 +76,34 @@ export default class SemModulesCard extends React.Component {
     if (moduleObj) {
       this.handleAddModule(moduleObj.moduleCode);
     }
+  }
+
+  renderSuggestion({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray }) {
+    let suggStyle = {position: "relative",
+                     alignItems: "center",
+                     padding: "0.3rem 0.6rem 0.3rem 0.6rem",
+                     backgroundColor: "#ffc588",
+                     color: "#fd6e12"};
+
+    // For the suggestion that is now being hovered over
+    if (option === focusedOption) {
+      suggStyle.backgroundColor = "#ff8326";
+      suggStyle.color = "#ffffff";
+    }
+
+    return (
+      <div key={key}
+           style={suggStyle}
+           onClick={() => selectValue(option)}
+           onMouseOver={() => focusOption(option)}>
+        <div>
+          <strong>{option.moduleCode}</strong>
+        </div>
+        <div>
+          <p>{option.moduleName}</p>
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -94,7 +130,12 @@ export default class SemModulesCard extends React.Component {
 
               {/* Async Search bar to retrieve thousands of records  */}
               <VirtualizedSelect searchable async clearable={false}
-                labelKey="moduleCode" placeholder="Add a module..."
+                labelKey="moduleCodeAndName"
+                loadingPlaceholder="Loading..."
+                noResultsText="Module not found"
+                placeholder="Add a module..."
+                // optionHeight={68}
+                // optionRenderer={this.renderSuggestion}
                 loadOptions={this.getModulesListFromDB.bind(this)}
                 onChange={this.handleSelectModuleCode.bind(this)} />
 

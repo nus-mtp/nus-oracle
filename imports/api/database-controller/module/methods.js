@@ -55,6 +55,7 @@ export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndName
 
   for (var i=0; i<searchResult.length; i++) {
     const returnPackage = {
+      moduleCodeAndName: searchResult[i].moduleCode + " " + searchResult[i].moduleName,
       moduleCode: searchResult[i].moduleCode,
       moduleName: searchResult[i].moduleName,
       moduleID: searchResult[i]._id,
