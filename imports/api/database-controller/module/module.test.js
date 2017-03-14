@@ -6,7 +6,7 @@ import {
   insertToModuleCollection,
   isEmptyModuleCollection,
   isExistModuleCollection,
-  searchByModuleCodeRegex,
+  searchByModuleCodeAndNameRegex,
   retrieveAllModule,
 } from './methods';
 if(Meteor.isServer){

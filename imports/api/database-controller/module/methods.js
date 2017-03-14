@@ -40,16 +40,23 @@ export const searchByModuleCode = function retrieveMod(modCode) {
   return returnPackage;
 };
 
-// This method finds all modules with matching substring
-export const searchByModuleCodeRegex = function searchByModuleCodeRegex(string) {
+// This method finds all module codes with matching substring
+export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndNameRegex(string) {
   // search by module code
-  const searchResult = Modules.find({ moduleCode: { $regex: string, $options: 'i' } }).fetch();
+  const searchResult =
+    Modules.find({$or: [
+                        { moduleCode: { $regex: string, $options: 'i' } },
+                        { moduleName: { $regex: string, $options: 'i' } }
+                       ]
+                 }).fetch();
+
   const resultArray = [];
   // wrap into module name and id
 
   for (var i=0; i<searchResult.length; i++) {
     const returnPackage = {
       moduleCode: searchResult[i].moduleCode,
+      moduleName: searchResult[i].moduleName,
       moduleID: searchResult[i]._id,
     };
     resultArray.push(returnPackage);

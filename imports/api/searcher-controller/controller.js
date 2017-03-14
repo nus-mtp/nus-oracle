@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { searchByModuleCodeRegex,
+import { searchByModuleCodeAndNameRegex,
          searchByModuleCode } from '../database-controller/module/methods';
 
 export const sendQuery = function sendQuery(userInput) {
@@ -9,10 +9,8 @@ export const sendQuery = function sendQuery(userInput) {
 
   let modules = [];
 
-  // search module by code
-  modules = modules.concat(searchByModuleCodeRegex(userInput));
-
-  // search module by name
+  // search module by code AND name
+  modules = modules.concat(searchByModuleCodeAndNameRegex(userInput));
 
   return modules;
 };
