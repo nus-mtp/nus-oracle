@@ -28,13 +28,15 @@ export default class AcadYrSection extends React.Component {
             }
           })}
 
-          <div style={{position: "relative", left: "30%", marginTop: '5em'}}>
-            <Button buttonClass="btn btn-inline btn-primary"
-                    style={{position: "relative"}}
-                    buttonText="Add new Acad Year"
+          <div style={{position: "relative", left: "50%", margin: "3em 0em 1em 0em"}}>
+            <Button buttonClass="btn btn-rounded btn-secondary-outline"
+                    style={{position: "relative",
+                            padding: "0.4em 0.5em 0.5em 0.6em",
+                            height: "2.5em"}}
+                    buttonText=""
                     buttonIcon={
                       <i className="glyphicon glyphicon-plus"
-                         style={{marginTop: "0.15em", marginRight: "0.5em"}}></i>}
+                         style={{fontSize: "1.5em", lineHeight: "1em"}}></i>}
                     onButtonClick={this.handleAddAYButtonClick.bind(this)} />
           </div>
 
