@@ -46,6 +46,14 @@ export default class SemModulesCard extends React.Component {
     let fetchedListOfModulesFromDB = [];
     if (input.length !== 0) { // Only fetch if user typed in something
       // Get suggestions from modules DB which best matches input
+      /* Returns module object in the following format:
+      {
+        moduleCodeAndName: moduleCode + " " + moduleName,
+        moduleCode: moduleCode,
+        moduleName: moduleName,
+        moduleID: _id,
+      }
+       */
       fetchedListOfModulesFromDB = sendQuery(input);
     }
 
@@ -94,7 +102,11 @@ export default class SemModulesCard extends React.Component {
 
               {/* Async Search bar to retrieve thousands of records  */}
               <VirtualizedSelect searchable async clearable={false}
-                labelKey="moduleCode" placeholder="Add a module..."
+                labelKey="moduleCodeAndName"
+                loadingPlaceholder="Loading..."
+                noResultsText="Module not found"
+                placeholder="Add a module..."
+                optionHeight={45}
                 loadOptions={this.getModulesListFromDB.bind(this)}
                 onChange={this.handleSelectModuleCode.bind(this)} />
 
