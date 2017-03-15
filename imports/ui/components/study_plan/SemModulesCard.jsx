@@ -78,34 +78,6 @@ export default class SemModulesCard extends React.Component {
     }
   }
 
-  renderSuggestion({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray }) {
-    let suggStyle = {position: "relative",
-                     alignItems: "center",
-                     padding: "0.3rem 0.6rem 0.3rem 0.6rem",
-                     backgroundColor: "#ffc588",
-                     color: "#fd6e12"};
-
-    // For the suggestion that is now being hovered over
-    if (option === focusedOption) {
-      suggStyle.backgroundColor = "#ff8326";
-      suggStyle.color = "#ffffff";
-    }
-
-    return (
-      <div key={key}
-           style={suggStyle}
-           onClick={() => selectValue(option)}
-           onMouseOver={() => focusOption(option)}>
-        <div>
-          <strong>{option.moduleCode}</strong>
-        </div>
-        <div>
-          <p>{option.moduleName}</p>
-        </div>
-      </div>
-    )
-  }
-
   render() {
     const modules = this.props.modules;
 
@@ -134,8 +106,7 @@ export default class SemModulesCard extends React.Component {
                 loadingPlaceholder="Loading..."
                 noResultsText="Module not found"
                 placeholder="Add a module..."
-                // optionHeight={68}
-                // optionRenderer={this.renderSuggestion}
+                optionHeight={45}
                 loadOptions={this.getModulesListFromDB.bind(this)}
                 onChange={this.handleSelectModuleCode.bind(this)} />
 
