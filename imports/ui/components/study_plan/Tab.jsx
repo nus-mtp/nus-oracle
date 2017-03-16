@@ -135,7 +135,7 @@ export default class Tab extends React.Component {
     return (
       <div className="card-typical"
            onBlur={this.handleOnBlurDropdown.bind(this)}
-           style={{position: 'fixed', zIndex: '300', top: '3.3em',
+           style={{position: 'fixed', zIndex: '300', top: '2.7em',
                    width: '7.75em', textAlign: 'left',
                    WebkitBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
                    MozBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
@@ -212,8 +212,7 @@ export default class Tab extends React.Component {
               {this.props.tabTitle}
 
               {/* Render dropdown caret */}
-              {this.props.enabledMouseOver && this.state.onMouseOver &&
-               !this.props.isEditingPlanName ?
+              {!this.props.isEditingPlanName ?
                 this.renderDropdownCaret() : null
               }
 
