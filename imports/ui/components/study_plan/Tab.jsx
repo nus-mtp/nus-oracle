@@ -47,7 +47,10 @@ export default class Tab extends React.Component {
   }
 
   handleOnBlurDropdown(event) {
-    this.setState({ onClickDropdown: false });
+    this.setState({
+      onMouseOver: false,
+      onClickDropdown: false
+    });
   }
 
   /**
