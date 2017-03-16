@@ -26,11 +26,6 @@ export default class AcadYrRow extends React.Component {
     this.setState({ isHover: false });
   }
 
-  isLastAcadYr() {
-    // The index here is 0-indexed, hence we must add 1 here
-    return this.props.acadYrIndex + 1 === this.props.numOfAcadYrs;
-  }
-
   getAcadYrHoverColor() {
     if (this.state.isHover) {
       return 'rgba(254, 64, 64, 0.17)'
@@ -47,7 +42,7 @@ export default class AcadYrRow extends React.Component {
 
           {this.props.acadYr}
 
-          {this.isLastAcadYr() ?
+          {this.props.isLastAcadYr ?
           <Button buttonClass="btn btn-inline btn-danger-outline"
                   style={{position: "relative",
                           fontSize: "0.75em",

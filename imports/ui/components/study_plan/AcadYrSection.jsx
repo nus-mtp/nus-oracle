@@ -9,6 +9,11 @@ export default class AcadYrSection extends React.Component {
     insertNewAcademicYearInPlanner(this.props.plannerID);
   }
 
+  isLastAcadYr(acadYrIndex, numOfAcadYrs) {
+    // acadYrIndex is 0-indexed, hence we must add 1
+    return acadYrIndex + 1 === numOfAcadYrs;
+  }
+
   render() {
     const plannerID = this.props.plannerID;
     const listOfSemesters = this.props.listOfSemesters;
@@ -18,13 +23,16 @@ export default class AcadYrSection extends React.Component {
         <div className="activity-line-action-list">
 
           {listOfSemesters.map((semester, rank) => {
-            // renders an  academic year which contains 2 semesters
-            if (rank % 4 == 0)  {
-              return <AcadYrRow key={rank} acadYrIndex={rank/2}
-                                numOfAcadYrs={listOfSemesters.length/2}
-                                semesterIndex={[rank, rank + 1, rank + 2, rank + 3]}
-                                acadYr={semester.academicYear}
-                                plannerID={plannerID} />;
+            // 0-indexed acad year (0: first acad year, 1: second acad year...)
+            let acadYrIndex = rank % 4; // '4' since each acad year has 4 sems
+
+            if (acadYrIndex === 0) {
+              return <AcadYrRow key={rank}
+                        isLastAcadYr={
+                          this.isLastAcadYr(rank / 4, listOfSemesters.length / 4)}
+                        semesterIndex={[rank, rank + 1, rank + 2, rank + 3]}
+                        acadYr={semester.academicYear}
+                        plannerID={plannerID} />;
             }
           })}
 
