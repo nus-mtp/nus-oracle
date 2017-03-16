@@ -167,10 +167,15 @@ export default class Tab extends React.Component {
                 title={"Are you sure you want to delete this study plan, '" +
                        this.props.tabTitle + "'?"}
                 content={
-                  <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
-                          buttonText="Yes"
-                          onButtonClick={this.handleConfirmDelete.bind(this)}
-                  />}
+                  <div>
+                    <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+                            buttonText="Yes"
+                            onButtonClick={this.handleConfirmDelete.bind(this)} />
+                    <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
+                            buttonText="No"
+                            onButtonClick={this.resetDeleteState.bind(this)} />
+                  </div>
+                }
               /> }
           /> : null}
       </div>
