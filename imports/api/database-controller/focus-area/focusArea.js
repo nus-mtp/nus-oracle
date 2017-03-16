@@ -49,3 +49,8 @@ const focusAreaSchema = {
 };
 
 FocusArea.attachSchema(focusAreaSchema);
+if (Meteor.isServer) {
+  Meteor.publish('FocusArea', function taskPublication () {
+    return FocusArea.find({});
+  });
+}

@@ -23,6 +23,7 @@ describe('search-controller', function() {
     it('full module code search query returns correct modules', function() {
       const code = 'CS1010';
       const moduleArrayResults = sendQuery(code);
+
       assert.equal(moduleArrayResults.length, 5);
     });
 
@@ -37,7 +38,7 @@ describe('search-controller', function() {
       const code = 'cs';
       const moduleArrayResults = sendQuery(code);
 
-      assert.equal(moduleArrayResults.length, 18);
+      assert.equal(moduleArrayResults.length, 32);
     });
 
     it ('no matching string returns no module', function()  {
@@ -45,6 +46,13 @@ describe('search-controller', function() {
       const moduleArrayResults = sendQuery(code);
 
       assert.equal(moduleArrayResults.length, 0);
+    });
+
+    it ('module name search query returns correct modules', function() {
+      const name = 'programming methodology';
+      const moduleArrayResults = sendQuery(name);
+
+      assert.equal(moduleArrayResults.length, 5);
     });
   });
 });
