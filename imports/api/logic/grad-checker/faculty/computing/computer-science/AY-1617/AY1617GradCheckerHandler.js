@@ -59,7 +59,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   const ULRRequirements = allGradRequirements[universityLevelTitle];
   const requiredMCsULR = allGraduationRequirementMCs[universityLevelTitle];
   graduationRequirements[universityLevelTitle] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
-  // convert ULR requirements into Wenhan's format
 
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]];
