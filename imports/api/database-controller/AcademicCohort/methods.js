@@ -24,7 +24,7 @@ export const insertGradRequirementToCohort = function insertGradRequirementToCoh
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const gradRequirementArray = targetCohort.cohortGradRequirementID;
   const cohortID = targetCohort._id;
-  // TO-DO : Check if the focus area exists
+
   gradRequirementArray.push(newGradRequirementID);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
 }
@@ -43,11 +43,25 @@ export const removeGradRequirementFromCohort  = function(cohortName, gradRequire
   AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
 }
 
+export const updateCohortGradRequirementIDs = function(cohortName, newgradRequirementArray ) {
+  const targetCohort = AcademicCohort.find({cohortName: cohortName});
+  console.log("matchingDocument: " + targetCohort.count());
+  if (targetCohort.count() == 0){
+    console.log("no graduation requirement with name " + cohortName);
+    return;
+  }
+  const targetCohortDocument = targetCohort.fetch()[0];
+  const cohortID = targetCohortDocument._id;
+  console.log("this cohort to be updated: " + targetCohortDocument["cohortName"]);
+  AcademicCohort.update({_id: cohortID},{$set:{cohortGradRequirementID: newgradRequirementArray}});
+}
+
 export const insertFocusAreaToCohort  = function(cohortName, newFocusAreaID ) {
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const focusAreaArray = targetCohort.cohortFocusAreaID;
   const cohortID = targetCohort._id;
-  // TO-DO : Check if the focus area exists
+  console.log(targetCohort);
+  // TO-DO: Check if focus area array exists
   focusAreaArray.push(newFocusAreaID);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }
@@ -72,7 +86,8 @@ export const getAllAcadCohort = function getAllCohort() {
 
 // obtain specific cohort document by name
 export const getCohortByName = function getCohortByName(cohortName) {
-  return AcademicCohort.findOne({cohortName: cohortName});
+  let result =  AcademicCohort.findOne({cohortName: cohortName});
+  return result;
 }
 
 // obtain cohort by ID

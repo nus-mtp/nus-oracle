@@ -95,3 +95,10 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
   return graduationRequirements;
 }
+
+const UIFormatConversion = function UIFormatConversion(unformattedRequirements) {
+  switch(unformattedRequirements.name)  {
+    case '':
+    break;
+  }
+}

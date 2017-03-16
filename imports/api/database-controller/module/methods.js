@@ -2,6 +2,7 @@ import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
 // The following component handles the available method of interaction with the Module Collections
+// TO-DO: remove
 export const createNewModuleDocument = function createModuleDocument() {
 }
 
@@ -39,6 +40,17 @@ export const searchByModuleCode = function retrieveMod(modCode) {
 
   return returnPackage;
 };
+
+// module is available in database
+export const findModuleAvailability = function searchForModule( modCode ) {
+  const modResult = Modules.find({ moduleCode: modCode });
+
+  if(modResult.count() == 0){
+    return false;
+  }
+
+  return true;
+}
 
 // This method finds all module codes with matching substring
 export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndNameRegex(string) {
@@ -79,7 +91,7 @@ export const removeAllModule = function removeAllModule() {
   return Modules.remove({});
 };
 
-// insert one new module collection to the Module Database
+// insert one new module document to the Module Database
 export const insertToModuleCollection = function insertToModuleCollection(object) {
   Modules.insert(object);
   // TO DO:return success/ failure message

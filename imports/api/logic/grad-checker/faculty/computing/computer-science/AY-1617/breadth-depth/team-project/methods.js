@@ -31,10 +31,6 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedTeamProjectModulesAndMCs = markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        // early termination here
-        if (markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]]) {
-          break;
-        }
         markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }

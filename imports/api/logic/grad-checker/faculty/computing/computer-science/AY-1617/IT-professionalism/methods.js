@@ -33,9 +33,6 @@ export const findITProfessionalismModules = function findITProfessionalismModule
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        if (markedITProfessionalismModulesAndMCs[keyNames[i]])  {
-          break;
-        }
         markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
