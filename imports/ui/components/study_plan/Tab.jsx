@@ -116,8 +116,8 @@ export default class Tab extends React.Component {
     return (
       <IconButton
         icon="fa fa-sort-down"
-        style={{position: 'absolute', top:'0.3em', right: '0.5em',
-                paddingTop: '0.15em', opacity: '0.8'}}
+        style={{position: 'absolute', paddingTop: '0.15em', opacity: '0.8',
+                top:'0.3em', right: '0.5em', height: '1.5em', width: '1em'}}
         displayColor="#505050" onMouseOverColor="#ff9100"
         onButtonClick={this.handleToggleDropdown.bind(this)}
       />
