@@ -96,12 +96,12 @@ export const populateFocusAreaModuleFixture = function populateFocusAreaModuleFi
                           'CS3240', 'CS3249', 'CS3343', 'CS4243', 'CS4249', 'CS4340',
                           'CS4344', 'CS4345', 'CS5237', 'CS5240', 'CS5343', 'CS4231',
                           'CS4232', 'CS4234', 'CS5230', 'CS5234', 'CS5236', 'CS5237',
-                          'CS5238', 'CS5330', 'CS4244', 'CS4246', 'CS4247', 'CS4350',];
+                          'CS5238', 'CS5330', 'CS4244', 'CS4246', 'CS4247', 'CS4350'];
   const focusAreaNames = ['Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
                           'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
                           'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
                           'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
-                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',];
+                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum'];
   for (var i = 0; i < focusAreaModules.length; i++)  {
     const testModule = {
       moduleCode: focusAreaModules[i],

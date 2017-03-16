@@ -21,6 +21,7 @@ export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, 
   primaryToBeStored = createModuleListObject(listOfPrimary);
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
+
   const newFocusAreaObject = {
     name : name,
     academicYearList: listOfAcadYear,
@@ -30,9 +31,14 @@ export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, 
     requirementMCs: requiredMCs
   }
 
-  FocusArea.insert(newFocusAreaObject);
+  return FocusArea.insert(newFocusAreaObject);
 }
 
+export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
+  for (var i=0; i < focusAreaIDs.length; i++) {
+    FocusArea.remove(focusAreaIDs[i]);
+  }
+}
 /** This method handles the checking of the module validity.
   * For a module to be valid, it needs to be inside the module database
   * @param {String} moduleCode: Code of the module that is going to be included in the focus area document
@@ -73,27 +79,39 @@ export const createModuleListObject = function(moduleList) {
 }
 
 export const getFocusAreaPrimaryRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
+  const focusAreaPrimaryRequirements = {};
+  let tempFocusAreaPrimaryDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaPrimaryDoc)  {
+      focusAreaPrimaryRequirements[tempFocusAreaPrimaryDoc.name] = tempFocusAreaPrimaryDoc.moduleListPrimary;
+    }
+  }
+  return focusAreaPrimaryRequirements;
+}
+
+export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
   const focusArea4KRequirements = {};
   let tempFocusArea4KDoc = {};
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
     tempFocusArea4KDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
-    if (tempGradDoc)  {
-      focusArea4KRequirements[tempFocusArea4KDoc.name] = tempFocusArea4KDoc.moduleListPrimary;
+    if (tempFocusArea4KDoc)  {
+      focusArea4KRequirements[tempFocusArea4KDoc.name] = tempFocusArea4KDoc.moduleListFourThousands;
     }
   }
   return focusArea4KRequirements;
 }
 
-export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
-  const focusAreaPrimaryRequirements = {};
-  let tempFocusAreaPrimaryDoc = {};
+export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimaryRequirement(getFocusRequirementIDArray) {
+  const focusAreaNonPrimaryRequirements = {};
+  let tempFocusAreaNonPrimaryDoc = {};
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
-    tempFocusAreaPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
-    if (tempGradDoc)  {
-      focusAreaPrimaryRequirements[tempFocusAreaPrimaryDoc.name] = tempFocusAreaPrimaryDoc.moduleListFourThousands;
+    tempFocusAreaNonPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaNonPrimaryDoc)  {
+      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListNonPrimary;
     }
   }
-  return focusAreaPrimaryRequirements;
+  return focusAreaNonPrimaryRequirements;
 }
 
 export const getGradRequirementMCs = function getGradRequirementMCs(getFocusRequirementIDArray) {
@@ -102,7 +120,7 @@ export const getGradRequirementMCs = function getGradRequirementMCs(getFocusRequ
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
     tempFocusAreaDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
     if (tempFocusAreaDoc)  {
-      gradMCs[tempGradDoc.name] = tempGradDoc.requirementMCs;
+      gradMCs[tempFocusAreaDoc.name] = tempFocusAreaDoc.requirementMCs;
     }
   }
   return gradMCs;

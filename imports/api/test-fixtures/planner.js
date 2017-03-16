@@ -87,6 +87,25 @@ export const populateULRFixture = function populateULRFixture() {
   return plannerIDs;
 }
 
+export const populateFocusAreaPlannerFixture = function populateFocusAreaPlannerFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const modulesOne = ['CS3241', 'CS3247', 'CS4247', 'CS4246', 'CS5240', 'CS4340'];
+  const plannerNames = ['testPlanner'];
+  const focusAreas = [['Com Graphics']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2016/2017', 'AY 2016/2017'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, modulesOne, plannerIDs[0]);
+
+  return plannerIDs;
+}
+
 export const dePopulatePlannerFixture = function dePopulatePlannerFixture(plannerIDs) {
   for (var i = 0; i<plannerIDs.length; i++)  {
     removePlanner(plannerIDs[i]);
