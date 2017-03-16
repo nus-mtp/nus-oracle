@@ -1,8 +1,6 @@
 import React from 'react';
-import SemModulesCardContainer from './SemModulesCardContainer.js';
-import SemSpecialModulesCardContainer from './SemSpecialModulesCardContainer.js';
-import SemSpecialModulesCard from './SemSpecialModulesCard.jsx';
 import Button from '../common/Button.jsx';
+import SemModulesCardContainer from './SemModulesCardContainer.js';
 
 import { deleteAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
 
@@ -60,11 +58,15 @@ export default class AcadYrRow extends React.Component {
         </div>
         <div className="cont">
           <div className="cont-in">
-            <SemModulesCardContainer sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
-            <SemModulesCardContainer sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
             <div className="col-md-4">
-              <SemSpecialModulesCardContainer specialSem="Special Sem I" semesterIndex={this.props.semesterIndex[2]} plannerID={this.props.plannerID}/>
-              <SemSpecialModulesCardContainer specialSem="Special Sem II" semesterIndex={this.props.semesterIndex[3]} plannerID={this.props.plannerID}/>
+              <SemModulesCardContainer sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
+            </div>
+            <div className="col-md-4">
+              <SemModulesCardContainer sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
+            </div>
+            <div className="col-md-4">
+              <SemModulesCardContainer sem="Special Sem I" semesterIndex={this.props.semesterIndex[2]} plannerID={this.props.plannerID}/>
+              <SemModulesCardContainer sem="Special Sem II" semesterIndex={this.props.semesterIndex[3]} plannerID={this.props.plannerID}/>
             </div>
           </div>
         </div>
@@ -74,7 +76,19 @@ export default class AcadYrRow extends React.Component {
 }
 
 AcadYrRow.propTypes = {
+  /**
+   *  Array of the indices of all the semesters in this academic year.
+   *  Namely, we have 2 normal sems and 2 special sems.
+   *  Normal sems are at positions 1 and 2, special sems are at positions 3 and 4.
+   *
+   *  NOTE: The next academic year's semester indices are CONTINUED LIKE THIS:
+   *  Normal sems are at positions 5 and 6, special sems are at positions 7 and 8.
+   */
   semesterIndex: React.PropTypes.array,
+
+  // Academic Year represented by this row
   acadYr: React.PropTypes.string,
+
+  // Planner ID containing this academic year
   plannerID: React.PropTypes.string
 }

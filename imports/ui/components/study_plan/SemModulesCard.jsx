@@ -102,46 +102,44 @@ export default class SemModulesCard extends React.Component {
     const modules = this.props.modules;
 
     return (
-      <div className="col-md-4">
-        <div className="card-grid-col">
-  				<article className="card-typical"
-                   style={{
-                     WebkitBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
-                     MozBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
-                     BoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)'}}>
-  					<div className="card-typical-section card-typical-content"
-                 style={{padding: '0.75em'}}>
-              <div style={{paddingBottom: '0.75em'}}>
-                {/* Renders all modules from the user's study plan */}
-                {Object.keys(modules).map((moduleCode, index) => {
-                  return <Module key={index} moduleCode={moduleCode}
-                                 handleDeleteModule={
-                                   this.handleDeleteModule.bind(this, moduleCode)} />;
-                })}
-              </div>
-
-              {/* Async Search bar to retrieve thousands of records optionHeight: 45px */}
-              <VirtualizedSelect searchable async clearable={false}
-                labelKey="moduleCodeAndName"
-                loadingPlaceholder="Loading..."
-                noResultsText="Module not found"
-                placeholder="Add a module..."
-                optionHeight={this.computeLineHeight}
-                loadOptions={this.getModulesListFromDB.bind(this)}
-                onChange={this.handleSelectModuleCode.bind(this)} />
-
+      <div className="card-grid-col">
+				<article className="card-typical"
+                 style={{
+                   WebkitBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
+                   MozBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
+                   BoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)'}}>
+					<div className="card-typical-section card-typical-content"
+               style={{padding: '0.75em'}}>
+            <div style={{paddingBottom: '0.75em'}}>
+              {/* Renders all modules from the user's study plan */}
+              {Object.keys(modules).map((moduleCode, index) => {
+                return <Module key={index} moduleCode={moduleCode}
+                               handleDeleteModule={
+                                 this.handleDeleteModule.bind(this, moduleCode)} />;
+              })}
             </div>
 
-  					<div className="card-typical-section"
-                 style={{padding: '0.5em 1em 0.5em 1em'}}>
-  						<div className="card-typical-linked">
-                {this.props.sem}
-              </div>
-  					</div>
+            {/* Async Search bar to retrieve thousands of records optionHeight: 45px */}
+            <VirtualizedSelect searchable async clearable={false}
+              labelKey="moduleCodeAndName"
+              loadingPlaceholder="Loading..."
+              noResultsText="Module not found"
+              placeholder="Add a module..."
+              optionHeight={this.computeLineHeight}
+              loadOptions={this.getModulesListFromDB.bind(this)}
+              onChange={this.handleSelectModuleCode.bind(this)} />
 
-  				</article>
-  			</div>
-      </div>
+          </div>
+
+					<div className="card-typical-section"
+               style={{padding: '0.5em 1em 0.5em 1em'}}>
+						<div className="card-typical-linked">
+              {this.props.sem}
+            </div>
+					</div>
+
+				</article>
+			</div>
     );
   }
 }
