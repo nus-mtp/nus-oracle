@@ -22,7 +22,7 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     if (Object.keys(moduleFulfilment).length <= 0)  {
       return {};
     }
-    
+
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
