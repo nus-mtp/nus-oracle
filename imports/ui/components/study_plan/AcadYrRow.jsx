@@ -1,6 +1,6 @@
 import React from 'react';
 import SemModulesCardContainer from './SemModulesCardContainer.js';
-import SemSpecialModulesCard from './SemSpecialModulesCard.jsx';
+import SemSpecialModulesCardContainer from './SemSpecialModulesCardContainer.js';
 
 export default class AcadYrRow extends React.Component {
   render() {
@@ -14,8 +14,8 @@ export default class AcadYrRow extends React.Component {
             <SemModulesCardContainer sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
             <SemModulesCardContainer sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
             <div className="col-md-4">
-              <SemSpecialModulesCard specialSem="Special Sem I" />
-              <SemSpecialModulesCard specialSem="Special Sem II" />
+              <SemSpecialModulesCardContainer specialSem="Special Sem I" semesterIndex={this.props.semesterIndex[2]} plannerID={this.props.plannerID}/>
+              <SemSpecialModulesCardContainer specialSem="Special Sem II" semesterIndex={this.props.semesterIndex[3]} plannerID={this.props.plannerID}/>
             </div>
           </div>
         </div>

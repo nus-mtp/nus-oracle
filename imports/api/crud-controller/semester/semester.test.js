@@ -102,8 +102,10 @@ describe('semester', function () {
 
     const retrievedSemesters = planner.semesters;
     assert.equal(retrievedSemesters.length-1, totalNumberOfSemestersInPlanner);
-    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2017/2018');
     assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2017/2018');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2017/2018');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-3].academicYear, 'AY 2017/2018');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-4].academicYear, 'AY 2017/2018');
   }),
 
   it ('get one semester in planner', function () {
@@ -116,6 +118,7 @@ describe('semester', function () {
 
   it ('delete one academic year in planner', function() {
     const plannerIDs = getPlannerIDsGivenUserID(userID);
+    insertNewAcademicYearInPlanner(plannerIDs[0])
 
     const totalNumberOfSemestersInPlanner = deleteAcademicYearInPlanner(plannerIDs[0]);
 
@@ -123,8 +126,8 @@ describe('semester', function () {
 
     const retrievedSemesters = planner.semesters;
     assert.equal(retrievedSemesters.length-1, totalNumberOfSemestersInPlanner);
-    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2015/2016');
-    assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2015/2016');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-2].academicYear, 'AY 2016/2017');
+    assert.equal(retrievedSemesters[retrievedSemesters.length-1].academicYear, 'AY 2016/2017');
   });
 
   it ('delete semester in planner', function () {
@@ -155,10 +158,10 @@ describe('semester', function () {
   it ('add new academic year using meteor methods', function ()  {
     const plannerIDs = getPlannerIDsGivenUserID(userID);
 
-    const secondSemLength = m_insertNewAcademicYearInPlanner.call({
+    const semLength = m_insertNewAcademicYearInPlanner.call({
       plannerID: plannerIDs[0]
     });
-    assert.equal(secondSemLength, 9);
+    assert.equal(semLength, 11);
   });
 
   it ('delete semester using meteor methods', function ()  {
@@ -172,11 +175,14 @@ describe('semester', function () {
 
   it ('delete academic year using meteor methods', function ()  {
     const plannerIDs = getPlannerIDsGivenUserID(userID);
+    m_insertNewAcademicYearInPlanner.call({
+      plannerID: plannerIDs[0]
+    });
 
-    const secondSemLength = m_deleteAcademicYearInPlanner.call({
+    const semLength = m_deleteAcademicYearInPlanner.call({
       plannerID: plannerIDs[0]}
     );
-    assert.equal(secondSemLength, 5);
+    assert.equal(semLength, 7);
   });
 
   it ('get all semesters using meteor methods', function ()  {

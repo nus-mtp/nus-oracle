@@ -143,7 +143,7 @@ export default class Tab extends React.Component {
           "dropdown-item",
           "fa fa-trash",
           {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '1em'},
-          "Edit",
+          "Rename",
           this.handleEditClick
         )}
 
