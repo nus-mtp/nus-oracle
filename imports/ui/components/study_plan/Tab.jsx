@@ -144,8 +144,8 @@ export default class Tab extends React.Component {
         {/* Edit study plan name dropdown selection */}
         {this.renderDropDownMenuSelection(
           "dropdown-item",
-          "fa fa-trash",
-          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '1em'},
+          "fa fa-edit",
+          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
           "Rename",
           this.handleEditClick
         )}
@@ -153,8 +153,8 @@ export default class Tab extends React.Component {
         {/* Delete study plan dropdown selection */}
         {this.renderDropDownMenuSelection(
           "dropdown-item",
-          "fa fa-edit",
-          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '0.8em'},
+          "fa fa-trash",
+          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '1.0em'},
           "Delete",
           this.handleDeleteClick
         )}
