@@ -13,7 +13,7 @@ const DEFAULT_MODULE_STATE = false;
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, listOfFourThousands, listOfNonPrimary){
+export const createNewFocusArea = function(name, listOfPrimary, listOfFourThousands, listOfNonPrimary){
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
@@ -21,15 +21,23 @@ export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, 
   primaryToBeStored = createModuleListObject(listOfPrimary);
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
-  const newFocusAreaObject = {
+
+  const newFocusAreaDocument = {
     name : name,
-    academicYearList: listOfAcadYear,
     moduleListPrimary : primaryToBeStored,
     moduleListFourThousands: fourThousandsToBeStored,
-    moduleListNonPrimary: nonPrimaryToBeStored
+    moduleListElectives: nonPrimaryToBeStored
   }
 
-  FocusArea.insert(newFocusAreaObject);
+  isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
+
+  if(isValid){
+    const result = FocusArea.insert(newFocusAreaDocument);
+    return result;
+  }
+
+  return {};
+
 }
 
 /** This method handles the checking of the module validity.
@@ -52,7 +60,7 @@ export const consolidateModuleArrayValidity = function(moduleArray) {
     const isValidModule = consolidateModuleCodeValidity(moduleCode);
 
     if(!isValidModule){
-      //console.log('The following module cannot be found in database: ' + moduleCode);
+      console.log('The following module cannot be found in database: ' + moduleCode);
       moduleIndex  = moduleArray.indexOf(moduleCode);
       moduleArray.splice(moduleIndex,1);
     }

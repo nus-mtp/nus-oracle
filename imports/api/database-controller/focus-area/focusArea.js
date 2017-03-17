@@ -31,9 +31,6 @@ const focusAreaSchema = {
   name: {
     type: String
   },
-  academicYearList: {
-    type: [String]
-  },
   moduleListPrimary: {
     type: Object,
     blackbox: true,
@@ -42,7 +39,7 @@ const focusAreaSchema = {
     type: Object,
     blackbox: true,
   },
-  moduleListNonPrimary: {
+  moduleListElectives: {
     type: Object,
     blackbox: true,
   }
