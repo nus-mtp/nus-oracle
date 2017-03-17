@@ -12,7 +12,7 @@ export default GradCheckerContainer = createContainer((props) => {
 
   const semesters = getAllSemestersInPlanner(props.activePlannerId);
   const requirements = getGraduationRequirements(semesters);
-  //console.log(JSON.stringify(requirements));
+  console.log(JSON.stringify(requirements));
   const listType = props.listType;
 
   const items = [
