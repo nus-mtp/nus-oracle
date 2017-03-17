@@ -36,20 +36,10 @@ export default class AcadYrSection extends React.Component {
             }
           })}
 
-          {/* <div style={{position: "relative", left: "50%", margin: "3em 0em 1em 0em"}}>
-            <Button buttonClass="btn btn-rounded btn-secondary-outline"
-                    style={{position: "relative",
-                            padding: "0.4em 0.5em 0.5em 0.6em",
-                            height: "2.5em"}}
-                    buttonText=""
-                    buttonIcon={
-                      <i className="glyphicon glyphicon-plus"
-                         style={{fontSize: "1.5em", lineHeight: "1em"}}></i>}
-                    onButtonClick={this.handleAddAYButtonClick.bind(this)} />
-          </div> */}
-
+          {/* Add New Academic Year Button at the bottom of the study plan */}
           <fieldset className="form-group"
-                    style={{textAlign: 'center', margin: '1rem 0 1rem 0'}}>
+                    style={{textAlign: 'center', margin: '2.5rem 0 2rem 0'}}>
+
             <Button buttonClass="btn btn-rounded btn-secondary-outline"
                     style={{position: "relative",
                             padding: "0.4em 0.5em 0.5em 0.6em",
@@ -63,6 +53,7 @@ export default class AcadYrSection extends React.Component {
             <small className="text-muted" style={{fontSize: '0.75em'}}>
               Add New Academic Year
             </small>
+
           </fieldset>
 
         </div>

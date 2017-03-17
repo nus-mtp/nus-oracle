@@ -122,9 +122,8 @@ export default class SemModulesCard extends React.Component {
             {/* Async Search bar to retrieve thousands of records optionHeight: 45px */}
             <VirtualizedSelect searchable async clearable={false}
               labelKey="moduleCodeAndName"
-              loadingPlaceholder="Loading..."
-              noResultsText="Module not found"
               placeholder="Add a module..."
+              menuBuffer={50}
               optionHeight={this.computeLineHeight}
               loadOptions={this.getModulesListFromDB.bind(this)}
               onChange={this.handleSelectModuleCode.bind(this)} />
