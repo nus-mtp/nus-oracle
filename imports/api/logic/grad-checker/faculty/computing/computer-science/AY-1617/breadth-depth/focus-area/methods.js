@@ -23,7 +23,6 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     }
   }
 
-
   for (var i=0; i<studentSemesters.length; i++) {
     let module4KFocusAreaNames = Object.keys(focusArea4KKeys);
     for (var j=0; j<module4KFocusAreaNames.length; j++) {
@@ -55,9 +54,9 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
   return true;
 }
 
-export const findFocusAreaModules = function findFocusAreaModules(academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules, requiredMCs)  {
+export const findFocusAreaModules = function findFocusAreaModules(focusAreaName, academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules, requiredMCs)  {
   let markedFocusAreaModulesAndMCs = {
-    name: 'Computer Science Focus Area',
+    name: focusAreaName,
     markedFocusAreaPrimaryModules: studentFocusArea.focusAreaPrimaryModules,
     markedFocusArea4KModules: studentFocusArea.focusArea4KModules,
     numberOfFocusAreaPrimaryModulesMarkedTrue: 0,

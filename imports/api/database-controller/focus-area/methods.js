@@ -78,7 +78,7 @@ export const createModuleListObject = function(moduleList) {
   return moduleToBeStored;
 }
 
-export const getFocusAreaPrimaryRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
+export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
   const focusAreaPrimaryRequirements = {};
   let tempFocusAreaPrimaryDoc = {};
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
@@ -114,7 +114,7 @@ export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimary
   return focusAreaNonPrimaryRequirements;
 }
 
-export const getGradRequirementMCs = function getGradRequirementMCs(getFocusRequirementIDArray) {
+export const getFocusAreaGradRequirementMCs = function getFocusAreaGradRequirementMCs(getFocusRequirementIDArray) {
   const gradMCs = {};
   let tempFocusAreaDoc = {};
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {

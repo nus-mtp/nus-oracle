@@ -3,14 +3,12 @@ import { populateModuleFixture,
          populateULRModuleFixture,
          populateFocusAreaModuleFixture } from '../../api/test-fixtures/modules';
 import { populatePlannerFixture } from '../../api/test-fixtures/planner';
-import { populateComputerGraphicsFocusAreaRequirementsFixture } from '../../api/test-fixtures/focusArea';
 import { populateModuleFulfilmentFixture,
          populateULRModuleFulfilment } from '../../api/test-fixtures/moduleFulfilment';
 import { populateAY1617AcademicCohortFixture } from '../../api/test-fixtures/academicCohort';
 
 import { Modules } from '../../api/database-controller/module/module';
 import { Students } from '../../api/database-controller/student/student';
-import { FocusArea } from '../../api/database-controller/focus-area/focusArea';
 import { ModuleFulfilments } from '../../api/database-controller/module-fulfilment/moduleFulfilment';
 import { Planner } from '../../api/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
@@ -34,9 +32,6 @@ Meteor.startup(() => {
   }
   if (Planner.find({}).count() === 0) {
     populatePlannerFixture();
-  }
-  if (FocusArea.find({}).count() === 0) {
-    populateComputerGraphicsFocusAreaRequirementsFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();

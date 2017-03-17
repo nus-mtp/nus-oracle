@@ -9,7 +9,7 @@ import { populateComputerGraphicsFocusAreaRequirementsFixture,
 import { getFocusAreaPrimaryRequirement,
          getFocusArea4KRequirement,
          getFocusAreaNonPrimaryRequirement,
-         getGradRequirementMCs } from '../../../../../../../../database-controller/focus-area/methods';
+         getFocusAreaGradRequirementMCs } from '../../../../../../../../database-controller/focus-area/methods';
 import { getAllSemestersInPlanner } from '../../../../../../../../crud-controller/semester/methods';
 
 import { checkFocusAreaFulfilmentMCs,
@@ -43,7 +43,7 @@ describe('grad-checker-focusArea', function()  {
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
-    const requiredMCs = getGradRequirementMCs(focusAreaReqIDs);
+    const requiredMCs = getFocusAreaGradRequirementMCs(focusAreaReqIDs);
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
@@ -63,14 +63,14 @@ describe('grad-checker-focusArea', function()  {
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
-    const requiredMCs = getGradRequirementMCs(focusAreaReqIDs);
+    const requiredMCs = getFocusAreaGradRequirementMCs(focusAreaReqIDs);
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules[requirementName],
       focusArea4KModules: focusArea4KModules[requirementName],
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules[requirementName]
     }
-    const markedFocusAreaModulesAndMCs = findFocusAreaModules(academicCohort, allSemesters, studentFocusAreas, {}, {}, requiredMCs);
+    const markedFocusAreaModulesAndMCs = findFocusAreaModules(requirementName, academicCohort, allSemesters, studentFocusAreas, {}, {}, requiredMCs);
 
     assert.isTrue(markedFocusAreaModulesAndMCs.isPrimaryTrue, 'primary focus area is fulfiled');
     assert.isTrue(markedFocusAreaModulesAndMCs.is4KTrue, '4k focus area is fulfiled');

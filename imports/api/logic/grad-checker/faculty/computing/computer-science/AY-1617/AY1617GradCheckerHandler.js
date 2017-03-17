@@ -1,17 +1,24 @@
 import { getCohortByName } from '../../../../../../database-controller/AcademicCohort/methods';
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../database-controller/graduation-requirement/methods';
+import { getFocusAreaPrimaryRequirement,
+         getFocusArea4KRequirement,
+         getFocusAreaNonPrimaryRequirement,
+         getFocusAreaGradRequirementMCs } from '../../../../../../database-controller/focus-area/methods';
 import { findFoundationRequirementModules } from './foundation/methods';
 import { findITProfessionalismModules } from './IT-professionalism/methods';
 import { findMathSciRequirementModules } from './math-science/methods';
 import { findTeamProjectRequirementModules } from './breadth-depth/team-project/methods';
 import { findIndustrialExperienceTrainingModules } from './breadth-depth/industrial-experience/methods';
+import { checkFocusAreaFulfilmentMCs,
+         findFocusAreaModules } from './breadth-depth/focus-area/methods';
 import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
+
+
 
 /*
  * Check student's
  * 1. Academic Cohort
- * 2. Major
  */
 
 /**
@@ -28,8 +35,14 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
                                   'Industrial Experience Training',
                                   'IT Professionalism','Mathematics and Sciences',
                                   'Unrestricted Electives', 'University Level Requirement'];
+  const focusAreaTitles = ['Algorithms & Theory', 'Artificial Intelligence',
+                           'Computer Graphics and Games', 'Computer Security',
+                           'Database Systems', 'Multimedia Information Retrieval',
+                           'Networking and Distributed Systems', 'Parallel Computing',
+                           'Programming Languages', 'Software Engineering'];
 
   let graduationRequirements = {};
+
   let UIFormatGraduationRequirement = {
     name: 'Graduation Requirements',
     children: [],
@@ -45,10 +58,15 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   }
 
   // retrieve foundation, IT-professionalism, Math-Sci and Breadth and Depth requirements here
-  //const cohortInformation = getCohortByName(studentAcademicCohort);
   const cohortGradRequirementIDs = cohortInformation.cohortGradRequirementID;
   const allGradRequirements = getGradRequirementModules(cohortGradRequirementIDs);
   const allGraduationRequirementMCs = getGradRequirementMCs(cohortGradRequirementIDs);
+
+  // retrieve focus area modules
+  const allFocusAreaPrimaryRequirements = getFocusAreaPrimaryRequirement(cohortInformation.cohortFocusAreaID);
+  const allFocusArea4KRequirements = getFocusArea4KRequirement(cohortInformation.cohortFocusAreaID);
+  const allFocusAreaNonPrimaryRequirements = getFocusAreaNonPrimaryRequirement(cohortInformation.cohortFocusAreaID);
+  const allFocusAreaGraduationRequirementMCs = getFocusAreaGradRequirementMCs(cohortInformation.cohortFocusAreaID);
 
   if (Object.keys(allGradRequirements).length === 0 || !allGradRequirements ||
       !allGraduationRequirementMCs) {
@@ -59,8 +77,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   for (var i=0; i<moduleRequirementTitle.length; i++) {
     graduationRequirements[moduleRequirementTitle[i]] = {};
   }
-
-  //retrieve focus area requirements here
 
   /*
    * Send all planner information to every requirement check
@@ -88,9 +104,38 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   }
 
   // find computer science breadth and depth requirement modules
-    // find focus area primary requirement modules objects
+    // find focus area requirement modules objects
+    const allStudentFocusAreas = {
+      focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
+      focusArea4KModules: allFocusArea4KRequirements,
+      focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
+    }
 
-    // find focus area 4000 requirement modules objects
+    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allFocusAreaGraduationRequirementMCs);
+
+    let focusAreaRequirements = {
+      name: moduleRequirementTitle[1],
+      children: [],
+      isFulfilled: false
+    };
+
+    for (var i=0; i<focusAreaTitles.length; i++)  {
+      let focusArea = {
+        focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
+        focusArea4KModules: allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]],
+        focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
+      }
+
+      if (!focusArea.focusAreaPrimaryModules || !focusArea.focusArea4KModules || !focusArea.focusArea4KModules)  {
+        continue;
+      }
+
+      let gradMCs = allFocusAreaGraduationRequirementMCs[focusAreaTitles[i]];
+      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, gradMCs);
+      focusAreaRequirements.children.push(UIFormatFocusAreaConversion(oneFocusArea));
+    }
+
+    UIFormatGraduationRequirement.children.push(focusAreaRequirements);
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
@@ -141,10 +186,9 @@ const UIFormatConversion = function UIFormatConversion(name, markedModules, isFu
   let tempGradRequirement = {};
 
   switch(name)  {
-    case 'Computer Science Focus Area':
-    break;
     case 'Unrestricted Electives':
     break;
+
     default:
     tempGradRequirement = {
       name: name,
@@ -154,6 +198,39 @@ const UIFormatConversion = function UIFormatConversion(name, markedModules, isFu
     tempGradRequirement = createUIFormat(tempGradRequirement, markedModules);
     tempGradRequirement.isFulfilled = isFulfilled;
     break;
+  }
+
+  return tempGradRequirement;
+}
+
+const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocusArea)  {
+  let tempGradRequirement = {
+    name: oneFocusArea.name,
+    children: [],
+    isFulfilled: false
+  }
+  // create primary here
+  let primaryModules =  {
+    name: 'Focus Area Primaries',
+    children: [],
+    isFulfilled: false
+  }
+  primaryModules = createUIFormat(primaryModules, oneFocusArea.markedFocusAreaPrimaryModules);
+  primaryModules.isFulfilled = oneFocusArea.primary;
+
+  // create 4k here
+  let fourThousandModules =  {
+    name: 'Focus Area 4K',
+    children: [],
+    isFulfilled: false
+  }
+  fourThousandModules = createUIFormat(fourThousandModules, oneFocusArea.markedFocusArea4KModules);
+  fourThousandModules.isFulfilled = oneFocusArea.fourThousand;
+
+  tempGradRequirement.children.push(primaryModules);
+  tempGradRequirement.children.push(fourThousandModules);
+  if (oneFocusArea.primary && oneFocusArea.fourThousand)  {
+    tempGradRequirement.isFulfilled = true;
   }
 
   return tempGradRequirement;
