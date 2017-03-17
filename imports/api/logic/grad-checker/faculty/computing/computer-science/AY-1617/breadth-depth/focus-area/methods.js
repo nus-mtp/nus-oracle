@@ -57,6 +57,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
 
 export const findFocusAreaModules = function findFocusAreaModules(academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules, requiredMCs)  {
   let markedFocusAreaModulesAndMCs = {
+    name: 'Computer Science Focus Area',
     markedFocusAreaPrimaryModules: studentFocusArea.focusAreaPrimaryModules,
     markedFocusArea4KModules: studentFocusArea.focusArea4KModules,
     numberOfFocusAreaPrimaryModulesMarkedTrue: 0,

@@ -3,11 +3,13 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
 
 export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(academicCohort, studentSemesters, teamProjectModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedTeamProjectModulesAndMCs = {
+    name: 'Computer Systems Team Project',
     markedTeamProjectModules: teamProjectModules,
     numberOfTeamProjectModulesMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -36,6 +38,7 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
       markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
+      markedTeamProjectModulesAndMCs.isFulfilled = true;
       break;
     }
   }

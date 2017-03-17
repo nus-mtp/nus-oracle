@@ -61,6 +61,7 @@ describe('grad-checker-mathSci', function()  {
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['PC1221X'], 'PC1221X checked');
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['LSM1301'], 'LSM1301 checked');
 
+    assert.isTrue(markedMathScienceModulesAndMCs.isFulfilled);
     assert.equal(markedMathScienceModulesAndMCs.numberOfMathSciModulesMarkedTrue, 7);
     assert.equal(markedMathScienceModulesAndMCs.totalModuleMCs, 28);
   })

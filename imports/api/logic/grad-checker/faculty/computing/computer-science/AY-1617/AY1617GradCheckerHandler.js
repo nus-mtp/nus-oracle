@@ -21,10 +21,14 @@ import { findULRRequirementModules } from '../../../../university-level-requirem
 */
 export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
   const graduationMCs = 160;
-  const moduleRequirementTitle = ['Computer Science Foundation', 'Computer Science Focus Area', 'Computer Systems Team Project', 'Industrial Experience Training', 'IT Professionalism', 'Mathematics and Sciences', 'Unrestricted Electives'];
-  const universityLevelTitle = 'University Level Requirement';
+  const moduleRequirementTitle = ['Computer Science Foundation',
+                                  'Computer Science Focus Area',
+                                  'Computer Systems Team Project',
+                                  'Industrial Experience Training',
+                                  'IT Professionalism','Mathematics and Sciences',
+                                  'Unrestricted Electives', 'University Level Requirement'];
 
-  const graduationRequirements = {};
+  let graduationRequirements = {};
 
   if (!studentSemesters) {
     return graduationRequirements;
@@ -56,9 +60,9 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
   // find university-level-requirements here
 
-  const ULRRequirements = allGradRequirements[universityLevelTitle];
-  const requiredMCsULR = allGraduationRequirementMCs[universityLevelTitle];
-  graduationRequirements[universityLevelTitle] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
+  const ULRRequirements = allGradRequirements[moduleRequirementTitle[7]];
+  const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[7]];
+  graduationRequirements[moduleRequirementTitle[7]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
 
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]];
@@ -96,9 +100,36 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   return graduationRequirements;
 }
 
-const UIFormatConversion = function UIFormatConversion(unformattedRequirements) {
+const UIFormatConversion = function UIFormatConversion(unformattedRequirements, graduationRequirements) {
+  let tempGradRequirement = {};
+
   switch(unformattedRequirements.name)  {
-    case '':
+    case 'Computer Science Foundation':
+    tempGradRequirement = {
+      name: unformattedRequirements.name,
+      children: {},
+      isFulfilled: false
+    }
+    const markedFoundationModules = Object.keys(unformattedRequirements.markedFoundationModules);
+    tempGradRequirement = createUIFormat(tempGradRequirement, unformattedRequirements, markedFoundationModules.length);
+    break;
+    case 'Computer Science Focus Area':
+    break;
+    case 'Computer Systems Team Project':
+    break;
+    case 'Industrial Experience Training':
+    break;
+    case 'IT Professionalism':
+    break;
+    case 'Mathematics and Sciences':
+    break;
+    case 'Unrestricted Electives':
+    break;
+    case 'University Level Requirement':
     break;
   }
+}
+
+const createUIFormat = function createUIFormat(tempGradRequirement, unformattedRequirements, length)  {
+  
 }

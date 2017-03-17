@@ -51,6 +51,7 @@ describe('grad-checker-teamProject', function()  {
     assert.isTrue(markedTeamProjectModulesAndMCs.moduleChecked['CS3283'], 'CS3283 checked');
     assert.isTrue(markedTeamProjectModulesAndMCs.moduleChecked['CS3284'], 'CS3284 checked');
 
+    assert.isTrue(markedTeamProjectModulesAndMCs.isFulfilled);
     assert.equal(markedTeamProjectModulesAndMCs.totalModuleMCs, 8);
     assert.equal(markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue, 2);
   })

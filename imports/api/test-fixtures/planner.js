@@ -46,7 +46,7 @@ export const populatePlannerFixture = function populatePlannerFixture() {
 export const populateIndustrialPlannerFixture = function populateIndustrialPlannerFixture() {
   const userIDs = '9f91pejfj912ras';
   const modulesOne = ['CP3880'];
-  const modulesTwo = ['CP3200', 'CP3202'];
+  const modulesTwo = ['CP3200'];
   const plannerNames = ['testPlanner', 'testPlannerTwo'];
   const focusAreas = [['Com Graphics'], ['Com Graphics', 'Security']];
 

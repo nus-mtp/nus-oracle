@@ -3,11 +3,13 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
 
 export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules, requiredMCs) {
   let markedMathSciModulesAndMCs = {
+    name: 'Mathematics and Sciences',
     markedMathSciModules: mathSciModules,
     numberOfMathSciModulesMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -33,9 +35,9 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
         markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
-    console.log("number of modules true: " + markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue);
     if (markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue === keyNames.length) {
       markedMathSciModulesAndMCs.requiredMCs = markedMathSciModulesAndMCs.totalModuleMCs;
+      markedMathSciModulesAndMCs.isFulfilled = true;
       break;
     }
   }

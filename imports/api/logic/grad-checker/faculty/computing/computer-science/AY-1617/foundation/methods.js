@@ -4,11 +4,13 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, requiredMCs) {
   let markedFoundationModulesAndMCs = {
+    name: 'Computer Science Foundation',
     markedFoundationModules: foundationModules,
     numberOfFoundationModulesMarkedTrue: 0,
     moduleChecked: {},
     totalModuleMCs: 0,
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -37,6 +39,7 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     // checks if all modules in foundation has been marked true
     if (markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue === keyNames.length) {
       markedFoundationModulesAndMCs.requiredMCs = markedFoundationModulesAndMCs.totalModuleMCs;
+      markedFoundationModulesAndMCs.isFulfilled = true;
       break;
     }
   }
