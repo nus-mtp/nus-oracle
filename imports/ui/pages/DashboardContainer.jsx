@@ -14,6 +14,8 @@ import Dashboard from './Dashboard.jsx';
 export const ALL_MODULES_FOR_SEARCH = "ALL_MODULES_FOR_SEARCH";
 export const ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS = "ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS";
 
+const ESTIMATED_NUM_OF_MODULES = 7000;
+
 Session.set(ALL_MODULES_FOR_SEARCH, []);
 Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, undefined);
 
@@ -23,8 +25,8 @@ export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('Modules');
     //const userID = '9f91pejfj912ras';
 
-    // Cache only once, hence check if we've cached before
-    if (Session.get(ALL_MODULES_FOR_SEARCH).length === 0 &&
+    // Cache only once after a successful cache
+    if (Session.get(ALL_MODULES_FOR_SEARCH).length <= ESTIMATED_NUM_OF_MODULES &&
         Session.get(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS) === undefined) {
       // Cache list of all modules stored in the DB as a user session variable
       let modulesForSearch = getAllModules();
