@@ -21,6 +21,10 @@ import { getAllModules } from '../../../api/searcher-controller/controller.js'
 // Import fixtures acting as a local database for all modules
 import { getModuleFixtures } from './fixtures/module_fixtures.js';
 
+// Import Session variable name constant that contains the cached modules
+import { ALL_MODULES_FOR_SEARCH } from '../../pages/DashboardContainer.jsx'
+import { ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS } from '../../pages/DashboardContainer.jsx'
+
 /**
  * React Component that implements the container for a semester's worth of
  * modules - all lists are in columnal form with rows of Modules.
@@ -92,7 +96,7 @@ export default class SemModulesCard extends React.Component {
 
   render() {
     const modules = this.props.modules;
-
+    console.log(Session.get(ALL_MODULES_FOR_SEARCH));
     return (
       <div className="card-grid-col">
 				<article className="card-typical"
@@ -118,7 +122,7 @@ export default class SemModulesCard extends React.Component {
               placeholder="Add a module..." noResultsText="No modules found"
               openOnFocus={true} tabSelectsValue={false}
               options={this.props.modulesForSearch}
-              filterOptions={this.props.filterOptions}
+              filterOptions={this.props.filterOptsForSearch}
               menuBuffer={50}
               optionHeight={this.computeLineHeight}
               onChange={this.handleSelectModuleCode.bind(this)} />
