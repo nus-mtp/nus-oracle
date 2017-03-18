@@ -26,13 +26,14 @@ import { getModuleFixtures } from './fixtures/module_fixtures.js';
 /**
  * Populating the module database for this React component on start up.
  *
- * If no DB is found, we populate the local DB with module fixtures
+ * If no modules were retrieved from the DB, use fixtures to act as local DB
  */
-let allModules = getAllModules(); // If we managed to retrieve all mods from DB
-if (allModules.length === 0) {
-  // If no modules were retrieved from the DB, use fixtures to act as local DB
-  allModules = getModuleFixtures();
-}
+let allModules = getModuleFixtures();
+
+// Wait for DB to get all modules
+getAllModules((modulesRetrievedFromDB) => {
+  allModules = modulesRetrievedFromDB;
+});
 
 // Prepare filter options for fast render and search in search bar
 const filterOptions = createFilterOptions({ options: allModules });
@@ -92,6 +93,17 @@ export default class SemModulesCard extends React.Component {
   computeLineHeight(option) {
     let module = option.option;
     let moduleCodeAndName = module.moduleCode + " " + module.moduleName;
+
+    if (moduleCodeAndName) { // Defensive check if it is defined
+      let moduleCodeAndNameLen = moduleCodeAndName.length;
+
+      if (moduleCodeAndNameLen <= SMALL_LINE_CHAR_LIMIT) {
+        return SMALL_LINE_HEIGHT;
+      } else if (moduleCodeAndNameLen <= MEDIUM_LINE_CHAR_LIMIT) {
+        return MEDIUM_LINE_HEIGHT;
+      } else {
+        return LARGE_LINE_HEIGHT;
+      }
     }
   }
 
