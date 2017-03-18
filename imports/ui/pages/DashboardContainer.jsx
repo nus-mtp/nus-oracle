@@ -23,9 +23,11 @@ export default DashboardContainer = createContainer(() => {
     // Cache list of all modules stored in the DB as a user session variable
     let modulesForSearch = getAllModules();
     let filterOptions = createFilterOptions({ options: modulesForSearch });
+    console.time("dashboard getAllModules()");
     Session.set(ALL_MODULES_FOR_SEARCH, getAllModules());
     Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions());
-    
+    console.timeEnd("dashboard getAllModules()");
+
     const plannerIDs = getPlannerIDs();
     return { plannerIDs };
 }, Dashboard);
