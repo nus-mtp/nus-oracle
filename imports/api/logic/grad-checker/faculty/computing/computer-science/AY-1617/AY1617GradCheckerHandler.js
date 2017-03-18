@@ -102,19 +102,21 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   }
 
   // find computer science breadth and depth requirement modules
-    // find focus area requirement modules objects
-    const allStudentFocusAreas = {
-      focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
-      focusArea4KModules: allFocusArea4KRequirements,
-      focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
-    }
-
+    // find focus area requirement modules object
+    let focusAreaMCSFulfilment = {};
     let focusAreaRequirements = {
       name: moduleRequirementTitle[1],
       children: [],
       isFulfilled: false
     };
 
+    const allStudentFocusAreas = {
+      focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
+      focusArea4KModules: allFocusArea4KRequirements,
+      focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
+    };
+
+    // for all focus area, find the ones fulfilled by the current planner
     for (var i=0; i<focusAreaTitles.length; i++)  {
       let focusArea = {
         focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
@@ -134,7 +136,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     }
 
     // check if student planner meet 24 MCs requirement
-    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+    focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
 
     if (!focusAreaMCSFulfilment.isFulfilled)  {
       focusAreaRequirements.isFulfilled = false;

@@ -89,7 +89,7 @@ export const populateULRFixture = function populateULRFixture() {
 
 export const populateFocusAreaPlannerFixture = function populateFocusAreaPlannerFixture() {
   const userIDs = '9f91pejfj912ras';
-  const modulesOne = ['CS3241', 'CS3247', 'CS4247', 'CS4246', 'CS5240', 'CS4340'];
+  const modulesOne = ['CS3241', 'CS3247', 'CS4247', 'CS4246', 'CS5240', 'CS4350'];
   const plannerNames = ['testPlanner'];
   const focusAreas = [['Com Graphics']];
 

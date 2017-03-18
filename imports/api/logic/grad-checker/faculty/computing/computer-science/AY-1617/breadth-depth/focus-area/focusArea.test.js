@@ -41,7 +41,6 @@ describe('grad-checker-focusArea', function()  {
   });
 
   it ('checks if find focus area MCs return true', function() {
-    const primaryModules = ['CS3241', 'CS3242', 'CS3247', 'CS4247', 'CS4350'];
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Focus Area' ;
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
@@ -62,7 +61,6 @@ describe('grad-checker-focusArea', function()  {
   })
 
   it ('checks if focus area requirement modules return true', function() {
-    const primaryModules = ['CS3241', 'CS3242', 'CS3247', 'CS4247', 'CS4350'];
     const academicCohort = 'AY 2016/2017';
     const focusAreaName = 'Computer Graphics and Games';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
@@ -80,7 +78,8 @@ describe('grad-checker-focusArea', function()  {
 
     assert.isTrue(markedFocusAreaModulesAndMCs.isPrimaryTrue, 'primary focus area is fulfiled');
     assert.isTrue(markedFocusAreaModulesAndMCs.is4KTrue, '4k focus area is fulfiled');
-    assert.equal(markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue, 3);
+    assert.equal(markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue, 4);
+    assert.equal(markedFocusAreaModulesAndMCs.total4KModuleMCs, 16);
   })
 
 });
