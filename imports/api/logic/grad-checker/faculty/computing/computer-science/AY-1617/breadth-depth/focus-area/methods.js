@@ -1,15 +1,18 @@
 import { searchByModuleCode } from '../../../../../../../../database-controller/module/methods';
 
 export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(studentSemesters, studentFocusAreas, requiredMCs) {
-  // checks for 24 MCs from primary modules
-  //console.log("primary keys: " + JSON.stringify(studentFocusAreas.focusAreaPrimaryModules));
-
+  // checks for 24 MCs from focus area modules
   const focusAreaPrimaryKeys = studentFocusAreas.focusAreaPrimaryModules;
   const focusArea4KKeys = studentFocusAreas.focusArea4KModules;
   const focusAreaNonPrimaryKeys = studentFocusAreas.focusAreaNonPrimaryModules;
   const modulesChecked = {};
   let totalMCs = 0;
+  let fulfilmentRequirement = {
+    totalMCsRequired: requiredMCs,
+    isFulfilled: false
+  };
 
+  // for all primary focus area modules, check if module exists in student planner
   for (var i=0; i<studentSemesters.length; i++) {
     let modulePrimaryFocusAreaNames = Object.keys(focusAreaPrimaryKeys);
     for (var j=0; j<modulePrimaryFocusAreaNames.length; j++) {
@@ -23,6 +26,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     }
   }
 
+  // for all 4K focus area modules, check if module exists in student planner
   for (var i=0; i<studentSemesters.length; i++) {
     let module4KFocusAreaNames = Object.keys(focusArea4KKeys);
     for (var j=0; j<module4KFocusAreaNames.length; j++) {
@@ -36,6 +40,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     }
   }
 
+  // for all non primary focus area modules, check if module exists in student planner
   for (var i=0; i<studentSemesters.length; i++) {
     let moduleNonPrimaryFocusAreaNames = Object.keys(focusAreaNonPrimaryKeys);
     for (var j=0; j<moduleNonPrimaryFocusAreaNames.length; j++) {
@@ -48,13 +53,15 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
       }
     }
   }
-  if (totalMCs < 24) {
-    return false;
+
+  if (totalMCs >= fulfilmentRequirement.totalMCsRequired) {
+    fulfilmentRequirement.isFulfilled = true;
   }
-  return true;
+
+  return fulfilmentRequirement;
 }
 
-export const findFocusAreaModules = function findFocusAreaModules(focusAreaName, academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules, requiredMCs)  {
+export const findFocusAreaModules = function findFocusAreaModules(focusAreaName, academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules)  {
   let markedFocusAreaModulesAndMCs = {
     name: focusAreaName,
     markedFocusAreaPrimaryModules: studentFocusArea.focusAreaPrimaryModules,
@@ -64,7 +71,6 @@ export const findFocusAreaModules = function findFocusAreaModules(focusAreaName,
     total4KModuleMCs: 0,
     isPrimaryTrue: false,
     is4KTrue: false,
-    requiredMCs: requiredMCs
   };
 
   // check for all previous focus area the remainder in focus area until totalMCs are greater or equal to required number of MCs
@@ -75,12 +81,6 @@ export const findFocusAreaModules = function findFocusAreaModules(focusAreaName,
 
   // check 4K focus area
   markedFocusAreaModulesAndMCs = findFocusArea4000Modules(markedFocusAreaModulesAndMCs, studentSemesters, exemptedModules, waivedModules);
-
-  const totalMCs = markedFocusAreaModulesAndMCs.totalPrimaryModuleMCs + markedFocusAreaModulesAndMCs.total4KModuleMCs;
-
-  if (markedFocusAreaModulesAndMCs.isPrimaryTrue && markedFocusAreaModulesAndMCs.is4KTrue)  {
-    markedFocusAreaModulesAndMCs.requiredMCs = totalMCs;
-  }
 
   return markedFocusAreaModulesAndMCs;
 }

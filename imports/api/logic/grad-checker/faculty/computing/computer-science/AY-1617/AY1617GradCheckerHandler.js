@@ -3,8 +3,7 @@ import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../database-controller/graduation-requirement/methods';
 import { getFocusAreaPrimaryRequirement,
          getFocusArea4KRequirement,
-         getFocusAreaNonPrimaryRequirement,
-         getFocusAreaGradRequirementMCs } from '../../../../../../database-controller/focus-area/methods';
+         getFocusAreaNonPrimaryRequirement } from '../../../../../../database-controller/focus-area/methods';
 import { findFoundationRequirementModules } from './foundation/methods';
 import { findITProfessionalismModules } from './IT-professionalism/methods';
 import { findMathSciRequirementModules } from './math-science/methods';
@@ -66,7 +65,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   const allFocusAreaPrimaryRequirements = getFocusAreaPrimaryRequirement(cohortInformation.cohortFocusAreaID);
   const allFocusArea4KRequirements = getFocusArea4KRequirement(cohortInformation.cohortFocusAreaID);
   const allFocusAreaNonPrimaryRequirements = getFocusAreaNonPrimaryRequirement(cohortInformation.cohortFocusAreaID);
-  const allFocusAreaGraduationRequirementMCs = getFocusAreaGradRequirementMCs(cohortInformation.cohortFocusAreaID);
 
   if (Object.keys(allGradRequirements).length === 0 || !allGradRequirements ||
       !allGraduationRequirementMCs) {
@@ -111,8 +109,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
     }
 
-    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allFocusAreaGraduationRequirementMCs);
-
     let focusAreaRequirements = {
       name: moduleRequirementTitle[1],
       children: [],
@@ -130,9 +126,18 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
         continue;
       }
 
-      let gradMCs = allFocusAreaGraduationRequirementMCs[focusAreaTitles[i]];
-      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, gradMCs);
+      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules);
       focusAreaRequirements.children.push(UIFormatFocusAreaConversion(oneFocusArea));
+      if (oneFocusArea.isPrimaryTrue && oneFocusArea.is4KTrue)  {
+        focusAreaRequirements.isFulfilled = true;
+      }
+    }
+
+    // check if student planner meet 24 MCs requirement
+    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+
+    if (!focusAreaMCSFulfilment.isFulfilled)  {
+      focusAreaRequirements.isFulfilled = false;
     }
 
     UIFormatGraduationRequirement.children.push(focusAreaRequirements);
@@ -178,6 +183,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   }
 
   // find unrestricted-electives requirement modules objects
+  
 
   return UIFormatGraduationRequirement;
 }

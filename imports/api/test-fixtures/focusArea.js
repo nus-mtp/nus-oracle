@@ -12,10 +12,9 @@ export const populateComputerGraphicsFocusAreaRequirementsFixture = function pop
 
   const nonPrimaryModules = ['CS3218', 'CS3240', 'CS3249', 'CS3343', 'CS4243', 'CS4249', 'CS4340',
                              'CS4344', 'CS4345', 'CS5237', 'CS5240', 'CS5343'];
-  const requiredMCs = 24;
 
   const listOfFocusAreas = [];
-  listOfFocusAreas.push(createNewFocusArea(requirementName, listOfAcadYear, primaryModules, fourThousandModules, nonPrimaryModules, requiredMCs));
+  listOfFocusAreas.push(createNewFocusArea(requirementName, listOfAcadYear, primaryModules, fourThousandModules, nonPrimaryModules));
   return listOfFocusAreas;
 }
 

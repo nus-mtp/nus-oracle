@@ -13,7 +13,7 @@ const DEFAULT_MODULE_STATE = false;
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, listOfFourThousands, listOfNonPrimary, requiredMCs){
+export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, listOfFourThousands, listOfNonPrimary){
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
@@ -28,7 +28,6 @@ export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, 
     moduleListPrimary : primaryToBeStored,
     moduleListFourThousands: fourThousandsToBeStored,
     moduleListNonPrimary: nonPrimaryToBeStored,
-    requirementMCs: requiredMCs
   }
 
   return FocusArea.insert(newFocusAreaObject);
@@ -112,16 +111,4 @@ export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimary
     }
   }
   return focusAreaNonPrimaryRequirements;
-}
-
-export const getFocusAreaGradRequirementMCs = function getFocusAreaGradRequirementMCs(getFocusRequirementIDArray) {
-  const gradMCs = {};
-  let tempFocusAreaDoc = {};
-  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
-    tempFocusAreaDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
-    if (tempFocusAreaDoc)  {
-      gradMCs[tempFocusAreaDoc.name] = tempFocusAreaDoc.requirementMCs;
-    }
-  }
-  return gradMCs;
 }

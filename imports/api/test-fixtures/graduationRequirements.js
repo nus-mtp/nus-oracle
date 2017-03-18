@@ -11,9 +11,18 @@ export const populateGraduationRequirementsFixture = function populateGraduation
   gradRequirementIDs.push(populateTeamProjectFixture());
   gradRequirementIDs.push(populateIndustrialExperienceFixture());
   gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
+  gradRequirementIDs.push(populateFocusAreaRequirementFixture());
 
   return gradRequirementIDs;
 };
+
+const populateFocusAreaRequirementFixture = function populateFocusAreaRequirementFixture()  {
+  const requirementName = 'Computer Science Focus Area';
+  const modules = [];
+  const requirementMCs = 24;
+
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
+}
 
 export const dePopulateGraduationRequirementsFixture = function dePopulateGraduationRequirementsFixture(gradRequirementIDArray) {
   for (var i=0; i < gradRequirementIDArray.length; i++) {
