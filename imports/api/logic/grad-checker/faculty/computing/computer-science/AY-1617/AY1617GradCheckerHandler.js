@@ -12,7 +12,7 @@ import { findIndustrialExperienceTrainingModules } from './breadth-depth/industr
 import { checkFocusAreaFulfilmentMCs,
          findFocusAreaModules } from './breadth-depth/focus-area/methods';
 import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
-
+import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
 
 /*
@@ -33,7 +33,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
                                   'Computer Systems Team Project',
                                   'Industrial Experience Training',
                                   'IT Professionalism','Mathematics and Sciences',
-                                  'Unrestricted Electives', 'University Level Requirement'];
+                                  'University Level Requirement', 'Unrestricted Electives'];
   const focusAreaTitles = ['Algorithms & Theory', 'Artificial Intelligence',
                            'Computer Graphics and Games', 'Computer Security',
                            'Database Systems', 'Multimedia Information Retrieval',
@@ -82,13 +82,13 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
   // find university-level-requirements here
 
-  const ULRRequirements = allGradRequirements[moduleRequirementTitle[7]];
-  const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[7]];
-  graduationRequirements[moduleRequirementTitle[7]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
-  if (Object.keys(graduationRequirements[moduleRequirementTitle[7]]).length > 0)  {
-  UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[7]].name,
-                                                                 graduationRequirements[moduleRequirementTitle[7]].markedULRModules,
-                                                                 graduationRequirements[moduleRequirementTitle[7]].isFulfilled));
+  const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
+  const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
+  graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
+  if (Object.keys(graduationRequirements[moduleRequirementTitle[6]]).length > 0)  {
+  UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[6]].name,
+                                                                 graduationRequirements[moduleRequirementTitle[6]].markedULRModules,
+                                                                 graduationRequirements[moduleRequirementTitle[6]].isFulfilled));
   }
 
   // find foundation requirement modules objects and call function from relevant academic year
@@ -142,7 +142,8 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       focusAreaRequirements.isFulfilled = false;
     }
 
-    UIFormatGraduationRequirement.children.push(focusAreaRequirements);
+    graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
+    UIFormatGraduationRequirement.children.push(graduationRequirements[moduleRequirementTitle[1]]);
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
@@ -157,7 +158,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     // find Industrial experience training requirement modules
     const industrialExperienceRequirements = allGradRequirements[moduleRequirementTitle[3]];
     const requiredMCsIndustrialExperience = allGraduationRequirementMCs[moduleRequirementTitle[3]];
-    graduationRequirements[moduleRequirementTitle[3]] = findIndustrialExperienceTrainingModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
+    graduationRequirements[moduleRequirementTitle[3]] = findIndustrialExperienceTrainingModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIndustrialExperience);
     if (Object.keys(graduationRequirements[moduleRequirementTitle[3]]).length > 0)  {
       UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[3]].name,
                                                                      graduationRequirements[moduleRequirementTitle[3]].markedIndustrialExperienceTrainingModules,
@@ -185,7 +186,14 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   }
 
   // find unrestricted-electives requirement modules objects
-  
+    // pass in required number of MCs from each requirement checks earlier,
+    // pass in semesters
+    let totalRequiredMCs = 0
+    for (var i=0; i<moduleRequirementTitle.length-1; i++) {
+      totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
+    }
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, studentSemesters);
+    UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
   return UIFormatGraduationRequirement;
 }
@@ -195,6 +203,11 @@ const UIFormatConversion = function UIFormatConversion(name, markedModules, isFu
 
   switch(name)  {
     case 'Unrestricted Electives':
+    tempGradRequirement = {
+      name: name,
+      children: [],
+      isFulfilled: isFulfilled
+    }
     break;
 
     default:

@@ -36,6 +36,9 @@ export const findITProfessionalismModules = function findITProfessionalismModule
         // checks if in exempted or waived modules
         markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]])  {
+          break;
+        }
       }
     }
     if (markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue === keyNames.length) {
@@ -85,5 +88,6 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedITPro
       }
     }
   }
+
   return markedITProfessionalismModulesAndMCs;
 }

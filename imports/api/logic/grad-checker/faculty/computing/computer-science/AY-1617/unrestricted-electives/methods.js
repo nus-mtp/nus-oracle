@@ -1,12 +1,24 @@
+import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
-export const findUnrestrictedElectivesRequirementModules = function findUnrestrictedElectivesRequirementModules(currentMCsInPlanner) {
+export const findUnrestrictedElectivesRequirementModules = function findUnrestrictedElectivesRequirementModules(totalRequiredMCs, studentSemesters) {
   // get total required MC to graduate
   const graduationMCs = 160;
+  let totalMCsInPlanner = 0;
 
-  // deduct graduationMCs from requiredMCs in planner -> this will give the MCs left for UEs
+  // loop through the planner, find total MCs in planner
+  for (var i=0; i<studentSemesters.length; i++) {
+    let modules = Object.keys(studentSemesters[i].moduleHashmap);
+    for (var j=0; j<modules.length; j++)  {
+      totalMCsInPlanner += searchByModuleCode(modules[i]).moduleMC;
+    }
+  }
 
-  // loop through the planner
-    // check which modules have not been marked, if so, deduct MC of that module
+  const requiredMCsForUEs = graduationMCs - totalRequiredMCs;
+  const plannerMCsForUEs = totalMCsInPlanner - totalRequiredMCs;
 
-  // check if number of of MCs equal to 0, if so, return true
+  if (plannerMCsForUEs >= requiredMCsForUEs)  {
+    return true;
+  }
+
+  return false;
 }

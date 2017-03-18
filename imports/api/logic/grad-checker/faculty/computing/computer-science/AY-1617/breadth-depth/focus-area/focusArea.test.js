@@ -57,7 +57,7 @@ describe('grad-checker-focusArea', function()  {
     }
     const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');
-    assert.equal(focusAreaMCSFulfilment.totalMCsRequired, 24);
+    assert.equal(focusAreaMCSFulfilment.requiredMCs, 24);
   })
 
   it ('checks if focus area requirement modules return true', function() {

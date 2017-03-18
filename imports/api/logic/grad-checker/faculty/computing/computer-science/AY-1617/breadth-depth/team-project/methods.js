@@ -34,6 +34,9 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
         // checks if in exempted or waived modules
         markedTeamProjectModulesAndMCs = markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]])  {
+          break;
+        }
       }
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
@@ -83,6 +86,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedTeamP
       }
     }
   }
+
   return markedTeamProjectModulesAndMCs;
 }
 

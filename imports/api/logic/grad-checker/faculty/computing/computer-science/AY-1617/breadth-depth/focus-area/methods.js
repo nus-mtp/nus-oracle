@@ -8,7 +8,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
   const modulesChecked = {};
   let totalMCs = 0;
   let fulfilmentRequirement = {
-    totalMCsRequired: requiredMCs,
+    requiredMCs: requiredMCs,
     isFulfilled: false
   };
 
@@ -54,7 +54,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     }
   }
 
-  if (totalMCs >= fulfilmentRequirement.totalMCsRequired) {
+  if (totalMCs >= fulfilmentRequirement.requiredMCs) {
     fulfilmentRequirement.isFulfilled = true;
   }
 

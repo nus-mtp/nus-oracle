@@ -33,6 +33,9 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
         // checks if in exempted or waived modules
         markedMathSciModulesAndMCs = markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]])  {
+          break;
+        }
       }
     }
     if (markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue === keyNames.length) {
@@ -47,52 +50,49 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
 
 const markModules = function markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
   for (var i = 0; i < studentSemesters.length; i++) {
-    if (studentSemesters[i].moduleHashmap[equivalentModule]) {
+    if (studentSemesters[i].moduleHashmap[equivalentModule] &&
+        !markedMathSciModulesAndMCs.moduleChecked[equivalentModule]) {
       // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
       markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
       markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
-      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
-      }
+      markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+      markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       break;
     }
   }
+
 
   return markedMathSciModulesAndMCs;
 }
 
 const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
   if (Object.keys(exemptedModules).length !== 0)  {
-    if (exemptedModules[equivalentModule])  {
+    if (exemptedModules[equivalentModule] &&
+        !markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
       markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
       markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
-      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
-      }
+      markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
+      markedMathSciModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
     }
   }
   if (Object.keys(waivedModules).length !== 0)  {
-    if (waivedModules[equivalentModule]) {
+    if (waivedModules[equivalentModule] &&
+        !markedMathSciModulesAndMCs.moduleChecked[equivalentModule]) {
       markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
       markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
-      if (!markedMathSciModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
-      }
+      markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
     }
   }
+
   return markedMathSciModulesAndMCs;
 }
 
 const markExceptions = function markExceptions(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
-  if (!markedMathSciModulesAndMCs.markedMathSciModules[originalModule]) {
-    if (originalModule === 'Science Two' &&
-        markedMathSciModulesAndMCs.moduleChecked['ST2131'] )  {
-      markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
-    } else {
-      markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
-    }
+  if (originalModule === 'Science Two' &&
+      markedMathSciModulesAndMCs.moduleChecked['ST2131'] )  {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
   }
 
   return markedMathSciModulesAndMCs;
@@ -100,14 +100,13 @@ const markExceptions = function markExceptions(markedMathSciModulesAndMCs, stude
 
 //check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
-  if (!markedMathSciModulesAndMCs.markedMathSciModules[originalModule]) {
-    if (originalModule === 'Science Two' &&
-        markedMathSciModulesAndMCs.moduleChecked['ST2131'] &&
-        !markedMathSciModulesAndMCs.markedMathSciModules[originalModule])  {
-      markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
-    } else {
-      markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
-    }
+  if (originalModule === 'Science Two' &&
+      markedMathSciModulesAndMCs.moduleChecked['ST2131'] &&
+      !markedMathSciModulesAndMCs.markedMathSciModules[originalModule])  {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
+  } else {
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
   }
+
   return markedMathSciModulesAndMCs;
 }

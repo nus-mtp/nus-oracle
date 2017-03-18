@@ -35,6 +35,9 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
         // checks if in exempted or waived modules
         markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedULRModulesAndMCs.markedULRModules[keyNames[i]] ) {
+          break;
+        }
       }
     }
     if (markedULRModulesAndMCs.numberOfULRMarkedTrue === keyNames.length) {
@@ -87,15 +90,9 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedULRMo
 }
 
 const markExceptions = function markExceptions(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
-  if (markedULRModulesAndMCs.markedULRModules[originalModule]) {
-    return markedULRModulesAndMCs;
-  }
   return markModules(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule);
 }
 
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
-  if (markedULRModulesAndMCs.markedULRModules[originalModule]) {
-    return markedULRModulesAndMCs;
-  }
   return markExemptedWaivedModules(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
 }

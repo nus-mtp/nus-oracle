@@ -34,6 +34,9 @@ export const findFoundationRequirementModules = function findFoundationRequireme
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]])  {
+          break;
+        }
       }
     }
     // checks if all modules in foundation has been marked true
@@ -83,5 +86,6 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
       }
     }
   }
+
   return markedFoundationModulesAndMCs;
 }
