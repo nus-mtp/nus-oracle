@@ -96,7 +96,7 @@ export default class SemModulesCard extends React.Component {
 
   render() {
     const modules = this.props.modules;
-    console.log(Session.get(ALL_MODULES_FOR_SEARCH));
+
     return (
       <div className="card-grid-col">
 				<article className="card-typical"
