@@ -22,7 +22,6 @@ export const isExistModuleCollection = function checkForCollection() {
   return false;
 }
 
-
 // This method try to find module in the collection by the moduleCode
 export const searchByModuleCode = function retrieveMod(modCode) {
   const searchResult = Modules.findOne({ moduleCode: modCode });
@@ -32,7 +31,6 @@ export const searchByModuleCode = function retrieveMod(modCode) {
 
   const returnPackage = {
     moduleCode: searchResult.moduleCode,
-    moduleID: searchResult._id,
     moduleMC: searchResult.moduleMC,
     moduleDescription: searchResult.moduleDescription
   };
@@ -42,7 +40,7 @@ export const searchByModuleCode = function retrieveMod(modCode) {
 
 // This method finds all module codes with matching substring
 export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndNameRegex(string) {
-  // search by module code
+  // search by module code and name
   const searchResult =
     Modules.find({$or: [
                         { moduleCode: { $regex: string, $options: 'i' } },
@@ -50,15 +48,14 @@ export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndName
                        ]
                  }).fetch();
 
+  // wrap into module code and name
   const resultArray = [];
-  // wrap into module name and id
 
   for (var i=0; i<searchResult.length; i++) {
     const returnPackage = {
       moduleCodeAndName: searchResult[i].moduleCode + " " + searchResult[i].moduleName,
       moduleCode: searchResult[i].moduleCode,
-      moduleName: searchResult[i].moduleName,
-      moduleID: searchResult[i]._id,
+      moduleName: searchResult[i].moduleName
     };
     resultArray.push(returnPackage);
   }
