@@ -55,7 +55,7 @@ export const getModuleFixtures = function getModuleFixtures() {
     modules.push(module);
   }
 
-  console.log("DEVELOPER NOTE: You are currently using module fixtures as the default \
+  console.log("DEVELOPER NOTES: You are currently using module fixtures as the default \
                module search index as you are developing on your localhost and are not \
                connected to the MONGO Database. Please connect to the heroku server if \
                you need to load the entire modules database.")

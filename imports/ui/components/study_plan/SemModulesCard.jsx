@@ -4,9 +4,8 @@ import { Session } from 'meteor/session';
 // Import React Components
 import Module from './Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
-import createFilterOptions from 'react-select-fast-filter-options';
 
-// Import necessary constants
+// Import constants for char limits and line height limits for search options
 import { SMALL_LINE_CHAR_LIMIT } from '../common/Constants.js';
 import { MEDIUM_LINE_CHAR_LIMIT } from '../common/Constants.js';
 import { SMALL_LINE_HEIGHT } from '../common/Constants.js';
@@ -21,22 +20,6 @@ import { getAllModules } from '../../../api/searcher-controller/controller.js'
 
 // Import fixtures acting as a local database for all modules
 import { getModuleFixtures } from './fixtures/module_fixtures.js';
-
-
-/**
- * Populating the module database for this React component on start up.
- *
- * If no modules were retrieved from the DB, use fixtures to act as local DB
- */
-let allModules = getModuleFixtures();
-
-// Wait for DB to get all modules
-getAllModules((modulesRetrievedFromDB) => {
-  allModules = modulesRetrievedFromDB;
-});
-
-// Prepare filter options for fast render and search in search bar
-const filterOptions = createFilterOptions({ options: allModules });
 
 /**
  * React Component that implements the container for a semester's worth of
@@ -134,8 +117,8 @@ export default class SemModulesCard extends React.Component {
             <VirtualizedSelect
               placeholder="Add a module..." noResultsText="No modules found"
               openOnFocus={true} tabSelectsValue={false}
-              options={allModules}
-              filterOptions={filterOptions}
+              options={this.props.modulesForSearch}
+              filterOptions={this.props.filterOptions}
               menuBuffer={50}
               optionHeight={this.computeLineHeight}
               onChange={this.handleSelectModuleCode.bind(this)} />
