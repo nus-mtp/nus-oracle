@@ -84,7 +84,7 @@ export const insertToModuleCollection = function insertToModuleCollection(object
 
 export const retrieveAllModule = function findAll() {
   console.log("retrieve all: ");
-  console.log(modulesRetrieved[0], modulesRetrieved[1], modulesRetrieved[2]);
   let modulesRetrieved = Modules.find({}).fetch();
+  console.log(modulesRetrieved[0], modulesRetrieved[1], modulesRetrieved[2]);
   return modulesRetrieved;
 };
