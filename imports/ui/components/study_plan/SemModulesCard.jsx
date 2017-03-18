@@ -139,8 +139,8 @@ export default class SemModulesCard extends React.Component {
             <VirtualizedSelect
               placeholder="Add a module..." noResultsText="No modules found"
               openOnFocus={true} tabSelectsValue={false}
-              options={modulesForSearch}
-              filterOptions={filterOptsForSearch}
+              options={this.props.modulesForSearch}
+              filterOptions={this.props.filterOptsForSearch}
               menuBuffer={50}
               optionHeight={this.computeLineHeight}
               onChange={this.handleSelectModuleCode.bind(this)} />
