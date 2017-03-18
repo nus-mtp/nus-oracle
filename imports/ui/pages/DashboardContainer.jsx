@@ -10,9 +10,12 @@ import { getAllModules } from '../../api/searcher-controller/controller.js';
 // Import React components
 import Dashboard from './Dashboard.jsx';
 
-// Export Sesion variable name constants
+// Export Session variable name constants
 export const ALL_MODULES_FOR_SEARCH = "ALL_MODULES_FOR_SEARCH";
 export const ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS = "ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS";
+
+Session.set(ALL_MODULES_FOR_SEARCH, []);
+Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, undefined);
 
 export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');
@@ -20,13 +23,20 @@ export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('Modules');
     //const userID = '9f91pejfj912ras';
 
-    // Cache list of all modules stored in the DB as a user session variable
-    let modulesForSearch = getAllModules();
-    let filterOptions = createFilterOptions({ options: modulesForSearch });
-    console.time("dashboard getAllModules()");
-    Session.set(ALL_MODULES_FOR_SEARCH, getAllModules());
-    Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions());
-    console.timeEnd("dashboard getAllModules()");
+    // Cache only once, hence check if we've cached before
+    if (Session.get(ALL_MODULES_FOR_SEARCH).length === 0 &&
+        Session.get(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS) === undefined) {
+      // Cache list of all modules stored in the DB as a user session variable
+      let modulesForSearch = getAllModules();
+      let filterOptions = createFilterOptions({ options: modulesForSearch });
+
+      console.time("dashboard getAllModules()");
+      Session.set(ALL_MODULES_FOR_SEARCH, modulesForSearch);
+      console.log("ALL MODS FOR SEARCH inside", Session.get(ALL_MODULES_FOR_SEARCH).length);
+      Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions());
+      console.timeEnd("dashboard getAllModules()");
+    }
+    console.log("ALL MODS FOR SEARCH outside", Session.get(ALL_MODULES_FOR_SEARCH).length);
 
     const plannerIDs = getPlannerIDs();
     return { plannerIDs };
