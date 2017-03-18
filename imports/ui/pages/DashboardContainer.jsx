@@ -35,7 +35,7 @@ export default DashboardContainer = createContainer(() => {
       console.time("dashboard getAllModules()");
       Session.set(ALL_MODULES_FOR_SEARCH, modulesForSearch);
       console.log("ALL MODS FOR SEARCH inside", Session.get(ALL_MODULES_FOR_SEARCH).length);
-      Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions());
+      Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions);
       console.timeEnd("dashboard getAllModules()");
     }
     console.log("ALL MODS FOR SEARCH outside", Session.get(ALL_MODULES_FOR_SEARCH).length);
