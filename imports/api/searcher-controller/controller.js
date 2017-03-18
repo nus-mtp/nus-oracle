@@ -21,6 +21,8 @@ import { searchByModuleCodeAndNameRegex,
  */
 export const getAllModules = function getAllModules() {
   let modules = retrieveAllModule();
+  console.log("modules:");
+  console.log(modules);
 
   // wrap into module code, name, label and value fields for UI
   const resultArray = [];
