@@ -92,14 +92,6 @@ export default class SemModulesCard extends React.Component {
   computeLineHeight(option) {
     let module = option.option;
     let moduleCodeAndName = module.moduleCode + " " + module.moduleName;
-    let moduleCodeAndNameLen = moduleCodeAndName.length;
-
-    if (moduleCodeAndNameLen <= SMALL_LINE_CHAR_LIMIT) {
-      return SMALL_LINE_HEIGHT;
-    } else if (moduleCodeAndNameLen <= MEDIUM_LINE_CHAR_LIMIT) {
-      return MEDIUM_LINE_HEIGHT;
-    } else {
-      return LARGE_LINE_HEIGHT;
     }
   }
 

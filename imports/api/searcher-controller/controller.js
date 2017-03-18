@@ -19,25 +19,26 @@ import { searchByModuleCodeAndNameRegex,
          It specifies the exact index of the option so that the search
          bar can recognize the different numbered options.
  */
-export const getAllModules = function getAllModules() {
-  let modules = retrieveAllModule();
-  console.log("modules:");
-  console.log(modules);
+export const getAllModules = function getAllModules(doneCallback) {
+  let modules = retrieveAllModule((modules) => {
+    console.log("modules:");
+    console.log(modules);
 
-  // wrap into module code, name, label and value fields for UI
-  const resultArray = [];
+    // wrap into module code, name, label and value fields for UI
+    const resultArray = [];
 
-  for (var i = 0; i < modules.length; i++) {
-    const returnPackage = {
-      label: modules[i].moduleCode + " " + modules[i].moduleName,
-      value: i,
-      moduleCode: modules[i].moduleCode,
-      moduleName: modules[i].moduleName
-    };
-    resultArray.push(returnPackage);
-  }
+    for (var i = 0; i < modules.length; i++) {
+      const returnPackage = {
+        label: modules[i].moduleCode + " " + modules[i].moduleName,
+        value: i,
+        moduleCode: modules[i].moduleCode,
+        moduleName: modules[i].moduleName
+      };
+      resultArray.push(returnPackage);
+    }
 
-  return resultArray;
+    doneCallback(resultArray);
+  });
 }
 
 /**

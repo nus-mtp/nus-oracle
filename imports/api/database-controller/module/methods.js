@@ -82,9 +82,18 @@ export const insertToModuleCollection = function insertToModuleCollection(object
   // TO DO:return success/ failure message
 };
 
+// Retrieves ALL modules from the database
 export const retrieveAllModule = function findAll() {
-  console.log("retrieve all: ");
-  let modulesRetrieved = Modules.find({}).fetch();
-  console.log(modulesRetrieved[0], modulesRetrieved[1], modulesRetrieved[2]);
-  return modulesRetrieved;
+  return Modules.find({}).fetch();
 };
+
+/**
+ * Wrapper function to wait to retrieve all modules from database before
+ * passing the result into a callback.
+ *
+ * @param  {[func]} doneCallback    Function that runs once the async call
+ *                                  to retrieve from DB is done.
+ */
+export const waitToRetrieveAllModules = function waitToRetrieveAllModules(doneCallback) {
+  doneCallback(Modules.find({}).fetch());
+}
