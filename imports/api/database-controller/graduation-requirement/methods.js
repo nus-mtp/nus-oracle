@@ -3,18 +3,24 @@ import { GraduationRequirements } from './graduationRequirement';
 
 const DEFAULT_MODULE_STATE = false;
 
-/** This method handles the creation of new graduation requirement document. It takes in two arguments
+/** This method handles the creation of new graduation requirement document. It takes in three arguments
   * @param {String} name: name of the graduation requirement
   * @param {[String]} listOfRequiredModule: list of module that will fulfill the gradRequirement.
+  * @param {int} requirementMCs: total MCs required for the graduation requirement to be fulfilled
   */
-export const createNewGradRequirementByModuleObject = function(name,  listOfRequiredModule, requirementMCs) {
+export const createNewGradRequirement = function createNewGradRequirementGivenModuleList(name,  listOfRequiredModule, requirementMCs) {
   const moduleObject = createModuleListObject(listOfRequiredModule);
 
-  insertNewGradRequirementModuleData(name,moduleObject,requirementMCs)
+   return insertNewGradRequirementModuleData(name,moduleObject,requirementMCs)
 
 }
 
-export const insertNewGradRequirementModuleData = function(cohortName,moduleListObject,requirementMCs) {
+/** This method insert the graduation requirement document to the Database
+  * @param {String} name: name of the graduation requirement
+  * @param {[Object]} moduleListObject: list of module that will fulfill the gradRequirement.
+  * @param {int} requirementMCs: total MCs required for the graduation requirement to be fulfilled
+  */
+export const insertNewGradRequirementModuleData = function insertNewGraduationRequirement(cohortName,moduleListObject,requirementMCs) {
   const gradRequirement = {
     requirementName : cohortName,
     requirementModules: moduleListObject,
@@ -35,7 +41,7 @@ export const insertNewGradRequirementModuleData = function(cohortName,moduleList
   * The module that is stored in the graduation requirement need to be present in the module database
   * @param {[String]} moduleList: list of module that is going to be stored
   */
-export const createModuleListObject = function(moduleList) {
+export const createModuleListObject = function createModuleListObject(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
@@ -47,8 +53,8 @@ export const createModuleListObject = function(moduleList) {
 }
 
 /**
-  * Retrieves requirement modules given graduation id and name of requirement
-  * @param {string}   unique id of graduation requirement document
+  * Retrieves object containing requirement modules given array of graduationID
+  * @param {[string]} array of unique ids of graduation requirement document
   * @return {Object}  object of mappedModuleName-boolean key-pair values
   */
 export const getGradRequirementModules = function getGradRequirementModules(gradRequirementIDArray) {
@@ -62,7 +68,11 @@ export const getGradRequirementModules = function getGradRequirementModules(grad
   }
   return gradRequirements;
 }
-
+/**
+  * Retrieves requirement modules given graduation id and name of requirement
+  * @param {string}   unique id of graduation requirement document
+  * @return {Object}  object of mappedModuleName-boolean key-pair values
+  */
 export const getGradRequirementMCs = function getGradRequirementMCs(gradRequirementIDArray) {
   const gradMCs = {};
   let tempGradDoc = {};
@@ -74,7 +84,9 @@ export const getGradRequirementMCs = function getGradRequirementMCs(gradRequirem
   }
   return gradMCs;
 }
-
+/** Remove graduation rquirement given its ID
+  * @param {string} ID of the graduation requirement that you want to delete/remove from the database
+  */
 export const removeOneGradRequirementModule = function removeGradRequirementModules(gradRequirementID)  {
   GraduationRequirements.remove(gradRequirementID);
 }

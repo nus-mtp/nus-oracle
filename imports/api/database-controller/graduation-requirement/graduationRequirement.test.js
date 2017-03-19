@@ -45,7 +45,7 @@ describe(" graduation requirement test", function() {
     assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
   });
 
-  it ('should return requirment MCS', function()  {
+  it ('should return requirement MCS', function()  {
     const gradRequirementMCs = getGradRequirementMCs(storeID);
     assert.equal(Object.keys(gradRequirementMCs).length, storeID.length);
     assert.equal(gradRequirementMCs[graduationName[0]], foundationRequirementMCs);

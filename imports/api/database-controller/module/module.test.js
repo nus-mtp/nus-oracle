@@ -8,6 +8,7 @@ import {
   isExistModuleCollection,
   searchByModuleCodeRegex,
   retrieveAllModule,
+  findModuleAvailability
 } from './methods';
 if(Meteor.isServer){
   describe ('module', function() {
@@ -59,8 +60,8 @@ if(Meteor.isServer){
     const emptyModule = {};
 
     const sampleModuleNoCorequisite = {
-      moduleCode:'CS3456',
-      moduleName:'Level 3000 Computing',
+      moduleCode:'NS3456',
+      moduleName:'Level 3000 Nomputing',
       moduleDescription: 'Brandon is Here',
       modulePreclusion: 'none',
       modulePrerequisite: 'H2 Arts',
@@ -97,12 +98,13 @@ if(Meteor.isServer){
       ],
     };
 
+    // call to ensure beginning and end the module db is always empty
     beforeEach(function () {
-      removeAllModule();
+      Modules.remove({});
     });
 
     afterEach(function() {
-      removeAllModule();
+      Modules.remove({});
     });
 
     it('should be able to store module data that fits the schema', function() {
@@ -115,12 +117,6 @@ if(Meteor.isServer){
       assert.equal(firstPass[0].modulePreclusion,'none');
 
     });
-
-    it('should be empty after you call removeAllModule', function(){
-      const result = retrieveAllModule();
-      assert.equal(result.length,0);
-    });
-
 
     it('should accept modules without termOffered data', function() {
       Modules.insert(sampleModuleTwo);
@@ -135,15 +131,34 @@ if(Meteor.isServer){
       Modules.insert(sampleModuleNoCorequisite);
       assert.equal(retrieveAllModule().length, 1);
     });
-    //// unresolved test ////
+
     it('should reject empty data', function() {
       try {
         Modules.insert(emptyModule);
       } catch (E) {
 
       }
-        assert.equal(retrieveAllModule().length,0);
-  });
+      assert.equal(retrieveAllModule().length,0);
+    });
+
+    it('searchByModuleCodeRegex should return all modules that fit the regex', function() {
+      Modules.insert(sampleModuleOne);
+      Modules.insert(sampleModuleTwo);
+      Modules.insert(sampleModuleNoCorequisite);
+
+      const searchResult = searchByModuleCodeRegex('CS');
+
+      assert.equal(searchResult.length,2);
+    });
+
+    it('findModuleAvailability should return true/false if module is available or not', function() {
+      Modules.insert(sampleModuleOne);
+      Modules.insert(sampleModuleTwo);
+      const searchResultOne = findModuleAvailability('CS0000');
+      assert.equal(searchResultOne,true);
+      const searchResultTwo = findModuleAvailability('NS1111');
+      assert.equal(searchResultTwo,false);
+    })
 
     //it('should reject module with missing vital info', function() {
     //  const insertResult = Modules.insert(sampleModuleMissingInfos);

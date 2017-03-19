@@ -6,6 +6,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Additional Limitation for the object inside the last three
 // elements are governed in the method.
+
 class FocusAreaCollection extends Mongo.Collection {
   insert(focusAreaData, callBack){
     const gradDocument = focusAreaData;

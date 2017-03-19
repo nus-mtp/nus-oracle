@@ -71,14 +71,10 @@ export const populateAcadCohortCollection = function() {
     for(var i = 0; i< acadCohortData.length; i++){
 
       let currentCohort = acadCohortData[i];
-
-      // get acad Cohort Name
       let currentCohortName = currentCohort["cohortName"];
       let newCohortID = createNewCohort(currentCohortName);
-      console.log("newCohort Name:" + currentCohortName);
-      console.log("newCohort ID:" + newCohortID);
       let gradRequirementIDs = [];
-  /////////////////////////////////// GRADUATION REQUIREMENT //////////////////////////////////////////////////////////////////////
+
       // see if there is any unique graduation requirement
       if (currentCohort["uniqueGradRequirement"] != "none"){
         /// if there is , insert to grad requirement DB
@@ -126,7 +122,7 @@ export const populateAcadCohortCollection = function() {
           }
 
         }
-        // create new academic cohort
+
         updateCohortFocusAreaIDs(currentCohortName,focusAreaIDs)
         updateCohortGradRequirementIDs(currentCohortName,gradRequirementIDs);
       }
