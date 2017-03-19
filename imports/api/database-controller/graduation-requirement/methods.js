@@ -1,3 +1,4 @@
+import { check } from 'meteor/check';
 import { GraduationRequirements } from './graduationRequirement';
 
 const DEFAULT_MODULE_STATE = false;
@@ -6,16 +7,27 @@ const DEFAULT_MODULE_STATE = false;
   * @param {String} name: name of the graduation requirement
   * @param {[String]} listOfRequiredModule: list of module that will fulfill the gradRequirement.
   */
-export const createNewGradRequirement = function(name,  listOfRequiredModule, requirementMCs) {
+export const createNewGradRequirementByModuleObject = function(name,  listOfRequiredModule, requirementMCs) {
   const moduleObject = createModuleListObject(listOfRequiredModule);
 
+  return insertNewGradRequirementModuleData(name,moduleObject,requirementMCs);
+}
+
+export const insertNewGradRequirementModuleData = function(cohortName,moduleListObject,requirementMCs) {
   const gradRequirement = {
-    requirementName : name,
-    requirementModules: moduleObject,
+    requirementName : cohortName,
+    requirementModules: moduleListObject,
     requirementMCs: requirementMCs,
   };
 
-  return GraduationRequirements.insert(gradRequirement);
+  isValid = Match.test(gradRequirement, GraduationRequirements.simpleSchema());
+
+  if(isValid){
+    const newGradId = GraduationRequirements.insert(gradRequirement);
+    return newGradId;
+  }
+
+  return {};
 }
 
 /** This method handles the creation of object list that is  going to be stored in the graduation Requirement Document

@@ -46,7 +46,7 @@ export const populatePlannerFixture = function populatePlannerFixture() {
 export const populateIndustrialPlannerFixture = function populateIndustrialPlannerFixture() {
   const userIDs = '9f91pejfj912ras';
   const modulesOne = ['CP3880'];
-  const modulesTwo = ['CP3200', 'CP3202'];
+  const modulesTwo = ['CP3200'];
   const plannerNames = ['testPlanner', 'testPlannerTwo'];
   const focusAreas = [['Com Graphics'], ['Com Graphics', 'Security']];
 
@@ -71,6 +71,25 @@ export const populateIndustrialPlannerFixture = function populateIndustrialPlann
 export const populateULRFixture = function populateULRFixture() {
   const userIDs = '9f91pejfj912ras';
   const modulesOne = ['GEH1001', 'GEQ1917', 'GER1000', 'GES1002', 'GET1006'];
+  const plannerNames = ['testPlanner'];
+  const focusAreas = [['Com Graphics']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2016/2017', 'AY 2016/2017'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, modulesOne, plannerIDs[0]);
+
+  return plannerIDs;
+}
+
+export const populateFocusAreaPlannerFixture = function populateFocusAreaPlannerFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const modulesOne = ['CS3241', 'CS3247', 'CS4247', 'CS4246', 'CS5240', 'CS4350'];
   const plannerNames = ['testPlanner'];
   const focusAreas = [['Com Graphics']];
 

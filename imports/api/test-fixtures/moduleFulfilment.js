@@ -5,7 +5,7 @@ import { createNewModuleFulfilment,
 export const populateModuleFulfilmentFixture = function populateModuleFulfilmentFixture() {
   const foundationModules = ['CS1010', 'CS1020', 'CS2010', 'CS1231', 'CS2100', 'CS2103T', 'CS2105', 'CS2106', 'CS3230'];
   const ITProfessionalismModules = ['IS1103', 'CS2101', 'ES2660'];
-  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science Two', 'PC1221', 'Science One'];
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
   const teamProjectModules = ['Project I', 'Project II'];
   const industrialExperienceModules = ['ATAP/SIP/Industry Course/NOC/FYP'];
 

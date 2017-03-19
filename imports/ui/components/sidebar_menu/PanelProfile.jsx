@@ -28,7 +28,9 @@ export default class PanelProfile extends React.Component {
   render() {
     let exemptedToolTip =
       <ReactTooltip id='Exempted' place="right" type="info" effect="solid">
-        <span> <h5 style={{marginBottom: 0.8+"rem"}}>Example of exempted modules </h5>
+        <span> <h5 style={{marginBottom: 0.8+"rem"}}>Exempted modules </h5>
+            Modules that you are not required to take and are not converted to UEs<br/><br/>
+            EXAMPLES: <br/>
             <b>LS1301:</b> Students with A-level or H2 Biology are<br/>
             exempted from taking LSM1301 <br/>
             <b>CS1010:</b> Polytechnic students who are<br/>
@@ -38,6 +40,8 @@ export default class PanelProfile extends React.Component {
     let waivedToolTip =
       <ReactTooltip id='Waived' place="right" type="info" effect="solid">
         <span> <h5 style={{marginBottom: 0.8+"rem"}}>Example of waived modules:</h5>
+            Modules that you are not required to take but are converted to UEs<br/><br/>
+            EXAMPLES: <br/>
             <b>PC1221:</b> Students with A-level or H2 Physics<br/>
             have PC1221 waived</span>
       </ReactTooltip>
