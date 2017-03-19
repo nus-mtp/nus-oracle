@@ -7,7 +7,8 @@ import { successMsgLoginName,
          errorMsgIncorrectPassword,
          errorMsgUnverifiedEmail,
          errorMsgUnrecognizedEmail,
-         errorMsgExceededLoginAttempts } from '../AccountAlerts.js';
+         errorMsgExceededLoginAttempts,
+         warningMsgs } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
@@ -101,10 +102,14 @@ export default class LoginAccount extends React.Component {
           Meteor.logout();
         } else if (isVerified) {
           // Log only a valid and verified user in
-          if (Meteor.user().profile.hasSetup) {
+          if (!Meteor.user().profile.hasSetup) {
             // Newly-signed-up users
-            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
+            Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
             FlowRouter.go(pathToAcadDetailsSetup);
+          } else {
+            //Actual redirect to dashbaord
+            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
+            FlowRouter.go(pathToUserDashboard);
           }
         } else {
           // Refresh login page if this email isn't verified yet

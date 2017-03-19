@@ -41,21 +41,8 @@ export default class SetUpAcadDetail extends React.Component {
     };
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
     //Meteor.logout();
   }
-  handleLogInAccount() {
-    const userId = Meteor.user()._id;
-    if (userId) {
-      // create Students document
-      const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
-      // set hasSetup to true
-      Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
-    }
-    Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
-    FlowRouter.go(pathToUserDashboard);
-  }
-
   //Handle the input of Matriculation year
   handleAcadValueChange(obj) {
     this.setState({ cohort: obj.value });
