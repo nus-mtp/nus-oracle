@@ -2,9 +2,11 @@ import { createNewModuleFulfilment } from '../database-controller/module-fulfilm
 import { ModuleFulfilments } from '../database-controller/module-fulfilment/moduleFulfilment';
 
 export const populateModuleFulfilmentCollection = function() {
-  // remove data from ModuleFulfilment
+
   if (Meteor.isServer){
+    // remove data from ModuleFulfilment
     ModuleFulfilments.remove({});
+    
     const ModuleFulfilmentFile = 'ModuleFulfilment.json';
     const ModuleFulfilmentJSON = JSON.parse(Assets.getText(ModuleFulfilmentFile));
 

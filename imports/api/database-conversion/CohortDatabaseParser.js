@@ -115,7 +115,7 @@ export const populateAcadCohortCollection = function() {
           let currentFocusArea = currentFocusAreaList[j];
           let currentFocusAreaID = getFocusAreaIDByName(currentFocusArea);
 
-          if(currentFocusAreaID === {}){
+          if(currentFocusAreaID === ''){
             console.log("cannot find matching document for focus Area named: " + currentFocusArea);
           } else {
             focusAreaIDs.push(currentFocusAreaID);

@@ -55,6 +55,8 @@ export const consolidateModuleArrayValidity = function CheckValidityForListOfMod
       moduleArray.splice(moduleIndex,1);
     }
   }
+
+  return moduleArray;
 }
 
 export const createModuleListObject = function createNewListOfModuleObject(moduleList) {
