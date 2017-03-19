@@ -14,16 +14,13 @@ import { checkFocusAreaFulfilmentMCs,
 import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
 import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
-
-/*
- * Check student's
- * 1. Academic Cohort
- */
-
 /**
 * retrieves an object of string boolean objects for each graduation requirement
 *  @param {objects}  a full appended object list of all the modules in a student planner
-*  @return {{objects}}  object of all graduation
+*  @param {number}  current student academic year
+*  @param {objects}  modules which are exempted by student
+*  @param {objects}  modules which are waived by student
+*  @return {{objects}}  UI formatted list of graduation requirements
 *
 */
 export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
@@ -192,15 +189,23 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     for (var i=0; i<moduleRequirementTitle.length-1; i++) {
       totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
     }
-    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, studentSemesters);
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
   return UIFormatGraduationRequirement;
 }
 
+/**
+* retrieves an object of UI formatted graduation requirements
+*  @param {string}  name of requirement
+*  @param {object}  the marked modules
+*  @param {boolean}  boolean that states if module has been fulfilled or not
+*  @return {{objects}}  UI formatted list of one requirements
+*
+*/
+
 const UIFormatConversion = function UIFormatConversion(name, markedModules, isFulfilled) {
   let tempGradRequirement = {};
-
   switch(name)  {
     case 'Unrestricted Electives':
     tempGradRequirement = {
@@ -224,6 +229,12 @@ const UIFormatConversion = function UIFormatConversion(name, markedModules, isFu
   return tempGradRequirement;
 }
 
+/**
+* retrieves an object of UI formatted graduation requirements for a focus area
+*  @param {object}  focus area object containing all the graduation requirements for 1 focus area
+*  @return {{objects}}  UI formatted list of one requirements
+*
+*/
 const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocusArea)  {
   let tempGradRequirement = {
     name: oneFocusArea.name,
@@ -257,6 +268,13 @@ const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocu
   return tempGradRequirement;
 }
 
+/**
+* retrieves an object of UI formatted marked graduation requirement
+*  @param {object}  parent grad requirement object
+*  @param {object}  an object containing a list of modules in the format of modueCode:bool
+*  @return {{objects}}  UI formatted list for one set of marked requirements
+*
+*/
 const createUIFormat = function createUIFormat(tempGradRequirement, modules)  {
   const keys = Object.keys(modules);
 

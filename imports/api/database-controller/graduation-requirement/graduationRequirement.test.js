@@ -1,6 +1,6 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { GraduationRequirements} from './graduationRequirement';
-import { createNewGradRequirementByModuleObject,
+import { createNewGradRequirement,
          getGradRequirementModules,
          getGradRequirementMCs } from './methods';
 
@@ -13,9 +13,12 @@ describe(" graduation requirement test", function() {
   const ITRequirementMCs = 12;
 
   beforeEach( function() {
-    let result1 = createNewGradRequirementByModuleObject(graduationName[0], foundationModuleList, foundationRequirementMCs);
+    if(Meteor.isServer){
+      GraduationRequirements.remove({});
+    }
+    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
-    let result2 = createNewGradRequirementByModuleObject(graduationName[1], ITProfModuleList, ITRequirementMCs);
+    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
     storeID.push(result2);
 
     assert.equal(GraduationRequirements.find({}).fetch().length, 2);
@@ -45,7 +48,7 @@ describe(" graduation requirement test", function() {
     assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
   });
 
-  it ('should return requirment MCS', function()  {
+  it ('should return requirement MCS', function()  {
     const gradRequirementMCs = getGradRequirementMCs(storeID);
     assert.equal(Object.keys(gradRequirementMCs).length, storeID.length);
     assert.equal(gradRequirementMCs[graduationName[0]], foundationRequirementMCs);

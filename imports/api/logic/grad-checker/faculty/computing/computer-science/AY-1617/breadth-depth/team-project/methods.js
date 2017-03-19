@@ -122,7 +122,6 @@ const markExceptions = function markExceptions(markedTeamProjectModulesAndMCs, s
   return markedTeamProjectModulesAndMCs;
 }
 
-//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
   switch(originalModule)  {
     case 'Project I':

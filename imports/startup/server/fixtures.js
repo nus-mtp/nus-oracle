@@ -2,6 +2,7 @@ import { populateModuleFixture,
          populateIndustrialAttachmentModuleFixture,
          populateULRModuleFixture,
          populateFocusAreaModuleFixture } from '../../api/test-fixtures/modules';
+
 import { populatePlannerFixture } from '../../api/test-fixtures/planner';
 import { populateModuleFulfilmentFixture,
          populateULRModuleFulfilment } from '../../api/test-fixtures/moduleFulfilment';
@@ -18,9 +19,19 @@ import { moduleInformationParser,
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
 //import '../../api/database-conversion/CohortDatabaseParser.js';
+
+import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
+import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
+import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
+
 Meteor.startup(() => {
   process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
+  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
+  //populateFocusAreaCollection();
+  //populateAcadCohortCollection();
+  //populateModuleFulfilmentCollection();
   //parseJSONFileAndStoreToDB();
+
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
     populateIndustrialAttachmentModuleFixture();
@@ -37,12 +48,4 @@ Meteor.startup(() => {
     populateModuleFulfilmentFixture();
     populateULRModuleFulfilment();
   }
-
-  Meteor.publish('userSetUp', function() {
-    if (!this.userId) {
-      return this.ready();
-    }
-
-    return Meteor.Users.find({_id:this.userId});
-  });
 });

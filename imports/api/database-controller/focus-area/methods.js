@@ -1,5 +1,5 @@
 import { FocusArea } from './focusArea';
-import { searchByModuleCode } from '../module/methods';
+import { findModuleAvailability } from '../module/methods';
 
 const DEFAULT_MODULE_STATE = false;
 
@@ -8,12 +8,12 @@ const DEFAULT_MODULE_STATE = false;
   *@param {[String]} listOfPrimary: list of primary module in the focus area
   *@param {[String]} listOfFourThousands: list of level four thousand modules in the focus Area
   *@param {[String]} listOfNonPrimary: list of module that is related to the focus area but is not part of primary module
-  *@return undefined
+  *@return {String} empty string on fails or object ID of the new document on success
   *
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, listOfFourThousands, listOfNonPrimary){
+export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfFourThousands, listOfNonPrimary){
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
@@ -22,15 +22,22 @@ export const createNewFocusArea = function(name, listOfAcadYear, listOfPrimary, 
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
 
-  const newFocusAreaObject = {
+  const newFocusAreaDocument = {
     name : name,
-    academicYearList: listOfAcadYear,
     moduleListPrimary : primaryToBeStored,
     moduleListFourThousands: fourThousandsToBeStored,
-    moduleListNonPrimary: nonPrimaryToBeStored,
+    moduleListElectives: nonPrimaryToBeStored
+  }
+  let result = '';
+
+  isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
+
+  if(isValid){
+    result = FocusArea.insert(newFocusAreaDocument);
+    return result;
   }
 
-  return FocusArea.insert(newFocusAreaObject);
+  return result;
 }
 
 export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
@@ -38,34 +45,27 @@ export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
     FocusArea.remove(focusAreaIDs[i]);
   }
 }
-/** This method handles the checking of the module validity.
-  * For a module to be valid, it needs to be inside the module database
-  * @param {String} moduleCode: Code of the module that is going to be included in the focus area document
-  */
-export const consolidateModuleCodeValidity = function(moduleCode) {
-  const validationResult = searchByModuleCode(moduleCode);
-
-  if (validationResult === {}){ return false;}
-  return true;
-}
 
 /** This method handles the checking of the list of module validity.
   * For a module to be valid, it needs to be inside the module database
   * @param {[String]} moduleArray: array of module code that is going to be included in the focus area document
   */
-export const consolidateModuleArrayValidity = function(moduleArray) {
-  for (moduleCode in moduleArray){
-    const isValidModule = consolidateModuleCodeValidity(moduleCode);
+export const consolidateModuleArrayValidity = function CheckValidityForListOfModule(moduleArray) {
+  let checkedModuleArray = [];
+  for (var i = 0; i < moduleArray.length; i++ ){
+    const isValidModule = findModuleAvailability(moduleArray[i]);
 
     if(!isValidModule){
-      //console.log('The following module cannot be found in database: ' + moduleCode);
-      moduleIndex  = moduleArray.indexOf(moduleCode);
-      moduleArray.splice(moduleIndex,1);
+      console.log('The following module cannot be found in database: ' + moduleArray[i]);
+    } else {
+      checkedModuleArray.push(moduleArray[i]);
     }
   }
+
+  return checkedModuleArray;
 }
 
-export const createModuleListObject = function(moduleList) {
+export const createModuleListObject = function createNewListOfModuleObject(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
 
@@ -107,8 +107,24 @@ export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimary
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
     tempFocusAreaNonPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
     if (tempFocusAreaNonPrimaryDoc)  {
-      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListNonPrimary;
+      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListElectives;
     }
   }
   return focusAreaNonPrimaryRequirements;
+}
+/** This method returns the ID of the queried Focus Area
+  * It is safe to assume that there will only be one focus area for each name,
+  * i.e. Focus Area name will always be unique.
+  * @param {string} name of the focus area that you want to retrieve
+  * @param {string} empty string on fail or object id of the relevant focus area on success.
+  */
+export const getFocusAreaIDByName = function searchFocusAreaByName(focusAreaName){
+  let resultCursor = FocusArea.find({name: focusAreaName});
+
+  if(resultCursor.count() > 0){
+    let result = resultCursor.fetch()[0];
+    return result["_id"];
+  }
+
+  return '';
 }
