@@ -3,6 +3,7 @@ import { searchByModuleCodeAndNameRegex,
          searchByModuleCode,
          retrieveAllModule } from '../database-controller/module/methods';
 
+
 /**
  * API wrapper call for returning list of all modules from the database
  * without any criteria.
