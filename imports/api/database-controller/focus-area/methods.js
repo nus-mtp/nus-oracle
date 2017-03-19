@@ -22,7 +22,6 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
 
-
   const newFocusAreaDocument = {
     name : name,
     moduleListPrimary : primaryToBeStored,
@@ -30,7 +29,6 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
     moduleListElectives: nonPrimaryToBeStored
   }
   let result = '';
-
   isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
 
   if(isValid){
@@ -39,7 +37,6 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   }
 
   return result;
-
 }
 
 
@@ -74,24 +71,6 @@ export const createModuleListObject = function createNewListOfModuleObject(modul
   return moduleToBeStored;
 }
 
-
-/** This method returns the ID of the queried Focus Area
-  * It is safe to assume that there will only be one focus area for each name,
-  * i.e. Focus Area name will always be unique.
-  * @param {string} name of the focus area that you want to retrieve
-  * @param {string} empty string on fail or object id of the relevant focus area on success.
-  */
-export const getFocusAreaIDByName = function searchFocusAreaByName(focusAreaName){
-  let resultCursor = FocusArea.find({name: focusAreaName});
-
-  if(resultCursor.count() > 0){
-    let result = resultCursor.fetch()[0];
-    return result["_id"];
-  }
-
-  return '';
-}
-
 export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
   const focusAreaPrimaryRequirements = {};
   let tempFocusAreaPrimaryDoc = {};
@@ -122,8 +101,24 @@ export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimary
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
     tempFocusAreaNonPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
     if (tempFocusAreaNonPrimaryDoc)  {
-      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListNonPrimary;
+      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListElectives;
     }
   }
   return focusAreaNonPrimaryRequirements;
+}
+/** This method returns the ID of the queried Focus Area
+  * It is safe to assume that there will only be one focus area for each name,
+  * i.e. Focus Area name will always be unique.
+  * @param {string} name of the focus area that you want to retrieve
+  * @param {string} empty string on fail or object id of the relevant focus area on success.
+  */
+export const getFocusAreaIDByName = function searchFocusAreaByName(focusAreaName){
+  let resultCursor = FocusArea.find({name: focusAreaName});
+
+  if(resultCursor.count() > 0){
+    let result = resultCursor.fetch()[0];
+    return result["_id"];
+  }
+
+  return '';
 }

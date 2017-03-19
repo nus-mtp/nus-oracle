@@ -18,6 +18,7 @@ import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
+//import '../../api/database-conversion/CohortDatabaseParser.js';
 
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
 import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
@@ -25,6 +26,7 @@ import { populateModuleFulfilmentCollection } from '../../api/database-conversio
 
 Meteor.startup(() => {
   process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
+  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();

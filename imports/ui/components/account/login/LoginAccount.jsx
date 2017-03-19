@@ -2,9 +2,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
 // Import success and error notifications
-import { successMsgs,
-         errorMsgs,
-         successMsgLoginName,
+import { successMsgLoginName,
+         errorLockedAccount,
          errorMsgIncorrectPassword,
          errorMsgUnverifiedEmail,
          errorMsgUnrecognizedEmail,
@@ -95,16 +94,16 @@ export default class LoginAccount extends React.Component {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
         let isVerified = Meteor.user().emails[0].verified; // TODO EMAIL VERIFICATION FUNCTION
-        console.log(isVerified)
         // WORK-IN-PROGRESS ADRIAN
-        if (isVerified) {
+        if (Meteor.user().profile.accountLock) {
+          Bert.alert(errorLockedAccount(Meteor.user().username), 'danger');
+          FlowRouter.go(pathToLogin);
+          Meteor.logout();
+        } else if (isVerified) {
           // Log only a valid and verified user in
           if (Meteor.user().profile.hasSetup) {
-            // Return users
-            FlowRouter.go(pathToUserDashboard);
-            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
-          } else {
             // Newly-signed-up users
+            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
             FlowRouter.go(pathToAcadDetailsSetup);
           }
         } else {

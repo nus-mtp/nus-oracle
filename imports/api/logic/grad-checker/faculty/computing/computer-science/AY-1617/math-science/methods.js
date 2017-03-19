@@ -52,7 +52,6 @@ const markModules = function markModules(markedMathSciModulesAndMCs, studentSeme
   for (var i = 0; i < studentSemesters.length; i++) {
     if (studentSemesters[i].moduleHashmap[equivalentModule] &&
         !markedMathSciModulesAndMCs.moduleChecked[equivalentModule]) {
-      // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
       markedMathSciModulesAndMCs.markedMathSciModules[originalModule] = true;
       markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue += 1;
       markedMathSciModulesAndMCs.moduleChecked[equivalentModule] = true;
@@ -87,6 +86,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathS
   return markedMathSciModulesAndMCs;
 }
 
+//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExceptions = function markExceptions(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
   if (originalModule === 'Science Two' &&
       markedMathSciModulesAndMCs.moduleChecked['ST2131'] )  {
@@ -101,8 +101,7 @@ const markExceptions = function markExceptions(markedMathSciModulesAndMCs, stude
 //check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
   if (originalModule === 'Science Two' &&
-      markedMathSciModulesAndMCs.moduleChecked['ST2131'] &&
-      !markedMathSciModulesAndMCs.markedMathSciModules[originalModule])  {
+      markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
     markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
   } else {
     markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
