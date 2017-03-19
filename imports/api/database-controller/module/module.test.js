@@ -6,7 +6,7 @@ import {
   insertToModuleCollection,
   isEmptyModuleCollection,
   isExistModuleCollection,
-  searchByModuleCodeRegex,
+  searchByModuleCodeAndNameRegex,
   retrieveAllModule,
   findModuleAvailability
 } from './methods';
@@ -146,7 +146,7 @@ if(Meteor.isServer){
       Modules.insert(sampleModuleTwo);
       Modules.insert(sampleModuleNoCorequisite);
 
-      const searchResult = searchByModuleCodeRegex('CS');
+      const searchResult = searchByModuleCodeAndNameRegex('CS');
 
       assert.equal(searchResult.length,2);
     });

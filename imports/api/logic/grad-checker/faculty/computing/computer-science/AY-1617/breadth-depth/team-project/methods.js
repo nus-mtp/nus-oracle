@@ -18,6 +18,9 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedTeamProjectModulesAndMCs = markModules(markedTeamProjectModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
