@@ -4,12 +4,16 @@ import React from 'react';
 import Module from './Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
 
+// Import necessary constants
+import { SMALL_LINE_CHAR_LIMIT } from '../common/Constants.js';
+import { MEDIUM_LINE_CHAR_LIMIT } from '../common/Constants.js';
+import { SMALL_LINE_HEIGHT } from '../common/Constants.js';
+import { MEDIUM_LINE_HEIGHT } from '../common/Constants.js';
+import { LARGE_LINE_HEIGHT } from '../common/Constants.js';
+
 import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
 import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
 import { sendQuery } from '../../../api/searcher-controller/controller.js'
-
-const SMALL_LINE_HEIGHT_LIMIT = 31;
-const MEDIUM_LINE_HEIGHT_LIMIT = 42;
 
 /**
  * React Component that implements the container for a semester's worth of
@@ -89,12 +93,12 @@ export default class SemModulesCard extends React.Component {
     let module = option.option;
     let moduleCodeAndNameLen = module.moduleCodeAndName.length;
 
-    if (moduleCodeAndNameLen <= SMALL_LINE_HEIGHT_LIMIT) {
-      return small;
-    } else if (moduleCodeAndNameLen <= MEDIUM_LINE_HEIGHT_LIMIT) {
-      return medium;
+    if (moduleCodeAndNameLen <= SMALL_LINE_CHAR_LIMIT) {
+      return SMALL_LINE_HEIGHT;
+    } else if (moduleCodeAndNameLen <= MEDIUM_LINE_CHAR_LIMIT) {
+      return MEDIUM_LINE_HEIGHT;
     } else {
-      return large;
+      return LARGE_LINE_HEIGHT;
     }
   }
 
@@ -122,9 +126,8 @@ export default class SemModulesCard extends React.Component {
             {/* Async Search bar to retrieve thousands of records optionHeight: 45px */}
             <VirtualizedSelect searchable async clearable={false}
               labelKey="moduleCodeAndName"
-              loadingPlaceholder="Loading..."
-              noResultsText="Module not found"
               placeholder="Add a module..."
+              menuBuffer={50}
               optionHeight={this.computeLineHeight}
               loadOptions={this.getModulesListFromDB.bind(this)}
               onChange={this.handleSelectModuleCode.bind(this)} />
