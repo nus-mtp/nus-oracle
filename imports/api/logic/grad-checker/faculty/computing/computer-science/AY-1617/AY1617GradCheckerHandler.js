@@ -14,7 +14,6 @@ import { checkFocusAreaFulfilmentMCs,
 import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
 import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
-
 /**
 * retrieves an object of string boolean objects for each graduation requirement
 *  @param {objects}  a full appended object list of all the modules in a student planner
@@ -207,7 +206,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
 const UIFormatConversion = function UIFormatConversion(name, markedModules, isFulfilled) {
   let tempGradRequirement = {};
-
   switch(name)  {
     case 'Unrestricted Electives':
     tempGradRequirement = {

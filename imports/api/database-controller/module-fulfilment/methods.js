@@ -46,7 +46,7 @@ export const updateModuleMappingOfModuleFulfilment = function updateModuleMappin
     result = ModuleFulfilments.update(fulfilment._id, {$set: {moduleMapping: mappingObject}});
 
   }
-
+  return result;
 }
 /** Return module fulfilment that fits the queried module code
   * @param {string} moduleCode of module fulfilment that you want to find
