@@ -13,7 +13,7 @@ describe(" graduation requirement test", function() {
   const ITRequirementMCs = 12;
 
   beforeEach( function() {
-    if(meteor.isServer){
+    if(Meteor.isServer){
       GraduationRequirements.remove({});
     }
     let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
