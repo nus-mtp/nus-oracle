@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 // Import success and error notifications
-import { successMsgs } from '../AccountAlerts.js'
-import { errorMsgs } from '../AccountAlerts.js'
+import {successMsgs,
+        errorMsgs } from '../AccountAlerts.js'
 
 // Import React components
 import Button from '../../common/Button.jsx';
@@ -26,6 +26,7 @@ export default class RegisterAccount extends React.Component {
       repassword:''};
   }
 
+ 
   handleEmailChange(event) {
     this.setState({email: event.target.value});
     this.setState({username: event.target.value});

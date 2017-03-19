@@ -24,14 +24,6 @@ const ACAD_COHORT = [
   { label: 'AY 2016/2017', value:'AY 2016/2017' }
 ]
 
-const COURSE_MAJORS =[
-  { label: 'Business Analytics', value: 'business analytics' },
-  { label: 'Computer Science', value: 'computer science' },
-  { label: 'Information Security', value: 'information security' },
-  { label: 'Information System', value: 'information system' },
-  { label: 'Computer Engineering', value: 'computer engineer' }
-]
-
 const PREV_EDUCATION =[
   { label: 'Junior College', value:'jc' },
   { label: 'Polytechnic', value: 'poly' },
@@ -63,28 +55,20 @@ export default class SetUpAcadDetail extends React.Component {
     Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
     FlowRouter.go(pathToUserDashboard);
   }
+
+  //Handle the input of Matriculation year
   handleAcadValueChange(obj) {
     this.setState({ cohort: obj.value });
     this.state.doubleCancel = true;
   }
 
-  handleCourseValueChange(obj) {
-    this.setState({ course: obj.value });
-    this.state.doubleCancel = true;
-  }
-
+  //Handle the input of Education background
   handleEduValueChange(obj) {
     this.setState({ prevEdu: obj.value });
     this.state.doubleCancel = true;
   }
-  handleClickNext() {
-    // console.log("Clicked Next!");
-  }
 
-  handleClickBack() {
-    // console.log("Clicked Back!");
-  }
-
+  //Handle event when cancel is selected
   handleCancel(event) {
     if (this.state.doubleCancel) {
       Bert.alert(warningMsgs.WARNING_CANCEL_SETUP , 'warning');
@@ -95,8 +79,9 @@ export default class SetUpAcadDetail extends React.Component {
     }
   }
 
+  //Handle the input of User have clicked to finish set up, checks if all the input have been added
   handleSubmit(event) {
-    if (!this.state.cohort || !this.state.prevEdu) {   
+    if (!this.state.cohort || !this.state.prevEdu) {
       Bert.alert(errorMsgs.ERR_SETUP_INCOMPLETE, 'danger');
     } else {
       const userId = Meteor.user()._id;

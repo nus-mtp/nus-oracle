@@ -1,5 +1,5 @@
+//Defines the template that will be sent to users' email while verifying accounts
 
-//@todo: Fix template link
 Accounts.emailTemplates.siteName = "nusOracle";
 Accounts.emailTemplates.from     = "nusOracle <admin@nusOracle.com>";
 

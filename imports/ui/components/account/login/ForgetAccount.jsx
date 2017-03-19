@@ -41,7 +41,7 @@ export default class ForgetAccount extends React.Component {
         let userAccount = Accounts.users.findOne({username: userName});
         console.log(userAccount);
         const userId = userAccount._id;
-/*
+/* @TODO: Adjust code
         Meteor.users.update(userId, {
           $set: { "profile.accountLock" : true }
         });
