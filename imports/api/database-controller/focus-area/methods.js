@@ -47,13 +47,13 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   */
 export const consolidateModuleArrayValidity = function CheckValidityForListOfModule(moduleArray) {
   let checkedModuleArray = [];
-  for (moduleCode in moduleArray){
-    const isValidModule = findModuleAvailability(moduleCode);
+  for (var i = 0; i < moduleArray.length; i++ ){
+    const isValidModule = findModuleAvailability(moduleArray[i]);
 
     if(!isValidModule){
-      console.log('The following module cannot be found in database: ' + moduleCode);
+      console.log('The following module cannot be found in database: ' + moduleArray[i]);
     } else {
-      checkedModuleArray.push(moduleCode);
+      checkedModuleArray.push(moduleArray[i]);
     }
   }
 

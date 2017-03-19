@@ -14,7 +14,6 @@ describe('moduleFulfilment test', function() {
   const storeID = [];
 
   beforeEach( function() {
-    ModuleFulfilments.remove({});
     let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode1,moduleListing1);
     storeID.push(id);
     id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
