@@ -101,10 +101,13 @@ export default class LoginAccount extends React.Component {
           Meteor.logout();
         } else if (isVerified) {
           // Log only a valid and verified user in
-          if (Meteor.user().profile.hasSetup) {
+          if (!Meteor.user().profile.hasSetup) {
             // Newly-signed-up users
-            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
             FlowRouter.go(pathToAcadDetailsSetup);
+          } else {
+            //Actual redirect to dashbaord
+            Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
+            FlowRouter.go(pathToUserDashboard);
           }
         } else {
           // Refresh login page if this email isn't verified yet

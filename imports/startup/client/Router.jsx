@@ -48,7 +48,6 @@ function checkLoggedIn (ctx, redirect) {
 function redirectIfLoggedIn (ctx, redirect) {
   console.log(profile);
   if (Meteor.userId()) {
-//    const userdetails = Meteor.users.find( { "_id": Meteor.userId()});
     Meteor.subscribe("user-profile", {
       onReady: function() {
         if (!Meteor.user().profile.hasSetup) {
@@ -58,14 +57,6 @@ function redirectIfLoggedIn (ctx, redirect) {
         }
       }
     });
-
-    //console.log(Meteor.user().profile.hasSetup);
-    //if (Meteor.user().profile.hasSetup) {
-    /* if (Meteor.user().profile.hasSetup) {
-       redirect(pathToUserDashboard)
-    } else {
-      redirect(pathToAcadDetailsSetup)
-    }*/
   }
 }
 /**
@@ -95,15 +86,6 @@ loggedinRouterGroup = FlowRouter.group({
  triggersEnter: [
    checkLoggedIn
  ]
- /*
- triggersEnter: [() =>
-   unless Meteor.loggingIn() or Meteor.userId()
-     route = FlowRouter.current()
-     unless route.route.name is 'login'
-       Session.set 'redirectAfterLogin', route.path
-     FlowRouter.go ‘login’
- ]
- */
 });
 
 
