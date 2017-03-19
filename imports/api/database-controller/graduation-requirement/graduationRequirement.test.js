@@ -1,6 +1,6 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { GraduationRequirements} from './graduationRequirement';
-import { createNewGradRequirement,
+import { createNewGradRequirementByModuleObject,
          getGradRequirementModules,
          getGradRequirementMCs } from './methods';
 
@@ -13,9 +13,9 @@ describe(" graduation requirement test", function() {
   const ITRequirementMCs = 12;
 
   beforeEach( function() {
-    let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
+    let result1 = createNewGradRequirementByModuleObject(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
-    let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
+    let result2 = createNewGradRequirementByModuleObject(graduationName[1], ITProfModuleList, ITRequirementMCs);
     storeID.push(result2);
 
     assert.equal(GraduationRequirements.find({}).fetch().length, 2);

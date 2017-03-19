@@ -46,5 +46,4 @@ Meteor.startup(() => {
     populateModuleFulfilmentFixture();
     populateULRModuleFulfilment();
   }
-
 });

@@ -45,7 +45,6 @@ export const removeGradRequirementFromCohort  = function removeOneGraduationRequ
 
 export const updateCohortGradRequirementIDs = function updateEntireCohortGraduationRequirementIDs(cohortName, newGradRequirementIDs ) {
   const targetCohort = AcademicCohort.find({cohortName: cohortName});
-
   if (targetCohort.count() == 0){
     console.log("no graduation requirement with name " + cohortName);
     return;
