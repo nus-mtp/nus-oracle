@@ -1,4 +1,4 @@
-// for Signin2.jsx
+
 Meteor.methods({
   sendVerificationLink() {
     let userId = Meteor.userId();
