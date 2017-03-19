@@ -22,15 +22,11 @@ var profile;
 
 //});
 /*
-* Help to triggersEnter to authenticate and redirect if user is not logged in
+* Help to triggersEnter to authenticate and redirect if user acccess dashbaord
 */
-function checkLoggedIn (ctx, redirect) {
+function redirectFromDashboard (ctx, redirect) {
   if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
     FlowRouter.go(pathToLogin);
-  /*} else if (!Meteor.user().emails[0].verified) {
-      redirect(pathToLogin);
-    } else if (!Meteor.user().profile.hasSetup) {
-      redirect(pathToAcadDetailsSetup)*/
     } else {
       Meteor.subscribe("user-profile", {
         onReady: function() {
@@ -43,21 +39,37 @@ function checkLoggedIn (ctx, redirect) {
   }
 }
 /*
-* Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
+* Help to triggersEnter to authenticate and redirect if user acccess acadSetup
 */
-function redirectIfLoggedIn (ctx, redirect) {
-  console.log(profile);
-  if (Meteor.userId()) {
-    Meteor.subscribe("user-profile", {
-      onReady: function() {
+function redirectFromSetup (ctx, redirect) {
+  if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
+    FlowRouter.go(pathToLogin);
+    } else {
+      Meteor.subscribe("user-profile", {
+        onReady: function() {
+          if (Meteor.user().profile.hasSetup) {
+            //console.log("I am in hacker voice")
+              FlowRouter.go(pathToUserDashboard);
+          }
+        }
+      });
+  }
+}
+/*
+* Help to triggersEnter to authenticate and redirect if user acccess index
+*/
+function redirectFromLogIn (ctx, redirect) {
+  Meteor.subscribe("user-profile", {
+    onReady: function() {
+      if (Meteor.user()) {
         if (!Meteor.user().profile.hasSetup) {
           FlowRouter.go(pathToAcadDetailsSetup);
         } else {
           FlowRouter.go(pathToUserDashboard);
         }
       }
-    });
-  }
+    }
+  });
 }
 /**
  * Implements routes throughout the project
@@ -70,7 +82,7 @@ function redirectIfLoggedIn (ctx, redirect) {
 publicRouterGroup = FlowRouter.group({
  name: 'public',
  triggersEnter: [
-   redirectIfLoggedIn
+   redirectFromLogIn
  ]
 });
 
@@ -82,16 +94,15 @@ publicRouterGroup.route(pathToLogin, {
 
 // The private routes after logging in, will be redirected to log in page if no account is present
 loggedinRouterGroup = FlowRouter.group({
- name: 'private',
- triggersEnter: [
-   checkLoggedIn
- ]
+ name: 'private'
 });
 
 
 loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
  name: 'acadSetup',
- triggersEnter: [checkLoggedIn],
+ triggersEnter: [
+   redirectFromSetup
+ ],
  action()  {
    mount(MainLayout, {content: <SetUpAcadDetail />});
  }
@@ -99,7 +110,9 @@ loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
 
 loggedinRouterGroup.route(pathToUserDashboard,  {
  name: 'dashboard',
- triggersEnter: [checkLoggedIn],
+ triggersEnter: [
+   redirectFromDashboard
+ ],
  action()  {
    mount(MainLayout, {content: <App />});
  }

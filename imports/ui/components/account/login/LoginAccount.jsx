@@ -7,7 +7,8 @@ import { successMsgLoginName,
          errorMsgIncorrectPassword,
          errorMsgUnverifiedEmail,
          errorMsgUnrecognizedEmail,
-         errorMsgExceededLoginAttempts } from '../AccountAlerts.js';
+         errorMsgExceededLoginAttempts,
+         warningMsgs } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
@@ -103,6 +104,7 @@ export default class LoginAccount extends React.Component {
           // Log only a valid and verified user in
           if (!Meteor.user().profile.hasSetup) {
             // Newly-signed-up users
+            Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
             FlowRouter.go(pathToAcadDetailsSetup);
           } else {
             //Actual redirect to dashbaord
