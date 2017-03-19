@@ -43,9 +43,6 @@ const STRINGS = ['programming methodology',
 //
 // const filterOptions = createFilterOptions({ options })
 
-const SMALL_LINE_HEIGHT_LIMIT = 31;
-const MEDIUM_LINE_HEIGHT_LIMIT = 42;
-
 /**
  * React Component that implements the container for a semester's worth of
  * modules - all lists are in columnal form with rows of Modules.
