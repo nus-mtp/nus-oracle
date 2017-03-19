@@ -30,7 +30,14 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   }
   let result = '';
 
-  return FocusArea.insert(newFocusAreaDocument);
+  isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
+
+  if(isValid){
+    result = FocusArea.insert(newFocusAreaDocument);
+    return result;
+  }
+
+  return result;
 }
 
 export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
