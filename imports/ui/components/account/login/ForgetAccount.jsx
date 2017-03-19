@@ -8,6 +8,8 @@ import { errorMsgs } from '../AccountAlerts.js';
 // Import React components
 import Button from '../../common/Button.jsx';
 
+import { Accounts } from 'meteor/accounts-base';
+
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -35,6 +37,15 @@ export default class ForgetAccount extends React.Component {
         // Variety of errors when entering email
         Bert.alert(error.reason, 'danger');
       } else {
+        let userName = this.state.email;
+        let userAccount = Accounts.users.findOne({username: userName});
+        console.log(userAccount);
+        const userId = userAccount._id;
+/* @TODO: Adjust code
+        Meteor.users.update(userId, {
+          $set: { "profile.accountLock" : true }
+        });
+        */
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
       }

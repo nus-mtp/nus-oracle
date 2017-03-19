@@ -3,10 +3,10 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 class ModuleFulfilmentCollection extends Mongo.Collection {
   insert(fulfilmentData, callBack){
-    const fulfuilmentDoc = fulfilmentData;
+    const fulfilmentDoc = fulfilmentData;
     let result;
     //validate document
-    return super.insert( fulfuilmentDoc, callBack);
+    return super.insert( fulfilmentDoc, callBack);
   };
   update(selector, modifier){
     const result = super.update(selector, modifier);
@@ -22,23 +22,6 @@ class ModuleFulfilmentCollection extends Mongo.Collection {
 
 export const ModuleFulfilments = new ModuleFulfilmentCollection("modfulfilment");
 
-/** Schema for the
-  * Object in the module Fulfilments
-  * [{acadYear:,
-      areaFulfilled:},
-  *  {acadYear:,
-      areaFulfilled:}]
-  */
-const moduleMappingSchema = {
-  moduleEquivalent: {
-    type: [String]
-  },
-  areaFulfiled: {
-    type: String,
-    optional: true
-  }
-}
-
 /*
  * moduleMapping type,
  * @key academicYear
@@ -49,9 +32,15 @@ const fulfilmentSchema = {
     type: String
   },
   moduleMapping: {
-    type: {moduleMappingSchema},
+    type: Object,
     blackbox: true
   }
 }
 
+
 ModuleFulfilments.attachSchema(fulfilmentSchema);
+if (Meteor.isServer) {
+  Meteor.publish('ModuleFulfilments', function taskPublication () {
+    return ModuleFulfilments.find({});
+  });
+}

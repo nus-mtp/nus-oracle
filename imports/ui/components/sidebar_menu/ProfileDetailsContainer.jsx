@@ -6,7 +6,7 @@ import { getStudentPreviousEducation } from '../../../api/database-controller/st
 import { updateStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
 import { updateStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
 import InlineEdit from 'react-edit-inline';
-import PanelListItem from '../common/PanelListItem.jsx';
+import ProfileDetails from './ProfileDetails.jsx';
 import Select from 'react-select';
 
 const PREV_EDUCATION = [
@@ -23,31 +23,39 @@ const ACAD_COHORT = [
   { label: 'AY 2016/2017', value:'AY 2016/2017' }
 ]
 
+getLabelFromValue = function(value){
+  for(i in PREV_EDUCATION)
+    if(PREV_EDUCATION[i].value === value)
+     return PREV_EDUCATION[i].label;
+  return "";
+}
+
+
 export default ProfileDetailsContainer = createContainer((props) => {
   const studentInfoType = props.studentInfoType;
-  const type= "header";
-  const isEditable = true;
+  const displayType = "header";
   var text = "no data";
+  var onChange;
+
   switch(studentInfoType){
     case 'PrevEdu':
       info = getStudentPreviousEducation();
-      text = info;
-      editable = <Select placeholder={info}
-              multi={false} clearable={false} searchable={false}
-              options={PREV_EDUCATION} value={info}
-              onChange={(data)=>{updateStudentPreviousEducation(data.value)}} />
-      break;
-
+      text = getLabelFromValue(info);
+      options = PREV_EDUCATION;
+      onChange = function(data){
+        updateStudentPreviousEducation(data.value)
+      };
+    break;
     case 'AcadCohort':
       info = getStudentAcademicCohort();
       text = info;
-      editable = <Select placeholder={info}
-              multi={false} clearable={false} searchable={false}
-              options={ACAD_COHORT} value={info}
-              onChange={(data)=>{updateStudentAcademicCohort(data.value)}} />
-      break;
+      options = ACAD_COHORT;
+      onChange = function(data){
+        updateStudentAcademicCohort(data.value)
+      };
+    break;
   }
 
-  return { type, text, editable, isEditable };
+  return { displayType, info, text, options, onChange };
 
-}, PanelListItem);
+}, ProfileDetails);

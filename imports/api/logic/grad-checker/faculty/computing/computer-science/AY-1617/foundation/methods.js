@@ -4,11 +4,13 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, requiredMCs) {
   let markedFoundationModulesAndMCs = {
+    name: 'Computer Science Foundation',
     markedFoundationModules: foundationModules,
     numberOfFoundationModulesMarkedTrue: 0,
     moduleChecked: {},
     totalModuleMCs: 0,
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -19,9 +21,11 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    console.log(moduleFulfilmentMappingEquivalent);
     markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
@@ -29,15 +33,16 @@ export const findFoundationRequirementModules = function findFoundationRequireme
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        if (markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]]) {
+        markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]])  {
           break;
         }
-        markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     // checks if all modules in foundation has been marked true
     if (markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue === keyNames.length) {
       markedFoundationModulesAndMCs.requiredMCs = markedFoundationModulesAndMCs.totalModuleMCs;
+      markedFoundationModulesAndMCs.isFulfilled = true;
       break;
     }
   }
@@ -81,5 +86,6 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
       }
     }
   }
+
   return markedFoundationModulesAndMCs;
 }

@@ -4,12 +4,14 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
 
 export const findITProfessionalismModules = function findITProfessionalismModules(academicCohort, studentSemesters, ITProfessionalismModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedITProfessionalismModulesAndMCs = {
+    name: 'IT Professionalism',
     markedITProfessionalismModules: ITProfessionalismModules,
     numberOfITProfessionalismModulesMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
     totalModuleMCs: 0,
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -20,6 +22,9 @@ export const findITProfessionalismModules = function findITProfessionalismModule
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
@@ -30,14 +35,15 @@ export const findITProfessionalismModules = function findITProfessionalismModule
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        if (markedITProfessionalismModulesAndMCs[keyNames[i]])  {
+        markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]])  {
           break;
         }
-        markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     if (markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue === keyNames.length) {
       markedITProfessionalismModulesAndMCs.requiredMCs = markedITProfessionalismModulesAndMCs.totalModuleMCs;
+      markedITProfessionalismModulesAndMCs.isFulfilled = true;
       break;
     }
   }
@@ -82,5 +88,6 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedITPro
       }
     }
   }
+
   return markedITProfessionalismModulesAndMCs;
 }

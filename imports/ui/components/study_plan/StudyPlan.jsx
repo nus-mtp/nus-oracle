@@ -14,7 +14,8 @@ export default class StudyPlan extends React.Component {
 
     return (
           <TabbedContainer tabTitleList={plannerNames}
-                           plannerIDs={this.props.plannerIDs}/>
+                           plannerIDs={this.props.plannerIDs}
+                           handleSelectTab={this.props.handleSelectTab}/>
     );
   }
 }

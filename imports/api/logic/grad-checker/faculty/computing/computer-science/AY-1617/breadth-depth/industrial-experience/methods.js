@@ -1,11 +1,15 @@
+import { getModuleFulfilment } from '../../../../../../../../database-controller/module-fulfilment/methods';
+import { searchByModuleCode } from '../../../../../../../../database-controller/module/methods';
 
-export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules)  {
+export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedIndustrialExperienceTrainingModulesAndMCs = {
+    name: 'Industrial Experience Training',
     markedIndustrialExperienceTrainingModules: industrialExperienceModules,
     numberOfIndustrialExperienceTrainingModulesMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -13,28 +17,32 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
   const keyNames = Object.keys(industrialExperienceModules);
 
   // loop through markedIndustrialExperienceTrainingModules
-    for (var i=0; i<keyNames.length; i++) {
+    for (var i=0; i < keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+    if (Object.keys(moduleFulfilment).length <= 0)  {
+      return {};
+    }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
     markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-    if (!markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
+    if (!markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]]
+        && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        // early termination here
-        if (markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]]) {
+        markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]])  {
           break;
         }
-        markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     if (markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue === keyNames.length) {
       markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
+      markedIndustrialExperienceTrainingModulesAndMCs.isFulfilled = true;
       break;
     }
   }
@@ -45,7 +53,6 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
 const markModules = function markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
   for (var i = 0; i < studentSemesters.length; i++) {
     if (studentSemesters[i].moduleHashmap[equivalentModule]) {
-      // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = true;
       markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue += 1;
       if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked[equivalentModule])  {
@@ -79,24 +86,37 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedIndus
       }
     }
   }
+
   return markedIndustrialExperienceTrainingModulesAndMCs;
 }
 
 const markExceptions = function markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
-  if (originalModule === 'ATAP/SIP/Industry Course/NOC'
-      && markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CS3200'])  {
-    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, 'CS3202', originalModule);
-  } else if (originalModule === 'ATAP/SIP/Industry Course/NOC'
-      && markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CS3202'])   {
-    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, 'CS3200', originalModule);
+  markedIndustrialExperienceTrainingModulesAndMCs = markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+
+  if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
+    if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
+      markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+    }
+  } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
+    if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
+      markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+    }
   }
-  else {
-    markModules(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, equivalentModule, originalModule);
-  }
+
   return markedIndustrialExperienceTrainingModulesAndMCs;
 }
 
-//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedModules(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
+
+  if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
+    if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
+      markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+    }
+  } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
+    if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
+      markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+    }
+  }
   return markedIndustrialExperienceTrainingModulesAndMCs;
 }

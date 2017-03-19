@@ -56,9 +56,9 @@ describe('grad-checker-foundation', function()  {
     assert.isTrue(markedFoundationModulesAndMCs.moduleChecked[modules[3]], 'CS3230 fulfiled');
     assert.isFalse(markedFoundationModulesAndMCs.markedFoundationModules['CS1231'], 'CS1231 not fulfiled');
 
+    assert.isFalse(markedFoundationModulesAndMCs.isFulfilled);
     assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
     assert.equal(markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue, 4);
-
   })
 
   it ('checks if equivalent, waived and exempted modules return correct boolean values', function() {
@@ -92,6 +92,7 @@ describe('grad-checker-foundation', function()  {
     assert.isTrue(markedFoundationModulesAndMCs.moduleChecked['CS3230'], 'CS3230 checked');
 
     // 16 because waived module does not count to MCs
+    assert.isFalse(markedFoundationModulesAndMCs.isFulfilled);
     assert.equal(markedFoundationModulesAndMCs.totalModuleMCs, 16);
     assert.equal(markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue, 5);
   })

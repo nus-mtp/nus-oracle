@@ -5,8 +5,8 @@ import { insertOneModuleInSemester } from '../crud-controller/module/methods';
 
 export const populatePlannerFixture = function populatePlannerFixture() {
   const userIDs = '9f91pejfj912ras';
-  const plannerNames = ['testPlanner', 'testPlannerTwo', 'testPlannerThree', 'testPlannerFour', 'testPlannerFive', 'testPlannerSix'];
-  const focusAreas = [['Com Graphics'], ['Com Graphics', 'Security'], ['Com Graphics'], ['Algorithms'], ['Com Graphics'], ['Com Graphics']];
+  const plannerNames = ['testPlanner', 'testPlannerTwo', 'testPlannerThree', 'testPlannerFour', 'testPlannerFive'];
+  const focusAreas = [['Com Graphics'], ['Com Graphics', 'Security'], ['Com Graphics'], ['Algorithms'], ['Com Graphics']];
 
   const academicYear = ['AY 2013/2014', 'AY 2013/2014', 'AY 2014/2015', 'AY 2014/2015', 'AY 2015/2016', 'AY 2015/2016', 'AY 2016/2017', 'AY 2016/2017'];
   const semesterNum = [1, 2, 1, 2, 1, 2, 1, 2];
@@ -17,7 +17,6 @@ export const populatePlannerFixture = function populatePlannerFixture() {
   const modulesThree = ['IS1103', 'CS2101'];
   const modulesFour = ['MA1301', 'MA1521', 'MA1101R', 'PC1221X', 'LSM1301', 'ST2131', 'ST2132'];
   const modulesFive = ['CS3283', 'CS3284'];
-  const modulesSix = ['CP3880'];
 
   const plannerIDs = [];
 
@@ -26,7 +25,6 @@ export const populatePlannerFixture = function populatePlannerFixture() {
   plannerIDs.push(createPlannerGivenUserID(plannerNames[2], focusAreas[2], userIDs));
   plannerIDs.push(createPlannerGivenUserID(plannerNames[3], focusAreas[3], userIDs));
   plannerIDs.push(createPlannerGivenUserID(plannerNames[4], focusAreas[4], userIDs));
-  plannerIDs.push(createPlannerGivenUserID(plannerNames[5], focusAreas[5], userIDs));
 
   // create semesters
   populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
@@ -34,7 +32,6 @@ export const populatePlannerFixture = function populatePlannerFixture() {
   populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[2]);
   populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[3]);
   populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[4]);
-  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[5]);
 
   // for each semester, insert a module into the semester
   populateModulesInSemester(semesterIndex, modules, plannerIDs[0]);
@@ -42,7 +39,69 @@ export const populatePlannerFixture = function populatePlannerFixture() {
   populateModulesInSemester(semesterIndex, modulesThree, plannerIDs[2]);
   populateModulesInSemester(semesterIndex, modulesFour, plannerIDs[3]);
   populateModulesInSemester(semesterIndex, modulesFive, plannerIDs[4]);
-  populateModulesInSemester(semesterIndex, modulesSix, plannerIDs[5]);
+
+  return plannerIDs;
+}
+
+export const populateIndustrialPlannerFixture = function populateIndustrialPlannerFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const modulesOne = ['CP3880'];
+  const modulesTwo = ['CP3200'];
+  const plannerNames = ['testPlanner', 'testPlannerTwo'];
+  const focusAreas = [['Com Graphics'], ['Com Graphics', 'Security']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2016/2017', 'AY 2016/2017'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[1], focusAreas[1], userIDs));
+
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[1]);
+
+  populateModulesInSemester(semesterIndex, modulesOne, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, modulesTwo, plannerIDs[1]);
+
+  return plannerIDs;
+}
+
+export const populateULRFixture = function populateULRFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const modulesOne = ['GEH1001', 'GEQ1917', 'GER1000', 'GES1002', 'GET1006'];
+  const plannerNames = ['testPlanner'];
+  const focusAreas = [['Com Graphics']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2016/2017', 'AY 2016/2017'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, modulesOne, plannerIDs[0]);
+
+  return plannerIDs;
+}
+
+export const populateFocusAreaPlannerFixture = function populateFocusAreaPlannerFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const modulesOne = ['CS3241', 'CS3247', 'CS4247', 'CS4246', 'CS5240', 'CS4350'];
+  const plannerNames = ['testPlanner'];
+  const focusAreas = [['Com Graphics']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2016/2017', 'AY 2016/2017'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, modulesOne, plannerIDs[0]);
 
   return plannerIDs;
 }

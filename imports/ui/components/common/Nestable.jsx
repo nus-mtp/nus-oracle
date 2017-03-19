@@ -14,9 +14,14 @@ export default class Nestable extends React.Component{
 
 class Item extends Nestable{
   render(){
+    var isFulfilled = this.props.isFulfilled;
+
     return(
       <li className="dd-item" >
-        <div className="dd-handle" style={styles.item}>{this.props.itemName}</div>
+        <div className={"dd-handle" + (isFulfilled ? " fulfilled" : " incomplete")} style={styles.item}>
+            {this.props.itemName}
+            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
+        </div>
       </li>
     );
   }
@@ -35,16 +40,18 @@ class ListItem extends Nestable{
   }
   render(){
     var isCollapsed = this.state.isCollapsed;
+    var isFulfilled = this.props.isFulfilled;
     var listName = this.props.listName;
 
     return(
       <li className="dd-item">
-        <div  className="dd-handle" style={styles.list}
-              onClick={this.toggleCollapse.bind(this)}>
-          <i  className={"fa fa-"+ (isCollapsed ? "plus" : "minus")}
-              style={styles.collapseIcon}>
-          </i>
-          {listName}
+        <div className={"dd-handle" + (isFulfilled ? " fulfilled" : " incomplete")} style={styles.list}
+          onClick={this.toggleCollapse.bind(this)}>
+            <i  className={"fa fa-"+ (isCollapsed ? "plus" : "minus")}
+                style={styles.collapseIcon}>
+            </i>
+            {listName}
+            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
         </div>
         <OrderedList items={this.props.items} isCollapsed={isCollapsed}/>
       </li>
@@ -62,13 +69,17 @@ class OrderedList extends Nestable{
           <ol className="dd-list" style={{display: isCollapsed ? "none" : "" }}>
             {
               items.map((item, index) => {
-              if(item.children == null){
+              if(item.name === undefined)
+                return undefined;
+              else if(item.children == undefined || item.children.length == 0 && item.name!== undefined){
                 //item is a single entry
-                return <Item itemName={item.name} key={index}/>;
+                return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled}/>;
+                // return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
               else {
                 //item is a list
-                return <ListItem listName={item.name} items={item.children} key={index}/>;
+                return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled}/>;
+                // return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
             })
           }
@@ -85,6 +96,16 @@ const styles = ({
   collapseIcon: {
     width: 1.3 +'em',
     fontSize: 0.7+'em'
+  },
+  completeIcon: {
+    width: 1.3 +'em',
+    fontSize: 0.7+'em',
+    fontColor: 'green'
+  },
+  incompleteIcon: {
+    width: 1.3 +'em',
+    fontSize: 0.7+'em',
+    fontColor: 'green'
   },
   list: {
     cursor: "pointer",

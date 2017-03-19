@@ -6,7 +6,6 @@ import Button from '../../common/Button.jsx';
 
 // Import success and error notifications
 import {  successMsgs,
-          errorMsgIncorrectPassword,
           warningMsgs,
           errorMsgs} from '../AccountAlerts.js';
 
@@ -25,14 +24,6 @@ const ACAD_COHORT = [
   { label: 'AY 2016/2017', value:'AY 2016/2017' }
 ]
 
-const COURSE_MAJORS =[
-  { label: 'Business Analytics', value: 'business analytics' },
-  { label: 'Computer Science', value: 'computer science' },
-  { label: 'Information Security', value: 'information security' },
-  { label: 'Information System', value: 'information system' },
-  { label: 'Computer Engineering', value: 'computer engineer' }
-]
-
 const PREV_EDUCATION =[
   { label: 'Junior College', value:'jc' },
   { label: 'Polytechnic', value: 'poly' },
@@ -46,67 +37,38 @@ export default class SetUpAcadDetail extends React.Component {
       cohort: '',
       course:'',
       prevEdu: '',
-      doubleCancel: true,
-      password:'',
-      username:Meteor.user().username,
-      passwordErr: 0
+      doubleCancel: true
     };
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    Meteor.logout();
+    Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
+    //Meteor.logout();
   }
   handleLogInAccount() {
-    Meteor.loginWithPassword(this.state.username, this.state.password, (error) => {
-      if (error) { // Login error
-        if (error.reason == 'Incorrect password') {
-          // Incorrect password entered by user
-          let numPasswordTries = this.state.passwordErr + 1;
-          this.setState({ passwordErr: numPasswordTries });
-          Bert.alert(errorMsgIncorrectPassword(numPasswordTries), 'danger');
-          if (numPasswordTries >= 5) {
-            this.handleForgetPassword();
-          }
-        }
-        return false;
-      } else {
-        this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
-        const userId = Meteor.user()._id;
-        if (userId) {
-          // create Students document
-          const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
-          // set hasSetup to true
-          Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
-        }
-        Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
-        FlowRouter.go(pathToUserDashboard);
-      }
-    });
+    const userId = Meteor.user()._id;
+    if (userId) {
+      // create Students document
+      const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
+      // set hasSetup to true
+      Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
+    }
+    Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
+    FlowRouter.go(pathToUserDashboard);
   }
+
+  //Handle the input of Matriculation year
   handleAcadValueChange(obj) {
     this.setState({ cohort: obj.value });
     this.state.doubleCancel = true;
   }
 
-  handleCourseValueChange(obj) {
-    this.setState({ course: obj.value });
-    this.state.doubleCancel = true;
-  }
-
+  //Handle the input of Education background
   handleEduValueChange(obj) {
     this.setState({ prevEdu: obj.value });
     this.state.doubleCancel = true;
   }
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
-  }
-  handleClickNext() {
-    // console.log("Clicked Next!");
-  }
 
-  handleClickBack() {
-    // console.log("Clicked Back!");
-  }
-
+  //Handle event when cancel is selected
   handleCancel(event) {
     if (this.state.doubleCancel) {
       Bert.alert(warningMsgs.WARNING_CANCEL_SETUP , 'warning');
@@ -117,48 +79,20 @@ export default class SetUpAcadDetail extends React.Component {
     }
   }
 
+  //Handle the input of User have clicked to finish set up, checks if all the input have been added
   handleSubmit(event) {
-    if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {
+    if (!this.state.cohort || !this.state.prevEdu) {
       Bert.alert(errorMsgs.ERR_SETUP_INCOMPLETE, 'danger');
     } else {
-      Meteor.loginWithPassword(this.state.username, this.state.password, (error) => {
-        if (error) { // Login error
-          if (error.reason == 'Incorrect password') {
-            // Incorrect password entered by user
-            let numPasswordTries = this.state.passwordErr + 1;
-            this.setState({ passwordErr: numPasswordTries });
-            Bert.alert(errorMsgIncorrectPassword(numPasswordTries), 'danger');
-            if (numPasswordTries >= 5) {
-              this.handleForgetPassword();
-            }
-          }
-          return false;
-        } else {
-          this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
-          const userId = Meteor.user()._id;
-          if (userId) {
-            // create Students document
-            const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
-            // set hasSetup to true
-            Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
-          }
-          Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
-          FlowRouter.go(pathToUserDashboard);
-        }
-      });
-      /*
-      if (this.handleLogInAccount()) {
-        const userId = Meteor.user()._id;
-        if (userId) {
-          // create Students document
-          const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
-          // set hasSetup to true
-          Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
-        }
-        Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
-        FlowRouter.go(pathToUserDashboard);
-
-      }*/
+      const userId = Meteor.user()._id;
+      if (userId) {
+        // create Students document
+        const studentID = createNewStudent(userId, this.state.cohort, this.state.prevEdu);
+        // set hasSetup to true
+        Meteor.users.update(userId, { $set: { 'profile.hasSetup': true} } );
+      }
+      Bert.alert(successMsgs.SUCCESS_SETUP, 'success');
+      FlowRouter.go(pathToUserDashboard);
     }
   }
 
@@ -171,7 +105,15 @@ export default class SetUpAcadDetail extends React.Component {
 
         <div className="col-md-6 blockui-element-container-default"
              style={{float: 'none', margin: '3.5em auto'}}>
-  				<div className="form-group"
+
+           <div className="form-group"
+                style={{color: '#ffffff', marginBottom: '2.5em'}}>
+             <h4 style={{marginBottom: '0.3em'}}>
+               <strong>Course Major: </strong>Computer Science
+             </h4>
+   				</div>
+
+          <div className="form-group"
                style={{color: '#ffffff', marginBottom: '2.5em'}}>
             <h5 style={{marginBottom: '0.3em'}}>
               <strong>Academic Cohort</strong>
@@ -185,17 +127,6 @@ export default class SetUpAcadDetail extends React.Component {
   				<div className="form-group"
                style={{color: '#ffffff', marginBottom: '2.5em'}}>
             <h5 style={{marginBottom: '0.3em'}}>
-              <strong>Course Major</strong>
-            </h5>
-            <Select placeholder="Select"
-                    multi={false} clearable={false} searchable={false}
-                    options={COURSE_MAJORS} value={this.state.course}
-                    onChange={this.handleCourseValueChange.bind(this)} />
-  				</div>
-
-  				<div className="form-group"
-               style={{color: '#ffffff', marginBottom: '2.5em'}}>
-            <h5 style={{marginBottom: '0.3em'}}>
               <strong>Previous Education</strong>
             </h5>
             <Select placeholder="Select"
@@ -203,18 +134,6 @@ export default class SetUpAcadDetail extends React.Component {
                     options={PREV_EDUCATION} value={this.state.prevEdu}
                     onChange={this.handleEduValueChange.bind(this)} />
   			  </div>
-
-          <div className="form-group"
-               style={{color: '#ffffff', marginBottom: '2.5em'}}>
-            <h5 style={{marginBottom: '0.3em'}}>
-              <strong>Re-enter Password:</strong>
-            </h5>
-            <input placeholder="Password"
-              type="password"
-              value={this.state.value}
-              onChange={this.handlePasswordChange.bind(this)} />
-          </div>
-
           <div className="blockui-element-container-default">
             <Button buttonClass="btn btn-rounded btn-inline btn-secondary-outline"
               buttonText="Cancel Setup"

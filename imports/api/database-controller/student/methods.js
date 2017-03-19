@@ -65,7 +65,7 @@ export const getStudentPreviousEducation = function getPrevEducation() {
 }
 
 export const updateStudentAcademicCohort = function updateStudentCohort(newCohort) {
-  //TO-DO: Check if the cohort exists in the acadCohortDataBase
+  //TO-DO: CASCADE change to the student study planner
   // find the studentID
   const studentID = getStudentID();
   const student = getCurrentStudentDocument(studentID);

@@ -13,24 +13,52 @@ export const pathToLogin = "/";
 export const pathToAcadDetailsSetup = "/acadSetup";
 export const pathToUserDashboard = "/userDashboard";
 
+var profile;
+//Tracker.autorun(function () {
+
+    //profile = Meteor.user();
+    //console.log("Tracker");
+    //console.log(profile);
+
+//});
 /*
 * Help to triggersEnter to authenticate and redirect if user is not logged in
 */
 function checkLoggedIn (ctx, redirect) {
   if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
-    redirect(pathToLogin);
+    FlowRouter.go(pathToLogin);
   /*} else if (!Meteor.user().emails[0].verified) {
       redirect(pathToLogin);
     } else if (!Meteor.user().profile.hasSetup) {
       redirect(pathToAcadDetailsSetup)*/
-    }
+    } else {
+      Meteor.subscribe("user-profile", {
+        onReady: function() {
+          if (!Meteor.user().profile.hasSetup) {
+            //console.log("I am in hacker voice")
+              FlowRouter.go(pathToAcadDetailsSetup);
+          }
+        }
+      });
+  }
 }
 /*
 * Help to triggersEnter to authenticate and redirect if user is logged in and have an account already set up
 */
 function redirectIfLoggedIn (ctx, redirect) {
+  console.log(profile);
   if (Meteor.userId()) {
-    redirect(pathToUserDashboard);
+//    const userdetails = Meteor.users.find( { "_id": Meteor.userId()});
+    Meteor.subscribe("user-profile", {
+      onReady: function() {
+        if (!Meteor.user().profile.hasSetup) {
+          FlowRouter.go(pathToAcadDetailsSetup);
+        } else {
+          FlowRouter.go(pathToUserDashboard);
+        }
+      }
+    });
+
     //console.log(Meteor.user().profile.hasSetup);
     //if (Meteor.user().profile.hasSetup) {
     /* if (Meteor.user().profile.hasSetup) {
@@ -48,49 +76,49 @@ function redirectIfLoggedIn (ctx, redirect) {
  */
 
  // The routes before logging in, will be redirected accordingly if account has been previously logged in
- publicRouterGroup = FlowRouter.group({
-   name: 'public',
-   triggersEnter: [
-     redirectIfLoggedIn
-   ]
- });
+publicRouterGroup = FlowRouter.group({
+ name: 'public',
+ triggersEnter: [
+   redirectIfLoggedIn
+ ]
+});
 
- publicRouterGroup.route(pathToLogin, {
-   action() {
-     mount(MainLayout, {content: <AccountManager />});
-   }
- });
+publicRouterGroup.route(pathToLogin, {
+ action() {
+   mount(MainLayout, {content: <AccountManager />});
+ }
+});
 
 // The private routes after logging in, will be redirected to log in page if no account is present
- loggedinRouterGroup = FlowRouter.group({
-   name: 'private',
-   triggersEnter: [
-     checkLoggedIn
-   ]
-   /*
-   triggersEnter: [() =>
-     unless Meteor.loggingIn() or Meteor.userId()
-       route = FlowRouter.current()
-       unless route.route.name is 'login'
-         Session.set 'redirectAfterLogin', route.path
-       FlowRouter.go ‘login’
-   ]
-   */
- });
+loggedinRouterGroup = FlowRouter.group({
+ name: 'private',
+ triggersEnter: [
+   checkLoggedIn
+ ]
+ /*
+ triggersEnter: [() =>
+   unless Meteor.loggingIn() or Meteor.userId()
+     route = FlowRouter.current()
+     unless route.route.name is 'login'
+       Session.set 'redirectAfterLogin', route.path
+     FlowRouter.go ‘login’
+ ]
+ */
+});
 
 
- loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
-   name: 'acadSetup',
-   triggersEnter: [checkLoggedIn],
-   action()  {
-     mount(MainLayout, {content: <SetUpAcadDetail />});
-   }
- });
+loggedinRouterGroup.route(pathToAcadDetailsSetup,  {
+ name: 'acadSetup',
+ triggersEnter: [checkLoggedIn],
+ action()  {
+   mount(MainLayout, {content: <SetUpAcadDetail />});
+ }
+});
 
- loggedinRouterGroup.route(pathToUserDashboard,  {
-   name: 'dashboard',
-   triggersEnter: [checkLoggedIn],
-   action()  {
-     mount(MainLayout, {content: <App />});
-   }
- });
+loggedinRouterGroup.route(pathToUserDashboard,  {
+ name: 'dashboard',
+ triggersEnter: [checkLoggedIn],
+ action()  {
+   mount(MainLayout, {content: <App />});
+ }
+});
