@@ -2,8 +2,6 @@ import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
 // The following component handles the available method of interaction with the Module Collections
-
-
 export const addNewTermFromModuleDocument = function updateTermModule(moduleCode, newTermOffered) {
   const a = searchByModuleCode(moduleCode);
   const termArray = a.termOffered;

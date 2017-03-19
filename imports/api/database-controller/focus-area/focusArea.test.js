@@ -136,8 +136,8 @@ describe('focus area test', function() {
 
       const inModuleCollectionConsolidatedModuleArray = consolidateModuleArrayValidity(focusAreaOneListPrimary);
       assert.equal(inModuleCollectionConsolidatedModuleArray.length,2);
-      assert.equal(inModuleCollectionConsolidatedModuleArray[0]['moduleName'],'default 1');
-      assert.equal(inModuleCollectionConsolidatedModuleArray[1]['moduleName'],'default 2');
+      assert.equal(inModuleCollectionConsolidatedModuleArray[0],'default1');
+      assert.equal(inModuleCollectionConsolidatedModuleArray[1],'default2');
     });
 
     it('should return empty string when finding ID of focus area name that does not exist', function(){
