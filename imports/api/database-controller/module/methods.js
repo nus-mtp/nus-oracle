@@ -2,10 +2,6 @@ import { Modules } from './module';
 import { Meteor } from 'meteor/meteor';
 
 // The following component handles the available method of interaction with the Module Collections
-// TO-DO: remove
-export const createNewModuleDocument = function createModuleDocument() {
-}
-
 export const addNewTermFromModuleDocument = function updateTermModule(moduleCode, newTermOffered) {
   const a = searchByModuleCode(moduleCode);
   const termArray = a.termOffered;
@@ -41,9 +37,9 @@ export const searchByModuleCode = function retrieveMod(modCode) {
 
 // module is available in database
 export const findModuleAvailability = function searchForModule( modCode ) {
-  const modResult = Modules.find({ moduleCode: modCode });
+  const resultCursor = Modules.find({ moduleCode: modCode });
 
-  if(modResult.count() == 0){
+  if(resultCursor.count() === 0){
     return false;
   }
 
@@ -78,7 +74,7 @@ export const searchByModuleCodeAndNameRegex = function searchByModuleCodeAndName
 // check if the collection of module is empty
 export const isEmptyModuleCollection = function checkForAnyContent() {
   const searchResult = Modules.find({}).fetch();
-  if (searchResult.length == 0) {
+  if (searchResult.length === 0) {
     return true;
   }
   return false;
@@ -90,7 +86,9 @@ export const removeAllModule = function removeAllModule() {
 
 // insert one new module document to the Module Database
 export const insertToModuleCollection = function insertToModuleCollection(object) {
-  Modules.insert(object);
+  // compare the object to the schema
+
+  return Modules.insert(object);
   // TO DO:return success/ failure message
 };
 
