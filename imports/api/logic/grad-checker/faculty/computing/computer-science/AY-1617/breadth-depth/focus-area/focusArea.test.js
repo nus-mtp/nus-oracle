@@ -69,10 +69,6 @@ describe('grad-checker-focusArea', function()  {
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
 
-    console.log("Focus Area Primary: " + JSON.stringify(focusAreaPrimaryModules));
-    console.log("Focus Area 4K: " + JSON.stringify(focusArea4KModules));
-    console.log("Focus Area Non Primary: " + JSON.stringify(focusAreaNonPrimaryModules));
-
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules[focusAreaName],
       focusArea4KModules: focusArea4KModules[focusAreaName],

@@ -23,8 +23,8 @@ import { populateAcadCohortCollection } from '../../api/database-conversion/coho
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 Meteor.startup(() => {
-  process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
   process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
+  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
