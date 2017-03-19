@@ -1,10 +1,46 @@
-/** While the name is CohortDatabaseParser, this file handles the database insertion
-* of two other Database Data: Graduation Requirement and focus area,
-* which will be linked back to the relevant academic cohort database by its mongoDB ID.
+/** Parse json file following the specified format below to be stored in the site database.
 * This parser will also make use of the schema to check the legibility of the data that is going to be
 * passed into the database as well as the availability in the database( check if the module is available in database)
+
+* Note that Academic Cohort will reference graduation requirement and focus area through their ID.
+* Focus Area can be easily referenced through their name.
+* However, graduation requirement requires both the cohort name and the requirement name to ensure uniqueness of document.
+* Thus, for ease of referencing, graduation requirement document will be created together with the creation of academic cohort.
+
+* Finally, make sure that the focus area and the module DB is available and populated before running this script.
+
+* The information in the json file to be parsed should be stored in the following manner :
+  { "data":[{
+              "cohortName": "AY xxxx/xxxx",
+              "uniqueGradRequirement": [
+                  {
+                    "requirementName": "requirement 1",
+                    "requirementModules": ["module1", "module2", "module3"]
+                  },
+                  {
+                    "requirementName": "requirement 2",
+                    "requirementModules": ["module1", "module2", "module3"]
+                  }
+                ],
+              "repeatedGradRequirement": "none",
+              "cohortFocusArea": ["fa1","fa2","fa3"]
+            },
+            {
+              "cohortName": "AY yyyy/yyyy",
+              "uniqueGradRequirement": "none",
+              "repeatedGradRequirement": [
+              {
+                /// this cohort should have existed in the DB
+                "cohortName": "AY xxxx/xxxx",
+                "graduationRequirement": ["requirement 2"]
+              }],
+              "cohortFocusArea": ["fa1","fa2","fa3"]
+            }
+          ]
+}
 */
 
+// import DB pointer in case required.
 import {GraduationRequirements} from '../database-controller/graduation-requirement/graduationRequirement';
 import { AcademicCohort } from '../database-controller/AcademicCohort/acadCohort';
 // import method to insert new graduation requirement methods
@@ -13,76 +49,88 @@ import { createNewGradRequirement,
 // import method to insert new academic cohort methods
 import { createNewCohort,
          updateCohortGradRequirementIDs,
-         getCohortByName} from '../database-controller/AcademicCohort/methods';
+         getCohortByName,
+         updateCohortFocusAreaIDs} from '../database-controller/AcademicCohort/methods';
+// import method to get focus area id from their name.
+import { getFocusAreaIDByName } from '../database-controller/focus-area/methods';
 //import method to check availability of module in module database
 import { findModuleAvailability } from '../database-controller/module/methods';
 
-const focusAreaFile = "FocusArea.json"
 const gradRequirementFile = 'GraduationRequirement.json';
-const empty = "none";
 
+export const populateAcadCohortCollection = function() {
 //make sure to only run this script on server side.
-if(Meteor.isServer){
-  AcademicCohort.remove({});
-  GraduationRequirements.remove({});
-  // get data
-  const jsonFile = JSON.parse(Assets.getText(gradRequirementFile));
-  const acadCohortData = jsonFile["data"];
+  if(Meteor.isServer){
+    AcademicCohort.remove({});
+    GraduationRequirements.remove({});
 
-  for(var i = 0; i< acadCohortData.length; i++){
+    // get data
+    const jsonFile = JSON.parse(Assets.getText(gradRequirementFile));
+    const acadCohortData = jsonFile["data"];
 
-    let currentCohort = acadCohortData[i];
+    for(var i = 0; i< acadCohortData.length; i++){
 
-    // get acad Cohort Name
-    let currentCohortName = currentCohort["cohortName"];
-    let newID = createNewCohort(currentCohortName);
-    console.log("newCohort ID:" + newID);
-    let gradRequirementID = [];
+      let currentCohort = acadCohortData[i];
 
-    // see if there is any unique graduation requirement
-    if (currentCohort["uniqueGradRequirement"] != "none"){
-      /// if there is , insert to grad requirement DB
-      for(var j = 0; j < currentCohort["uniqueGradRequirement"].length; j++){
-        let currentNewRequirement = currentCohort["uniqueGradRequirement"][j];
-        let newID = insertNewGradRequirementModuleData(currentNewRequirement["requirementName"],
-                                                       currentNewRequirement["requirementModules"],
-                                                       currentNewRequirement["requirementMCs"]);
-        console.log(newID);
-        /// store ID to array
-        gradRequirementID.push(newID);
-      }
-    }
-
-    /// else find the equivalent grad requirement
-    if (currentCohort["repeatedGradRequirement"] != "none"){
-      for(var j = 0; j < currentCohort["repeatedGradRequirement"].length; j++){
-        let referencedCohort = currentCohort["repeatedGradRequirement"][j]["cohortName"];
-        let referencedGradIDDocument = getCohortByName(referencedCohort)["cohortGradRequirementID"];
-        console.log(referencedGradIDDocument);
-        let requirementList = currentCohort["repeatedGradRequirement"][j]["graduationRequirement"];
-
-        for(var k = 0; k < requirementList.length ; k++ ){
-          currentRequirementName = requirementList[k];
-          let matchingDocument = GraduationRequirements.findOne({$and:[{requirementName:currentRequirementName},{_id:{$in:referencedGradIDDocument}}]});
-          console.log("matching document is:" + JSON.stringify(matchingDocument["_id"]));
-          gradRequirementID.push(matchingDocument["_id"]);
+      // get acad Cohort Name
+      let currentCohortName = currentCohort["cohortName"];
+      let newCohortID = createNewCohort(currentCohortName);
+      console.log("newCohort Name:" + currentCohortName);
+      console.log("newCohort ID:" + newCohortID);
+      let gradRequirementIDs = [];
+  /////////////////////////////////// GRADUATION REQUIREMENT //////////////////////////////////////////////////////////////////////
+      // see if there is any unique graduation requirement
+      if (currentCohort["uniqueGradRequirement"] != "none"){
+        /// if there is , insert to grad requirement DB
+        for(var j = 0; j < currentCohort["uniqueGradRequirement"].length; j++){
+          let currentNewRequirement = currentCohort["uniqueGradRequirement"][j];
+          let newRequirementID = createNewGradRequirement(currentNewRequirement["requirementName"],
+                                                         currentNewRequirement["requirementModules"],
+                                                         currentNewRequirement["requirementMCs"]);
+          console.log(currentNewRequirement + ":" + newRequirementID);
+          /// store ID to array
+          gradRequirementIDs.push(newRequirementID);
         }
       }
-    }
 
-    // check for focus area
-    // create new academic cohort
-    console.log(gradRequirementID);
-    updateCohortGradRequirementIDs(currentCohortName,gradRequirementID);
+      /// else find the equivalent grad requirement
+      if (currentCohort["repeatedGradRequirement"] != "none"){
+        for(var j = 0; j < currentCohort["repeatedGradRequirement"].length; j++){
+          let referencedCohort = currentCohort["repeatedGradRequirement"][j]["cohortName"];
+          let referencedGradIDDocument = getCohortByName(referencedCohort)["cohortGradRequirementID"];
+
+          let requirementList = currentCohort["repeatedGradRequirement"][j]["graduationRequirement"];
+
+          for(var k = 0; k < requirementList.length ; k++ ){
+            currentRequirementName = requirementList[k];
+            let matchingDocument = GraduationRequirements.findOne({$and:[{requirementName:currentRequirementName},{_id:{$in:referencedGradIDDocument}}]});
+            gradRequirementIDs.push(matchingDocument["_id"]);
+          }
+        }
+      }
+  ////////////////////////////////////// FOCUS AREA /////////////////////////////////////////////////////////////////
+      // check for focus area
+      // its safe to assume that every cohort will always have focus area
+      const focusAreaIDs = [];
+      let currentFocusAreaList = currentCohort["cohortFocusArea"];
+      if (currentFocusAreaList != "none"){
+        for(var j = 0; j < currentFocusAreaList.length ; j++){
+          // current focus area is the name! we need to obtain the ID!
+          let currentFocusArea = currentFocusAreaList[j];
+          let currentFocusAreaID = getFocusAreaIDByName(currentFocusArea);
+
+          if(currentFocusAreaID === {}){
+            console.log("cannot find matching document for focus Area named: " + currentFocusArea);
+          } else {
+            focusAreaIDs.push(currentFocusAreaID);
+          }
+
+        }
+        // create new academic cohort
+        updateCohortFocusAreaIDs(currentCohortName,focusAreaIDs)
+        updateCohortGradRequirementIDs(currentCohortName,gradRequirementIDs);
+      }
+
+    }
   }
 }
-// set environment as the mlab environment
-//process.env.MONGO_URL = 'mongodb://rainbowheadstudio:<dbpassword>@ds151059.mlab.com:51059/development-nus-oracle'
-// load the document from the private folder
-
-// for now, always remove all data
-
-// parse string from assets to JSON
-// start checking the data
-
-//
