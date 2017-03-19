@@ -8,13 +8,15 @@ const MAX_PASSWORD_TRIES = 5;
 
 export const successMsgs = {
   SUCCESS_LOGIN: "Welcome back!",
+  SUCCESS_LOGOUT: "Thanks for using NUS Oracle",
   SUCCESS_SIGNUP: "Thanks for signing up! Please check your email to verify your NUS Oracle account!",
   SUCCESS_SETUP: "Setup is all done. Welcome to NUS Oracle!",
   SUCCESS_NEW_PASSWORD_SENT: "New password sent to your email!"
 }
 
 export const warningMsgs = {
-  WARNING_CANCEL_SETUP: "Click again to leave this page"
+  WARNING_CANCEL_SETUP: "Click again to leave this page",
+  WARNING_SETUP: "Please complete setup before proceeding"
 }
 
 export const errorMsgs = {
@@ -23,8 +25,9 @@ export const errorMsgs = {
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your email has not been verified. Please check",
+  ERR_ACCOUNT_LOCK: "Your account has been locked. Please check",
   ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'",
-  ERR_SETUP_INCOMPLETE: "Please enter all four fields before continuing",
+  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing"
 }
 
 //=====================================================
@@ -68,6 +71,15 @@ export const errorMsgExceededLoginAttempts = function(email) {
  */
 export const errorMsgUnverifiedEmail = function(email) {
   return errorMsgs.ERR_EMAIL_UNVERIFIED + " " + email;
+}
+
+/**
+ * ERROR Warning when's account has been locked
+ * @param  {[String]} email   User's email address
+ * @return {[String]}    Error message
+ */
+export const errorLockedAccount = function(email) {
+  return errorMsgs.ERR_ACCOUNT_LOCK + " " + email;
 }
 
 /**

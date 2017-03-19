@@ -1,20 +1,21 @@
-import React from 'react';
-//import verfification from '../../server/send-verification'
+// Logic and UI for logging out
+
 /*
  To delete accounts,
  1) meteor mongo
  2) db.users.remove({_id:db.users.find()[0]._id})
 
  */
+import React from 'react';
+import {successMsgs} from '../AccountAlerts.js'
 
- export const logout = function logout() {
-     Meteor.logout(( error ) => {
+export const logout = function logoutAccountFromMeteor() {
+    Meteor.logout(( error ) => {
        if ( error ) {
-         console.log('error in logging out  user');
          Bert.alert( error.reason, 'danger' );
-         console.log(error.reason);
        } else {
-         Bert.alert( 'Thanks for using NUS Oracle' , 'success' );
+         //Successful log out, redirects to login page
+         Bert.alert( successMsgs.SUCCESS_LOGOUT , 'success' );
          FlowRouter.go('/');
        }
      })
@@ -23,18 +24,11 @@ import React from 'react';
 export default class LogoutAccount extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  //Handler when Logout is clicked
   handleSubmit(event) {
     logout();
-    event.preventDefault();
-  }
-
-  handleTestSubmit(event) {//change this to handleSubmit to debug
-    alert('A name was submitted: ' + this.state.email
-          + '\n password: ' + this.state.password);
     event.preventDefault();
   }
 
