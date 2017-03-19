@@ -2,6 +2,7 @@ import { populateModuleFixture,
          populateIndustrialAttachmentModuleFixture,
          populateULRModuleFixture,
          populateFocusAreaModuleFixture } from '../../api/test-fixtures/modules';
+
 import { populatePlannerFixture } from '../../api/test-fixtures/planner';
 import { populateModuleFulfilmentFixture,
          populateULRModuleFulfilment } from '../../api/test-fixtures/moduleFulfilment';
@@ -18,6 +19,7 @@ import { moduleInformationParser,
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
 //import '../../api/database-conversion/CohortDatabaseParser.js';
+
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
 import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';

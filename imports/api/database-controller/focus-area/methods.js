@@ -45,21 +45,6 @@ export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
     FocusArea.remove(focusAreaIDs[i]);
   }
 }
-/** This method handles the checking of the module validity.
-  * For a module to be valid, it needs to be inside the module database
-  * @param {String} moduleCode: Code of the module that is going to be included in the focus area document
-  */
-export const consolidateModuleCodeValidity = function(moduleCode) {
-  const validationResult = searchByModuleCode(moduleCode);
-  isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
-
-  if(isValid){
-    result = FocusArea.insert(newFocusAreaDocument);
-    return result;
-  }
-
-  return result;
-}
 
 /** This method handles the checking of the list of module validity.
   * For a module to be valid, it needs to be inside the module database
