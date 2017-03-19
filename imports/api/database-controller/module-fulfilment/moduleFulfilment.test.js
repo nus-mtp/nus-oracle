@@ -15,7 +15,7 @@ if (Meteor.isServer){
     const storeID = [];
 
     beforeEach( function() {
-      Meteor.remove({});
+      ModuleFulfilments.remove({});
       let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode1,moduleListing1);
       storeID.push(id);
       id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
