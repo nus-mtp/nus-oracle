@@ -25,7 +25,7 @@ describe('focus area test', function() {
       modulePrerequisite: 'loremIpsum',
       moduleCorequisite: 'loremIpsum',
       modulePreclusion: 'loremIpsum',
-      moduleMC: 'loremIpsum',
+      moduleMC: 0,
       termOffered: [
         {
           "termYear": "AY 2014/2015",
@@ -45,7 +45,7 @@ describe('focus area test', function() {
       modulePrerequisite: 'loremIpsum',
       moduleCorequisite: 'loremIpsum',
       modulePreclusion: 'loremIpsum',
-      moduleMC: 'loremIpsum',
+      moduleMC: 0,
       termOffered: [
         {
           "termYear": "AY 2014/2015",
