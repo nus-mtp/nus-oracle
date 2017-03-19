@@ -57,7 +57,9 @@ export const updateCohortGradRequirementIDs = function updateEntireCohortGraduat
   AcademicCohort.update({_id: cohortID},{$set:{cohortGradRequirementID: newGradRequirementIDs}});
 }
 
+
 export const insertFocusAreaToCohort  = function insertOneFocusAreaIDToAcadCohort(cohortName, newFocusAreaID ) {
+
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const focusAreaArray = targetCohort.cohortFocusAreaID;
   const cohortID = targetCohort._id;

@@ -29,6 +29,7 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
     moduleListElectives: nonPrimaryToBeStored
   }
   let result = '';
+
   isValid = Match.test(newFocusAreaDocument, FocusArea.simpleSchema());
 
   if(isValid){
@@ -37,6 +38,12 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   }
 
   return result;
+}
+
+export const removeFocusArea = function removeFocusArea(focusAreaIDs)  {
+  for (var i=0; i < focusAreaIDs.length; i++) {
+    FocusArea.remove(focusAreaIDs[i]);
+  }
 }
 
 

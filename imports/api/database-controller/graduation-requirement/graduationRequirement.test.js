@@ -13,6 +13,9 @@ describe(" graduation requirement test", function() {
   const ITRequirementMCs = 12;
 
   beforeEach( function() {
+    if(meteor.isServer){
+      GraduationRequirements.remove({});
+    }
     let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
     let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
