@@ -61,7 +61,8 @@ export const insertFocusAreaToCohort  = function insertOneFocusAreaIDToAcadCohor
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const focusAreaArray = targetCohort.cohortFocusAreaID;
   const cohortID = targetCohort._id;
-  // TO-DO : Check if the focus area exists
+  console.log(targetCohort);
+  // TO-DO: Check if focus area array exists
   focusAreaArray.push(newFocusAreaID);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }

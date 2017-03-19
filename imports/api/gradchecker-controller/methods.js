@@ -10,13 +10,12 @@ export const getGraduationRequirements = function getGraduationRequirements(stud
   const studentWaivedModules = getStudentWaivedModules();
   let graduationRequirements = {};
 
-
   // currently assumes only computing students
   switch (studentAcademicCohort)  {
     case 'AY 2016/2017':
     graduationRequirements = AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules);
     break;
   }
-  
+
   return graduationRequirements;
 }

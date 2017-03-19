@@ -3,11 +3,13 @@ import { searchByModuleCode } from '../../../../database-controller/module/metho
 
 export const findULRRequirementModules = function findULRRequirementModules(academicCohort, studentSemesters, ULRModules, exemptedModules, waivedModules, requiredMCs) {
   let markedULRModulesAndMCs = {
+    name: 'University Level Requirement',
     markedULRModules: ULRModules,
     numberOfULRMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -32,15 +34,15 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        // early termination here
-        if (markedULRModulesAndMCs.markedULRModules[keyNames[i]]) {
+        markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedULRModulesAndMCs.markedULRModules[keyNames[i]] ) {
           break;
         }
-        markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     if (markedULRModulesAndMCs.numberOfULRMarkedTrue === keyNames.length) {
       markedULRModulesAndMCs.requiredMCs = markedULRModulesAndMCs.totalModuleMCs;
+      markedULRModulesAndMCs.isFulfilled = true;
       break;
     }
   }

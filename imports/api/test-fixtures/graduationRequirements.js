@@ -1,5 +1,5 @@
 import { GraduationRequirements } from '../database-controller/graduation-requirement/graduationRequirement';
-import { createNewGradRequirement,
+import { createNewGradRequirementByModuleObject,
          removeOneGradRequirementModule } from '../database-controller/graduation-requirement/methods';
 
 export const populateGraduationRequirementsFixture = function populateGraduationRequirementsFixture() {
@@ -11,6 +11,7 @@ export const populateGraduationRequirementsFixture = function populateGraduation
   gradRequirementIDs.push(populateTeamProjectFixture());
   gradRequirementIDs.push(populateIndustrialExperienceFixture());
   gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
+  gradRequirementIDs.push(populateFocusAreaRequirementFixture());
 
   return gradRequirementIDs;
 };
@@ -21,12 +22,21 @@ export const dePopulateGraduationRequirementsFixture = function dePopulateGradua
   }
 }
 
+const populateFocusAreaRequirementFixture = function populateFocusAreaRequirementFixture()  {
+  const requirementName = 'Computer Science Focus Area';
+  const modules = [];
+  const requirementMCs = 24;
+
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
+}
+
+
 const populateComScienceFoundationRequirementsFixture = function populateComScienceFoundationRequirementsFixture() {
   const requirementName = 'Computer Science Foundation';
   const modules = ['CS1010', 'CS1020', 'CS2010', 'CS1231', 'CS2100', 'CS2103T', 'CS2105', 'CS2106', 'CS3230'];
   const requirementMCs = 36;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 };
 
 const populateComSciITProfessionalismFixture = function populateComSciITProfessionalismFixture() {
@@ -34,15 +44,15 @@ const populateComSciITProfessionalismFixture = function populateComSciITProfessi
   const modules = ['IS1103', 'CS2101', 'ES2660'];
   const requirementMCs = 12;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 };
 
 const populateComSciMathScienceFixture = function populateComSciMathScienceFixture()  {
   const requirementName = 'Mathematics and Sciences';
-  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science Two', 'PC1221', 'Science One'];
+  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
   const requirementMCs = 28;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 }
 
 const populateTeamProjectFixture = function populateTeamProjectFixure() {
@@ -50,7 +60,7 @@ const populateTeamProjectFixture = function populateTeamProjectFixure() {
   const modules = ['Project I', 'Project II'];
   const requirementMCs = 8;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 }
 
 const populateIndustrialExperienceFixture = function populateIndustrialExperienceFixture()  {
@@ -58,7 +68,7 @@ const populateIndustrialExperienceFixture = function populateIndustrialExperienc
   const modules = ['ATAP/SIP/Industry Course/NOC/FYP'];
   const requirementMCs = 12;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 }
 
 const populateUniversityLevelRequirementFixture = function populateUniversityLevelRequirementFixture()  {
@@ -67,5 +77,5 @@ const populateUniversityLevelRequirementFixture = function populateUniversityLev
                    'Singapore Studies', 'Thinking and Expression'];
   const requirementMCs = 20;
 
-  return createNewGradRequirement(requirementName, modules, requirementMCs);
+  return createNewGradRequirementByModuleObject(requirementName, modules, requirementMCs);
 }

@@ -22,6 +22,7 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
 
+
   const newFocusAreaDocument = {
     name : name,
     moduleListPrimary : primaryToBeStored,
@@ -40,6 +41,7 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   return result;
 
 }
+
 
 /** This method handles the checking of the list of module validity.
   * For a module to be valid, it needs to be inside the module database
@@ -72,6 +74,7 @@ export const createModuleListObject = function createNewListOfModuleObject(modul
   return moduleToBeStored;
 }
 
+
 /** This method returns the ID of the queried Focus Area
   * It is safe to assume that there will only be one focus area for each name,
   * i.e. Focus Area name will always be unique.
@@ -87,4 +90,40 @@ export const getFocusAreaIDByName = function searchFocusAreaByName(focusAreaName
   }
 
   return '';
+}
+
+export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
+  const focusAreaPrimaryRequirements = {};
+  let tempFocusAreaPrimaryDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaPrimaryDoc)  {
+      focusAreaPrimaryRequirements[tempFocusAreaPrimaryDoc.name] = tempFocusAreaPrimaryDoc.moduleListPrimary;
+    }
+  }
+  return focusAreaPrimaryRequirements;
+}
+
+export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
+  const focusArea4KRequirements = {};
+  let tempFocusArea4KDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusArea4KDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusArea4KDoc)  {
+      focusArea4KRequirements[tempFocusArea4KDoc.name] = tempFocusArea4KDoc.moduleListFourThousands;
+    }
+  }
+  return focusArea4KRequirements;
+}
+
+export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimaryRequirement(getFocusRequirementIDArray) {
+  const focusAreaNonPrimaryRequirements = {};
+  let tempFocusAreaNonPrimaryDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaNonPrimaryDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaNonPrimaryDoc)  {
+      focusAreaNonPrimaryRequirements[tempFocusAreaNonPrimaryDoc.name] = tempFocusAreaNonPrimaryDoc.moduleListNonPrimary;
+    }
+  }
+  return focusAreaNonPrimaryRequirements;
 }

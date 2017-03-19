@@ -11,8 +11,7 @@ const DEFAULT_MODULE_STATE = false;
 export const createNewGradRequirement = function createNewGradRequirementGivenModuleList(name,  listOfRequiredModule, requirementMCs) {
   const moduleObject = createModuleListObject(listOfRequiredModule);
 
-   return insertNewGradRequirementModuleData(name,moduleObject,requirementMCs)
-
+  return insertNewGradRequirementModuleData(name,moduleObject,requirementMCs);
 }
 
 /** This method insert the graduation requirement document to the Database

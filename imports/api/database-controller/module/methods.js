@@ -27,7 +27,6 @@ export const searchByModuleCode = function retrieveMod(modCode) {
   return returnPackage;
 };
 
-
 // module is available in database
 export const findModuleAvailability = function searchForModule( modCode ) {
   const resultCursor = Modules.find({ moduleCode: modCode });
