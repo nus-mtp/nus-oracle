@@ -14,7 +14,7 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
   let fulfilment = getModuleFulfilment(moduleCode);
   let docsID = '';
 
-  if (Object.keys(fulfilment).length > 0) {
+  if (Object.keys(fulfilment).length === 0) {
     mappingObject = {};
     mappingObject[academicYear] = moduleMapping;
     fulfilment = {
