@@ -47,7 +47,10 @@ export default class Tab extends React.Component {
   }
 
   handleOnBlurDropdown(event) {
-    this.setState({ onClickDropdown: false });
+    this.setState({
+      onMouseOver: false,
+      onClickDropdown: false
+    });
   }
 
   /**
@@ -113,8 +116,8 @@ export default class Tab extends React.Component {
     return (
       <IconButton
         icon="fa fa-sort-down"
-        style={{position: 'absolute', top:'0.3em', right: '0.5em',
-                paddingTop: '0.15em', opacity: '0.8'}}
+        style={{position: 'absolute', paddingTop: '0.15em', opacity: '0.8',
+                top:'0.3em', right: '0.5em', height: '1.5em', width: '1em'}}
         displayColor="#505050" onMouseOverColor="#ff9100"
         onButtonClick={this.handleToggleDropdown.bind(this)}
       />
@@ -132,7 +135,7 @@ export default class Tab extends React.Component {
     return (
       <div className="card-typical"
            onBlur={this.handleOnBlurDropdown.bind(this)}
-           style={{position: 'fixed', zIndex: '300', top: '3.3em',
+           style={{position: 'fixed', zIndex: '300', top: '2.7em',
                    width: '7.75em', textAlign: 'left',
                    WebkitBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
                    MozBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
@@ -141,8 +144,8 @@ export default class Tab extends React.Component {
         {/* Edit study plan name dropdown selection */}
         {this.renderDropDownMenuSelection(
           "dropdown-item",
-          "fa fa-trash",
-          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '1em'},
+          "fa fa-edit",
+          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
           "Rename",
           this.handleEditClick
         )}
@@ -150,8 +153,8 @@ export default class Tab extends React.Component {
         {/* Delete study plan dropdown selection */}
         {this.renderDropDownMenuSelection(
           "dropdown-item",
-          "fa fa-edit",
-          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '0.8em'},
+          "fa fa-trash",
+          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '1.0em'},
           "Delete",
           this.handleDeleteClick
         )}
@@ -164,10 +167,15 @@ export default class Tab extends React.Component {
                 title={"Are you sure you want to delete this study plan, '" +
                        this.props.tabTitle + "'?"}
                 content={
-                  <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
-                          buttonText="Yes"
-                          onButtonClick={this.handleConfirmDelete.bind(this)}
-                  />}
+                  <div>
+                    <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+                            buttonText="Yes"
+                            onButtonClick={this.handleConfirmDelete.bind(this)} />
+                    <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
+                            buttonText="No"
+                            onButtonClick={this.resetDeleteState.bind(this)} />
+                  </div>
+                }
               /> }
           /> : null}
       </div>
@@ -209,8 +217,7 @@ export default class Tab extends React.Component {
               {this.props.tabTitle}
 
               {/* Render dropdown caret */}
-              {this.props.enabledMouseOver && this.state.onMouseOver &&
-               !this.props.isEditingPlanName ?
+              {!this.props.isEditingPlanName ?
                 this.renderDropdownCaret() : null
               }
 

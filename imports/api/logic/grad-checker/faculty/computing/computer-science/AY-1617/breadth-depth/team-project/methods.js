@@ -3,11 +3,13 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
 
 export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(academicCohort, studentSemesters, teamProjectModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedTeamProjectModulesAndMCs = {
+    name: 'Computer Systems Team Project',
     markedTeamProjectModules: teamProjectModules,
     numberOfTeamProjectModulesMarkedTrue: 0,
     totalModuleMCs: 0,
     moduleChecked: {},
-    requiredMCs: requiredMCs
+    requiredMCs: requiredMCs,
+    isFulfilled: false
   };
 
   let moduleFulfilment = {};
@@ -31,15 +33,15 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
         markedTeamProjectModulesAndMCs = markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        // early termination here
-        if (markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]]) {
+        markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        if (markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]])  {
           break;
         }
-        markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
       }
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
       markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
+      markedTeamProjectModulesAndMCs.isFulfilled = true;
       break;
     }
   }
@@ -84,6 +86,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedTeamP
       }
     }
   }
+
   return markedTeamProjectModulesAndMCs;
 }
 
@@ -119,7 +122,6 @@ const markExceptions = function markExceptions(markedTeamProjectModulesAndMCs, s
   return markedTeamProjectModulesAndMCs;
 }
 
-//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
   switch(originalModule)  {
     case 'Project I':

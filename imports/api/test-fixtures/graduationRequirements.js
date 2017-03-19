@@ -11,6 +11,7 @@ export const populateGraduationRequirementsFixture = function populateGraduation
   gradRequirementIDs.push(populateTeamProjectFixture());
   gradRequirementIDs.push(populateIndustrialExperienceFixture());
   gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
+  gradRequirementIDs.push(populateFocusAreaRequirementFixture());
 
   return gradRequirementIDs;
 };
@@ -20,6 +21,15 @@ export const dePopulateGraduationRequirementsFixture = function dePopulateGradua
     removeOneGradRequirementModule(gradRequirementIDArray[i]);
   }
 }
+
+const populateFocusAreaRequirementFixture = function populateFocusAreaRequirementFixture()  {
+  const requirementName = 'Computer Science Focus Area';
+  const modules = [];
+  const requirementMCs = 24;
+
+  return createNewGradRequirement(requirementName, modules, requirementMCs);
+}
+
 
 const populateComScienceFoundationRequirementsFixture = function populateComScienceFoundationRequirementsFixture() {
   const requirementName = 'Computer Science Foundation';
@@ -39,7 +49,7 @@ const populateComSciITProfessionalismFixture = function populateComSciITProfessi
 
 const populateComSciMathScienceFixture = function populateComSciMathScienceFixture()  {
   const requirementName = 'Mathematics and Sciences';
-  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science Two', 'PC1221', 'Science One'];
+  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
   const requirementMCs = 28;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);

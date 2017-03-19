@@ -20,16 +20,16 @@ export const createNewCohort = function createCohort(cohortName) {
   return {};
 }
 
-export const insertGradRequirementToCohort = function insertGradRequirementToCohort(cohortName, newGradRequirementID)  {
+export const insertGradRequirementToCohort = function insertOneGradRequirementIDToCohort(cohortName, newGradRequirementID)  {
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const gradRequirementArray = targetCohort.cohortGradRequirementID;
   const cohortID = targetCohort._id;
-  // TO-DO : Check if the focus area exists
+
   gradRequirementArray.push(newGradRequirementID);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
 }
 
-export const removeGradRequirementFromCohort  = function(cohortName, gradRequirementIDToRemove ) {
+export const removeGradRequirementFromCohort  = function removeOneGraduationRequirementByID(cohortName, gradRequirementIDToRemove ) {
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const gradRequirementArray = targetCohort.cohortGradRequirementID;
   const cohortID = targetCohort._id
@@ -43,16 +43,32 @@ export const removeGradRequirementFromCohort  = function(cohortName, gradRequire
   AcademicCohort.update({_id: cohortID}, {$set:{cohortGradRequirementID: gradRequirementArray}});
 }
 
-export const insertFocusAreaToCohort  = function(cohortName, newFocusAreaID ) {
+export const updateCohortGradRequirementIDs = function updateEntireCohortGraduationRequirementIDs(cohortName, newGradRequirementIDs ) {
+  const targetCohort = AcademicCohort.find({cohortName: cohortName});
+  if (targetCohort.count() == 0){
+    console.log("no graduation requirement with name " + cohortName);
+    return;
+  }
+
+  const targetCohortDocument = targetCohort.fetch()[0];
+  const cohortID = targetCohortDocument._id;
+  console.log("this cohort to be updated: " + targetCohortDocument["cohortName"]);
+  AcademicCohort.update({_id: cohortID},{$set:{cohortGradRequirementID: newGradRequirementIDs}});
+}
+
+
+export const insertFocusAreaToCohort  = function insertOneFocusAreaIDToAcadCohort(cohortName, newFocusAreaID ) {
+
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const focusAreaArray = targetCohort.cohortFocusAreaID;
   const cohortID = targetCohort._id;
-  // TO-DO : Check if the focus area exists
+  console.log(targetCohort);
+  // TO-DO: Check if focus area array exists
   focusAreaArray.push(newFocusAreaID);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }
 
-export const removeFocusAreaFromCohort  = function(cohortName, focusAreaIDToRemove ) {
+export const removeFocusAreaFromCohort  = function removeOneFocusAreaIDFromAcadCohort(cohortName, focusAreaIDToRemove ) {
   const targetCohort = AcademicCohort.findOne({cohortName: cohortName});
   const focusAreaArray = targetCohort.cohortFocusAreaID;
   const cohortID = targetCohort._id
@@ -65,6 +81,22 @@ export const removeFocusAreaFromCohort  = function(cohortName, focusAreaIDToRemo
   focusAreaArray.splice(IDindex,1);
   AcademicCohort.update({_id: cohortID}, {$set:{cohortFocusAreaID: focusAreaArray}});
 }
+
+export const updateCohortFocusAreaIDs = function(cohortName, newFocusAreaIDs){
+  const targetCohort = AcademicCohort.find({cohortName: cohortName});
+  console.log("matchingDocument: " + targetCohort.count());
+
+  if (targetCohort.count() == 0){
+    console.log("no graduation requirement with name " + cohortName);
+    return;
+  }
+
+  const targetCohortDocument = targetCohort.fetch()[0];
+  const cohortID = targetCohortDocument._id;
+  console.log("this cohort to be updated: " + targetCohortDocument["cohortName"]);
+  AcademicCohort.update({_id: cohortID},{$set:{cohortFocusAreaID: newFocusAreaIDs}});
+}
+
 // obtain all the stored Cohort from the server
 export const getAllAcadCohort = function getAllCohort() {
   return AcademicCohort.find({}).fetch();
@@ -72,7 +104,8 @@ export const getAllAcadCohort = function getAllCohort() {
 
 // obtain specific cohort document by name
 export const getCohortByName = function getCohortByName(cohortName) {
-  return AcademicCohort.findOne({cohortName: cohortName});
+  let result =  AcademicCohort.findOne({cohortName: cohortName});
+  return result;
 }
 
 // obtain cohort by ID

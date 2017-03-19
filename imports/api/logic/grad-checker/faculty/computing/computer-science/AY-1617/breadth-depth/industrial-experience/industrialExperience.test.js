@@ -53,7 +53,7 @@ describe('grad-checker-industrialExperience', function()  {
     assert.equal(markedIndustrialExperienceAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue, 1);
   })
 
-  it ('checks if CP3200 and CP3202 return correct boolean values', function() {
+  it ('checks return correct boolean values when CP3200 exists and CP3202 does not', function() {
     const modules = ['ATAP/SIP/Industry Course/NOC/FYP'];
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Industrial Experience Training';
@@ -63,11 +63,12 @@ describe('grad-checker-industrialExperience', function()  {
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
     const markedIndustrialExperienceAndMCs = findIndustrialExperienceTrainingModules(academicCohort, allSemesters, industrialExperienceModules, {}, {}, requiredMCs);
-    assert.isTrue(markedIndustrialExperienceAndMCs.markedIndustrialExperienceTrainingModules[modules[0]], 'CP3200 and CP3202 fulfiled');
-    assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3200'], 'CP3200 checked');
-    assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3202'], 'CP3202 checked');
 
-    assert.equal(markedIndustrialExperienceAndMCs.totalModuleMCs, 12);
-    assert.equal(markedIndustrialExperienceAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue, 2);
+    assert.isFalse(markedIndustrialExperienceAndMCs.markedIndustrialExperienceTrainingModules[modules[0]], 'CP3200 and CP3202 not fulfiled');
+    assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3200'], 'CP3200 checked');
+
+    assert.isTrue(markedIndustrialExperienceAndMCs.isFulfilled);
+    assert.equal(markedIndustrialExperienceAndMCs.totalModuleMCs, 6);
+    assert.equal(markedIndustrialExperienceAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue, 1);
   })
 });

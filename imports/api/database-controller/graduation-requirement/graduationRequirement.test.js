@@ -13,6 +13,9 @@ describe(" graduation requirement test", function() {
   const ITRequirementMCs = 12;
 
   beforeEach( function() {
+    if(Meteor.isServer){
+      GraduationRequirements.remove({});
+    }
     let result1 = createNewGradRequirement(graduationName[0], foundationModuleList, foundationRequirementMCs);
     storeID.push(result1);
     let result2 = createNewGradRequirement(graduationName[1], ITProfModuleList, ITRequirementMCs);
@@ -33,7 +36,6 @@ describe(" graduation requirement test", function() {
 
   it('should not have an empty moduleListing', function() {
     const foundationList = GraduationRequirements.findOne({_id:storeID[0]});
-    //console.log("foundation list: " + JSON.stringify(foundationList));
     assert.equal(Object.keys(foundationList.requirementModules).length, foundationModuleList.length);
     const professionalList = GraduationRequirements.findOne({_id:storeID[1]});
     assert.equal(Object.keys(professionalList.requirementModules).length, ITProfModuleList.length);
@@ -46,7 +48,7 @@ describe(" graduation requirement test", function() {
     assert.equal(Object.keys(gradRequirements[graduationName[1]]).length, ITProfModuleList.length);
   });
 
-  it ('should return requirment MCS', function()  {
+  it ('should return requirement MCS', function()  {
     const gradRequirementMCs = getGradRequirementMCs(storeID);
     assert.equal(Object.keys(gradRequirementMCs).length, storeID.length);
     assert.equal(gradRequirementMCs[graduationName[0]], foundationRequirementMCs);

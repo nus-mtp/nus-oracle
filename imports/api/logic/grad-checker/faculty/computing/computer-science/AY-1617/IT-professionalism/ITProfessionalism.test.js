@@ -51,6 +51,7 @@ describe('grad-checker-ITProfessionalism', function()  {
     assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');
     assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[1]], 'CS2101 checked');
 
+    assert.isFalse(markedITProfessionalismModulesAndMCs.isFulfilled);
     assert.equal(markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue, 2);
     assert.equal(markedITProfessionalismModulesAndMCs.totalModuleMCs, 8);
   })

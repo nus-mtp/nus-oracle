@@ -29,10 +29,6 @@ export const populateModuleFixture = function populateModuleFixture() {
                        'Software Engineering on Modern Application Platforms', 'Thematic Systems Project I', 'Thematic Systems Project II',
                        'Software Engineering Project I', 'Software Engineering Project II'];
 
-  const intershipModules = ['CP3880', 'CP3200', 'CP3202', 'CP4101'];
-  const intershipNames = ['Advanced Technology Attachment Programme',
-                          'Internship', 'Internship II', 'BComp Dissertation'];
-
   for (var i = 0; i < moduleCodes.length; i++)  {
     const testModule = {
       moduleCode: moduleCodes[i],
@@ -84,6 +80,32 @@ export const populateULRModuleFixture = function populateULRModuleFixture()  {
     const testModule = {
       moduleCode: ULRModules[i],
       moduleName: ULRNames[i],
+      moduleDescription: 'Lorem ipsum',
+      modulePrerequisite: 'Lorem ipsum',
+      moduleCorequisite: 'Lorem ipsum',
+      modulePreclusion: 'Lorem ipsum',
+      moduleMC: 4,
+      termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
+    };
+    insertToModuleCollection(testModule);
+  }
+}
+
+export const populateFocusAreaModuleFixture = function populateFocusAreaModuleFixture() {
+  const focusAreaModules = ['CS3241', 'CS3242', 'CS3247', 'CS4247', 'CS4350', 'CS3218',
+                          'CS3240', 'CS3249', 'CS3343', 'CS4243', 'CS4249', 'CS4340',
+                          'CS4344', 'CS4345', 'CS5237', 'CS5240', 'CS5343', 'CS4231',
+                          'CS4232', 'CS4234', 'CS5230', 'CS5234', 'CS5236', 'CS5237',
+                          'CS5238', 'CS5330', 'CS4244', 'CS4246', 'CS4247', 'CS4350'];
+  const focusAreaNames = ['Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
+                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
+                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
+                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum',
+                          'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum', 'Lorem Ispsum'];
+  for (var i = 0; i < focusAreaModules.length; i++)  {
+    const testModule = {
+      moduleCode: focusAreaModules[i],
+      moduleName: focusAreaNames[i],
       moduleDescription: 'Lorem ipsum',
       modulePrerequisite: 'Lorem ipsum',
       moduleCorequisite: 'Lorem ipsum',
