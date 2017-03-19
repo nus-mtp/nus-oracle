@@ -96,7 +96,7 @@ export default class SetUpAcadDetail extends React.Component {
   }
 
   handleSubmit(event) {
-    if (!this.state.course || !this.state.cohort || !this.state.prevEdu) {   
+    if (!this.state.cohort || !this.state.prevEdu) {   
       Bert.alert(errorMsgs.ERR_SETUP_INCOMPLETE, 'danger');
     } else {
       const userId = Meteor.user()._id;

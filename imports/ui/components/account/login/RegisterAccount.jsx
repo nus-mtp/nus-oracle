@@ -46,6 +46,7 @@ export default class RegisterAccount extends React.Component {
       password: this.state.password,
       profile:  {
         hasSetup: false,
+        accountLock: false
       }
     }
 

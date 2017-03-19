@@ -24,8 +24,9 @@ export const errorMsgs = {
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your email has not been verified. Please check",
+  ERR_ACCOUNT_LOCK: "Your account has been locked. Please check",
   ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'",
-  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing",
+  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing"
 }
 
 //=====================================================
@@ -69,6 +70,15 @@ export const errorMsgExceededLoginAttempts = function(email) {
  */
 export const errorMsgUnverifiedEmail = function(email) {
   return errorMsgs.ERR_EMAIL_UNVERIFIED + " " + email;
+}
+
+/**
+ * ERROR Warning when's account has been locked
+ * @param  {[String]} email   User's email address
+ * @return {[String]}    Error message
+ */
+export const errorLockedAccount = function(email) {
+  return errorMsgs.ERR_ACCOUNT_LOCK + " " + email;
 }
 
 /**
