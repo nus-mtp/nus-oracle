@@ -25,6 +25,24 @@ import { getModuleFixtures } from './fixtures/module_fixtures.js';
 import { ALL_MODULES_FOR_SEARCH } from '../../pages/DashboardContainer.jsx'
 import { ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS } from '../../pages/DashboardContainer.jsx'
 
+// TODO :TESTING
+import createFilterOptions from 'react-select-fast-filter-options';
+
+const STRINGS = ['programming methodology',
+				 'topics in urban studies shaping liveable places',
+				 'advanced independent study in accounting and physics and mathematics',
+				 'managing the environment in a productive way to reduce pollution']
+
+// const NUM_OPTIONS = 1e4
+// const options = Array
+//   .from(Array(NUM_OPTIONS))
+//   .map((_, index) => ({
+//     label: `${index}: ${STRINGS[Math.floor(Math.random() * STRINGS.length)]}`,
+//     value: index
+//   }))
+//
+// const filterOptions = createFilterOptions({ options })
+
 /**
  * React Component that implements the container for a semester's worth of
  * modules - all lists are in columnal form with rows of Modules.

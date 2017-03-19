@@ -14,7 +14,7 @@ import Dashboard from './Dashboard.jsx';
 export const ALL_MODULES_FOR_SEARCH = "ALL_MODULES_FOR_SEARCH";
 export const ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS = "ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS";
 
-const ESTIMATED_NUM_OF_MODULES = 7000;
+const ESTIMATED_NUM_OF_MODULES = 7100;
 
 Session.set(ALL_MODULES_FOR_SEARCH, []);
 Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, undefined);
@@ -32,13 +32,10 @@ export default DashboardContainer = createContainer(() => {
       let modulesForSearch = getAllModules();
       let filterOptions = createFilterOptions({ options: modulesForSearch });
 
-      console.time("dashboard getAllModules()");
       Session.set(ALL_MODULES_FOR_SEARCH, modulesForSearch);
-      console.log("ALL MODS FOR SEARCH inside", Session.get(ALL_MODULES_FOR_SEARCH).length);
-      Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions());
-      console.timeEnd("dashboard getAllModules()");
+      Session.set(ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS, filterOptions);
     }
-    console.log("ALL MODS FOR SEARCH outside", Session.get(ALL_MODULES_FOR_SEARCH).length);
+    console.log("ALL MODS FOR SEARCH", Session.get(ALL_MODULES_FOR_SEARCH).length);
 
     const plannerIDs = getPlannerIDs();
     return { plannerIDs };
