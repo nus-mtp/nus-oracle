@@ -5,7 +5,7 @@ import { createNewModuleFulfilment,
         updateModuleMappingOfModuleFulfilment,
         removeOneModuleFulfilment } from './methods';
 
-describe('moduleFulfillment test', function() {
+describe('moduleFulfilment test', function() {
   const moduleCode1 = 'CS1010';
   const moduleCode2 = 'CS1020';
   const dummyAcademicYear = 'AY 2015/2016';
@@ -14,10 +14,10 @@ describe('moduleFulfillment test', function() {
   const storeID = [];
 
   beforeEach( function() {
-    ModuleFufilments.remove({});
-    id = createNewModuleFulfilment(dummyAcademicYear, moduleCode1,moduleListing1);
+    ModuleFulfilments.remove({});
+    let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode1,moduleListing1);
     storeID.push(id);
-    id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
+    let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
     storeID.push(id);
 
     assert.equal(ModuleFulfilments.find({}).fetch().length,2);

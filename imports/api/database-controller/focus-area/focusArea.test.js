@@ -110,9 +110,6 @@ describe('focus area test', function() {
     });
 
     it('should contain two focus area after beforeEach function', function(){
-      const checkCursor = FocusArea.find({});
-      assert.equal(checkCursor.length,2);
-
       const firstFocusArea = FocusArea.findOne({"name": "Focus Area 1"})
       assert.equal(Object.keys(firstFocusArea.moduleListPrimary).length,2);
       assert.equal(Object.keys(firstFocusArea.moduleListFourThousands).length,2);

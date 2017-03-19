@@ -46,17 +46,18 @@ export const createNewFocusArea = function createNewFocusArea(name, listOfPrimar
   * @param {[String]} moduleArray: array of module code that is going to be included in the focus area document
   */
 export const consolidateModuleArrayValidity = function CheckValidityForListOfModule(moduleArray) {
+  let checkedModuleArray = [];
   for (moduleCode in moduleArray){
     const isValidModule = findModuleAvailability(moduleCode);
 
     if(!isValidModule){
       console.log('The following module cannot be found in database: ' + moduleCode);
-      moduleIndex  = moduleArray.indexOf(moduleCode);
-      moduleArray.splice(moduleIndex,1);
+    } else {
+      checkedModuleArray.push(moduleCode);
     }
   }
 
-  return moduleArray;
+  return checkedModuleArray;
 }
 
 export const createModuleListObject = function createNewListOfModuleObject(moduleList) {
