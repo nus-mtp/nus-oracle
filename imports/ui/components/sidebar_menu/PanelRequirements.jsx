@@ -49,13 +49,13 @@ export default class PanelRequirements extends React.Component {
       { name: 'UNRESTRICTED ELECTIVES', isFulfilled: false }
     ];
 
-    console.log(this.props.activePlannerId);
+    // console.log(this.props.activePlannerId);
 
     return (
       <nav className="side-menu-addl">
         <PanelHeader  title="CS Degree Requirements" icon="font-icon font-icon-page" />
         <GradCheckerContainer activePlannerId={this.props.activePlannerId}/>
-        <Nestable items={items} />
+        {/* <Nestable items={items} /> */}
       </nav>
     );
   }

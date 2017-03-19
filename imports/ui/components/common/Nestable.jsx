@@ -18,15 +18,9 @@ class Item extends Nestable{
 
     return(
       <li className="dd-item" >
-        <div className="dd-handle row" style={styles.item}>
-          <div className="col-11">
+        <div className={"dd-handle" + (isFulfilled ? " fulfilled" : " incomplete")} style={styles.item}>
             {this.props.itemName}
-          </div>
-          <div className="col-1">
-            <i  className={"fa fa-"+ (isFulfilled ? "check" : "close")}
-                style={(isFulfilled ? styles.completeIcon : styles.incompleteIcon)}>
-            </i>
-          </div>
+            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
         </div>
       </li>
     );
@@ -51,21 +45,13 @@ class ListItem extends Nestable{
 
     return(
       <li className="dd-item">
-        <div  className="dd-handle row" style={styles.list}
-              onClick={this.toggleCollapse.bind(this)}>
-          <div className="col-1">
+        <div className={"dd-handle" + (isFulfilled ? " fulfilled" : " incomplete")} style={styles.list}
+          onClick={this.toggleCollapse.bind(this)}>
             <i  className={"fa fa-"+ (isCollapsed ? "plus" : "minus")}
                 style={styles.collapseIcon}>
             </i>
-          </div>
-          <div className="col-10">
             {listName}
-          </div>
-          <div className="col-1">
-            <i  className={"fa fa-"+ (isFulfilled ? "check" : "close")}
-                style={(isFulfilled ? styles.completeIcon : styles.incompleteIcon)}>
-            </i>
-          </div>
+            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
         </div>
         <OrderedList items={this.props.items} isCollapsed={isCollapsed}/>
       </li>
@@ -83,13 +69,17 @@ class OrderedList extends Nestable{
           <ol className="dd-list" style={{display: isCollapsed ? "none" : "" }}>
             {
               items.map((item, index) => {
-              if(item.children == null){
+              if(item.name === undefined)
+                return undefined;
+              else if(item.children == undefined || item.children.length == 0 && item.name!== undefined){
                 //item is a single entry
                 return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled}/>;
+                // return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
               else {
                 //item is a list
                 return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled}/>;
+                // return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
             })
           }
