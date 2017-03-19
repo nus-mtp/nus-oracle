@@ -17,7 +17,7 @@ describe('moduleFulfilment test', function() {
     ModuleFulfilments.remove({});
     let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode1,moduleListing1);
     storeID.push(id);
-    let id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
+    id = createNewModuleFulfilment(dummyAcademicYear, moduleCode2, moduleListing2);
     storeID.push(id);
 
     assert.equal(ModuleFulfilments.find({}).fetch().length,2);
