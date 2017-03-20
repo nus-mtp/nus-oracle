@@ -53,7 +53,7 @@ describe('grad-checker-focusArea', function()  {
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
       focusArea4KModules: focusArea4KModules,
-      focusAreaElectives: focusAreaNonPrimaryModules
+      focusAreaNonPrimaryModules: focusAreaNonPrimaryModules
     }
     const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');

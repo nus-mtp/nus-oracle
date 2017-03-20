@@ -4,7 +4,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
   // checks for 24 MCs from focus area modules
   const focusAreaPrimaryKeys = studentFocusAreas.focusAreaPrimaryModules;
   const focusArea4KKeys = studentFocusAreas.focusArea4KModules;
-  const focusAreaNonPrimaryKeys = studentFocusAreas.focusAreaElectives;
+  const focusAreaNonPrimaryKeys = studentFocusAreas.focusAreaNonPrimaryModules;
   const modulesChecked = {};
   let totalMCs = 0;
   let fulfilmentRequirement = {
