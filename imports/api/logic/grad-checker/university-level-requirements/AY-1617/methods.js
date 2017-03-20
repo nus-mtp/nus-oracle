@@ -11,7 +11,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
-
+  
   let moduleFulfilment = {};
   let moduleFulfilmentMappingEquivalent = [];
   const keyNames = Object.keys(ULRModules);

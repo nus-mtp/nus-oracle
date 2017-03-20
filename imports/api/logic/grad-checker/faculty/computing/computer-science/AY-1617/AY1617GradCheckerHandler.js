@@ -48,7 +48,9 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   if (!studentSemesters) {
     return graduationRequirements;
   }
+
   const cohortInformation = getCohortByName(studentAcademicCohort);
+
   if (!cohortInformation) {
     return graduationRequirements;
   }
@@ -77,8 +79,8 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
    * Send all planner information to every requirement check
    */
 
-  // find university-level-requirements here
 
+  // find university-level-requirements here
   const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
   const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
   graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
@@ -113,6 +115,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
     };
 
+
     // for all focus area, find the ones fulfilled by the current planner
     for (var i=0; i<focusAreaTitles.length; i++)  {
       let focusArea = {
@@ -134,13 +137,15 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
     // check if student planner meet 24 MCs requirement
     focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+    graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
 
     if (!focusAreaMCSFulfilment.isFulfilled)  {
       focusAreaRequirements.isFulfilled = false;
     }
 
-    graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
-    UIFormatGraduationRequirement.children.push(graduationRequirements[moduleRequirementTitle[1]]);
+    UIFormatGraduationRequirement.children.push(focusAreaRequirements);
+
+    console.log(JSON.stringify(UIFormatGraduationRequirement));
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
