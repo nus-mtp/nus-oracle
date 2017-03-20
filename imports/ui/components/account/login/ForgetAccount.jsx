@@ -38,20 +38,9 @@ export default class ForgetAccount extends React.Component {
         Bert.alert(error.reason, 'danger');
       } else {
         let userName = this.state.email;
-        Meteor.subscribe("user-profile", {
-          onReady: function() {
-            let userAccount = Accounts.users.findOne({_id: "ankv7ZYhbew7xZZax"});
-            console.log(userAccount);
-          }
-        });
-        let userAccount = Accounts.users.findOne({username: userName});
-        console.log(userAccount);
 
-        const userId = userAccount._id;
-
-        Meteor.users.update(userId, {
-          $set: { "profile.accountLock" : true }
-        });
+        user = Meteor.call('resetpassword', userName);
+        console.log(user);
 
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
