@@ -3,7 +3,8 @@ import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../database-controller/graduation-requirement/methods';
 import { getFocusAreaPrimaryRequirement,
          getFocusArea4KRequirement,
-         getFocusAreaNonPrimaryRequirement } from '../../../../../../database-controller/focus-area/methods';
+         getFocusAreaNonPrimaryRequirement,
+         getFocusAreaPrimary4KRequirement } from '../../../../../../database-controller/focus-area/methods';
 import { findFoundationRequirementModules } from './foundation/methods';
 import { findITProfessionalismModules } from './IT-professionalism/methods';
 import { findMathSciRequirementModules } from './math-science/methods';
@@ -63,7 +64,9 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   // retrieve focus area modules
   const allFocusAreaPrimaryRequirements = getFocusAreaPrimaryRequirement(cohortInformation.cohortFocusAreaID);
   const allFocusArea4KRequirements = getFocusArea4KRequirement(cohortInformation.cohortFocusAreaID);
+  const allFocusArea4KPrimaryRequirements = getFocusAreaPrimary4KRequirement(cohortInformation.cohortFocusAreaID);
   const allFocusAreaNonPrimaryRequirements = getFocusAreaNonPrimaryRequirement(cohortInformation.cohortFocusAreaID);
+
 
   if (Object.keys(allGradRequirements).length === 0 || !allGradRequirements ||
       !allGraduationRequirementMCs) {
@@ -112,6 +115,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     const allStudentFocusAreas = {
       focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
       focusArea4KModules: allFocusArea4KRequirements,
+      focusAreaPrimary4KModules :allFocusArea4KPrimaryRequirements,
       focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
     };
 
@@ -121,6 +125,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       let focusArea = {
         focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
         focusArea4KModules: allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]],
+        focusAreaPrimary4KModules: allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]],
         focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
       }
 
@@ -145,7 +150,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
     UIFormatGraduationRequirement.children.push(focusAreaRequirements);
 
-    console.log(JSON.stringify(UIFormatGraduationRequirement));
+    //console.log(JSON.stringify(UIFormatGraduationRequirement));
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];

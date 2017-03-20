@@ -80,16 +80,23 @@ export const createModuleListObject = function createNewListOfModuleObject(modul
 }
 
 export const getFocusAreaRequirement = function getFocusAreaRequirement(getFocusRequirementIDArray)  {
-  const focusAreaRequirements = {};
+  const allfocusAreaRequirements = {
+    focusAreaPrimaryModules: {},
+    focusArea4KModules: {},
+    focusAreaNonPrimaryModules: {}
+  };
+
   let tempFocusAreaDoc = {};
   for (var i=0; i<getFocusRequirementIDArray.length; i++) {
     tempFocusAreaDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
     if (tempFocusAreaDoc)  {
-      focusAreaRequirements[tempFocusAreaDoc.name] = tempFocusAreaDoc;
+      allfocusAreaRequirements.focusAreaPrimaryModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListPrimary;
+      allfocusAreaRequirements.focusArea4KModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListPrimaryFourThousands;
+      allfocusAreaRequirements.focusAreaNonPrimaryModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListElectives;
     }
   }
 
-  return focusAreaRequirements;
+  return allfocusAreaRequirements;
 }
 
 export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
@@ -114,6 +121,18 @@ export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getF
     }
   }
   return focusArea4KRequirements;
+}
+
+export const getFocusAreaPrimary4KRequirement = function getFocusAreaPrimary4KRequirement(getFocusRequirementIDArray) {
+  const focusAreaPrimary4KRequirements = {};
+  let tempFocusPrimaryArea4KDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaPrimary4KDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaPrimary4KDoc)  {
+      focusAreaPrimary4KRequirements[tempFocusAreaPrimary4KDoc.name] = tempFocusAreaPrimary4KDoc.moduleListPrimaryFourThousands;
+    }
+  }
+  return focusAreaPrimary4KRequirements;
 }
 
 export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimaryRequirement(getFocusRequirementIDArray) {
