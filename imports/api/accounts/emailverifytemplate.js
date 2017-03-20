@@ -13,3 +13,16 @@ Accounts.emailTemplates.verifyEmail = {
     return emailBody;
   }
 };
+
+Accounts.emailTemplates.resetPassword = {
+  subject() {
+    return "[nusOracle] Reset Your Password";
+  },
+  text( user, url ) {
+    let emailAddress   = user.emails[0].address,
+        supportEmail   = "support@nusOracle.com",
+        resetURL   = "placeholder link",
+        emailBody      = `To reset your password, please visit (${resetURL}) and place this token to the following link:\n\n${url}\n\n `;
+    return emailBody;
+  }
+};

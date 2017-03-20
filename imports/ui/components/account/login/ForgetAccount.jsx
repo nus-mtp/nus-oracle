@@ -38,14 +38,21 @@ export default class ForgetAccount extends React.Component {
         Bert.alert(error.reason, 'danger');
       } else {
         let userName = this.state.email;
+        Meteor.subscribe("user-profile", {
+          onReady: function() {
+            let userAccount = Accounts.users.findOne({_id: "ankv7ZYhbew7xZZax"});
+            console.log(userAccount);
+          }
+        });
         let userAccount = Accounts.users.findOne({username: userName});
         console.log(userAccount);
+
         const userId = userAccount._id;
-/* @TODO: Adjust code
+
         Meteor.users.update(userId, {
           $set: { "profile.accountLock" : true }
         });
-        */
+
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
       }
@@ -68,7 +75,35 @@ export default class ForgetAccount extends React.Component {
                 placeholder="NUS E-mail" value={this.state.value}
                 onChange={this.handleEmailChange.bind(this)} />
             </div>
+            <div className='form-group'>
+              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                      buttonText="RESET PASSWORD"
+                      onButtonClick={this.handleReset.bind(this)} />
+            </div>
+          </div>
+        </div>
+        <div className="box-typical box-typical-padding" style={{textAlign: 'center'}}>
+          <h5 className="m-t-lg">
+            <p>Received token from your email?</p>
+            <p><strong>Fill in your token and new password below!:</strong></p>
+          </h5>
 
+          <div className="form-group">
+            <div className="form-group">
+              <input className="form-control" type="text"
+                placeholder="Token" value={this.state.value}
+                onChange={this.handleEmailChange.bind(this)} />
+            </div>
+            <div className="form-group">
+              <input className="form-control" type="password"
+                placeholder="Password" value={this.state.value}
+                onChange={this.handleEmailChange.bind(this)} />
+            </div>
+            <div className="form-group">
+              <input className="form-control" type="password"
+                placeholder="Re-enter Password" value={this.state.value}
+                onChange={this.handleEmailChange.bind(this)} />
+            </div>
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                       buttonText="RESET PASSWORD"
