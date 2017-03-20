@@ -10,7 +10,8 @@ import { populateGraduationRequirementsFixture,
 
 import { getFocusAreaPrimaryRequirement,
          getFocusArea4KRequirement,
-         getFocusAreaNonPrimaryRequirement } from '../../../../../../../../database-controller/focus-area/methods';
+         getFocusAreaNonPrimaryRequirement,
+         getFocusAreaRequirement } from '../../../../../../../../database-controller/focus-area/methods';
 import { getGradRequirementMCs } from '../../../../../../../../database-controller/graduation-requirement/methods';
 
 import { getAllSemestersInPlanner } from '../../../../../../../../crud-controller/semester/methods';
@@ -44,17 +45,24 @@ describe('grad-checker-focusArea', function()  {
     const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Focus Area' ;
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
+    const focusAreaModules = getFocusAreaRequirement(focusAreaReqIDs);
 
-    const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
-    const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
-    const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
+    console.log("focus area: " + JSON.stringify(focusAreaModules));
+
+    const focusAreaPrimaryModules = focusAreaModules.moduleListPrimary;
+    const focusArea4KModules = focusAreaModules.moduleListFourThousands;
+    const focusAreaNonPrimaryModules = focusAreaModules.moduleListElectives;
     const requiredMCs = getGradRequirementMCs(gradFocusAreaID)[requirementName];
+
+    console.log("primary focus: " + focusAreaModules.moduleListPrimary);
+    console.log("primary focus const: " + focusAreaPrimaryModules);
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
       focusArea4KModules: focusArea4KModules,
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules
     }
+
     const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');
     assert.equal(focusAreaMCSFulfilment.requiredMCs, 24);
@@ -64,10 +72,11 @@ describe('grad-checker-focusArea', function()  {
     const academicCohort = 'AY 2016/2017';
     const focusAreaName = 'Computer Graphics and Games';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
+    const focusAreaModules = getFocusAreaRequirement(focusAreaReqIDs);
 
-    const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
-    const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
-    const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
+    const focusAreaPrimaryModules = focusAreaModules.moduleListPrimary;
+    const focusArea4KModules = focusAreaModules.moduleListFourThousands;
+    const focusAreaNonPrimaryModules = focusAreaModules.moduleListElectives;
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules[focusAreaName],
