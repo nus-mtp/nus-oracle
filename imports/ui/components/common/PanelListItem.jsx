@@ -30,11 +30,11 @@ export default class PanelListItem extends React.Component{
         <li className={this.props.displayType}>
           <a href="#"
              style={ isEditable? {cursor: 'pointer'} : {cursor: 'default'}}
-             onClick={isEditable?this.props.handleEditClick:null}>
+             onClick={isEditable?this.props.handleEditClick:this.props.onClick}>
             <span className="tbl-row">
               <span className="tbl-cell tbl-cell-caption">
                 { this.text() }
-                { (isEditable && !isEditing)? icon : null }
+                { (isEditable && !isEditing)? icon : null } 
               </span>
             </span>
           </a>
