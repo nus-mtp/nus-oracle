@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import React from 'react';
 import Module from '../study_plan/Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
