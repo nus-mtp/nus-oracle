@@ -3,36 +3,37 @@ import { searchByModuleCodeAndNameRegex,
          searchByModuleCode,
          retrieveAllModule } from '../database-controller/module/methods';
 
+// Module Database from a public loaded clientside
+import { moduleDatabase } from './../../../public/nus_modules/moduleDatabase.js';
 
 /**
- * API wrapper call for returning list of all modules from the database
- * without any criteria.
+ * Load module database from server and return it in the JSON format:
  *
  * @return {[Array]} Array of all modules, with each module in the JSON format:
-   {
-       label: moduleCode + " " + moduleName
-       value: {index of this object in the list of modules}
-       moduleCode: "CS1010",
-       moduleName: "Programming Methodology"
-   }
-   Note: The 'value' field is specially meant for the module search bar
-         for react-select-fast-filter-options.
-         It specifies the exact index of the option so that the search
-         bar can recognize the different numbered options.
+ {
+     label: moduleCode + " " + moduleName
+     value: {index of this object in the list of modules}
+     moduleCode: "CS1010",
+     moduleName: "Programming Methodology"
+ }
+
+ Note: The 'value' field is specially meant for the module search bar for the
+       React library that handles search 'react-select-fast-filter-options'.
+       It specifies the exact index of the option so that the search bar can
+       recognize the different numbered options.
  */
 export const getAllModules = function getAllModules() {
-  let modules = retrieveAllModule();
-
-  // wrap into module code, name, label and value fields for UI
+  // Wrap into module code, name, label and value fields for UI search
   const resultArray = [];
 
-  for (var i = 0; i < modules.length; i++) {
+  for (var i = 0; i < moduleDatabase.length; i++) {
     const returnPackage = {
-      label: modules[i].moduleCode + " " + modules[i].moduleName,
+      label: moduleDatabase[i].moduleCode + " " + moduleDatabase[i].moduleName,
       value: i,
-      moduleCode: modules[i].moduleCode,
-      moduleName: modules[i].moduleName
+      moduleCode: moduleDatabase[i].moduleCode,
+      moduleName: moduleDatabase[i].moduleName
     };
+
     resultArray.push(returnPackage);
   }
 
