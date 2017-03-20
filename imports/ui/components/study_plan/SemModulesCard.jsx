@@ -4,6 +4,7 @@ import { Session } from 'meteor/session';
 // Import React Components
 import Module from './Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
+import createFilterOptions from 'react-select-fast-filter-options';
 
 // Import constants for char limits and line height limits for search options
 import { SMALL_LINE_CHAR_LIMIT } from '../common/Constants.js';
@@ -15,33 +16,14 @@ import { LARGE_LINE_HEIGHT } from '../common/Constants.js';
 // Import Logic Controller Methods
 import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
 import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
-import { sendQuery } from '../../../api/searcher-controller/controller.js'
-import { getAllModules } from '../../../api/searcher-controller/controller.js'
+import { getAllModules } from '../../../api/searcher-controller/controller.js';
 
-// Import fixtures acting as a local database for all modules
-import { getModuleFixtures } from './fixtures/module_fixtures.js';
 
-// Import Session variable name constant that contains the cached modules
-import { ALL_MODULES_FOR_SEARCH } from '../../pages/DashboardContainer.jsx'
-import { ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS } from '../../pages/DashboardContainer.jsx'
-
-// TODO :TESTING
-import createFilterOptions from 'react-select-fast-filter-options';
-
-const STRINGS = ['programming methodology',
-				 'topics in urban studies shaping liveable places',
-				 'advanced independent study in accounting and physics and mathematics',
-				 'managing the environment in a productive way to reduce pollution']
-
-// const NUM_OPTIONS = 1e4
-// const options = Array
-//   .from(Array(NUM_OPTIONS))
-//   .map((_, index) => ({
-//     label: `${index}: ${STRINGS[Math.floor(Math.random() * STRINGS.length)]}`,
-//     value: index
-//   }))
-//
-// const filterOptions = createFilterOptions({ options })
+// Prepare the module database that is saved serverside for ALL
+// SemModulesCard components so that you do not need to reactively
+// load the database again. (Done for clientside performance improvement).
+const allModules = getAllModules();
+const filterOptions = createFilterOptions({ options: allModules });
 
 /**
  * React Component that implements the container for a semester's worth of
@@ -51,8 +33,8 @@ const STRINGS = ['programming methodology',
  * user's study plan.
  */
 export default class SemModulesCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   /**
@@ -125,7 +107,7 @@ export default class SemModulesCard extends React.Component {
 					<div className="card-typical-section card-typical-content"
                style={{padding: '0.75em'}}>
             <div style={{paddingBottom: '0.75em'}}>
-              
+
               {/* Renders all modules from the user's study plan */}
               {Object.keys(modules).map((moduleCode, index) => {
                 return <Module key={index} moduleCode={moduleCode}
@@ -139,8 +121,8 @@ export default class SemModulesCard extends React.Component {
             <VirtualizedSelect
               placeholder="Add a module..." noResultsText="No modules found"
               openOnFocus={true} tabSelectsValue={false}
-              options={this.props.modulesForSearch}
-              filterOptions={this.props.filterOptsForSearch}
+              options={allModules}
+              filterOptions={filterOptions}
               menuBuffer={50}
               optionHeight={this.computeLineHeight}
               onChange={this.handleSelectModuleCode.bind(this)} />

@@ -15,19 +15,9 @@ export default SemModulesCardContainer = createContainer((props) => {
 
   // Load modules in the user's study plan based on the semester and planner
   const modules = getAllModulesInSemester(semesterIndex, plannerID);
-  console.time("semModsContainer ALL_MODULES_FOR_SEARCH");
-  const modulesForSearch = Session.get("ALL_MODULES_FOR_SEARCH");
-  console.timeEnd("semModsContainer ALL_MODULES_FOR_SEARCH");
-
-  console.time("semModsContainer ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  const filterOptsForSearch = Session.get("ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  console.timeEnd("semModsContainer ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  console.log("\n")
 
   return {
     sem,
     modules,
-    modulesForSearch,
-    filterOptsForSearch
   };
 }, SemModulesCard);
