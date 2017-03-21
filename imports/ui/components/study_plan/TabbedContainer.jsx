@@ -1,25 +1,26 @@
-/* Import common utilities */
-import { ENTER_CHAR_KEY_CODE } from '../common/Constants.js';
-import { MAX_STUDY_PLAN_NAME_LENGTH } from '../common/Constants.js';
-import { isDefinedObj } from '../../../utils/util.js';
-import { getFirstNChars } from '../../../utils/util.js';
-
-/* Import React components */
 import React from 'react';
+
+// Import React libraries
 import Select from 'react-select';
 import ReactClickOut from 'react-onclickout';
+
+// Import React components
 import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
 import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
 
-/* Import server-side methods */
-import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
-import { removePlanner } from '../../../api/crud-controller/planner/methods.js';
-import { setPlannerName } from '../../../api/crud-controller/planner/methods.js';
+// Import server-side methods
+import { createPlanner,
+         removePlanner,
+         setPlannerName } from '../../../api/crud-controller/planner/methods.js';
 
-// TEMPORARY
-const focusArea = ['dunnoWhatFocusArea'];
+ // Import common constants and utilities
+ import { ENTER_CHAR_KEY_CODE,
+          MAX_STUDY_PLAN_NAME_LENGTH } from '../common/Constants.js';
+ import { isDefinedObj,
+          getFirstNChars } from '../../../utils/util.js';
+
 
 /**
  * React Component for a TabbedContainer that holds the user's study plan.
@@ -63,7 +64,7 @@ export default class TabbedContainer extends React.Component {
       if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
         if (this.state.isAddingNewPlan) {
           this.setState({ isAddingNewPlan: false });
-          createPlanner(userInputStudyPlanName, focusArea);
+          createPlanner(userInputStudyPlanName, ["focusArea"]);
         }
       }
     }
@@ -82,7 +83,7 @@ export default class TabbedContainer extends React.Component {
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
       if (userInputStudyPlanName) {
-        createPlanner(userInputStudyPlanName, focusArea);
+        createPlanner(userInputStudyPlanName, ["focusArea"]);
       }
     }
   }
@@ -182,11 +183,9 @@ export default class TabbedContainer extends React.Component {
     }
 
     return (
-      <Tab key={index} tabWidth="9em"
+      <Tab key={index}
            navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
            tabTitle={tabTitleComponent}
-           enabledMouseOver={true}
-           isFirstTab={(index === 0) ? true : false}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
            onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
@@ -238,9 +237,8 @@ export default class TabbedContainer extends React.Component {
    */
   renderAddPlanTab() {
     return (
-      <Tab tabWidth="9em"
-           navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
-           enabledMouseOver={false} isFirstTab={false}
+      <Tab navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
+           enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
            tabTitle={
              <input autoFocus type="text" className="form-control"
                     style={{height: "1.5em"}}
@@ -260,7 +258,8 @@ export default class TabbedContainer extends React.Component {
    */
   renderAddPlanButton() {
     return (
-      <Tab tabWidth="3em" isFirstTab={false}
+      <Tab tabWidth="3em"
+           enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
            tabTitle={
              <IconButton
                icon="glyphicon glyphicon-plus"
