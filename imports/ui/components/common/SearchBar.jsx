@@ -11,11 +11,11 @@ import createFilterOptions from 'react-select-fast-filter-options';
 import { getAllModules } from '../../../api/searcher-controller/controller.js';
 
 // Import constants for char limits and line height limits for search options
-import { SMALL_LINE_CHAR_LIMIT } from '../common/Constants.js';
-import { MEDIUM_LINE_CHAR_LIMIT } from '../common/Constants.js';
-import { SMALL_LINE_HEIGHT } from '../common/Constants.js';
-import { MEDIUM_LINE_HEIGHT } from '../common/Constants.js';
-import { LARGE_LINE_HEIGHT } from '../common/Constants.js';
+import { SMALL_LINE_CHAR_LIMIT,
+         MEDIUM_LINE_CHAR_LIMIT,
+         SMALL_LINE_HEIGHT,
+         MEDIUM_LINE_HEIGHT,
+         LARGE_LINE_HEIGHT } from '../common/Constants.js';
 
 /**
  * Prepare the module database that is saved serverside for ALL
