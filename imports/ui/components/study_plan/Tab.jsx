@@ -107,17 +107,14 @@ export default class Tab extends React.Component {
   /**
    * Renders the dropdown caret on the right hand side of a tab
    *
-   * @param {[boolean]} enabledMouseOver    Whether mouse over is activated
-   *                                        for this tab or not
-   * @param {[boolean]} onMouseOver    Whether this tab is being hovered over
    * @return    Dropdown caret React component
    */
-  renderDropdownCaret(enabledMouseOver, onMouseOver) {
+  renderDropdownCaret() {
     return (
       <IconButton
         icon="fa fa-sort-down"
         style={{position: 'absolute', paddingTop: '0.15em', opacity: '0.8',
-                top:'0.3em', right: '0.5em', height: '1.5em', width: '1em'}}
+        top:'0.3em', right: '0.5em', height: '1.5em', width: '1em'}}
         displayColor="#505050" onMouseOverColor="#ff9100"
         onButtonClick={this.handleToggleDropdown.bind(this)}
       />
@@ -127,11 +124,9 @@ export default class Tab extends React.Component {
   /**
    * Renders the dropdown menu anchored below a tab
    *
-   * @param {[boolean]} onClickDropdown    Whether or not user clicked to
-   *                                       activate dropdown menu or not
    * @return    Dropdown menu React component with dropdown menu buttons
    */
-  renderDropDownMenu(onClickDropdown) {
+  renderDropDownMenu() {
     return (
       <div className="card-typical"
            onBlur={this.handleOnBlurDropdown.bind(this)}
@@ -214,15 +209,16 @@ export default class Tab extends React.Component {
             <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
 
               {/* The label of this Tab is rendered here */}
-              {this.props.tabTitle}
+              { this.props.tabTitle }
 
               {/* Render dropdown caret */}
-              {!this.props.isEditingPlanName ?
-                this.renderDropdownCaret() : null
-              }
+              { this.props.enabledDropdown && this.props.enabledMouseOver &&
+                !this.props.isEditingPlanName ?
+                this.renderDropdownCaret() : null }
 
               {/* Toggle Dropdown menu for this tab */}
-              {this.state.onClickDropdown ?  this.renderDropDownMenu() : null}
+              { this.props.enabledDropdown && this.state.onClickDropdown ?
+                this.renderDropDownMenu() : null }
 
             </span>
           </a>
@@ -244,19 +240,35 @@ Tab.propTypes = {
   navSpanClass: React.PropTypes.string,
 
   // String representation of the style of the span tag within a Tab
-  // If you don't want to use the style tag, simply pass in an empty object
-  // like: {}
   navSpanStyle: React.PropTypes.object,
 
   // Handler for when a user clicks on this Tab
   onClickTab: React.PropTypes.func,
 
-  // Handler for when a user clicks on delete button on the Tab
+  // Handler for when a user clicks on delete button on the Tab dropdown
   onClickDeleteTab: React.PropTypes.func,
+
+  // Handler for when a user clicks on edit button on the Tab dropdown
+  onClickDeleteTab: React.PropTypes.func,
+
+  // Boolean true means this Tab is currently in edit state, false otherwise
+  isEditingPlanName: React.PropTypes.bool,
 
   // Boolean true means this Tab is currently selected, false otherwise
   isActiveTab: React.PropTypes.bool,
 
   // Boolean true means this Tab will deactivate mouse over events, false otherwise
-  enabledMouseOver: React.PropTypes.bool
+  enabledMouseOver: React.PropTypes.bool,
+
+  // Boolean true means this Tab will render a dropdown menu, false otherwise
+  enabledDropdown: React.PropTypes.bool
+}
+
+Tab.defaultProps = {
+  tabTitle: <div>default title node</div>,
+  tabWidth: "9em",
+  navSpanStyle: {},
+  isActiveTab: false,
+  enabledMouseOver: true,
+  enabledDropdown: true
 }

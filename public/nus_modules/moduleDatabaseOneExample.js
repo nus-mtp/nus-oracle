@@ -1,4 +1,4 @@
-module.exports.moduleDatabase = [
+module.exports.moduleDatabaseOneExample = [
   {
     "moduleCode": "ACC1002",
     "moduleName": "Financial Accounting",
