@@ -96,10 +96,12 @@ const markExceptions = function markExceptions(markedIndustrialExperienceTrainin
   if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   }
 
@@ -112,10 +114,12 @@ const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(marke
   if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   }
   return markedIndustrialExperienceTrainingModulesAndMCs;

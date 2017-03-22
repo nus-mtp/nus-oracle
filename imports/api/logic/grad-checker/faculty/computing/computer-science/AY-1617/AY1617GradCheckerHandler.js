@@ -165,7 +165,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     focusAreaRequirements.children.push(focusAreaAtLeast12MCs);
     UIFormatGraduationRequirement.children.push(focusAreaRequirements);
 
-    console.log(JSON.stringify(UIFormatGraduationRequirement));
+    //console.log(JSON.stringify(UIFormatGraduationRequirement));
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
@@ -181,6 +181,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     const industrialExperienceRequirements = allGradRequirements[moduleRequirementTitle[3]];
     const requiredMCsIndustrialExperience = allGraduationRequirementMCs[moduleRequirementTitle[3]];
     graduationRequirements[moduleRequirementTitle[3]] = findIndustrialExperienceTrainingModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIndustrialExperience);
+    console.log(graduationRequirements[moduleRequirementTitle[3]].isFulfilled);
     if (Object.keys(graduationRequirements[moduleRequirementTitle[3]]).length > 0)  {
       UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[3]].name,
                                                                      graduationRequirements[moduleRequirementTitle[3]].markedIndustrialExperienceTrainingModules,
