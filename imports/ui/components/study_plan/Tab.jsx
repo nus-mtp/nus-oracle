@@ -240,8 +240,6 @@ Tab.propTypes = {
   navSpanClass: React.PropTypes.string,
 
   // String representation of the style of the span tag within a Tab
-  // If you don't want to use the style tag, simply pass in an empty object
-  // like: {}
   navSpanStyle: React.PropTypes.object,
 
   // Handler for when a user clicks on this Tab
