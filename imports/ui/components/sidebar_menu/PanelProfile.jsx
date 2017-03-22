@@ -49,6 +49,7 @@ export default class PanelProfile extends React.Component {
       <nav className="side-menu-addl">
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
+          <PanelListItem displayType="header" text="Change Password"  isEditable={false}/>
           <PanelListItem displayType="header" text="E-mail"  isEditable={false}/>
           <PanelListItem displayType="" text={ (Meteor.user()) ? Meteor.user().username : "" }  isEditable={false}/>
           <ModulesCardContainer studentID="" listType="Exempted" tooltip={exemptedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
@@ -57,7 +58,6 @@ export default class PanelProfile extends React.Component {
           <ProfileDetailsContainer studentInfoType="PrevEdu"/>
           <PanelListItem displayType="header" text="Academic Cohort"  isEditable={false}/>
           <ProfileDetailsContainer studentInfoType="AcadCohort"/>
-          <PanelListItem displayType="header" text="Change Password"  isEditable={false}/>
         </ul>
       </nav>
     );
