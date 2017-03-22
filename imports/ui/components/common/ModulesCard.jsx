@@ -37,26 +37,14 @@ export default class ModulesCard extends React.Component {
     }
   }
 
-  /**
-   * Returns a node that styles the footer of this card
-   *
-   * @param text {[String]}  Text to display on footer
-   */
-  renderFooter(text) {
-    return (
-      <div className="card-typical-section"
-           style={{padding: '0.5em 1em 0.5em 1em'}}>
-        <div className="card-typical-linked">
-          {text}
-        </div>
-      </div>
-    )
-  }
-
   render() {
     return (
       <div className="card-grid-col">
 				<article className="card-typical" style={this.props.cardStyle}>
+
+          {/* Header of this ModulesCard that can contain additional text */}
+          {this.props.header}
+
 					<div className="card-typical-section card-typical-content"
                style={{padding: '0.75em'}}>
 
@@ -82,9 +70,7 @@ export default class ModulesCard extends React.Component {
           </div>
 
           {/* Footer of this ModulesCard that can contain additional text */}
-          {this.props.isDisplayFooter ?
-            this.renderFooter(this.props.sem) :
-            null}
+          {this.props.footer}
 
 				</article>
 			</div>
@@ -102,12 +88,23 @@ ModulesCard.propTypes = {
   // Style object for this modules card
   cardStyle: React.PropTypes.object,
 
-  // True if you want to display a footer at the bottom of the ModulesCard, false otherwise
-  isDisplayFooter: React.PropTypes.bool,
+  // Pass in a valid React node to display a header at the top
+  header: React.PropTypes.node,
+
+  // Pass in a valid React node to display a footer at the bottom
+  footer: React.PropTypes.node,
 
   // Handler for when a user clicks on a module from the search dropdown
   handleSelectModule: React.PropTypes.func,
 
   // Handler for when a user clicks on delete button on a <Module/>
   handleDeleteModule: React.PropTypes.func,
+}
+
+ModulesCard.defaultProps = {
+  sem: "",
+  modules: [{}],
+  cardStyle: {},
+  header: null,
+  footer: null,
 }

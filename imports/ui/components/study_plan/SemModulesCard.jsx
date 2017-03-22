@@ -9,8 +9,8 @@ import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/m
 
 /**
  * React Component that implements the container for a semester's worth of
- * modules. Contains the methods and renders a common ModulesCard component
- * to display all modules in a semester.
+ * modules. Contains the methods for handling those modules and renders a
+ * common ModulesCard component to display all modules in a semester.
  */
 export default class SemModulesCard extends React.Component {
   constructor(props) {
@@ -48,7 +48,13 @@ export default class SemModulesCard extends React.Component {
           WebkitBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
           MozBoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)',
           BoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)'}}
-        isDisplayFooter={true}
+        footer={
+          <div className="card-typical-section"
+               style={{padding: '0.5em 1em 0.5em 1em'}}>
+            <div className="card-typical-linked">
+              {this.props.sem}
+            </div>
+          </div>}
         handleSelectModule={this.handleSelectModule.bind(this)}
         handleDeleteModule={this.handleDeleteModule.bind(this)} />
     );
