@@ -90,11 +90,10 @@ export default class Tab extends React.Component {
    * plan the user is currently viewing.
    *
    * @param {[String]} cssClass    Current default CSS class for a tab
-   * @param {[boolean]} isActiveTab    True if is active tab, false otherwise
    * @return    String representation of a CSS class to apply for an active tab
    */
-  setActiveTabClass(cssClass, isActiveTab) {
-    if (isActiveTab) {
+  setActiveTabClass(cssClass) {
+    if (this.props.isActiveTab) {
       return cssClass + " active";
     } else {
       return cssClass;
@@ -201,11 +200,11 @@ export default class Tab extends React.Component {
     return (
       /* ReactClickOut listens for and handles all click-outside events */
       <ReactClickOut onClickOut={this.handleOnBlurDropdown.bind(this)} >
-        <li className='nav-item' style={{float: "left", width: this.props.tabWidth}}
+        <li className='nav-item' style={this.props.tabStyle}
             onClick={this.props.onClickTab}
             onMouseEnter={this.handleOnMouseEnter.bind(this)}
             onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-          <a className={this.setActiveTabClass("nav-link", this.props.isActiveTab)} role='tab'>
+          <a className={this.setActiveTabClass("nav-link")} role='tab'>
             <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
 
               {/* The label of this Tab is rendered here */}
@@ -232,14 +231,13 @@ Tab.propTypes = {
   // Title of the tab (max: 15 chars, or a "..." will be rendered in place)
   tabTitle: React.PropTypes.node,
 
-  // String representation of the width of each tab. Recommended to be in em
-  // units like: "9em"
-  tabWidth: React.PropTypes.string,
+  // Style object of this Tab
+  tabStyle: React.PropTypes.object,
 
   // String representation of the class of the span tag within a Tab
   navSpanClass: React.PropTypes.string,
 
-  // String representation of the style of the span tag within a Tab
+  // Style object of the span tag within this Tab
   navSpanStyle: React.PropTypes.object,
 
   // Handler for when a user clicks on this Tab
@@ -266,7 +264,7 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
   tabTitle: <div>default title node</div>,
-  tabWidth: "9em",
+  tabStyle: {float: "left", width: "9em", backgroundColor: "#f6f8fa"},
   navSpanStyle: {},
   isActiveTab: false,
   enabledMouseOver: true,
