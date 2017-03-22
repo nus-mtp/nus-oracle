@@ -7,18 +7,31 @@ import { searchByModuleCodeAndNameRegex,
 import { moduleDatabase } from './../../../public/nus_modules/moduleDatabase.js';
 
 /**
- * Load module database from server and return it in the JSON format:
+ * Load module database from server and return it in the specified JSON format
+ * for module searching purposes.
  *
  * @return {[Array]} Array of all modules, with each module in the JSON format:
  {
-     label: moduleCode + " " + moduleName
+     label: "ACC3602 Managerial Planning and Control"
      value: {index of this object in the list of modules}
-     moduleCode: "CS1010",
-     moduleName: "Programming Methodology"
+     "moduleCode": "ACC3602",
+     "moduleName": "Managerial Planning and Control",
+     "moduleDescription": "The course examines various means by which control ",
+     "modulePrerequisite": "FNA2002 or ACC2002",
+     "modulePreclusion": "Students who have passed FNA1002 are not allowed to take ACC 1002.",
+     "moduleMC": 4,
+     "termOffered": [
+       {
+         "termYear": "AY 2014/2015",
+         "semester": 1
+       }, {
+         "termYear": "AY 2014/2015",
+         "semester": 2
+       }
+     ]
  }
 
- Note: The 'value' field is specially meant for the module search bar for the
-       React library that handles search 'react-select-fast-filter-options'.
+ Note: The 'value' field is specially meant for handling search.
        It specifies the exact index of the option so that the search bar can
        recognize the different numbered options.
  */
@@ -30,8 +43,7 @@ export const getAllModules = function getAllModules() {
     const returnPackage = {
       label: moduleDatabase[i].moduleCode + " " + moduleDatabase[i].moduleName,
       value: i,
-      moduleCode: moduleDatabase[i].moduleCode,
-      moduleName: moduleDatabase[i].moduleName
+      ...moduleDatabase[i]
     };
 
     resultArray.push(returnPackage);

@@ -1,4 +1,7 @@
 import React from 'react';
+
+// Import React components
+import ReactTooltip from 'react-tooltip'
 import IconButton from './IconButton.jsx';
 
 export default class Module extends React.Component {
