@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 // Import logic methods
 import { getAllModulesInSemester } from '../../../api/crud-controller/module/methods.js';
+import { findModuleInfo } from './../../../api/searcher-controller/controller.js';
 
 // Import React components
 import SemModulesCard from './SemModulesCard.jsx';
@@ -14,7 +15,14 @@ export default SemModulesCardContainer = createContainer((props) => {
   const plannerID = props.plannerID;
 
   // Load modules in the user's study plan based on the semester and planner
-  const modules = getAllModulesInSemester(semesterIndex, plannerID);
+  // Map of module codes, e.g. {"CS1010" : "CS1010"}
+  const moduleCodesMap = getAllModulesInSemester(semesterIndex, plannerID);
+
+  let moduleCodesArray = Object.keys(moduleCodesMap);
+  let modules = [];
+  for (let i = 0; i < moduleCodesArray.length; i++) {
+    modules.push(findModuleInfo(moduleCodesArray[i]));
+  }
 
   return {
     sem,
