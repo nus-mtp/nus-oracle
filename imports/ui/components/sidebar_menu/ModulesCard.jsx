@@ -1,5 +1,5 @@
 import React from 'react';
-import Module from '../study_plan/Module.jsx';
+import Module from './../common/Module.jsx';
 import VirtualizedSelect from 'react-virtualized-select';
 import IconButton from '../common/IconButton.jsx'
 
