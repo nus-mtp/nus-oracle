@@ -116,6 +116,13 @@ export default class TabbedContainer extends React.Component {
   handleDeleteStudyPlanClick(index) {
     let studyPlanIDToDelete = this.props.plannerIDs[index];
     removePlanner(studyPlanIDToDelete);
+
+    // if deleting last planner, auto select previous planner
+    if(index == this.props.plannerIDs.length - 1 ){
+      this.setState({
+        tabSelectedIndex: index-1
+      })
+    }
   }
 
   /**
