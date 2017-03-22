@@ -6,6 +6,9 @@ import { searchByModuleCodeAndNameRegex,
 // Module Database from a public loaded clientside
 import { moduleDatabase } from './../../../public/nus_modules/moduleDatabase.js';
 
+//==============================================================
+// METHODS FOR LOCAL DATABASE CALLS
+//==============================================================
 /**
  * Load module database from server and return it in the specified JSON format
  * for module searching purposes.
@@ -52,6 +55,25 @@ export const getAllModules = function getAllModules() {
   return resultArray;
 }
 
+/**
+ * Searches through the local module database to find the module object that
+ * represents moduleCode module.
+ *
+ * @param  {[String]} moduleCode    Module code of the module to find
+ * @return {[Object]}    Module object that was found. Returns null if not found.
+ */
+export const findModuleInfo = function findModuleInfo(moduleCode) {
+  for (var i = 0; i < moduleDatabase.length; i++) {
+    if (moduleDatabase[i].moduleCode === moduleCode) {
+      return moduleDatabase[i];
+    }
+  }
+  return null;
+}
+
+//==============================================================
+// METHODS FOR SERVERSIDE DATABASE CALLS
+//==============================================================
 /**
  * Searches for a list of all modules of which each module code and name
  * matches the specified userInput String.
