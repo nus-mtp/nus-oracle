@@ -277,15 +277,14 @@ export default class TabbedContainer extends React.Component {
    */
   renderAddPlanButton() {
     return (
-      <Tab tabWidth="3em"
-           enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
+      <Tab enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
+           tabStyle={{float: "left", width: "3em", backgroundColor: "#f6f8fa"}}
            tabTitle={
              <IconButton
                icon="glyphicon glyphicon-plus"
                style={{margin: '0.75em 0.25em'}}
                displayColor="#505050" onMouseOverColor="#00a8ff"
-               onButtonClick={this.handleAddStudyPlanClick.bind(this)}
-               enabledMouseOver={false} />}
+               onButtonClick={this.handleAddStudyPlanClick.bind(this)} />}
       />
     )
   }
