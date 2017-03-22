@@ -45,6 +45,7 @@ export default class ModulesCard extends React.Component {
           {/* Header of this ModulesCard that can contain additional text */}
           {this.props.header}
 
+          {/* Main Content of this ModulesCard */}
 					<div className="card-typical-section card-typical-content"
                style={{padding: '0.75em'}}>
 

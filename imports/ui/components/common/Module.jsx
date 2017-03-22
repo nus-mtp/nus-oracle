@@ -9,6 +9,9 @@ export default class Module extends React.Component {
     }
   }
 
+  /**
+   * Handlers for mouse hover events over this Module component
+   */
   handleOnMouseEnter(event) {
     this.setState({ onMouseOver: true });
   }
