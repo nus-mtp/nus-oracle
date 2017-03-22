@@ -1,5 +1,6 @@
 import { searchByModuleCode } from '../../../../../../../../database-controller/module/methods';
 
+// focus area MCs are assumed to be at 4MCs and no focus area with more than 4MCs
 export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(studentSemesters, studentFocusAreas, requiredMCs) {
   // checks for 24 MCs from focus area modules
   const focusAreaPrimaryKeys = studentFocusAreas.focusAreaPrimaryModules;
@@ -87,6 +88,8 @@ export const findFocusAreaModules = function findFocusAreaModules(focusAreaName,
     minNumberOfPrimary4K: 1,
     total4KModuleMCs: 0,
     min4KModuleMCs: 12,
+    threePrimaryModules: false,
+    one4KModules: false,
     isPrimaryTrue: false,
     is4KTrue: false,
   };
@@ -117,21 +120,26 @@ const findFocusAreaPrimary = function findFocusAreaPrimary(markedFocusAreaModule
   }
 
   // checks if primary has at least 3 modules
-  if (markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue < markedFocusAreaModulesAndMCs.minNumberOfPrimaryFocusArea) {
-    return markedFocusAreaModulesAndMCs;
+  if (markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue >= markedFocusAreaModulesAndMCs.minNumberOfPrimaryFocusArea) {
+    markedFocusAreaModulesAndMCs.threePrimaryModules = true;
   }
 
   // checks if primary has at least 1 4K
   for (var i=0; i<focusAreaPrimary4KKeys.length; i++)  {
     if (markedFocusAreaModulesAndMCs.markedFocusAreaPrimary4KModules[focusAreaPrimary4KKeys[i]]) {
-      markedFocusAreaModulesAndMCs.isPrimaryTrue = true;
+      markedFocusAreaModulesAndMCs.one4KModules = true;
       break;
     }
+  }
+
+  if (markedFocusAreaModulesAndMCs.threePrimaryModules && markedFocusAreaModulesAndMCs.one4KModules)  {
+    markedFocusAreaModulesAndMCs.isPrimaryTrue = true;
   }
 
   return markedFocusAreaModulesAndMCs;
 }
 
+// run find focus area 4k on all 4k modules, not just 1 focus area
 const findFocusArea4KModules = function findFocusArea4KModules(markedFocusAreaModulesAndMCs, studentSemesters, exemptedModules, waivedModules)  {
   const keyNames = Object.keys(markedFocusAreaModulesAndMCs.markedFocusArea4KModules);
 

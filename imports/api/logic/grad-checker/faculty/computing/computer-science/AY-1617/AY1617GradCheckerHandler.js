@@ -112,6 +112,18 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       isFulfilled: false
     };
 
+    let focusAreaPrimaries = {
+      name: "Area Primaries",
+      children: [],
+      isFulfilled: false
+    }
+
+    let focusAreaAtLeast12MCs = {
+      name: "At least 12 MCs of 4K modules",
+      children: [],
+      isFulfilled: false
+    }
+
     const allStudentFocusAreas = {
       focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
       focusArea4KModules: allFocusArea4KRequirements,
@@ -134,23 +146,26 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       }
 
       let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules);
-      focusAreaRequirements.children.push(UIFormatFocusAreaConversion(oneFocusArea));
-      if (oneFocusArea.isPrimaryTrue && oneFocusArea.is4KTrue)  {
-        focusAreaRequirements.isFulfilled = true;
+      focusAreaPrimaries.children.push(UIFormatFocusAreaConversion(oneFocusArea));
+      if (oneFocusArea.isPrimaryTrue)  {
+        focusAreaPrimaries.isFulfilled = true;
       }
     }
 
     // check if student planner meet 24 MCs requirement
     focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+    focusAreaAtLeast12MCs.isFulfilled = focusAreaMCSFulfilment.isFulfilled;
     graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
 
-    if (!focusAreaMCSFulfilment.isFulfilled)  {
-      focusAreaRequirements.isFulfilled = false;
+    if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled)  {
+      focusAreaRequirements.isFulfilled =  true;
     }
 
+    focusAreaRequirements.children.push(focusAreaPrimaries);
+    focusAreaRequirements.children.push(focusAreaAtLeast12MCs);
     UIFormatGraduationRequirement.children.push(focusAreaRequirements);
 
-    //console.log(JSON.stringify(UIFormatGraduationRequirement));
+    console.log(JSON.stringify(UIFormatGraduationRequirement));
 
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
@@ -253,27 +268,25 @@ const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocu
   }
   // create primary here
   let primaryModules =  {
-    name: 'Focus Area Primaries',
+    name: 'Focus Area Primary',
     children: [],
     isFulfilled: false
   }
   primaryModules = createUIFormat(primaryModules, oneFocusArea.markedFocusAreaPrimaryModules);
-  primaryModules.isFulfilled = oneFocusArea.primary;
+  primaryModules.isFulfilled = oneFocusArea.threePrimaryModules;
 
   // create 4k here
   let fourThousandModules =  {
-    name: 'Focus Area 4K',
+    name: 'Focus Area Primary 4K and above',
     children: [],
     isFulfilled: false
   }
-  fourThousandModules = createUIFormat(fourThousandModules, oneFocusArea.markedFocusArea4KModules);
-  fourThousandModules.isFulfilled = oneFocusArea.fourThousand;
+  fourThousandModules = createUIFormat(fourThousandModules, oneFocusArea.markedFocusAreaPrimary4KModules);
+  fourThousandModules.isFulfilled = oneFocusArea.one4KModules;
 
   tempGradRequirement.children.push(primaryModules);
   tempGradRequirement.children.push(fourThousandModules);
-  if (oneFocusArea.primary && oneFocusArea.fourThousand)  {
-    tempGradRequirement.isFulfilled = true;
-  }
+  tempGradRequirement.isFulfilled = oneFocusArea.isPrimaryTrue;
 
   return tempGradRequirement;
 }
