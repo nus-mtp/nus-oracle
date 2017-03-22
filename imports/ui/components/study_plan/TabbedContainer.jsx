@@ -12,6 +12,8 @@ import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
 import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
+import AddNewPlanner from './AddNewPlanner.jsx';
+import ModalContainer from '../common/ModalContainer.jsx';
 
 /* Import server-side methods */
 import { createPlanner } from '../../../api/crud-controller/planner/methods.js';
@@ -32,6 +34,7 @@ export default class TabbedContainer extends React.Component {
     this.state = {
       tabSelectedIndex: 0,
       isAddingNewPlan: false,
+      isModaleVisible: false,
       isEditingPlanName: false,
       planNameToEdit: false
     }
@@ -87,13 +90,22 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  handleCancelAddPlanModale(event) {
+    this.setState({ isModaleVisible: false });
+  }
+
   /**
    * Handler for add study plan button on the right hand side of all tabs
    */
   handleAddStudyPlanClick() {
-    this.setState({ isAddingNewPlan : true });
+    this.setState({ isModaleVisible : true});
   }
 
+  handleAddBlankTemplate(){
+    this.setState({ isModaleVisible : false});
+    this.setState({ isAddingNewPlan : true});
+    console.log('handle blank template');
+  }
   /**
    * Handler for deleting study plan.
    *
@@ -238,16 +250,16 @@ export default class TabbedContainer extends React.Component {
    */
   renderAddPlanTab() {
     return (
-      <Tab tabWidth="9em"
-           navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
-           enabledMouseOver={false} isFirstTab={false}
-           tabTitle={
-             <input autoFocus type="text" className="form-control"
-                    style={{height: "1.5em"}}
-                    onKeyPress={this.handleEnterStudyPlanName.bind(this)}
-                    onBlur={this.handleCancelAddStudyPlan.bind(this)} />
-           }
-      />
+        <Tab tabWidth="9em"
+             navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
+             enabledMouseOver={false} isFirstTab={false}
+             tabTitle={
+               <input autoFocus type="text" className="form-control"
+                      style={{height: "1.5em"}}
+                      onKeyPress={this.handleEnterStudyPlanName.bind(this)}
+                      onBlur={this.handleCancelAddStudyPlan.bind(this)} />
+             }
+        />
     )
   }
 
@@ -290,9 +302,13 @@ export default class TabbedContainer extends React.Component {
               {/* Renders the tab used to enter a new study plan's name when
                   user clicks on "Add" study plan button */}
                   {this.state.isAddingNewPlan ? this.renderAddPlanTab() : null}
+                  {this.state.isModaleVisible ?
+                    <ModalContainer content={<AddNewPlanner isFullscreen={false} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>} onHidden={this.handleCancelAddPlanModale.bind(this)}
+                    onHidden={this.handleCancelAddPlanModale.bind(this)}/>
+                  : null}
 
               {/* "Add" study plan button with a "+" symbol */}
-              {this.renderAddPlanButton()}
+              {plannerIDs.length!=0 ? this.renderAddPlanButton() : null}
 
             </ul>
           </div>
@@ -301,6 +317,10 @@ export default class TabbedContainer extends React.Component {
         <div className='tab-content' style={{padding: '8px', marginTop: '-1px'}}>
           <div role='tabpanel' className='tab-pane fade in active'
                id={'tab' + this.state.tabSelectedIndex}>
+                 {
+                   // Show add menu dialog when no planners in dashboard
+                   (plannerIDs.length == 0 && !this.state.isAddingNewPlan) ? <AddNewPlanner isFullscreen={true} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> : null
+                 }
 
             {/* Renders a Academic Year content panel under each tab. */}
             {plannerIDs.map((plannerID, index) => {
