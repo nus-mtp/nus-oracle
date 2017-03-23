@@ -152,8 +152,8 @@ describe('semester', function () {
 
     const updatedPlanner = Planner.findOne({_id:plannerId[0]});
 
-    assert.equal(updatedPlanner.semesters[0], "AY 2041/2042");
-    assert.equal(updatedPlanner.semesters[4], "AY 2042/2043");
+    assert.equal(updatedPlanner.semesters[0].academicYear, "AY 2041/2042");
+    assert.equal(updatedPlanner.semesters[4].academicYear, "AY 2042/2043");
   });
 
   it ('add new semester using meteor methods', function ()  {
