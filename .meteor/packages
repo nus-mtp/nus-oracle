@@ -54,4 +54,3 @@ aldeed:browser-tests
 http@1.2.11
 check
 session
-dispatch:mocha-phantomjs
