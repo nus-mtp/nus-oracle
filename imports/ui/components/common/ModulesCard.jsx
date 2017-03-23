@@ -51,13 +51,17 @@ export default class ModulesCard extends React.Component {
 
            {/* Renders all modules from a given list of modules */}
             <div style={{paddingBottom: '0.75em'}}>
-              {Object.keys(this.props.modules).map((moduleCode, index) => {
-                return <Module
-                         key={index}
-                         moduleCode={moduleCode}
-                         handleDeleteModule={
-                           this.handleDeleteModule.bind(this, moduleCode)
-                         } />;
+              {this.props.modules.map((module, index) => {
+                if (module) {
+                  return (
+                    <Module
+                      key={index}
+                      module={module}
+                      handleDeleteModule={
+                        this.handleDeleteModule.bind(this, module.moduleCode)
+                      } />
+                  );
+                }
               })}
             </div>
 
@@ -84,7 +88,7 @@ ModulesCard.propTypes = {
   sem: React.PropTypes.string,
 
   // List of module objects that will be rendered as a list of <Module/> components
-  modules: React.PropTypes.object,
+  modules: React.PropTypes.array,
 
   // Style object for this modules card
   cardStyle: React.PropTypes.object,

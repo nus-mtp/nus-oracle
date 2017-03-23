@@ -66,5 +66,5 @@ SemModulesCard.propTypes = {
   sem: React.PropTypes.string,
 
   // List of module objects that will be rendered as a list of <Module/> components
-  modules: React.PropTypes.object,
+  modules: React.PropTypes.array,
 }
