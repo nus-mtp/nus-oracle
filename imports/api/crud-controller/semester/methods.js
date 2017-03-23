@@ -163,5 +163,5 @@ export const updateSemesterAcademicYearInPlanner = function updateSemesterAcadem
   }
 
   //update the semester back to the planner
-  Planner.Update({"_id": planner._id},{ $set: { "semesters": retrievedSemester } });
+  Planner.update({"_id": planner._id},{ $set: { "semesters": retrievedSemester } });
 }
