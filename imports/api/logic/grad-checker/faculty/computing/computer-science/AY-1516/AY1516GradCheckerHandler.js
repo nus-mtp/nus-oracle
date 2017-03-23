@@ -12,7 +12,7 @@ import { findTeamProjectRequirementModules } from './breadth-depth/team-project/
 import { findIndustrialExperienceTrainingModules } from './breadth-depth/industrial-experience/methods';
 import { checkFocusAreaFulfilmentMCs,
          findFocusAreaModules } from './breadth-depth/focus-area/methods';
-import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
+import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1516/methods';
 import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
 /* Explanation for new AY creation
@@ -45,7 +45,7 @@ import { findUnrestrictedElectivesRequirementModules } from './unrestricted-elec
 *  @return {{objects}}  UI formatted list of graduation requirements
 *
 */
-export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
+export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
   const graduationMCs = 160;
   const moduleRequirementTitle = ['Computer Science Foundation',
                                   'Computer Science Focus Area',
@@ -105,14 +105,14 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
 
   // find university-level-requirements here
-  const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
+  /*const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
   const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
   graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
   if (Object.keys(graduationRequirements[moduleRequirementTitle[6]]).length > 0)  {
   UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[6]].name,
                                                                  graduationRequirements[moduleRequirementTitle[6]].markedULRModules,
                                                                  graduationRequirements[moduleRequirementTitle[6]].isFulfilled));
-  }
+  }*/
 
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]];
