@@ -80,7 +80,7 @@ describe('focus area test', function() {
       ]
     };
 
-    const moduleDefault4 = {
+    const moduleDe  fault4 = {
       moduleCode: 'default4',
       moduleName: 'defaultModuleName',
       moduleDescription: 'loremIpsum',

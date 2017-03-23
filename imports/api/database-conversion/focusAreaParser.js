@@ -19,7 +19,7 @@ export const populateFocusAreaCollection = function() {
     for(var i = 0 ; i < focusAreaData.length; i++){
         let currentFocusArea = focusAreaData[i];
         // store it into database
-        let currentID = createNewFocusArea(currentFocusArea["name"],currentFocusArea["moduleListPrimary"],currentFocusArea["moduleListFourThousands"],currentFocusArea["moduleListElectives"]);
+        let currentID = createNewFocusArea(currentFocusArea["name"],currentFocusArea["moduleListPrimary"],currentFocusArea["moduleListPrimaryFourThousands"],["moduleListFourThousands"],currentFocusArea["moduleListElectives"]);
         console.log(currentFocusArea["name"] + ": " + JSON.stringify(currentID) );
     }
   }
