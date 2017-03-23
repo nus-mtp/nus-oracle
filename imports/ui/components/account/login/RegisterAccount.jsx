@@ -26,7 +26,7 @@ export default class RegisterAccount extends React.Component {
       repassword:''};
   }
 
- 
+
   handleEmailChange(event) {
     this.setState({email: event.target.value});
     this.setState({username: event.target.value});
@@ -53,26 +53,31 @@ export default class RegisterAccount extends React.Component {
 
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
       if (validEmail) {
-        if (this.state.password == this.state.repassword) {
-          Accounts.createUser( user, (error) => {
-            if (error) {
-              // Variety of errors when signing up
-              Bert.alert(error.reason, 'danger');
-            } else {
-              Meteor.call('sendVerificationLink', (error, response) => {
-                if (error) {
-                  Bert.alert(error.reason, 'danger');
-                } else {
-                  Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
-                  this.props.onSuccess();
-                  Meteor.logout();
-                }
-              });
-            }
-          });
-        } else {
-            Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
-        }
+        Meteor.call('nusPasswordVerifier',
+                    this.state.password,
+                    this.state.repassword,
+                    (errorObj, isValidPassword) => {
+            if (isValidPassword) {
+            Accounts.createUser( user, (error) => {
+              if (error) {
+                // Variety of errors when signing up
+                Bert.alert(error.reason, 'danger');
+              } else {
+                Meteor.call('sendVerificationLink', (error, response) => {
+                  if (error) {
+                    Bert.alert(error.reason, 'danger');
+                  } else {
+                    Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
+                    this.props.onSuccess();
+                    Meteor.logout();
+                  }
+                });
+              }
+            });
+          } else {
+              Bert.alert(errorObj.error, 'danger');
+          }
+        });
       } else {
         Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
       }
