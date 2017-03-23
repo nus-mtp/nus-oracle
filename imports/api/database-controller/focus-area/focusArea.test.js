@@ -10,11 +10,13 @@ describe('focus area test', function() {
   if(Meteor.isServer){
     const focusAreaOneName = "Focus Area 1";
     const focusAreaOneListPrimary = ['default1','default2'];
+    const focusAreaOneListPrimaryFourThousands = ['de4002','de4003'];
     const focusAreaOneListFourK = ['de4000','de4001'];
     const focusAreaOneElective = ['default4','default3'];
 
     const focusAreaTwoName = "Focus Area 2";
     const focusAreaTwoListPrimary = ['default6','default5'];
+    const focusAreaTwoListPrimaryFourThousands = ['de4002','de4003'];
     const focusAreaTwoListFourK = ['de4001','de4002'];
     const focusAreaTwoElective = ['default7','default8'];
 
@@ -99,8 +101,8 @@ describe('focus area test', function() {
     };
 */
     beforeEach(function() {
-      createNewFocusArea(focusAreaOneName,focusAreaOneListPrimary, focusAreaOneListFourK, focusAreaOneElective);
-      createNewFocusArea(focusAreaTwoName,focusAreaTwoListPrimary, focusAreaTwoListFourK, focusAreaTwoElective);
+      createNewFocusArea(focusAreaOneName,focusAreaOneListPrimary, focusAreaOneListPrimaryFourThousands, focusAreaOneListFourK, focusAreaOneElective);
+      createNewFocusArea(focusAreaTwoName,focusAreaTwoListPrimary, focusAreaTwoListPrimaryFourThousands,focusAreaTwoListFourK, focusAreaTwoElective);
       Modules.insert(moduleDefault1);
       Modules.insert(moduleDefault2);
     });
