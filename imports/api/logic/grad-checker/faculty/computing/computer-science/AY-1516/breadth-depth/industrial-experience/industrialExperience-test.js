@@ -5,7 +5,7 @@ import { populateIndustrialPlannerFixture,
          dePopulatePlannerFixture } from '../../../../../../../../test-fixtures/planner';
 import { populateModuleFulfilmentFixture,
          dePopulateModuleFulfilmentFixture } from '../../../../../../../../test-fixtures/moduleFulfilment';
-import { populateGraduationRequirementsFixture,
+import { populateAY1516GraduationRequirementsFixture,
          dePopulateGraduationRequirementsFixture } from '../../../../../../../../test-fixtures/graduationRequirements';
 
 import { getGradRequirementModules,
@@ -23,7 +23,7 @@ describe('grad-checker-industrialExperience', function()  {
     this.timeout(10000);
     populateIndustrialAttachmentModuleFixture();
     plannerIDs = populateIndustrialPlannerFixture();
-    graduationIDs = populateGraduationRequirementsFixture();
+    graduationIDs = populateAY1516GraduationRequirementsFixture();
     fulfilmentIDs = populateModuleFulfilmentFixture();
     done();
   });

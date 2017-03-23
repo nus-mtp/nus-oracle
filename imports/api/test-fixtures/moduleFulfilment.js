@@ -98,6 +98,19 @@ export const populateULRModuleFulfilment = function populateULRModuleFulfilment(
   return moduleFulfilmentIDs;
 }
 
+export const populateAY1516ComSciITFulfilment = function populateAY1516ComSciITFulfilment() {
+  const academicYear = 'AY 2015/2016';
+  const ITProfessionalismModules = ['IS1103', 'CS2101'];
+
+  const moduleFulfilmentIDs = [];
+
+  for (var i=0; i < ITProfessionalismModules.length; i++)  {
+    moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ITProfessionalismModules[i], []));
+  }
+
+  return moduleFulfilmentIDs;
+}
+
 export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516ComSciMathScienceFulfilment() {
   const moduleFulfilmentIDs = [];
   const academicYear = 'AY 2015/2016';

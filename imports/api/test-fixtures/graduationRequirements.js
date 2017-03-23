@@ -16,6 +16,20 @@ export const populateGraduationRequirementsFixture = function populateGraduation
   return gradRequirementIDs;
 };
 
+export const populateAY1516GraduationRequirementsFixture = function populateAY1516GraduationRequirementsFixture() {
+  const gradRequirementIDs = [];
+
+  gradRequirementIDs.push(populateComScienceFoundationRequirementsFixture());
+  gradRequirementIDs.push(populateAY1516ComSciITProfessionalismFixture());
+  gradRequirementIDs.push(populateAY1516ComSciMathScienceGradFixture());
+  gradRequirementIDs.push(populateTeamProjectFixture());
+  gradRequirementIDs.push(populateIndustrialExperienceFixture());
+  gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
+  gradRequirementIDs.push(populateFocusAreaRequirementFixture());
+
+  return gradRequirementIDs;
+}
+
 export const dePopulateGraduationRequirementsFixture = function dePopulateGraduationRequirementsFixture(gradRequirementIDArray) {
   for (var i=0; i < gradRequirementIDArray.length; i++) {
     removeOneGradRequirementModule(gradRequirementIDArray[i]);
@@ -47,6 +61,16 @@ const populateComSciITProfessionalismFixture = function populateComSciITProfessi
   return createNewGradRequirement(requirementName, modules, requirementMCs);
 };
 
+const populateAY1516ComSciITProfessionalismFixture = function populateAY1516ComSciITProfessionalismFixture() {
+  const requirementName = 'IT Professionalism';
+  const modules = ['IS1103', 'CS2101'];
+  const requirementMCs = 8;
+
+  const gradRequirementIDs = [];
+
+  return createNewGradRequirement(requirementName, modules, requirementMCs);
+}
+
 const populateComSciMathScienceFixture = function populateComSciMathScienceFixture()  {
   const requirementName = 'Mathematics and Sciences';
   const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
@@ -55,15 +79,14 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
   return createNewGradRequirement(requirementName, modules, requirementMCs);
 }
 
-export const populateAY1516ComSciMathScienceGradFixture = function populateAY1516ComSciMathScienceGradFixture()  {
+const populateAY1516ComSciMathScienceGradFixture = function populateAY1516ComSciMathScienceGradFixture()  {
   const requirementName = 'Mathematics and Sciences';
   const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
   const requirementMCs = 32;
 
   const gradRequirementIDs = [];
 
-  gradRequirementIDs.push(createNewGradRequirement(requirementName, modules, requirementMCs));
-  return gradRequirementIDs;
+  return createNewGradRequirement(requirementName, modules, requirementMCs);
 }
 
 const populateTeamProjectFixture = function populateTeamProjectFixure() {

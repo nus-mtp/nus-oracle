@@ -5,7 +5,7 @@ import { populate1516MathSciPlannerFixture,
          dePopulatePlannerFixture } from '../../../../../../../test-fixtures/planner';
 import { populateAY1516ComSciMathScienceFulfilment,
          dePopulateModuleFulfilmentFixture } from '../../../../../../../test-fixtures/moduleFulfilment';
-import { populateAY1516ComSciMathScienceGradFixture,
+import { populateAY1516GraduationRequirementsFixture,
          dePopulateGraduationRequirementsFixture } from '../../../../../../../test-fixtures/graduationRequirements';
 
 import { getGradRequirementModules,
@@ -23,7 +23,7 @@ describe('grad-checker-mathSci', function()  {
     this.timeout(10000);
     populateModuleFixture();
     plannerIDs = populate1516MathSciPlannerFixture();
-    graduationIDs = populateAY1516ComSciMathScienceGradFixture();
+    graduationIDs = populateAY1516GraduationRequirementsFixture();
     fulfilmentIDs = populateAY1516ComSciMathScienceFulfilment();
     done();
   });
@@ -40,7 +40,7 @@ describe('grad-checker-mathSci', function()  {
     const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
     const academicCohort = 'AY 2015/2016';
     const requirementName = 'Mathematics and Sciences'
-    
+
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
 
