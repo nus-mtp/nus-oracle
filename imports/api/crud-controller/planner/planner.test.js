@@ -142,9 +142,7 @@ describe('planner', function () {
 
     const newPlannerName = '    ';
     const numOfDocumentsUpdatedWithSemester = setPlannerName(plannerIDs[0], newPlannerName);
-    const planner = Planner.findOne(plannerIDs[0]);
 
-    assert.equal(planner.name, newPlannerName);
-    assert.equal(numOfDocumentsUpdatedWithSemester, 1);
+    assert.equal(numOfDocumentsUpdatedWithSemester, 0);
   });
 });
