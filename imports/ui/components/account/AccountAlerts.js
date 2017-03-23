@@ -22,6 +22,7 @@ export const warningMsgs = {
 export const errorMsgs = {
   ERR_INCORRECT_PASSWORD: "Incorrect password entered",
   ERR_PASSWORDS_NOT_MATCH: "Passwords do not match",
+  ERR_PASSWORDS_GET_ON_MY_LEVEL: "Passwords needs upper and lower case letters, numbers, non-alphanumeric characters and no whitespace",
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your email has not been verified. Please check",

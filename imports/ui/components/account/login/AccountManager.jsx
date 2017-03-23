@@ -7,6 +7,7 @@ import ModalContainer from '../../common/ModalContainer.jsx';
 import LoginAccount from './LoginAccount.jsx';
 import RegisterAccount from './RegisterAccount.jsx';
 import ForgetAccount from './ForgetAccount.jsx';
+import RestoreAccount from './RestoreAccount.jsx';
 import ChangPassword from '../manage-account/ChangePassword.jsx';
 
 export default class AccountManager extends React.Component {
@@ -15,7 +16,8 @@ export default class AccountManager extends React.Component {
     this.state = {
       isLoggingIn: true,
       isSigningUp: false,
-      isForgetPassword: false
+      isForgetPassword: false,
+      isRestoreAccount: false
     }
   }
 
@@ -42,11 +44,22 @@ export default class AccountManager extends React.Component {
       isForgetPassword: false
     });
   }
+  handleRestoreAccount() {
+    this.setState({
+      isRestoreAccount: true
+    });
+  }
 
+  handleHideRestoreAccount() {
+    this.setState({
+      isRestoreAccount: false
+    });
+  }
   handleCloseAllWindows() {
     this.setState({
       isSigningUp: false,
-      isForgetPassword: false
+      isForgetPassword: false,
+      isRestoreAccount: false
     });
   }
 
@@ -63,6 +76,9 @@ export default class AccountManager extends React.Component {
           {this.state.isForgetPassword ?
             <ModalContainer onHidden={this.handleHideForgetPassword.bind(this)}
                             content={<ForgetAccount onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
+          {FlowRouter.getQueryParam("acc")=="reset-password" ?
+            <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
+                            content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
         </div>
       </div>
     );
