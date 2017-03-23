@@ -151,17 +151,19 @@ export const updateSemesterAcademicYearInPlanner = function updateSemesterAcadem
   let currentAcademicYear = newAcadYear;
   const retrievedSemester = planner.semesters;
   // checks if retrieved semester is empty, if so return nothing
-  if (retrievedSemester.length < 0) {
+  if (retrievedSemester.length <= 0) {
     return 0;
   }
-  
+
   for (var i = 0; i < retrievedSemester.length; i++){
     if (i%4 == 0 && i != 0){
       currentAcademicYear = increaseAcadYearByOne(currentAcademicYear);
+      console.log(currentAcademicYear);
     }
-    retrievedSemester.academicYear = currentAcademicYear;
+
+    retrievedSemester[i].academicYear = currentAcademicYear;
   }
 
   //update the semester back to the planner
-  Planner.update({"_id": planner._id},{ $set: { "semesters": retrievedSemester } });
+  return Planner.update({"_id": planner._id},{ $set: { "semesters": retrievedSemester } });
 }
