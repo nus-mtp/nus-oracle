@@ -98,6 +98,42 @@ export const populateULRModuleFulfilment = function populateULRModuleFulfilment(
   return moduleFulfilmentIDs;
 }
 
+export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516ComSciMathScienceFulfilment() {
+  const moduleFulfilmentIDs = [];
+  const academicYear = 'AY 2015/2016';
+
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three'];
+
+  const ST2334Equivalent = ['ST2131'];
+  const PC1221Equivalent = ['PC1221FC', 'PC1221X', 'PC1222', 'PC1222X'];
+
+  // science 3 has same equivalent modules as science 1
+  const ScienceOneEquivalent = ['CM1121', 'CM1131', 'CM1417', 'LSM1301', 'LSM1302',
+                                'PC1141', 'PC1142', 'PC1143', 'PC1144', 'PC1221',
+                                'PC1222', 'PC1432', 'MA2213','MA2214'];
+  const ScienceTwoEquivalent = ['CM1121', 'CM1131', 'CM1417', 'LSM1301', 'LSM1302',
+                                'PC1141', 'PC1142', 'PC1143', 'PC1144', 'PC1221',
+                                'PC1222', 'PC1432', 'MA2213','MA2214', 'ST2132'];
+
+  for (var i=0; i < mathSciModules.length; i++)  {
+    if (mathSciModules[i] === 'ST2334') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ST2334Equivalent));
+    } else if (mathSciModules[i] === 'PC1221')  {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], PC1221Equivalent));
+    } else if (mathSciModules[i] === 'Science One')  {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
+    } else if (mathSciModules[i] === 'Science Two') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceTwoEquivalent));
+    } else if (mathSciModules[i] === 'Science Three') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
+    }  else {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], []));
+    }
+  }
+
+  return moduleFulfilmentIDs;
+}
+
 export const dePopulateModuleFulfilmentFixture = function dePopulateModuleFulfilmentFixture(moduleFulfilmentIDs) {
   for (var i=0; i<moduleFulfilmentIDs.length; i++)  {
     removeOneModuleFulfilment(moduleFulfilmentIDs[i]);

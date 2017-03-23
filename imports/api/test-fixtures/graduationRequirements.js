@@ -55,6 +55,17 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
   return createNewGradRequirement(requirementName, modules, requirementMCs);
 }
 
+export const populateAY1516ComSciMathScienceGradFixture = function populateAY1516ComSciMathScienceGradFixture()  {
+  const requirementName = 'Mathematics and Sciences';
+  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
+  const requirementMCs = 32;
+
+  const gradRequirementIDs = [];
+
+  gradRequirementIDs.push(createNewGradRequirement(requirementName, modules, requirementMCs));
+  return gradRequirementIDs;
+}
+
 const populateTeamProjectFixture = function populateTeamProjectFixure() {
   const requirementName = 'Computer Systems Team Project';
   const modules = ['Project I', 'Project II'];

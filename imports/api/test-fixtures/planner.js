@@ -106,6 +106,25 @@ export const populateFocusAreaPlannerFixture = function populateFocusAreaPlanner
   return plannerIDs;
 }
 
+export const populate1516MathSciPlannerFixture = function populate1516MathSciPlannerFixture() {
+  const userIDs = '9f91pejfj912ras';
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'PC1221X', 'LSM1301', 'ST2131', 'ST2132', 'LSM1302'];
+  const plannerNames = ['testPlanner'];
+  const focusAreas = [['Com Graphics']];
+
+  const plannerIDs = [];
+
+  const academicYear = ['AY 2015/2016', 'AY 2015/2016'];
+  const semesterNum = [1, 2];
+  const semesterIndex = [0, 1];
+
+  plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
+  populateSemesters(semesterIndex, academicYear, semesterNum, plannerIDs[0]);
+  populateModulesInSemester(semesterIndex, mathSciModules, plannerIDs[0]);
+
+  return plannerIDs;
+}
+
 export const dePopulatePlannerFixture = function dePopulatePlannerFixture(plannerIDs) {
   for (var i = 0; i<plannerIDs.length; i++)  {
     removePlanner(plannerIDs[i]);

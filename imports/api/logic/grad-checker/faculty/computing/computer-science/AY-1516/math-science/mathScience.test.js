@@ -1,11 +1,11 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { populateModuleFixture,
          dePopulateModuleFixture } from '../../../../../../../test-fixtures/modules';
-import { populatePlannerFixture,
+import { populate1516MathSciPlannerFixture,
          dePopulatePlannerFixture } from '../../../../../../../test-fixtures/planner';
-import { populateModuleFulfilmentFixture,
+import { populateAY1516ComSciMathScienceFulfilment,
          dePopulateModuleFulfilmentFixture } from '../../../../../../../test-fixtures/moduleFulfilment';
-import { populateGraduationRequirementsFixture,
+import { populateAY1516ComSciMathScienceGradFixture,
          dePopulateGraduationRequirementsFixture } from '../../../../../../../test-fixtures/graduationRequirements';
 
 import { getGradRequirementModules,
@@ -22,9 +22,9 @@ describe('grad-checker-mathSci', function()  {
   beforeEach(function (done)  {
     this.timeout(10000);
     populateModuleFixture();
-    plannerIDs = populatePlannerFixture();
-    graduationIDs = populateGraduationRequirementsFixture();
-    fulfilmentIDs = populateModuleFulfilmentFixture();
+    plannerIDs = populate1516MathSciPlannerFixture();
+    graduationIDs = populateAY1516ComSciMathScienceGradFixture();
+    fulfilmentIDs = populateAY1516ComSciMathScienceFulfilment();
     done();
   });
 
@@ -37,11 +37,13 @@ describe('grad-checker-mathSci', function()  {
   });
 
   it ('checks if find modules correct boolean values', function() {
-    const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
+    const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
     const academicCohort = 'AY 2015/2016';
     const requirementName = 'Mathematics and Sciences'
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[3]);
+    
+    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
+
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
     const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
@@ -52,6 +54,7 @@ describe('grad-checker-mathSci', function()  {
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[4]], 'PC1221 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[5]], 'Science One fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[6]], 'Science Two fulfiled');
+    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[7]], 'Science Three fulfiled');
 
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked[modules[1]], 'CS2101 checked');
@@ -60,10 +63,11 @@ describe('grad-checker-mathSci', function()  {
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['ST2132'], 'ST2132 checked');
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['PC1221X'], 'PC1221X checked');
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['LSM1301'], 'LSM1301 checked');
+    assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked['LSM1302'], 'LSM1302 checked');
 
     assert.isTrue(markedMathScienceModulesAndMCs.isFulfilled);
-    assert.equal(markedMathScienceModulesAndMCs.numberOfMathSciModulesMarkedTrue, 7);
-    assert.equal(markedMathScienceModulesAndMCs.totalModuleMCs, 28);
+    assert.equal(markedMathScienceModulesAndMCs.numberOfMathSciModulesMarkedTrue, 8);
+    assert.equal(markedMathScienceModulesAndMCs.totalModuleMCs, 32);
   })
 
 });
