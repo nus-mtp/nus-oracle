@@ -192,7 +192,6 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
     const requiredMCsTeamProject = allGraduationRequirementMCs[moduleRequirementTitle[2]];
     graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectRequirements, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
-    console.log("team project " + graduationRequirements[moduleRequirementTitle[2]].requiredMCs);
     if (Object.keys(graduationRequirements[moduleRequirementTitle[2]]).length > 0)  {
       UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[2]].name,
                                                                      graduationRequirements[moduleRequirementTitle[2]].markedTeamProjectModules,
@@ -213,7 +212,6 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
   const ITRequirements = allGradRequirements[moduleRequirementTitle[4]];
   const requiredMCsIT = allGraduationRequirementMCs[moduleRequirementTitle[4]];
   graduationRequirements[moduleRequirementTitle[4]] = findITProfessionalismModules(studentAcademicCohort, studentSemesters, ITRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIT);
-  console.log(moduleRequirementTitle[4] + " " + graduationRequirements[moduleRequirementTitle[4]].requiredMCs);
   if (Object.keys(graduationRequirements[moduleRequirementTitle[4]]).length > 0)  {
     UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[4]].name,
                                                                    graduationRequirements[moduleRequirementTitle[4]].markedITProfessionalismModules,
@@ -235,12 +233,7 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
     // pass in semesters
     let totalRequiredMCs = 0
     for (var i=0; i<moduleRequirementTitle.length-1; i++) {
-      let tempMCs = graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
-      console.log("temp MCs " + tempMCs);
-      if (tempMCs) {
-        totalRequiredMCs += tempMCs;
-      }
-      console.log(moduleRequirementTitle[i] + " " + totalRequiredMCs);
+      totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
     }
     graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));

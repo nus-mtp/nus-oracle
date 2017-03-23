@@ -9,17 +9,12 @@ export const findUnrestrictedElectivesRequirementModules = function findUnrestri
     let modules = Object.keys(studentSemesters[i].moduleHashmap);
     for (var j=0; j<modules.length; j++)  {
       totalMCsInPlanner += searchByModuleCode(modules[j]).moduleMC;
+      //console.log(modules[j] + " " + totalMCsInPlanner);
     }
   }
 
-  //console.log("totalMCsRequired " + totalRequiredMCs);
-  //console.log("graduationMCs " + graduationMCs);
-
   const requiredMCsForUEs = graduationMCs - totalRequiredMCs;
   const plannerMCsForUEs = totalMCsInPlanner - totalRequiredMCs;
-
-  //console.log("requiredMCs " + requiredMCsForUEs);
-  //console.log("plannerMCs " + plannerMCsForUEs);
 
   if (plannerMCsForUEs >= requiredMCsForUEs)  {
     return true;
