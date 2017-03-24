@@ -33,12 +33,20 @@ export default class TabbedContainer extends React.Component {
   constructor() {
     super();
     this.state = {
+      newPlannerDialog: null,
       tabSelectedIndex: 0,
       isAddingNewPlan: false,
       isModalVisible: false,
       isEditingPlanName: false,
       planNameToEdit: false
     }
+  }
+
+  /**
+   * Display Add New Planner Dialog only when component is completely mounted
+   */
+  componentDidMount(){
+    this.setState({newPlannerDialog: <AddNewPlanner isFullscreen={true} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> });
   }
 
   //======================================================
@@ -332,7 +340,7 @@ export default class TabbedContainer extends React.Component {
                id={'tab' + this.state.tabSelectedIndex}>
                  {
                    // Show add menu dialog when no planners in dashboard
-                   (plannerIDs.length == 0 && !this.state.isAddingNewPlan) ? <AddNewPlanner isFullscreen={true} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> : null
+                   (plannerIDs.length == 0 && !this.state.isAddingNewPlan) ? this.state.newPlannerDialog : null
                  }
 
             {/* Renders a Academic Year content panel under each tab. */}
