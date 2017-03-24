@@ -1,5 +1,5 @@
 import { createNewModuleFulfilment,
-         updateModuleMappingOfModuleFulfilment} from '../database-controller/module-fulfilment/methods';
+         updateModuleMappingOfModuleFulfilment } from '../database-controller/module-fulfilment/methods';
 import { ModuleFulfilments } from '../database-controller/module-fulfilment/moduleFulfilment';
 
 export const populateModuleFulfilmentCollection = function() {

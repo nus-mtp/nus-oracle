@@ -31,7 +31,7 @@ export const createNewModuleFulfilment = function createNewModuleFulfilment(acad
   * @param {String} moduleCode: module code
   * @param {[String]} moduleEquivalentList: list of module that will fulfill the same moduleCode.
   */
-export const updateModuleMappingOfModuleFulfilment = function updateModuleMapping(academicYear, moduleCode, updatedModuleMapping){
+  export const updateModuleMappingOfModuleFulfilment = function updateModuleMapping(academicYear, moduleCode, updatedModuleMapping){
   const moduleMapping = {
     moduleEquivalent: updatedModuleMapping
   }
