@@ -100,6 +100,7 @@ export const populateAcadCohortCollection = function() {
           for(var k = 0; k < requirementList.length ; k++ ){
             currentRequirementName = requirementList[k];
             let matchingDocument = GraduationRequirements.findOne({$and:[{requirementName:currentRequirementName},{_id:{$in:referencedGradIDDocument}}]});
+            console.log("look for the following name:" + currentRequirementName);
             gradRequirementIDs.push(matchingDocument["_id"]);
           }
         }

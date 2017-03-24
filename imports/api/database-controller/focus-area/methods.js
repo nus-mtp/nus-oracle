@@ -13,18 +13,20 @@ const DEFAULT_MODULE_STATE = false;
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfFourThousands, listOfNonPrimary){
+export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfPrimaryFourThousands, listOfFourThousands, listOfNonPrimary){
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
 
   primaryToBeStored = createModuleListObject(listOfPrimary);
+  primaryFourThousandsToBeStored = createModuleListObject(listOfPrimaryFourThousands)
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
 
   const newFocusAreaDocument = {
     name : name,
     moduleListPrimary : primaryToBeStored,
+    moduleListPrimaryFourThousands: primaryFourThousandsToBeStored,
     moduleListFourThousands: fourThousandsToBeStored,
     moduleListElectives: nonPrimaryToBeStored
   }
