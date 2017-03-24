@@ -24,7 +24,21 @@ export const populateAY1516GraduationRequirementsFixture = function populateAY15
   gradRequirementIDs.push(populateAY1516ComSciMathScienceGradFixture());
   gradRequirementIDs.push(populateTeamProjectFixture());
   gradRequirementIDs.push(populateIndustrialExperienceFixture());
-  gradRequirementIDs.push(populateUniversityLevelRequirementFixture());
+  gradRequirementIDs.push(populateUniversity1415LevelRequirementFixture());
+  gradRequirementIDs.push(populateFocusAreaRequirementFixture());
+
+  return gradRequirementIDs;
+}
+
+export const populateAY1415GraduationRequirementsFixture = function populateAY1415GraduationRequirementsFixture() {
+  const gradRequirementIDs = [];
+
+  gradRequirementIDs.push(populateComScienceFoundationRequirementsFixture());
+  gradRequirementIDs.push(populateAY1516ComSciITProfessionalismFixture());
+  gradRequirementIDs.push(populateAY1516ComSciMathScienceGradFixture());
+  gradRequirementIDs.push(populateTeamProjectFixture());
+  gradRequirementIDs.push(populateIndustrialExperienceFixture());
+  gradRequirementIDs.push(populateUniversity1415LevelRequirementFixture());
   gradRequirementIDs.push(populateFocusAreaRequirementFixture());
 
   return gradRequirementIDs;
@@ -109,6 +123,15 @@ const populateUniversityLevelRequirementFixture = function populateUniversityLev
   const requirementName = 'University Level Requirement';
   const modules = ['Human Cultures', 'Asking Questions', 'Quantitative Reasoning',
                    'Singapore Studies', 'Thinking and Expression'];
+  const requirementMCs = 20;
+
+  return createNewGradRequirement(requirementName, modules, requirementMCs);
+}
+
+const populateUniversity1415LevelRequirementFixture = function populateUniversity1415LevelRequirementFixture()  {
+  const requirementName = 'University Level Requirement';
+  const modules = ['GEM A', 'GEM B', 'Breadth One',
+                   'Breadth Two', 'Singapore Studies'];
   const requirementMCs = 20;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);

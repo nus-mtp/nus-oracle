@@ -147,6 +147,28 @@ export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516
   return moduleFulfilmentIDs;
 }
 
+export const populate1415ULRModuleFulfilment = function populate1415ULRModuleFulfilment() {
+  const moduleFulfilmentIDs = [];
+
+  const ULRModules = ['GEM A', 'GEM B', 'Breadth One',
+                   'Breadth Two', 'Singapore Studies'];
+  const GEM_AEquivalent = ['GEM1034', 'GEM1048', 'GEM1051', 'GEK1002'];
+  const GEM_BEquivalent = ['GEK1509', 'GEK1901', 'GEK1539'];
+  const Breadth_One = [];
+  const Breadth_Two = [];
+  const Singapore_Studies = ['SSA2214', 'SSA2221', 'SSA2203'];
+
+  const academicYear = 'AY 2014/2015';
+
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[0], GEM_AEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[1], GEM_BEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[2], Breadth_One));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[3], Breadth_Two));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[4], Singapore_Studies));
+
+  return moduleFulfilmentIDs;
+}
+
 export const dePopulateModuleFulfilmentFixture = function dePopulateModuleFulfilmentFixture(moduleFulfilmentIDs) {
   for (var i=0; i<moduleFulfilmentIDs.length; i++)  {
     removeOneModuleFulfilment(moduleFulfilmentIDs[i]);

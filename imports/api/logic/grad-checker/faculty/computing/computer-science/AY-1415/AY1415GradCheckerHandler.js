@@ -12,7 +12,7 @@ import { findTeamProjectRequirementModules } from './breadth-depth/team-project/
 import { findIndustrialExperienceTrainingModules } from './breadth-depth/industrial-experience/methods';
 import { checkFocusAreaFulfilmentMCs,
          findFocusAreaModules } from './breadth-depth/focus-area/methods';
-import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1516/methods';
+import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1415/methods';
 import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
 /* Explanation for new AY creation
@@ -45,7 +45,7 @@ import { findUnrestrictedElectivesRequirementModules } from './unrestricted-elec
 *  @return {{objects}}  UI formatted list of graduation requirements
 *
 */
-export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
+export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
   const graduationMCs = 160;
   const moduleRequirementTitle = ['Computer Science Foundation',
                                   'Computer Science Focus Area',

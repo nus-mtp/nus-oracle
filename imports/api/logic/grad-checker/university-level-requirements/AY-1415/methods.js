@@ -1,5 +1,6 @@
 import { getModuleFulfilment } from '../../../../database-controller/module-fulfilment/methods';
 import { searchByModuleCode } from '../../../../database-controller/module/methods';
+import { getFirstNChars } from '../../../../../utils/util'
 
 /* Explanation
  * There are 5 functions in this file. To migrate to a new AY, unless there is a
@@ -62,13 +63,12 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
 
 const markModules = function markModules(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule) {
   for (var i = 0; i < studentSemesters.length; i++) {
-    if (studentSemesters[i].moduleHashmap[equivalentModule]) {
+    if (studentSemesters[i].moduleHashmap[equivalentModule] &&
+        !markedULRModulesAndMCs.moduleChecked[equivalentModule]) {
       markedULRModulesAndMCs.markedULRModules[originalModule] = true;
       markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
-      if (!markedULRModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
-      }
+      markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
+      markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
       break;
     }
   }
@@ -78,31 +78,92 @@ const markModules = function markModules(markedULRModulesAndMCs, studentSemester
 
 const markExemptedWaivedModules = function markExemptedWaivedModules(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule) {
   if (Object.keys(exemptedModules).length !== 0)  {
-    if (exemptedModules[equivalentModule])  {
+    if (exemptedModules[equivalentModule] &&
+        !markedULRModulesAndMCs.moduleChecked[equivalentModule])  {
       markedULRModulesAndMCs.markedULRModules[originalModule] = true;
       markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
-      if (!markedULRModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
-        markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
-      }
+      markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
+      markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(equivalentModule).moduleMC;
     }
   }
   if (Object.keys(waivedModules).length !== 0)  {
-    if (waivedModules[equivalentModule]) {
+    if (waivedModules[equivalentModule] &&
+        !markedULRModulesAndMCs.moduleChecked[equivalentModule]) {
       markedULRModulesAndMCs.markedULRModules[originalModule] = true;
       markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
-      if (!markedULRModulesAndMCs.moduleChecked[equivalentModule])  {
-        markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
-      }
+      markedULRModulesAndMCs.moduleChecked[equivalentModule] = true;
     }
   }
   return markedULRModulesAndMCs;
 }
 
 const markExceptions = function markExceptions(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  // parse equivalent module here for checking breadth
+  if (originalModule == "Breadth One" || originalModule == "Breadth Two") {
+    for (var i = 0; i < studentSemesters.length; i++) {
+      const modules = Object.keys(studentSemesters[i].moduleHashmap);
+      for (var j=0; j<modules.length; j++)  {
+        let parsedPrefix = getFirstNChars(modules[j], 2);
+        if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
+            parsedPrefix === "CS" || parsedPrefix === "IS" ||
+            parsedPrefix === "IT")  {
+              break;
+        } else {
+          if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
+              markedULRModulesAndMCs.markedULRModules[originalModule] = true;
+              markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
+              markedULRModulesAndMCs.moduleChecked[modules[j]] = true;
+              markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(modules[j]).moduleMC;
+              break;
+            }
+          }
+        }
+        return markedULRModulesAndMCs;
+      }
+  }
   return markModules(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule);
 }
 
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  if (originalModule == "Breadth One" || originalModule == "Breadth Two") {
+    for (var i = 0; i < exemptedModules.length; i++) {
+      let modules = Object.keys(exemptedModules);
+      for (var j=0; j<modules.length; j++)  {
+        let parsedPrefix = getFirstNChars(modules[j], 2);
+        if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
+            parsedPrefix === "CS" || parsedPrefix === "IS" ||
+            parsedPrefix === "IT")  {
+              break;
+        } else {
+          if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
+              markedULRModulesAndMCs.markedULRModules[originalModule] = true;
+              markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
+              markedULRModulesAndMCs.moduleChecked[modules[j]] = true;
+              markedULRModulesAndMCs.totalModuleMCs += searchByModuleCode(modules[j]).moduleMC;
+              break;
+            }
+          }
+        }
+      }
+      for (var i = 0; i < waivedModules.length; i++) {
+        let modules = Object.keys(waivedModules);
+        for (var j=0; j<modules.length; j++)  {
+          let parsedPrefix = getFirstNChars(modules[j], 2);
+          if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
+              parsedPrefix === "CS" || parsedPrefix === "IS" ||
+              parsedPrefix === "IT")  {
+                break;
+          } else {
+            if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
+                markedULRModulesAndMCs.markedULRModules[originalModule] = true;
+                markedULRModulesAndMCs.numberOfULRMarkedTrue += 1;
+                markedULRModulesAndMCs.moduleChecked[modules[j]] = true;
+                break;
+              }
+            }
+          }
+          return markedULRModulesAndMCs;
+        }
+  }
   return markExemptedWaivedModules(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
 }
