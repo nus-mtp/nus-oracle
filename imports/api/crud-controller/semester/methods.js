@@ -158,7 +158,6 @@ export const updateSemesterAcademicYearInPlanner = function updateSemesterAcadem
   for (var i = 0; i < retrievedSemester.length; i++){
     if (i%4 == 0 && i != 0){
       currentAcademicYear = increaseAcadYearByOne(currentAcademicYear);
-      console.log(currentAcademicYear);
     }
 
     retrievedSemester[i].academicYear = currentAcademicYear;
