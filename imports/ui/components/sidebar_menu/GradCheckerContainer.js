@@ -49,10 +49,10 @@ export default GradCheckerContainer = createContainer((props) => {
 
   //console.log("Panel Reqs " + JSON.stringify(requirements));
   //foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
-  foundation = new Criteria(foundationReq);
+  //foundation = new Criteria(foundationReq);
   const items = [requirements];
   // const items = [foundation];
   
   return { items };
-// }, Nestable);
-}, NestableGradChecker);
+}, Nestable);
+//}, NestableGradChecker);
