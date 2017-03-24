@@ -21,7 +21,7 @@ export default class ForgetAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
     };
   }
 
@@ -29,7 +29,7 @@ export default class ForgetAccount extends React.Component {
     this.setState({email: event.target.value});
   }
 
-  handleReset() {
+  handleSendResetEmail() {
     Accounts.forgotPassword({
       email: this.state.email
     }, (error) => {
@@ -38,14 +38,10 @@ export default class ForgetAccount extends React.Component {
         Bert.alert(error.reason, 'danger');
       } else {
         let userName = this.state.email;
-        let userAccount = Accounts.users.findOne({username: userName});
-        console.log(userAccount);
-        const userId = userAccount._id;
-/* @TODO: Adjust code
-        Meteor.users.update(userId, {
-          $set: { "profile.accountLock" : true }
-        });
-        */
+
+        user = Meteor.call('lockAcc', userName);
+        console.log(user);
+
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
       }
@@ -68,15 +64,14 @@ export default class ForgetAccount extends React.Component {
                 placeholder="NUS E-mail" value={this.state.value}
                 onChange={this.handleEmailChange.bind(this)} />
             </div>
-
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                      buttonText="RESET PASSWORD"
-                      onButtonClick={this.handleReset.bind(this)} />
+                      buttonText="SEND EMAIL"
+                      onButtonClick={this.handleSendResetEmail.bind(this)} />
             </div>
           </div>
-
         </div>
+
       </div>
     );
   }
