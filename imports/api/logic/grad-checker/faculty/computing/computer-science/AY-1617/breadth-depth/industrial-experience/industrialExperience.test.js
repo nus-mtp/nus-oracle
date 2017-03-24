@@ -67,8 +67,8 @@ describe('grad-checker-industrialExperience', function()  {
     assert.isFalse(markedIndustrialExperienceAndMCs.markedIndustrialExperienceTrainingModules[modules[0]], 'CP3200 and CP3202 not fulfiled');
     assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3200'], 'CP3200 checked');
 
-    assert.isTrue(markedIndustrialExperienceAndMCs.isFulfilled);
+    assert.isFalse(markedIndustrialExperienceAndMCs.isFulfilled);
     assert.equal(markedIndustrialExperienceAndMCs.totalModuleMCs, 6);
-    assert.equal(markedIndustrialExperienceAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue, 1);
+    assert.equal(markedIndustrialExperienceAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue, 0);
   })
 });

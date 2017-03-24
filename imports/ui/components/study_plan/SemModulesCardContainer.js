@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 // Import logic methods
 import { getAllModulesInSemester } from '../../../api/crud-controller/module/methods.js';
+import { findModuleInfo } from './../../../api/searcher-controller/controller.js';
 
 // Import React components
 import SemModulesCard from './SemModulesCard.jsx';
@@ -14,20 +15,17 @@ export default SemModulesCardContainer = createContainer((props) => {
   const plannerID = props.plannerID;
 
   // Load modules in the user's study plan based on the semester and planner
-  const modules = getAllModulesInSemester(semesterIndex, plannerID);
-  console.time("semModsContainer ALL_MODULES_FOR_SEARCH");
-  const modulesForSearch = Session.get("ALL_MODULES_FOR_SEARCH");
-  console.timeEnd("semModsContainer ALL_MODULES_FOR_SEARCH");
+  // Map of module codes, e.g. {"CS1010" : "CS1010"}
+  const moduleCodesMap = getAllModulesInSemester(semesterIndex, plannerID);
 
-  console.time("semModsContainer ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  const filterOptsForSearch = Session.get("ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  console.timeEnd("semModsContainer ALL_MODULES_FOR_SEARCH_FILTER_OPTIONS");
-  console.log("\n")
+  let moduleCodesArray = Object.keys(moduleCodesMap);
+  let modules = [];
+  for (let i = 0; i < moduleCodesArray.length; i++) {
+    modules.push(findModuleInfo(moduleCodesArray[i]));
+  }
 
   return {
     sem,
     modules,
-    modulesForSearch,
-    filterOptsForSearch
   };
 }, SemModulesCard);

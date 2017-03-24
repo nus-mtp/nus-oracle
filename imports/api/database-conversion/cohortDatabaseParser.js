@@ -67,25 +67,30 @@ export const populateAcadCohortCollection = function() {
     // get data
     const jsonFile = JSON.parse(Assets.getText(gradRequirementFile));
     const acadCohortData = jsonFile["data"];
-
+    let result = "";
     for(var i = 0; i< acadCohortData.length; i++){
-
       let currentCohort = acadCohortData[i];
       let currentCohortName = currentCohort["cohortName"];
+      result = result.concat("Reading data for Academic Cohort " + currentCohortName + "\r\n");
+
+      //create new cohort document
       let newCohortID = createNewCohort(currentCohortName);
       let gradRequirementIDs = [];
-
       // see if there is any unique graduation requirement
       if (currentCohort["uniqueGradRequirement"] != "none"){
         /// if there is , insert to grad requirement DB
+        result = result.concat("  Found the following number of unique requirement " + currentCohort["uniqueGradRequirement"].length);
         for(var j = 0; j < currentCohort["uniqueGradRequirement"].length; j++){
           let currentNewRequirement = currentCohort["uniqueGradRequirement"][j];
+          //TO DO one check for none
+          if (currentCohort["requirementModules"] != "none") {
           let newRequirementID = createNewGradRequirement(currentNewRequirement["requirementName"],
                                                          currentNewRequirement["requirementModules"],
                                                          currentNewRequirement["requirementMCs"]);
-          console.log(currentNewRequirement + ":" + newRequirementID);
+          result = result.concat("  -" + currentNewRequirement["requirementName"] + ":" + newRequirementID + "\r\n");
           /// store ID to array
           gradRequirementIDs.push(newRequirementID);
+        }
         }
       }
 
@@ -96,10 +101,11 @@ export const populateAcadCohortCollection = function() {
           let referencedGradIDDocument = getCohortByName(referencedCohort)["cohortGradRequirementID"];
 
           let requirementList = currentCohort["repeatedGradRequirement"][j]["graduationRequirement"];
-
+          result = result.concat("Found the following repeated requirement from " + referencedCohort + ": " + requirementList.length + "\r\n");
           for(var k = 0; k < requirementList.length ; k++ ){
             currentRequirementName = requirementList[k];
             let matchingDocument = GraduationRequirements.findOne({$and:[{requirementName:currentRequirementName},{_id:{$in:referencedGradIDDocument}}]});
+            console.log("look for the following name:" + currentRequirementName);
             gradRequirementIDs.push(matchingDocument["_id"]);
           }
         }
@@ -123,10 +129,11 @@ export const populateAcadCohortCollection = function() {
 
         }
 
-        updateCohortFocusAreaIDs(currentCohortName,focusAreaIDs)
+        updateCohortFocusAreaIDs(currentCohortName,focusAreaIDs);
         updateCohortGradRequirementIDs(currentCohortName,gradRequirementIDs);
       }
 
     }
+    console.log(result);
   }
 }

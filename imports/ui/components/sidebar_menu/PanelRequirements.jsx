@@ -54,8 +54,8 @@ export default class PanelRequirements extends React.Component {
     return (
       <nav className="side-menu-addl">
         <PanelHeader  title="CS Degree Requirements" icon="font-icon font-icon-page" />
-        {/* <GradCheckerContainer activePlannerId={this.props.activePlannerId}/> */}
-        <Nestable items={items} />
+        <GradCheckerContainer activePlannerId={this.props.activePlannerId}/>
+        {/* <Nestable items={items} /> */}
       </nav>
     );
   }

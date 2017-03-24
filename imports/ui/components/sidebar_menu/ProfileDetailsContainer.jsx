@@ -5,6 +5,7 @@ import { getStudentAcademicCohort } from '../../../api/database-controller/stude
 import { getStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
 import { updateStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
 import { updateStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
+import { updateStudentPlannerAcademicYear} from '../../../api/crud-controller/planner/methods.js'
 import InlineEdit from 'react-edit-inline';
 import ProfileDetails from './ProfileDetails.jsx';
 import Select from 'react-select';
@@ -30,6 +31,10 @@ getLabelFromValue = function(value){
   return "";
 }
 
+const updateAcademicCohort = function updateAcademicCohort(data) {
+  updateStudentAcademicCohort(data);
+  updateStudentPlannerAcademicYear(data);
+}
 
 export default ProfileDetailsContainer = createContainer((props) => {
   const studentInfoType = props.studentInfoType;
@@ -51,7 +56,7 @@ export default ProfileDetailsContainer = createContainer((props) => {
       text = info;
       options = ACAD_COHORT;
       onChange = function(data){
-        updateStudentAcademicCohort(data.value)
+        updateAcademicCohort(data.value);
       };
     break;
   }

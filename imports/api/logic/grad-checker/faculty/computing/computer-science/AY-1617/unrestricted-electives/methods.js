@@ -8,7 +8,8 @@ export const findUnrestrictedElectivesRequirementModules = function findUnrestri
   for (var i=0; i<studentSemesters.length; i++) {
     let modules = Object.keys(studentSemesters[i].moduleHashmap);
     for (var j=0; j<modules.length; j++)  {
-      totalMCsInPlanner += searchByModuleCode(modules[i]).moduleMC;
+      totalMCsInPlanner += searchByModuleCode(modules[j]).moduleMC;
+      //console.log(modules[j] + " " + totalMCsInPlanner);
     }
   }
 

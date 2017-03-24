@@ -10,7 +10,9 @@ import { populateGraduationRequirementsFixture,
 
 import { getFocusAreaPrimaryRequirement,
          getFocusArea4KRequirement,
-         getFocusAreaNonPrimaryRequirement } from '../../../../../../../../database-controller/focus-area/methods';
+         getFocusAreaNonPrimaryRequirement,
+         getFocusAreaPrimary4KRequirement,
+         getFocusAreaRequirement } from '../../../../../../../../database-controller/focus-area/methods';
 import { getGradRequirementMCs } from '../../../../../../../../database-controller/graduation-requirement/methods';
 
 import { getAllSemestersInPlanner } from '../../../../../../../../crud-controller/semester/methods';
@@ -48,13 +50,18 @@ describe('grad-checker-focusArea', function()  {
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
+    const focusAreaPrimary4KModules = getFocusAreaPrimary4KRequirement(focusAreaReqIDs);
+
+    //const studentFocusAreas = getFocusAreaRequirement(focusAreaReqIDs);
     const requiredMCs = getGradRequirementMCs(gradFocusAreaID)[requirementName];
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
       focusArea4KModules: focusArea4KModules,
-      focusAreaElectives: focusAreaNonPrimaryModules
+      focusAreaPrimary4KModules: focusAreaPrimary4KModules,
+      focusAreaNonPrimaryModules: focusAreaNonPrimaryModules
     }
+
     const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');
     assert.equal(focusAreaMCSFulfilment.requiredMCs, 24);
@@ -64,13 +71,20 @@ describe('grad-checker-focusArea', function()  {
     const academicCohort = 'AY 2016/2017';
     const focusAreaName = 'Computer Graphics and Games';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
+    //const focusAreaModules = getFocusAreaRequirement(focusAreaReqIDs);
+
+    //const focusAreaPrimaryModules = focusAreaModules.focusAreaPrimaryModules;
+    //const focusArea4KModules = focusAreaModules.focusArea4KModules;
+    //const focusAreaNonPrimaryModules = focusAreaModules.focusAreaNonPrimaryModules;
 
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
+    const focusAreaPrimary4KModules = getFocusAreaPrimary4KRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules[focusAreaName],
+      focusAreaPrimary4KModules: focusAreaPrimary4KModules[focusAreaName],
       focusArea4KModules: focusArea4KModules[focusAreaName],
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules[focusAreaName]
     }

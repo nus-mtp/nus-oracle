@@ -32,8 +32,7 @@
     "react-select": "^1.0.0-rc.3",
     "react-select-fast-filter-options": "^0.2.1",
     "react-tooltip": "^3.2.7",
-    "react-virtualized-select": "^2.4.0",
-    "underscore": "^1.8.3"
+    "react-virtualized-select": "^2.4.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

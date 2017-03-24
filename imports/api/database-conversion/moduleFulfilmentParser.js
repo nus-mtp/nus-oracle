@@ -1,4 +1,5 @@
-import { createNewModuleFulfilment } from '../database-controller/module-fulfilment/methods';
+import { createNewModuleFulfilment,
+         updateModuleMappingOfModuleFulfilment } from '../database-controller/module-fulfilment/methods';
 import { ModuleFulfilments } from '../database-controller/module-fulfilment/moduleFulfilment';
 
 export const populateModuleFulfilmentCollection = function() {
@@ -6,7 +7,7 @@ export const populateModuleFulfilmentCollection = function() {
   if (Meteor.isServer){
     // remove data from ModuleFulfilment
     ModuleFulfilments.remove({});
-    
+
     const ModuleFulfilmentFile = 'ModuleFulfilment.json';
     const ModuleFulfilmentJSON = JSON.parse(Assets.getText(ModuleFulfilmentFile));
 
@@ -21,7 +22,11 @@ export const populateModuleFulfilmentCollection = function() {
       let currentModuleMappingKey = Object.keys(currentModuleMapping);
 
       for (var j = 0; j < currentModuleMappingKey.length; j++){
-        createNewModuleFulfilment(currentModuleMappingKey[j], currentModuleName, currentModuleMapping[currentModuleMappingKey[j]]["moduleEquivalent"]);
+        if (j > 0) {
+          updateModuleMappingOfModuleFulfilment(currentModuleMappingKey[j], currentModuleName, currentModuleMapping[currentModuleMappingKey[j]]["moduleEquivalent"]);
+        } else {
+          createNewModuleFulfilment(currentModuleMappingKey[j], currentModuleName, currentModuleMapping[currentModuleMappingKey[j]]["moduleEquivalent"]);
+        }
       }
     }
   }

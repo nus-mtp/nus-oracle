@@ -1,6 +1,15 @@
-// import fulfilment methods here
 import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
 import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
+
+/* Explanation for new AY creation
+ * There are 5 functions in this file. To migrate to a new AY, unless there is a
+ * huge change in calculation of graduation requirements, the only functions that
+ * should be modified are markExceptions and markExemptedWaivedExceptions.
+ *
+ * The 2 methods above are where code for any new execptions to the calculation of
+ * graduation requirement should be placed. If there are no exceptions, simply return
+ * markModules and markExemptedWaivedModules
+ */
 
 export const findITProfessionalismModules = function findITProfessionalismModules(academicCohort, studentSemesters, ITProfessionalismModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedITProfessionalismModulesAndMCs = {
@@ -27,15 +36,15 @@ export const findITProfessionalismModules = function findITProfessionalismModule
     }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
     if (!markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedITProfessionalismModulesAndMCs = markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedITProfessionalismModulesAndMCs = markModules(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]])  {
           break;
         }
@@ -90,4 +99,12 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedITPro
   }
 
   return markedITProfessionalismModulesAndMCs;
+}
+
+const markExceptions = function markExceptions(markedITProfessionalismModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  return markModules(markedITProfessionalismModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+}
+
+const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  return markExemptedWaivedModules(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
 }

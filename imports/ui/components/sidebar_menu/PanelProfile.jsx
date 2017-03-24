@@ -2,7 +2,7 @@ import React from 'react';
 import PanelHeader from '../common/PanelHeader.jsx'
 import Nestable from '../common/Nestable.jsx'
 import PanelListItem from '../common/PanelListItem.jsx'
-import ModulesCardContainer from './ModulesCardContainer.js'
+import SidebarModulesCardContainer from './SidebarModulesCardContainer.js'
 import ProfileDetailsContainer from './ProfileDetailsContainer.jsx'
 import InlineEdit from 'react-edit-inline';
 import ReactTooltip from 'react-tooltip'
@@ -13,6 +13,9 @@ export default class PanelProfile extends React.Component {
     super();
   }
 
+  handleChangePassword() {
+    this.props.onChangePassword();
+  }
   datachanged(data){
     console.log(data);
   }
@@ -49,15 +52,17 @@ export default class PanelProfile extends React.Component {
       <nav className="side-menu-addl">
         <PanelHeader  title="User Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
+          <PanelListItem displayType="header" text="Change Password"  isEditable={false}/>
           <PanelListItem displayType="header" text="E-mail"  isEditable={false}/>
           <PanelListItem displayType="" text={ (Meteor.user()) ? Meteor.user().username : "" }  isEditable={false}/>
-          <ModulesCardContainer studentID="" listType="Exempted" tooltip={exemptedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
-          <ModulesCardContainer studentID="" listType="Waived" tooltip={waivedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
+          <SidebarModulesCardContainer studentID="" listType="Exempted" tooltip={exemptedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
+          <SidebarModulesCardContainer studentID="" listType="Waived" tooltip={waivedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
           <PanelListItem displayType="header" text="Previous Education" isEditable={false}/>
           <ProfileDetailsContainer studentInfoType="PrevEdu"/>
           <PanelListItem displayType="header" text="Academic Cohort"  isEditable={false}/>
           <ProfileDetailsContainer studentInfoType="AcadCohort"/>
-          <PanelListItem displayType="header" text="Change Password"  isEditable={false}/>
+          <PanelListItem displayType="header" text="Change Password"  isEditable={false}
+          onClick = {this.handleChangePassword.bind(this)}/>
         </ul>
       </nav>
     );

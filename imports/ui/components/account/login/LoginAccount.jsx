@@ -69,7 +69,7 @@ export default class LoginAccount extends React.Component {
 
     let user = Accounts.users.findOne({ username: email });
     if (user) { // In case the user can't be found
-      Meteor.call('resetpassword', user._id);
+      //Meteor.call('resetpassword', user._id);
     } else {
       Bert.alert(errorMsgUnrecognizedEmail(email), 'danger');
     }

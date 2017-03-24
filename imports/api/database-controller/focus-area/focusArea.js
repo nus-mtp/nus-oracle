@@ -36,6 +36,10 @@ const focusAreaSchema = {
     type: Object,
     blackbox: true,
   },
+  moduleListPrimaryFourThousands: {
+    type: Object,
+    blackbox: true,
+  },
   moduleListFourThousands: {
     type: Object,
     blackbox: true,
