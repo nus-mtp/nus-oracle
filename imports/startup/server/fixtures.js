@@ -18,11 +18,13 @@ import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
-//import '../../api/database-conversion/CohortDatabaseParser.js';
+import '../../api/database-conversion/ULRAfter1516Scraper.js';
 
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
-import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
+  import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
+
+import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
 
 Meteor.startup(() => {
   process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
@@ -30,6 +32,7 @@ Meteor.startup(() => {
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
+  //scrapeModuleMappingListingForULR1516();
   //parseJSONFileAndStoreToDB();
 
   if (Modules.find({}).count() === 0) {

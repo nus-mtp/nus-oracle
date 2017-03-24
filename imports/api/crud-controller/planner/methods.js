@@ -169,7 +169,6 @@ export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYe
 
   //find student list of planner
   const studentPlannerCursor = Planner.find({userID:studentId});
-  console.log("Student Planner found: " + studentPlannerCursor.count());
   if(studentPlannerCursor.count() <= 0){
     return;
   }
@@ -178,7 +177,6 @@ export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYe
   //update academic Year
   for (var i = 0; i < studentPlannerCursor.count() ; i++){
     let currentStudentPlanner = studentPlanners[i];
-    console.log(currentStudentPlanner);
     updateSemesterAcademicYearInPlanner(currentStudentPlanner, newAcademicYear);
   }
 }
