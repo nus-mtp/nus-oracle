@@ -160,3 +160,34 @@ export const deleteOneModuleInSemester = function deleteOneModuleInSemester(seme
 
   return deletedModule;
 };
+
+export const deleteAllModulesInSemester = function deleteAllModulesInSemester(semesterIndex, plannerID) {
+  const planner = Planner.findOne(plannerID);
+  if (!planner) {
+    return {};
+  }
+  const retrievedSemesters = planner.semesters;
+  if (!retrievedSemesters) {
+    return {};
+  }
+
+  // checks semester index is not larger than the size of semester
+  if (semesterIndex > retrievedSemesters.length-1)  {
+    return {};
+  }
+
+  const oneSemester = retrievedSemesters[semesterIndex];
+  if (!oneSemester) {
+    return {};
+  }
+  const modules = oneSemester.moduleHashmap;
+  if (!modules) {
+    return {};
+  }
+
+  oneSemester.moduleHashmap = {};
+  retrievedSemesters[semesterIndex] = oneSemester;
+  Planner.update(plannerID, { $set: { semesters: retrievedSemesters } });
+
+  return oneSemester.moduleHashmap;
+};

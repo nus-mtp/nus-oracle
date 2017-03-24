@@ -1,6 +1,6 @@
 import { Planner } from './planner';
 import { getStudentID } from '../../database-controller/student/methods';
-
+import { updateSemesterAcademicYearInPlanner } from '../semester/methods';
 /**
  * creates a planner
  * @param  {string}    name of planner
@@ -163,3 +163,22 @@ export const getPlannerIDsGivenUserID = function getPlannerGivenID(userID) {
  export const removePlanner = function removePlanner(plannerID) {
   Planner.remove(plannerID);
 };
+
+export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYear(newAcademicYear) {
+  const studentId = getStudentID();
+
+  //find student list of planner
+  const studentPlannerCursor = Planner.find({userID:studentId});
+  console.log("Student Planner found: " + studentPlannerCursor.count());
+  if(studentPlannerCursor.count() <= 0){
+    return;
+  }
+
+  const studentPlanners = studentPlannerCursor.fetch();
+  //update academic Year
+  for (var i = 0; i < studentPlannerCursor.count() ; i++){
+    let currentStudentPlanner = studentPlanners[i];
+    console.log(currentStudentPlanner);
+    updateSemesterAcademicYearInPlanner(currentStudentPlanner, newAcademicYear);
+  }
+}

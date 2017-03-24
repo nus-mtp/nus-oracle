@@ -38,11 +38,21 @@ export default GradCheckerContainer = createContainer((props) => {
   // foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
   // criteria = new Criteria(foundationReq, modulesCompleted);
 
-  criteria = new Criteria(AY1617,modulesCompleted);
+  // TODO: Alternative implementation of GradChecker - Experiment - @walrys Wenhan
+  // criteria = new Criteria(AY1617,modulesCompleted);
   // const items = [requirements];
-  const items = [criteria];
+  // const items = [criteria];
   // const items = AY1617(modulesCompleted);
-  console.log(getStudentAcademicCohort());
+  // console.log(getStudentAcademicCohort());
+
+  const requirements = getGraduationRequirements(semesters);
+
+  //console.log("Panel Reqs " + JSON.stringify(requirements));
+  //foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
+  foundation = new Criteria(foundationReq);
+  const items = [requirements];
+  // const items = [foundation];
+  
   return { items };
 // }, Nestable);
 }, NestableGradChecker);
