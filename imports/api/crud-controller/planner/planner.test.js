@@ -149,5 +149,13 @@ describe('planner', function () {
     assert.equal(originalPlanner.semesters.length, duplicatePlanner.semesters.length);
 
     removePlanner(id);
+
+  it ('set planner name (only spaces)', function()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const newPlannerName = '    ';
+    const numOfDocumentsUpdatedWithSemester = setPlannerName(plannerIDs[0], newPlannerName);
+
+    assert.equal(numOfDocumentsUpdatedWithSemester, 0);
   });
 });
