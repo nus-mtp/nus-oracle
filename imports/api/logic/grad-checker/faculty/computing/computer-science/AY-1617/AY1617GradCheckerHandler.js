@@ -150,14 +150,17 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       if (oneFocusArea.isPrimaryTrue)  {
         focusAreaPrimaries.isFulfilled = true;
       }
+      if (oneFocusArea.is4KTrue) {
+        focusAreaAtLeast12MCs.isFulfilled = true;
+      }
     }
 
     // check if student planner meet 24 MCs requirement
     focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
-    focusAreaAtLeast12MCs.isFulfilled = focusAreaMCSFulfilment.isFulfilled;
     graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
 
-    if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled)  {
+    if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled &&
+        focusAreaMCSFulfilment.isFulfilled)  {
       focusAreaRequirements.isFulfilled =  true;
     }
 
