@@ -29,27 +29,29 @@ import { updateSemesterAcademicYearInPlanner } from '../semester/methods';
 };
 
 /**
- * creates a planner given user ID, DO NOT USE IN PRODUCTION, ONLY FOR TESTING PURPOSES!
- * @param  {string}    name of planner
- * @param  {[string]}  array of focus area
- * @param {string}     id of user
+ * duplicates a planner
+ * @param  {string}    id of planner
  * @return {string}    id of planner
  */
- export const createPlannerGivenUserID = function createPlanner(plannerName, focusArea, userID) {
-  let name = plannerName;
-  if (name === '') {
-    name = 'Untitled';
+export const duplicatePlanner = function duplicatePlanner(plannerID)  {
+  // find planner ID inside collection of planners
+  const plannerToBeDuplicated = Planner.findOne(plannerID);
+
+  // create a new planner and insert into current planner
+  if (getStudentID() === '')  {
+    return '';
   }
+
   const newPlanner = {
-    name: name,
-    semesters: [],
-    focusArea: focusArea,
-    userID: userID,
+    name: plannerToBeDuplicated.name,
+    semesters: plannerToBeDuplicated.semesters,
+    focusArea: plannerToBeDuplicated.focusArea,
+    userID: getStudentID(),
   };
 
   const id = Planner.insert(newPlanner);
   return id;
-};
+}
 
 /**
  * retrieves focus area in a planner
@@ -162,6 +164,50 @@ export const getPlannerIDsGivenUserID = function getPlannerGivenID(userID) {
  export const removePlanner = function removePlanner(plannerID) {
   Planner.remove(plannerID);
 };
+
+/**
+ * creates a planner given user ID, DO NOT USE IN PRODUCTION, ONLY FOR TESTING PURPOSES!
+ * @param  {string}    name of planner
+ * @param  {[string]}  array of focus area
+ * @param {string}     id of user
+ * @return {string}    id of planner
+ */
+ export const createPlannerGivenUserID = function createPlanner(plannerName, focusArea, userID) {
+  let name = plannerName;
+  if (name === '') {
+    name = 'Untitled';
+  }
+  const newPlanner = {
+    name: name,
+    semesters: [],
+    focusArea: focusArea,
+    userID: userID,
+  };
+
+  const id = Planner.insert(newPlanner);
+  return id;
+};
+
+/**
+ * duplicates a planner given user ID, DO NOT USE IN PRODUCTION, ONLY FOR TESTING PURPOSES!
+ * @param  {string}    id of planner
+ * @param {string}     id of user
+ * @return {string}    id of planner
+ */
+export const duplicatePlannerGivenUserID = function duplicatePlannerGivenUserID(plannerID, userID)  {
+  // find planner ID inside collection of planners
+  const plannerToBeDuplicated = Planner.findOne(plannerID);
+
+  const newPlanner = {
+    name: plannerToBeDuplicated.name,
+    semesters: plannerToBeDuplicated.semesters,
+    focusArea: plannerToBeDuplicated.focusArea,
+    userID: userID,
+  };
+
+  const id = Planner.insert(newPlanner);
+  return id;
+}
 
 export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYear(newAcademicYear) {
   const studentId = getStudentID();

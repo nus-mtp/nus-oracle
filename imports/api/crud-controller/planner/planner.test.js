@@ -7,6 +7,7 @@ import { createPlannerGivenUserID,
          setPlannerFocusArea,
          getPlannerIDs,
          getPlannerIDsGivenUserID,
+         duplicatePlannerGivenUserID,
          setPlannerName,
          removePlanner } from './methods';
 
@@ -135,5 +136,18 @@ describe('planner', function () {
 
     assert.equal(planner.name, newPlannerName);
     assert.equal(numOfDocumentsUpdatedWithSemester, 1);
+  });
+
+  it ('duplicates planner given user id', function()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const id = duplicatePlannerGivenUserID(plannerIDs[0], userID);
+    const originalPlanner = Planner.findOne(plannerIDs[0]);
+    const duplicatePlanner = Planner.findOne(id);
+
+    assert.equal(originalPlanner.name, duplicatePlanner.name);
+    assert.equal(originalPlanner.semesters.length, duplicatePlanner.semesters.length);
+
+    removePlanner(id);
   });
 });
