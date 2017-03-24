@@ -1,6 +1,16 @@
 import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
 import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
 
+/* Explanation for new AY creation
+ * There are 5 functions in this file. To migrate to a new AY, unless there is a
+ * huge change in calculation of graduation requirements, the only functions that
+ * should be modified are markExceptions and markExemptedWaivedExceptions.
+ *
+ * The 2 methods above are where code for any new execptions to the calculation of
+ * graduation requirement should be placed. If there are no exceptions, simply return
+ * markModules and markExemptedWaivedModules
+ */
+
 export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules, requiredMCs) {
   let markedMathSciModulesAndMCs = {
     name: 'Mathematics and Sciences',

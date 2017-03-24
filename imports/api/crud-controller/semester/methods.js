@@ -146,3 +146,24 @@ export const deleteSemesterInPlanner = function deleteSemesterInPlanner(plannerI
   );
   return retrievedSemester.length-1;
 };
+
+export const updateSemesterAcademicYearInPlanner = function updateSemesterAcademicYearInPlanner(planner, newAcadYear){
+  let currentAcademicYear = newAcadYear;
+  const retrievedSemester = planner.semesters;
+  // checks if retrieved semester is empty, if so return nothing
+  if (retrievedSemester.length <= 0) {
+    return 0;
+  }
+
+  for (var i = 0; i < retrievedSemester.length; i++){
+    if (i%4 == 0 && i != 0){
+      currentAcademicYear = increaseAcadYearByOne(currentAcademicYear);
+      console.log(currentAcademicYear);
+    }
+
+    retrievedSemester[i].academicYear = currentAcademicYear;
+  }
+
+  //update the semester back to the planner
+  return Planner.update({"_id": planner._id},{ $set: { "semesters": retrievedSemester } });
+}

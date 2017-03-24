@@ -8,7 +8,8 @@ import { insertNewSemesterInPlanner,
          deleteAcademicYearInPlanner,
          deleteSemesterInPlanner ,
          getAllSemestersInPlanner,
-         getSemesterInPlanner } from './methods';
+         getSemesterInPlanner,
+         updateSemesterAcademicYearInPlanner} from './methods';
 import { m_insertNewSemesterInPlanner,
          m_insertNewAcademicYearInPlanner,
          m_deleteAcademicYearInPlanner,
@@ -142,6 +143,19 @@ describe('semester', function () {
     assert.equal(retrievedSemesters.length-1, numOfSemesters);
   });
 
+
+  it ('should update the semester academic year in a planenr when the updateSemesterAcademicYearInPlanner method is called', function() {
+    const plannerId = getPlannerIDsGivenUserID(userID);
+    const planner = Planner.findOne({_id:plannerId[0]});
+
+    updateSemesterAcademicYearInPlanner(planner, "AY 2041/2042");
+
+    const updatedPlanner = Planner.findOne({_id:plannerId[0]});
+
+    assert.equal(updatedPlanner.semesters[0].academicYear, "AY 2041/2042");
+    assert.equal(updatedPlanner.semesters[4].academicYear, "AY 2042/2043");
+  });
+
   it ('add new semester using meteor methods', function ()  {
     const plannerIDs = getPlannerIDsGivenUserID(userID);
     const academicYear = 'AY 2019/2020';
@@ -204,4 +218,5 @@ describe('semester', function () {
     });
     expect(semesterModules).to.be.a('object');
   });
+
 });

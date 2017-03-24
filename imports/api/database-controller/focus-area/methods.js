@@ -13,18 +13,20 @@ const DEFAULT_MODULE_STATE = false;
   * In the process itself, the module will be filtered and check if the same modulecode actually
   * exists in the database. If not, the module will be removed from the lists.
   */
-export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfFourThousands, listOfNonPrimary){
+export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfPrimaryFourThousands, listOfFourThousands, listOfNonPrimary){
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
 
   primaryToBeStored = createModuleListObject(listOfPrimary);
+  primaryFourThousandsToBeStored = createModuleListObject(listOfPrimaryFourThousands);
   fourThousandsToBeStored = createModuleListObject(listOfFourThousands);
   nonPrimaryToBeStored = createModuleListObject(listOfNonPrimary);
 
   const newFocusAreaDocument = {
     name : name,
     moduleListPrimary : primaryToBeStored,
+    moduleListPrimaryFourThousands: primaryFourThousandsToBeStored,
     moduleListFourThousands: fourThousandsToBeStored,
     moduleListElectives: nonPrimaryToBeStored
   }
@@ -77,6 +79,26 @@ export const createModuleListObject = function createNewListOfModuleObject(modul
   return moduleToBeStored;
 }
 
+export const getFocusAreaRequirement = function getFocusAreaRequirement(getFocusRequirementIDArray)  {
+  const allfocusAreaRequirements = {
+    focusAreaPrimaryModules: {},
+    focusArea4KModules: {},
+    focusAreaNonPrimaryModules: {}
+  };
+
+  let tempFocusAreaDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaDoc)  {
+      allfocusAreaRequirements.focusAreaPrimaryModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListPrimary;
+      allfocusAreaRequirements.focusArea4KModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListPrimaryFourThousands;
+      allfocusAreaRequirements.focusAreaNonPrimaryModules[tempFocusAreaDoc.name] = tempFocusAreaDoc.moduleListElectives;
+    }
+  }
+
+  return allfocusAreaRequirements;
+}
+
 export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
   const focusAreaPrimaryRequirements = {};
   let tempFocusAreaPrimaryDoc = {};
@@ -99,6 +121,18 @@ export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getF
     }
   }
   return focusArea4KRequirements;
+}
+
+export const getFocusAreaPrimary4KRequirement = function getFocusAreaPrimary4KRequirement(getFocusRequirementIDArray) {
+  const focusAreaPrimary4KRequirements = {};
+  let tempFocusPrimaryArea4KDoc = {};
+  for (var i=0; i<getFocusRequirementIDArray.length; i++) {
+    tempFocusAreaPrimary4KDoc = FocusArea.findOne(getFocusRequirementIDArray[i]);
+    if (tempFocusAreaPrimary4KDoc)  {
+      focusAreaPrimary4KRequirements[tempFocusAreaPrimary4KDoc.name] = tempFocusAreaPrimary4KDoc.moduleListPrimaryFourThousands;
+    }
+  }
+  return focusAreaPrimary4KRequirements;
 }
 
 export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimaryRequirement(getFocusRequirementIDArray) {

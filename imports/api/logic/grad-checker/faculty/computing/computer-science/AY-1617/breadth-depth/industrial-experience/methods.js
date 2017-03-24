@@ -1,6 +1,16 @@
 import { getModuleFulfilment } from '../../../../../../../../database-controller/module-fulfilment/methods';
 import { searchByModuleCode } from '../../../../../../../../database-controller/module/methods';
 
+/* Explanation for new AY creation
+ * There are 5 functions in this file. To migrate to a new AY, unless there is a
+ * huge change in calculation of graduation requirements, the only functions that
+ * should be modified are markExceptions and markExemptedWaivedExceptions.
+ *
+ * The 2 methods above are where code for any new execptions to the calculation of
+ * graduation requirement should be placed. If there are no exceptions, simply return
+ * markModules and markExemptedWaivedModules
+ */
+
 export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules, requiredMCs)  {
   let markedIndustrialExperienceTrainingModulesAndMCs = {
     name: 'Industrial Experience Training',
@@ -96,10 +106,12 @@ const markExceptions = function markExceptions(markedIndustrialExperienceTrainin
   if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   }
 
@@ -112,10 +124,12 @@ const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(marke
   if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200'])  {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   } else if (markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3202']) {
     if (!markedIndustrialExperienceTrainingModulesAndMCs.moduleChecked['CP3200']) {
       markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[originalModule] = false;
+      markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue = 0;
     }
   }
   return markedIndustrialExperienceTrainingModulesAndMCs;

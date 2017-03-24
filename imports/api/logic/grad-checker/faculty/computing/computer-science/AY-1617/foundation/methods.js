@@ -1,6 +1,16 @@
-// import fulfilment methods here
 import { getModuleFulfilment } from '../../../../../../../database-controller/module-fulfilment/methods';
 import { searchByModuleCode } from '../../../../../../../database-controller/module/methods';
+
+/* Explanation for new AY creation
+ * There are 5 functions in this file. To migrate to a new AY, unless there is a
+ * huge change in calculation of graduation requirements, the only functions that
+ * should be modified are markExceptions and markExemptedWaivedExceptions.
+ *
+ * The 2 methods above are where code for any new execptions to the calculation of
+ * graduation requirement should be placed. If there are no exceptions, simply return
+ * markModules and markExemptedWaivedModules
+ */
+
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, requiredMCs) {
   let markedFoundationModulesAndMCs = {
@@ -26,14 +36,14 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     }
 
     moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
+    markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
     if (!markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
-        markedFoundationModulesAndMCs = markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedFoundationModulesAndMCs = markModules(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]])  {
           break;
         }
@@ -88,4 +98,12 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
   }
 
   return markedFoundationModulesAndMCs;
+}
+
+const markExceptions = function markExceptions(markedFoundationModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
+  return markModules(markedFoundationModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+}
+
+const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
+  return markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
 }
