@@ -13,6 +13,9 @@ export default class PanelProfile extends React.Component {
     super();
   }
 
+  handleChangePassword() {
+    this.props.onChangePassword();
+  }
   datachanged(data){
     console.log(data);
   }
@@ -58,6 +61,8 @@ export default class PanelProfile extends React.Component {
           <ProfileDetailsContainer studentInfoType="PrevEdu"/>
           <PanelListItem displayType="header" text="Academic Cohort"  isEditable={false}/>
           <ProfileDetailsContainer studentInfoType="AcadCohort"/>
+          <PanelListItem displayType="header" text="Change Password"  isEditable={false}
+          onClick = {this.handleChangePassword.bind(this)}/>
         </ul>
       </nav>
     );
