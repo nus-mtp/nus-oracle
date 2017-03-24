@@ -43,7 +43,7 @@ describe('grad-checker-focusArea', function()  {
   });
 
   it ('checks if find focus area MCs return true', function() {
-    const academicCohort = 'AY 2015/2016';
+    const academicCohort = 'AY 2016/2017';
     const requirementName = 'Computer Science Focus Area' ;
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
@@ -68,7 +68,7 @@ describe('grad-checker-focusArea', function()  {
   })
 
   it ('checks if focus area requirement modules return true', function() {
-    const academicCohort = 'AY 2015/2016';
+    const academicCohort = 'AY 2016/2017';
     const focusAreaName = 'Computer Graphics and Games';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     //const focusAreaModules = getFocusAreaRequirement(focusAreaReqIDs);

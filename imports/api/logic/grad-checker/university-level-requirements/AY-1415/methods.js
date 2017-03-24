@@ -39,6 +39,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
+
     if (!markedULRModulesAndMCs.markedULRModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {

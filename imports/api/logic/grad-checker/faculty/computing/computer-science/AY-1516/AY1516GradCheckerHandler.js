@@ -105,14 +105,14 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
 
 
   // find university-level-requirements here
-  /*const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
+  const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
   const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
   graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
   if (Object.keys(graduationRequirements[moduleRequirementTitle[6]]).length > 0)  {
   UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[6]].name,
                                                                  graduationRequirements[moduleRequirementTitle[6]].markedULRModules,
                                                                  graduationRequirements[moduleRequirementTitle[6]].isFulfilled));
-  }*/
+  }
 
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]];
@@ -178,7 +178,6 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
 
     // check if student planner meet 24 MCs requirement
     focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
-    focusAreaAtLeast12MCs.isFulfilled = focusAreaMCSFulfilment.isFulfilled;
     graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
 
     if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled &&
