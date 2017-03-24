@@ -99,13 +99,15 @@ export default class TabbedContainer extends React.Component {
    * Handler for add study plan button on the right hand side of all tabs
    */
   handleAddStudyPlanClick() {
-    this.setState({ isModalVisible : true});
+    this.setState({ isModalVisible : true });
   }
 
   handleAddBlankTemplate(){
-    this.setState({ isModalVisible : false});
-    this.setState({ isAddingNewPlan : true});
-    console.log('handle blank template');
+    this.setState({
+      isModalVisible : false,
+      isAddingNewPlan : true,
+      tabSelectedIndex: this.props.plannerIDs.length
+    });
   }
   /**
    * Handler for deleting study plan.
@@ -119,7 +121,7 @@ export default class TabbedContainer extends React.Component {
     removePlanner(studyPlanIDToDelete);
 
     // if deleting last planner, auto select previous planner
-    if(index == this.props.plannerIDs.length - 1 ){
+    if(index == this.props.plannerIDs.length - 1){
       this.setState({
         tabSelectedIndex: index-1
       })
@@ -241,6 +243,7 @@ export default class TabbedContainer extends React.Component {
   renderTabTitleInput(tabTitle, plannerID) {
     return(
       <input autoFocus type="text" defaultValue={tabTitle}
+             placeholder={tabTitle}
              className="form-control" style={{height: "1.5em"}}
              onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
              onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
@@ -260,6 +263,7 @@ export default class TabbedContainer extends React.Component {
            enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
            tabTitle={
              <input autoFocus type="text" className="form-control"
+                    placeholder="Untitled"
                     style={{height: "1.5em"}}
                     onKeyPress={this.handleEnterStudyPlanName.bind(this)}
                     onBlur={this.handleCancelAddStudyPlan.bind(this)} />
@@ -306,11 +310,15 @@ export default class TabbedContainer extends React.Component {
 
               {/* Renders the tab used to enter a new study plan's name when
                   user clicks on "Add" study plan button */}
-                  {this.state.isAddingNewPlan ? this.renderAddPlanTab() : null}
-                  {this.state.isModalVisible ?
-                    <ModalContainer content={<AddNewPlanner isFullscreen={false} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>} onHidden={this.handleCancelAddPlanModale.bind(this)}
-                    onHidden={this.handleCancelAddPlanModale.bind(this)}/>
-                  : null}
+              {this.state.isAddingNewPlan ? this.renderAddPlanTab() : null}
+              {this.state.isModalVisible ?
+                <ModalContainer content={
+                  <AddNewPlanner
+                    isFullscreen={false}
+                    handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
+                    onHidden={this.handleCancelAddPlanModale.bind(this)}
+                onHidden={this.handleCancelAddPlanModale.bind(this)}/>
+              : null}
 
               {/* "Add" study plan button with a "+" symbol */}
               {plannerIDs.length!=0 ? this.renderAddPlanButton() : null}

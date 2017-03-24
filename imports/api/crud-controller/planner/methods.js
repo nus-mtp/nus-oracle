@@ -8,7 +8,7 @@ import { updateSemesterAcademicYearInPlanner } from '../semester/methods';
  * @return {string}    id of planner
  */
  export const createPlanner = function createPlanner(plannerName, focusArea) {
-  let name = plannerName;
+  let name = plannerName.trim(); // normalize and remove sandwiched whitespaces
   if (name === '') {
     name = 'Untitled';
   }
@@ -142,6 +142,7 @@ export const getPlannerIDsGivenUserID = function getPlannerGivenID(userID) {
  * @return {number}    number of updated documents in semester
  */
  export const setPlannerName = function setPlannerName(plannerID, newPlannerName)  {
+  newPlannerName = newPlannerName.trim(); // normalize and remove sandwiched whitespaces
   if (newPlannerName === '')  {
     return 0;
   }

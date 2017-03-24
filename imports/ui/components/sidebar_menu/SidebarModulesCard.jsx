@@ -74,7 +74,7 @@ export default class SidebarModulesCard extends React.Component {
                           onButtonClick={this.props.handleInfoClick}/>
             </div>
 
-            { this.props.tooltip }
+            {this.props.tooltip}
 
           </div>
         }
@@ -86,7 +86,7 @@ export default class SidebarModulesCard extends React.Component {
 
 SidebarModulesCard.propTypes = {
   listType: React.PropTypes.string,
-  modules: React.PropTypes.object,
+  modules: React.PropTypes.array,
   tooltip: React.PropTypes.node,
   handleInfoClick: React.PropTypes.func,
 }

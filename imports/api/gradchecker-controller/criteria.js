@@ -1,5 +1,6 @@
 import { searchByModuleCode } from '../database-controller/module/methods';
 import { getModuleFulfilment } from '../database-controller/module-fulfilment/methods';
+import { getStudentAcademicCohort } from '../database-controller/student/methods.js';
 
 /**
 * Creates a graduation criteria given the following parameters for the requirement
@@ -16,26 +17,27 @@ import { getModuleFulfilment } from '../database-controller/module-fulfilment/me
 *  @param {object}  or simply construct Criteria from Object provided here
 *
 */
-// export function Criteria(name, modulesCompleted, requiredMC, isStrictMC, subreq, toUE, object){
-export function Criteria(object){
+
+export function Criteria(object, modulesCompleted){
+  var subrequirements;
   if(object){ // construct Critera from Object provided
     this.name = object.name;
     this.requiredMC = object.requiredMC;
     this.isStrictMC = object.isStrictMC;
-    this.subreq = object.subreq;
-    this.modulesCompleted = object.modulesCompleted;
+
+    if(object.subreq){
+      subrequirements = [object.subreq[0]];
+      for(var i=1; i<object.subreq.length; i++){
+        subrequirements.push(new Criteria(object.subreq[i], modulesCompleted));
+      }
+    }
+    if(subrequirements)
+      this.subreq = subrequirements;
+
+    this.modulesCompleted = modulesCompleted;
     this.fulfilledMC = 0;
     this.toUE = object.toUE;
   }
-  // else{ // object not supplied. construct Criteria with params provided
-  //   this.name = name;
-  //   this.requiredMC = requiredMC;
-  //   this.isStrictMC = isStrictMC;
-  //   this.subreq = subreq;
-  //   this.modulesCompleted = modulesCompleted;
-  //   this.fulfilledMC = 0;
-  //   this.toUE = toUE;
-  // }
 
   this.isModule = function() {
     return (this.subreq === undefined || this.subreq === null || this.subreq.length == 0);
@@ -79,15 +81,22 @@ export function Criteria(object){
         this.requiredMC = searchByModuleCode(this.name).moduleMC;
         return true && this.checkMC();
       }
-      // [WARNING: Cannot do this as equivalent modules might not have the same MCs]
-      // else loop through all equivalent modules
+
+      // //else loop through all equivalent modules
+
       // else {
       //   for(equivalent in getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent){
-      //     if(_.contains(modulesCompleted, equivalent))
+      //     if(_.contains(modulesCompleted, equivalent)){
       //       this.fulfilledMC = searchByModuleCode(equivalent).moduleMC;
       //       return this.checkMC();
+      //     }
       //   }
       // }
+
+      // console.log(this.name);
+      // console.log(JSON.stringify(getModuleFulfilment(this.name)));
+      // console.log(JSON.stringify(getModuleFulfilment("CS1010")));
+
       return false;
     }
 
