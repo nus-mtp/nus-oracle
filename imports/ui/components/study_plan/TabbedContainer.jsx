@@ -243,6 +243,7 @@ export default class TabbedContainer extends React.Component {
   renderTabTitleInput(tabTitle, plannerID) {
     return(
       <input autoFocus type="text" defaultValue={tabTitle}
+             placeholder={tabTitle}
              className="form-control" style={{height: "1.5em"}}
              onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
              onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
@@ -262,6 +263,7 @@ export default class TabbedContainer extends React.Component {
            enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
            tabTitle={
              <input autoFocus type="text" className="form-control"
+                    placeholder="Untitled"
                     style={{height: "1.5em"}}
                     onKeyPress={this.handleEnterStudyPlanName.bind(this)}
                     onBlur={this.handleCancelAddStudyPlan.bind(this)} />
