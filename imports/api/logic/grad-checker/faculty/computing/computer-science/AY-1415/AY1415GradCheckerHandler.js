@@ -57,7 +57,8 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
                            'Computer Graphics and Games', 'Computer Security',
                            'Database Systems', 'Multimedia Information Retrieval',
                            'Networking and Distributed Systems', 'Parallel Computing',
-                           'Programming Languages', 'Software Engineering'];
+                           'Programming Languages', 'Software Engineering', 'Interactive Media',
+                           'Visual Computing'];
 
   let graduationRequirements = {};
 
@@ -123,6 +124,7 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
                                                                    graduationRequirements[moduleRequirementTitle[0]].markedFoundationModules,
                                                                    graduationRequirements[moduleRequirementTitle[0]].isFulfilled));
   }
+
 
   // find computer science breadth and depth requirement modules
     // find focus area requirement modules object
