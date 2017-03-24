@@ -117,6 +117,33 @@ export const populateFocusAreaModuleFixture = function populateFocusAreaModuleFi
   }
 }
 
+export const populate1415ULRModuleFixture = function populate1415ULRModuleFixture() {
+  const ULRModules = ['GEM1034', 'GEM1048', 'GEM1051', 'GEK1509', 'GEK1901', 'GEK1002', 'GEK1539',
+                      'NM2213', 'NM3228', 'NM3226', 'ES1541', 'JS2230', 'SSA2214', 'SSA2221', 'SSA2203',
+                      'CS1010'];
+
+  const ULRNames = ['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum',
+                    'Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum',
+                    'Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum',
+                    'Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum',
+                    'Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum',
+                    'Lorem Ipsum'];
+
+   for (var i = 0; i < ULRModules.length; i++)  {
+     const testModule = {
+       moduleCode: ULRModules[i],
+       moduleName: ULRNames[i],
+       moduleDescription: 'Lorem ipsum',
+       modulePrerequisite: 'Lorem ipsum',
+       moduleCorequisite: 'Lorem ipsum',
+       modulePreclusion: 'Lorem ipsum',
+       moduleMC: 4,
+       termOffered: [{Sem1: 'Sem 1', Sem2: 'Sem 2'}]
+     };
+     insertToModuleCollection(testModule);
+   }
+}
+
 export const dePopulateModuleFixture = function dePopulateModuleFixture() {
   const allModules = retrieveAllModule();
   for (var i = 0; i < allModules.length; i++)  {

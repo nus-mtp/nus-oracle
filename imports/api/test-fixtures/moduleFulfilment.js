@@ -98,6 +98,77 @@ export const populateULRModuleFulfilment = function populateULRModuleFulfilment(
   return moduleFulfilmentIDs;
 }
 
+export const populateAY1516ComSciITFulfilment = function populateAY1516ComSciITFulfilment() {
+  const academicYear = 'AY 2015/2016';
+  const ITProfessionalismModules = ['IS1103', 'CS2101'];
+
+  const moduleFulfilmentIDs = [];
+
+  for (var i=0; i < ITProfessionalismModules.length; i++)  {
+    moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ITProfessionalismModules[i], []));
+  }
+
+  return moduleFulfilmentIDs;
+}
+
+export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516ComSciMathScienceFulfilment() {
+  const moduleFulfilmentIDs = [];
+  const academicYear = 'AY 2015/2016';
+
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three'];
+
+  const ST2334Equivalent = ['ST2131'];
+  const PC1221Equivalent = ['PC1221FC', 'PC1221X', 'PC1222', 'PC1222X'];
+
+  // science 3 has same equivalent modules as science 1
+  const ScienceOneEquivalent = ['CM1121', 'CM1131', 'CM1417', 'LSM1301', 'LSM1302',
+                                'PC1141', 'PC1142', 'PC1143', 'PC1144', 'PC1221',
+                                'PC1222', 'PC1432', 'MA2213','MA2214'];
+  const ScienceTwoEquivalent = ['CM1121', 'CM1131', 'CM1417', 'LSM1301', 'LSM1302',
+                                'PC1141', 'PC1142', 'PC1143', 'PC1144', 'PC1221',
+                                'PC1222', 'PC1432', 'MA2213','MA2214', 'ST2132'];
+
+  for (var i=0; i < mathSciModules.length; i++)  {
+    if (mathSciModules[i] === 'ST2334') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ST2334Equivalent));
+    } else if (mathSciModules[i] === 'PC1221')  {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], PC1221Equivalent));
+    } else if (mathSciModules[i] === 'Science One')  {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
+    } else if (mathSciModules[i] === 'Science Two') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceTwoEquivalent));
+    } else if (mathSciModules[i] === 'Science Three') {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
+    }  else {
+      moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], []));
+    }
+  }
+
+  return moduleFulfilmentIDs;
+}
+
+export const populate1415ULRModuleFulfilment = function populate1415ULRModuleFulfilment() {
+  const moduleFulfilmentIDs = [];
+
+  const ULRModules = ['GEM A', 'GEM B', 'Breadth One',
+                   'Breadth Two', 'Singapore Studies'];
+  const GEM_AEquivalent = ['GEM1034', 'GEM1048', 'GEM1051', 'GEK1002'];
+  const GEM_BEquivalent = ['GEK1509', 'GEK1901', 'GEK1539'];
+  const Breadth_One = [];
+  const Breadth_Two = [];
+  const Singapore_Studies = ['SSA2214', 'SSA2221', 'SSA2203'];
+
+  const academicYear = 'AY 2014/2015';
+
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[0], GEM_AEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[1], GEM_BEquivalent));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[2], Breadth_One));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[3], Breadth_Two));
+  moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, ULRModules[4], Singapore_Studies));
+
+  return moduleFulfilmentIDs;
+}
+
 export const dePopulateModuleFulfilmentFixture = function dePopulateModuleFulfilmentFixture(moduleFulfilmentIDs) {
   for (var i=0; i<moduleFulfilmentIDs.length; i++)  {
     removeOneModuleFulfilment(moduleFulfilmentIDs[i]);

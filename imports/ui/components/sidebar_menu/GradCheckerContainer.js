@@ -6,6 +6,7 @@ import { getAllSemestersInPlanner } from '../../../api/crud-controller/semester/
 import { getStudentExemptedModules, getStudentWaivedModules } from '../../../api/database-controller/student/methods';
 import { AY1617 } from '../../../api/gradchecker-controller/allGraduationRequirements.js';
 import Nestable from '../common/Nestable.jsx';
+import NestableGradChecker from '../common/NestableGradChecker.jsx';
 
 export default GradCheckerContainer = createContainer((props) => {
   Meteor.subscribe('AcademicCohort');
@@ -35,9 +36,11 @@ export default GradCheckerContainer = createContainer((props) => {
 
   const requirements = getGraduationRequirements(semesters);
 
+  //console.log("Panel Reqs " + JSON.stringify(requirements));
   //foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
   foundation = new Criteria(foundationReq);
   const items = [requirements];
   // const items = [foundation];
   return { items };
 }, Nestable);
+// }, NestableGradChecker);

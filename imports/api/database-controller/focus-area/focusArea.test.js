@@ -10,6 +10,7 @@ describe('focus area test', function() {
   if(Meteor.isServer){
     const focusAreaOneName = "Focus Area 1";
     const focusAreaOneListPrimary = ['default1','default2'];
+    const focusAreaOneListFourKPrimary = ['de4005','de4006'];
     const focusAreaOneListPrimaryFourThousands = ['de4002','de4003'];
     const focusAreaOneListFourK = ['de4000','de4001'];
     const focusAreaOneElective = ['default4','default3'];

@@ -9,7 +9,8 @@ import { insertNewSemesterInPlanner } from '../semester/methods';
 import { insertOneModuleInSemester,
          getAllModulesInSemester,
          getOneModuleInSemester,
-         deleteOneModuleInSemester } from './methods';
+         deleteOneModuleInSemester,
+         deleteAllModulesInSemester } from './methods';
 import { m_insertOneModuleInSemester,
          m_getAllModulesInSemester,
          m_getOneModuleInSemester,
@@ -115,6 +116,13 @@ describe('modules', function () {
 
     const module = deleteOneModuleInSemester(0, modules[0], plannerIDs[0]);
     assert.equal(module, modules[0]);
+  });
+
+  it ('remove all modules in semester', function () {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+
+    const module = deleteAllModulesInSemester(userID);
+    assert.equal(Object.keys(module).length, 0);
   });
 
   it ('get all module using meteor methods', function() {
