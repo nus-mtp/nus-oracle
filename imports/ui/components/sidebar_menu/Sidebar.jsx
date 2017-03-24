@@ -11,7 +11,9 @@ export default class Sidebar extends React.Component {
       activeMenuPanelIndex: 0
     }
   }
-
+  handleChangePassword() {
+    this.props.onChangePassword();
+  }
   handleSwitchTab(index) {
     this.setState({activeMenuPanelIndex: index});
   }
@@ -19,7 +21,8 @@ export default class Sidebar extends React.Component {
   render() {
     // var menuPanelsList = [<PanelProfile />, <PanelRequirements />, <SidebarPanel />, <SidebarPanel />, <SidebarPanel />];
     // var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me", "Logout"];
-    var menuPanelsList = [<PanelProfile />, <PanelRequirements activePlannerId={this.props.activePlannerId}/>];
+    var menuPanelsList = [<PanelProfile onChangePassword = {this.handleChangePassword.bind(this)}/>,
+                          <PanelRequirements activePlannerId={this.props.activePlannerId}/>];
     var tabTitleList = ["My Profile", "Requirements", "Logout"];
     var iconList = ["user", "tasks", "power-off"];
     var activeMenuPanelIndex = this.state.activeMenuPanelIndex;
