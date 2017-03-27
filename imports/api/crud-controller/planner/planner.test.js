@@ -159,3 +159,5 @@ describe('planner', function () {
     assert.equal(numOfDocumentsUpdatedWithSemester, 0);
   });
 });
+
+})

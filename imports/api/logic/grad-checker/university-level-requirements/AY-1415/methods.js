@@ -59,7 +59,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     }
   }
   // return { moduleCode: boolean } object
-  //console.log("module fulfilment " + JSON.stringify(moduleFulfilment));
+  console.log("module fulfilment " + JSON.stringify(moduleFulfilment));
 
   return markedULRModulesAndMCs;
 }
