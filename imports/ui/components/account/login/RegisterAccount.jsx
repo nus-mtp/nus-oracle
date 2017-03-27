@@ -7,7 +7,7 @@ import {successMsgs,
 
 // Import React components
 import Button from '../../common/Button.jsx';
-
+var Loader = require('halogen/PulseLoader');
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -41,6 +41,7 @@ export default class RegisterAccount extends React.Component {
   }
 
   handleSubmit() { // to verify registration
+    this.props.onSubmit();
     let user = {
       username: this.state.email,
       email: this.state.email,

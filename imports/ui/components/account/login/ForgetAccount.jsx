@@ -30,6 +30,8 @@ export default class ForgetAccount extends React.Component {
   }
 
   handleSendResetEmail() {
+    this.props.onSubmit();
+
     Accounts.forgotPassword({
       email: this.state.email
     }, (error) => {
@@ -43,8 +45,8 @@ export default class ForgetAccount extends React.Component {
         console.log(user);
 
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
-        this.props.onSuccess();
       }
+      this.props.onSuccess();
     });
   }
 

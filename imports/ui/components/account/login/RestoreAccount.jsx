@@ -38,6 +38,7 @@ export default class RestoreAccount extends React.Component {
   }
 
   handleReset() {
+    this.props.onSubmit();
     Meteor.call('nusPasswordVerifier',
                 this.state.password,
                 this.state.repassword,
@@ -55,6 +56,7 @@ export default class RestoreAccount extends React.Component {
             console.log("UNLOCKED");
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
             this.props.onSuccess();
+            FlowRouter.reload();
           }
         });
       }

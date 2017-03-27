@@ -17,7 +17,6 @@ import Button from '../../common/Button.jsx';
 import { pathToLogin } from '../../../../startup/client/Router.jsx';
 import { pathToAcadDetailsSetup } from '../../../../startup/client/Router.jsx';
 import { pathToUserDashboard } from '../../../../startup/client/Router.jsx';
-
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
@@ -76,6 +75,7 @@ export default class LoginAccount extends React.Component {
   }
 
   handleSubmit() {
+    this.props.onSubmit();
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
       if (error) { // Login error
         if (error.reason == 'Incorrect password') {
@@ -119,6 +119,7 @@ export default class LoginAccount extends React.Component {
         }
       }
     });
+    this.props.onSuccess();
   }
 
   render() {
@@ -158,6 +159,7 @@ export default class LoginAccount extends React.Component {
                    onClick={this.handleClickOnForgetPassword.bind(this)}>
                   Forgot Password?
                 </a>
+
 
           </div>
         </div>

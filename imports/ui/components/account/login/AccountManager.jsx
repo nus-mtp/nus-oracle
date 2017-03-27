@@ -7,6 +7,7 @@ import ModalContainer from '../../common/ModalContainer.jsx';
 import LoginAccount from './LoginAccount.jsx';
 import RegisterAccount from './RegisterAccount.jsx';
 import ForgetAccount from './ForgetAccount.jsx';
+import LoadingScreen from './LoadingScreen.jsx';
 import RestoreAccount from './RestoreAccount.jsx';
 import ChangPassword from '../manage-account/ChangePassword.jsx';
 
@@ -17,10 +18,21 @@ export default class AccountManager extends React.Component {
       isLoggingIn: true,
       isSigningUp: false,
       isForgetPassword: false,
-      isRestoreAccount: false
+      isRestoreAccount: false,
+      isLoading: false
     }
   }
+  handleLoading() {
+    this.setState({
+      isLoading: true
+    });
+  }
 
+  handleHideLoading() {
+    this.setState({
+      isLoading: false
+    });
+  }
   handleSignUp() {
     this.setState({
       isSigningUp: true
@@ -59,7 +71,8 @@ export default class AccountManager extends React.Component {
     this.setState({
       isSigningUp: false,
       isForgetPassword: false,
-      isRestoreAccount: false
+      isRestoreAccount: false,
+      isLoading: false
     });
   }
 
@@ -69,16 +82,25 @@ export default class AccountManager extends React.Component {
         <div className="page-center page-center-in">
           {this.state.isLoggingIn ?
             <LoginAccount onForgetPassword={this.handleForgetPassword.bind(this)}
-                          onSignUp={this.handleSignUp.bind(this)} /> : null}
+                          onSignUp={this.handleSignUp.bind(this)}
+                          onSubmit={this.handleLoading.bind(this)}
+                          onSuccess={this.handleCloseAllWindows.bind(this)}/> : null}
           {this.state.isSigningUp ?
             <ModalContainer onHidden={this.handleHideSignUp.bind(this)}
-                            content={<RegisterAccount onSuccess={this.handleCloseAllWindows.bind(this)}/>} /> : null}
+                            content={<RegisterAccount onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onSubmit={this.handleLoading.bind(this)}/>} /> : null}
           {this.state.isForgetPassword ?
             <ModalContainer onHidden={this.handleHideForgetPassword.bind(this)}
-                            content={<ForgetAccount onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
+                            content={<ForgetAccount
+                            onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onSubmit={this.handleLoading.bind(this)}/>} /> : null}
           {FlowRouter.getQueryParam("acc")=="reset-password" ?
             <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
-                            content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
+                            content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onSubmit={this.handleLoading.bind(this)} />} /> : null}
+          {this.state.isLoading ? 
+            <ModalContainer onHidden={this.handleHideLoading.bind(this)}
+                            content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
         </div>
       </div>
     );
