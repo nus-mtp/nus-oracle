@@ -7,6 +7,7 @@ import ModalContainer from '../../common/ModalContainer.jsx';
 import LoginAccount from './LoginAccount.jsx';
 import RegisterAccount from './RegisterAccount.jsx';
 import ForgetAccount from './ForgetAccount.jsx';
+import ChangPassword from '../manage-account/ChangePassword.jsx';
 
 export default class AccountManager extends React.Component {
   constructor(props) {

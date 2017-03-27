@@ -13,6 +13,9 @@ export default class PanelProfile extends React.Component {
     super();
   }
 
+  handleChangePassword() {
+    this.props.onChangePassword();
+  }
   datachanged(data){
     console.log(data);
   }
