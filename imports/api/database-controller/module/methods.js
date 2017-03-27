@@ -22,8 +22,14 @@ export const isExistModuleCollection = function checkForCollection() {
 // This method try to find module in the collection by the moduleCode
 export const searchByModuleCode = function retrieveMod(modCode) {
   const searchResult = Modules.findOne({ moduleCode: modCode });
+  const resultArray = [];
+
   if (!searchResult) {
     return {};
+  }
+
+  for (var i=0; i<searchResult.length; i++) {
+
   }
 
   const returnPackage = {
@@ -33,6 +39,15 @@ export const searchByModuleCode = function retrieveMod(modCode) {
   };
 
   return returnPackage;
+};
+
+export const searchByModuleCodeRegex = function searchByModuleCodeRegex (modCode) {
+  const searchResult = Modules.find( {moduleCode: { $regex: modCode, $options: 'i' }} ).fetch();
+  if (!searchResult) {
+    return {};
+  }
+
+  return searchResult;
 };
 
 // module is available in database

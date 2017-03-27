@@ -25,14 +25,15 @@ import { populateFocusAreaCollection } from '../../api/database-conversion/focus
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
+
 
 Meteor.startup(() => {
-  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
-  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
   //scrapeModuleMappingListingForULR1516();
+  //scrapeModuleMappingListingForBeforeULR1516();
   //parseJSONFileAndStoreToDB();
 
   if (Modules.find({}).count() === 0) {
