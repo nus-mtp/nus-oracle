@@ -18,7 +18,7 @@ import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 
-import '../../api/database-conversion/ULRAfter1516Scraper.js';
+//import '../../api/database-conversion/samplePlannerParser.js';
 
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
   import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
