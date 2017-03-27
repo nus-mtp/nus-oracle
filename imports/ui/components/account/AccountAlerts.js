@@ -11,7 +11,8 @@ export const successMsgs = {
   SUCCESS_LOGOUT: "Thanks for using NUS Oracle",
   SUCCESS_SIGNUP: "Thanks for signing up! Please check your email to verify your NUS Oracle account!",
   SUCCESS_SETUP: "Setup is all done. Welcome to NUS Oracle!",
-  SUCCESS_PASSWORD_CHANGED: "New password successfully changed!"
+  SUCCESS_PASSWORD_CHANGED: "New password successfully changed!",
+  SUCCESS_NEW_PASSWORD_SENT: "A password restoration has been sent, please use token to reset!"
 }
 
 export const warningMsgs = {
@@ -29,6 +30,14 @@ export const errorMsgs = {
   ERR_ACCOUNT_LOCK: "Your account has been locked. Please check",
   ERR_EMAIL_ENTERED_INVALID: "Invalid NUS email. Remember to end your email address with '@u.nus.edu'",
   ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing"
+}
+export const loadingMsgs = {
+  LOAD_LOGGING_IN: "Logging you in",
+  LOAD_LOGGING_OUT: "Thank you for using NUS Oracle",
+  LOAD_REGISTERING: "Creating account",
+  LOAD_INITIALISING: "Do you know, there are over 7000 unique modules in the past 5 years?",
+  LOAD_FORGET: "Launching Token to your email",
+  LOAD_CHANGE: "Changing password"
 }
 
 //=====================================================

@@ -20,12 +20,15 @@ import { Accounts } from 'meteor/accounts-base';
  http://madscript.com/halogen/
  */
 
-export default class ForgetAccount extends React.Component {
+export default class LoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      message: this.props.loadText
     };
+    console.log(this.state.message);
   }
+
 
   render() {
     return (
@@ -35,7 +38,7 @@ export default class ForgetAccount extends React.Component {
           <h5 className="m-t-lg">
             <p>Loading</p>
 
-            <p><strong>Fill in your NUS E-mail below:</strong></p>
+            <p><strong>{this.state.message}</strong></p>
           </h5>
           <PulseLoader postition='relative' color="#ff9702" />
         </div>

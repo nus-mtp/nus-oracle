@@ -10,6 +10,7 @@ import ForgetAccount from './ForgetAccount.jsx';
 import LoadingScreen from './LoadingScreen.jsx';
 import RestoreAccount from './RestoreAccount.jsx';
 import ChangPassword from '../manage-account/ChangePassword.jsx';
+import {loadingMsgs} from './../AccountAlerts.js'
 
 export default class AccountManager extends React.Component {
   constructor(props) {
@@ -19,7 +20,8 @@ export default class AccountManager extends React.Component {
       isSigningUp: false,
       isForgetPassword: false,
       isRestoreAccount: false,
-      isLoading: false
+      isLoading: false,
+      loadMessage: loadingMsgs.LOAD_LOGGING_IN
     }
   }
   handleLoading() {
@@ -35,6 +37,7 @@ export default class AccountManager extends React.Component {
   }
   handleSignUp() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_REGISTERING,
       isSigningUp: true
     });
   }
@@ -47,6 +50,7 @@ export default class AccountManager extends React.Component {
 
   handleForgetPassword() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_FORGET,
       isForgetPassword: true
     });
   }
@@ -58,6 +62,7 @@ export default class AccountManager extends React.Component {
   }
   handleRestoreAccount() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_CHANGE,
       isRestoreAccount: true
     });
   }
@@ -72,7 +77,8 @@ export default class AccountManager extends React.Component {
       isSigningUp: false,
       isForgetPassword: false,
       isRestoreAccount: false,
-      isLoading: false
+      isLoading: false,
+      loadMessage: loadingMsgs.LOAD_LOGGING_IN
     });
   }
 
@@ -98,9 +104,10 @@ export default class AccountManager extends React.Component {
             <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
                             content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)}
                             onSubmit={this.handleLoading.bind(this)} />} /> : null}
-          {this.state.isLoading ? 
+          {this.state.isLoading ?
             <ModalContainer onHidden={this.handleHideLoading.bind(this)}
-                            content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
+                            content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)}
+                            loadText= {this.state.loadMessage}/>} /> : null}
         </div>
       </div>
     );

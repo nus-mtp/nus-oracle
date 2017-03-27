@@ -69,7 +69,6 @@ export default class RegisterAccount extends React.Component {
                     Bert.alert(error.reason, 'danger');
                   } else {
                     Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
-                    this.props.onSuccess();
                     Meteor.logout();
                   }
                 });
@@ -83,6 +82,7 @@ export default class RegisterAccount extends React.Component {
         Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
       }
     });
+    this.props.onSuccess();
   }
 
 
