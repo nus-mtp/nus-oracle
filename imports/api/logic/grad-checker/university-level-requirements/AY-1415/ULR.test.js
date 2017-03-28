@@ -14,7 +14,7 @@ import { getAllSemestersInPlanner } from '../../../../crud-controller/semester/m
 
 import { findULRRequirementModules } from './methods';
 
-describe('grad-checker-ULR', function()  {
+describe('grad-checker-ULR-1415', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];

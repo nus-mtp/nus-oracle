@@ -12,18 +12,21 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  */
 
 // focus area MCs are assumed to be at 4MCs and no focus area with more than 4MCs
-export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(studentSemesters, studentFocusAreas, requiredMCs) {
+export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(studentSemesters, studentFocusAreas, requiredMCs, moduleChecked) {
   // checks for 24 MCs from focus area modules
   const focusAreaPrimaryKeys = studentFocusAreas.focusAreaPrimaryModules;
   const focusArea4KKeys = studentFocusAreas.focusArea4KModules;
   const focusAreaPrimary4KKeys = studentFocusAreas.focusAreaPrimary4KModules;
   const focusAreaNonPrimaryKeys = studentFocusAreas.focusAreaNonPrimaryModules;
-  const modulesChecked = {};
   let totalMCs = 0;
   let fulfilmentRequirement = {
     requiredMCs: requiredMCs,
-    isFulfilled: false
+    isFulfilled: false,
+    modulesChecked: {}    // swap this out to moduleChecked once focus area decision has been implemented
   };
+
+  // for moduleChecked, only mark true if total number of MCs is less than or equal to
+  // the required number of MCs
 
   // for all primary focus area modules, check if module exists in student planner
   for (var i=0; i<studentSemesters.length; i++) {
@@ -31,9 +34,9 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     for (var j=0; j<modulePrimaryFocusAreaNames.length; j++) {
       let modulePrimaryKeys = Object.keys(focusAreaPrimaryKeys[modulePrimaryFocusAreaNames[j]]);
       for (var k=0; k<modulePrimaryKeys.length; k++)  {
-        if (studentSemesters[i].moduleHashmap[modulePrimaryKeys[k]] && !modulesChecked[modulePrimaryKeys[k]])  {
+        if (studentSemesters[i].moduleHashmap[modulePrimaryKeys[k]] && !fulfilmentRequirement.modulesChecked[modulePrimaryKeys[k]])  {
           totalMCs += searchByModuleCode(modulePrimaryKeys[k]).moduleMC;
-          modulesChecked[modulePrimaryKeys[k]] = true;
+          fulfilmentRequirement.modulesChecked[modulePrimaryKeys[k]] = true;
         }
       }
     }
@@ -45,9 +48,9 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     for (var j=0; j<module4KFocusAreaNames.length; j++) {
       let module4KKeys = Object.keys(focusArea4KKeys[module4KFocusAreaNames[j]]);
       for (var k=0; k<module4KKeys.length; k++)  {
-        if (studentSemesters[i].moduleHashmap[module4KKeys[k]] && !modulesChecked[module4KKeys[k]])  {
+        if (studentSemesters[i].moduleHashmap[module4KKeys[k]] && !fulfilmentRequirement.modulesChecked[module4KKeys[k]])  {
           totalMCs += searchByModuleCode(module4KKeys[k]).moduleMC;
-          modulesChecked[module4KKeys[k]] = true;
+          fulfilmentRequirement.modulesChecked[module4KKeys[k]] = true;
         }
       }
     }
@@ -59,9 +62,9 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     for (var j=0; j<modulePrimary4KFocusAreaNames.length; j++) {
       let modulePrimary4KKeys = Object.keys(focusAreaPrimary4KKeys[modulePrimary4KFocusAreaNames[j]]);
       for (var k=0; k<modulePrimary4KKeys.length; k++)  {
-        if (studentSemesters[i].moduleHashmap[modulePrimary4KKeys[k]] && !modulesChecked[modulePrimary4KKeys[k]])  {
+        if (studentSemesters[i].moduleHashmap[modulePrimary4KKeys[k]] && !fulfilmentRequirement.modulesChecked[modulePrimary4KKeys[k]])  {
           totalMCs += searchByModuleCode(modulePrimary4KKeys[k]).moduleMC;
-          modulesChecked[modulePrimary4KKeys[k]] = true;
+          fulfilmentRequirement.modulesChecked[modulePrimary4KKeys[k]] = true;
         }
       }
     }
@@ -73,9 +76,9 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
     for (var j=0; j<moduleNonPrimaryFocusAreaNames.length; j++) {
       let moduleNonPrimaryKeys = Object.keys(focusAreaNonPrimaryKeys[moduleNonPrimaryFocusAreaNames[j]]);
       for (var k=0; k<moduleNonPrimaryKeys.length; k++)  {
-        if (studentSemesters[i].moduleHashmap[moduleNonPrimaryKeys[k]] && !modulesChecked[moduleNonPrimaryKeys[k]])  {
+        if (studentSemesters[i].moduleHashmap[moduleNonPrimaryKeys[k]] && !fulfilmentRequirement.modulesChecked[moduleNonPrimaryKeys[k]])  {
           totalMCs += searchByModuleCode(moduleNonPrimaryKeys[k]).moduleMC;
-          modulesChecked[moduleNonPrimaryKeys[k]] = true;
+          fulfilmentRequirement.modulesChecked[moduleNonPrimaryKeys[k]] = true;
         }
       }
     }
@@ -88,7 +91,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
   return fulfilmentRequirement;
 }
 
-export const findFocusAreaModules = function findFocusAreaModules(focusAreaName, academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules)  {
+export const findFocusAreaModules = function findFocusAreaModules(focusAreaName, academicCohort, studentSemesters, studentFocusArea, exemptedModules, waivedModules, moduleChecked)  {
   let markedFocusAreaModulesAndMCs = {
     name: focusAreaName,
     markedFocusAreaPrimaryModules: studentFocusArea.focusAreaPrimaryModules,
@@ -97,10 +100,11 @@ export const findFocusAreaModules = function findFocusAreaModules(focusAreaName,
     numberOfFocusAreaPrimaryModulesMarkedTrue: 0,
     minNumberOfPrimaryFocusArea: 3,
     minNumberOfPrimary4K: 1,
-    total4KModuleMCs: 0,
     min4KModuleMCs: 12,
+    moduleChecked: moduleChecked,
     threePrimaryModules: false,
     one4KModules: false,
+    total4KModuleMCs: 0,
     isPrimaryTrue: false,
     is4KTrue: false,
   };
@@ -135,7 +139,7 @@ const findFocusAreaPrimary = function findFocusAreaPrimary(markedFocusAreaModule
     markedFocusAreaModulesAndMCs.threePrimaryModules = true;
   }
 
-  // checks if primary has at least 1 4K
+  // checks if primary has at least 1 primary 4K
   for (var i=0; i<focusAreaPrimary4KKeys.length; i++)  {
     if (markedFocusAreaModulesAndMCs.markedFocusAreaPrimary4KModules[focusAreaPrimary4KKeys[i]]) {
       markedFocusAreaModulesAndMCs.one4KModules = true;
@@ -144,6 +148,26 @@ const findFocusAreaPrimary = function findFocusAreaPrimary(markedFocusAreaModule
   }
 
   if (markedFocusAreaModulesAndMCs.threePrimaryModules && markedFocusAreaModulesAndMCs.one4KModules)  {
+    /*const numberOfPrimariesChecked = 0;
+    // mark modules to be true only if the focus area has been marked true
+    // when implementation of focus area decision is done, do a check here that checks if focus area
+    // is the focus area and only consider it into moduleChecked if it is
+    for (var j=0; j<focusAreaPrimary4KKeys; j++)  {
+      if (markedFocusAreaModulesAndMCs.markedFocusAreaPrimary4KModules[focusAreaPrimary4KKeys[i]]) {
+        markedFocusAreaModulesAndMCs.moduleChecked[focusAreaPrimary4KKeys] = true;
+        numberOfPrimariesChecked += 1;
+        break;
+      }
+    }
+    for (var i=0; i<focusAreaPrimaryKeys.length; i++)  {
+      if (markedFocusAreaModulesAndMCs.markedFocusAreaPrimaryModules[focusAreaPrimaryKeys]) {
+        markedFocusAreaModulesAndMCs.moduleChecked[focusAreaPrimaryKeys] = true;
+        numberOfPrimariesChecked += 1;
+      }
+      if (numberOfPrimariesChecked === markedFocusAreaModulesAndMCs.minNumberOfPrimaryFocusArea)  {
+        break;
+      }
+    }*/
     markedFocusAreaModulesAndMCs.isPrimaryTrue = true;
   }
 
@@ -161,6 +185,13 @@ const findFocusArea4KModules = function findFocusArea4KModules(markedFocusAreaMo
 
   // only set 4K condition true if more than minModule4K mcs have been fulfiled
   if (markedFocusAreaModulesAndMCs.total4KModuleMCs >= markedFocusAreaModulesAndMCs.min4KModuleMCs) {
+    /*for (var i=0; i<keyNames.length; i++) {
+      if (markedFocusAreaModulesAndMCs.markedFocusArea4KModules[keyNames[i]]) {
+        // make sure to check if number of modules checked does not exceed
+        // 12 MCs worth of 4K here
+        markedFocusAreaModulesAndMCs.moduleChecked[keyNames[i]] = true;
+      }
+    }*/
     markedFocusAreaModulesAndMCs.is4KTrue = true;
   }
 
@@ -241,7 +272,7 @@ const mark4KExemptedWaivedModules = function mark4KExemptedWaivedModules(markedF
   }
   if (Object.keys(waivedModules).length !== 0)  {
     if (waivedModules[originalModule]) {
-      markedFocusAreaModulesAndMCs.moduleChecked[originalModule] = true;
+      markedFocusAreaModulesAndMCs.markedFocusArea4KModules[originalModule] = true;
     }
   }
   return markedFocusAreaModulesAndMCs;
