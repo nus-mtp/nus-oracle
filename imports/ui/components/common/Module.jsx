@@ -3,6 +3,7 @@ import React from 'react';
 // Import React components
 import ModuleInfoTooltip from './ModuleInfoTooltip.jsx';
 import IconButton from './IconButton.jsx';
+import ReactTooltip from 'react-tooltip';
 
 export default class Module extends React.Component {
   constructor() {
@@ -31,6 +32,7 @@ export default class Module extends React.Component {
    */
   handleDeleteClick() {
     this.props.handleDeleteModule();
+    ReactTooltip.hide(); // Hides all React Tooltips
   }
 
   render() {
