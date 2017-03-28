@@ -11,6 +11,28 @@ export default class ModuleInfoTooltip extends React.Component {
   //===========================================================
   // RENDERING COMPUTATION FUNCTIONS
   //===========================================================
+
+  /**
+   * Computes the semester value label from a semester index.
+   * Semester: Sem 1 or 2, Special Semester: Sem 3 or 4
+   *
+   * @param {[int]} sem  Semester index
+   *
+   * @return {[String]} Numeric text that represents this semester
+   *                    For Sems 1 & 2, their sem indices stay the same
+   *                    For Special Sems 3 & 4, their sem indices will be I & II instead
+   */
+  computeSemValue(sem) {
+    if (sem === 3) {
+      return "I";
+    } else if (sem === 4) {
+      return "II";
+    } else {
+      // Sem 1 or 2 remains the same
+      return sem;
+    }
+  }
+
   /**
    * Computes the semester text label from a semester index.
    * Semester: Sem 1 or 2, Special Semester: Sem 3 or 4
@@ -48,18 +70,27 @@ export default class ModuleInfoTooltip extends React.Component {
     let result = [];
     let sem = 1;
     let nextSem = 1;
+
     for (let i = 0; i < terms.length; i++) {
+      sem = this.computeSemValue(terms[i].semester);
+
       if (i+1 !== terms.length && terms[i].termYear === terms[i+1].termYear) {
         // If we've not reached the end of the list and consecutive years are the same
-        sem = terms[i].semester;
-        nextSem = terms[i+1].semester;
+        nextSem = this.computeSemValue(terms[i+1].semester);
         result.push({
           "displayAY": terms[i].termYear,
           "displaySems": this.computeSemType(sem) + " " + sem + " & " + nextSem
         })
-        ++i;
+        ++i; // Traverse the list with this 1 extra step
+      } else {
+        // If there aren't consecutive years, compute as per normal
+        result.push({
+          "displayAY": terms[i].termYear,
+          "displaySems": this.computeSemType(sem) + " " + sem
+        })
       }
     }
+
     return result;
   }
 
