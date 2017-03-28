@@ -3,6 +3,9 @@ import React from 'react';
 // Import React components
 import ReactTooltip from 'react-tooltip';
 
+// Import Utility functions
+import { isDefinedObj } from './../../../utils/util.js';
+
 export default class ModuleInfoTooltip extends React.Component {
   constructor(props) {
     super(props);
@@ -105,17 +108,28 @@ export default class ModuleInfoTooltip extends React.Component {
    * @return {[node]} Unordered list of AYs and Sems
    */
   renderTermYearAndSem(terms) {
-    return(
-      <ul>
-        {this.flattenTermYears(terms).map((term, index) => {
-          return(
-            <li key={index}>
-              {term.displayAY}, {term.displaySems}
-            </li>
-          );
-        })}
-      </ul>
-    );
+    if (!isDefinedObj(terms)) {
+      if (terms.length === 0) {
+        // Response to user if no terms are offered
+        return (
+          <ul>
+            None
+          </ul>
+        );
+      }
+    } else {
+      return(
+        <ul>
+          {this.flattenTermYears(terms).map((term, index) => {
+            return(
+              <li key={index}>
+                {term.displayAY}, {term.displaySems}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
   }
 
   /**
