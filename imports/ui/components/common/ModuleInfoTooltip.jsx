@@ -132,7 +132,7 @@ export default class ModuleInfoTooltip extends React.Component {
             <div className="tbl-row">
               <span className="label label-warning"
                     style={{fontSize: '0.75em', float: 'left', marginTop: '1em'}}>
-                4 MCs
+                {module.moduleMC}MCs
               </span>
             </div>
           </div>
