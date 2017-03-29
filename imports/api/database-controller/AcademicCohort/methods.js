@@ -6,7 +6,8 @@ export const createNewCohort = function createCohort(cohortName) {
   const newCohortDocument = {
     cohortName: cohortName,
     cohortFocusAreaID: [],
-    cohortGradRequirementID: []
+    cohortGradRequirementID: [],
+    cohortDefaultPlannerID:[]
   };
 
   const cohortSchema = AcademicCohort.simpleSchema();
@@ -136,13 +137,12 @@ export const getAcadCohortDefaultPlannerIDs = function getAcadCohortDefaultPlann
     return [];
   }
 
-  let defaultPlannerIDs = resultCursor.fetch();
-
-  if(!defaultPlannerIDs){
+  let defaultPlanner = resultCursor.fetch()[0];
+  if(!defaultPlanner){
     return [];
   }
 
-  return defaultPlannerIDs.cohortDefaultPlannerID;
+  return defaultPlanner.cohortDefaultPlannerID;
 }
 
 export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlannerIDs(cohortName){
