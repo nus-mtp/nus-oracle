@@ -71,8 +71,8 @@ if(Meteor.isServer){
    it('should return array of stored plannerIDs in the acadCohort Document', function() {
      updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
      const result = getAcadCohortDefaultPlannerIDs("AY 2015/2016");
-     assert.equal(plannerIDArray[0],"12");
-     assert.equal(plannerIDArray[1],"23");
+     assert.equal(result[0],"12");
+     assert.equal(result[1],"23");
    });
 
   });
