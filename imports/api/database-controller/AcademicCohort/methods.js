@@ -56,6 +56,19 @@ export const updateCohortGradRequirementIDs = function updateEntireCohortGraduat
   AcademicCohort.update({_id: cohortID},{$set:{cohortGradRequirementID: newGradRequirementIDs}});
 }
 
+export const updateCohortDefaultPlannerID = function updateCohortDefaultPlannerID(cohortName,newCohortDefaultPlannerIDs) {
+  const targetCohort = AcademicCohort.find({cohortName: cohortName});
+  if (targetCohort.count() == 0) {
+    console.log("no Academic Cohort with name " + cohortName);
+    return;
+  }
+
+  const targetCohortDocument = targetCohort.fetch()[0];
+  const cohortID = targetCohortDocument._id;
+  console.log( "this cohort to be updated: " + targetCohortDocument["cohortName"] );
+  return AcademicCohort.update({_id: cohortID},{$set:{cohortDefaultPlannerID: newCohortDefaultPlannerIDs}});
+}
+
 
 export const insertFocusAreaToCohort  = function insertOneFocusAreaIDToAcadCohort(cohortName, newFocusAreaID ) {
 

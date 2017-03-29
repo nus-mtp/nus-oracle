@@ -6,7 +6,8 @@ import { createNewCohort,
          getCohortByName,
          getCohortByID,
          insertFocusAreaToCohort,
-         removeFocusAreaFromCohort} from './methods';
+         removeFocusAreaFromCohort,
+         updateCohortDefaultPlannerID} from './methods';
 if(Meteor.isServer){
   describe('AcademicCohort on Server', function(){
    let result = 0;
@@ -50,6 +51,15 @@ if(Meteor.isServer){
      assert.equal(focusAreaArray[0],'dfdfd');
    })
 
+   it('should insert new Arrays of planner ID if updateCohortDefaultPlannerID is called', function() {
+     const result = updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
+     const editedCohort = AcademicCohort.findOne({_id:result});
+     const plannerIDArray = editedCohort.cohortDefaultPlannerID;
+     assert.equal(plannerIDArray.length, 2);
+     assert.equal(plannerIDArray[0],"12");
+     assert.equal(plannerIDArray[1],"23");
+   })
+
   });
 }
 
@@ -86,6 +96,8 @@ describe('AcadCohort on Client', function() {
     for (i = 0; i < queryResult.length; i++){
       assert.equal(queryResult[i].label,queryResult[i].value);
     }
-  })
+  });
+
+
 });
 }
