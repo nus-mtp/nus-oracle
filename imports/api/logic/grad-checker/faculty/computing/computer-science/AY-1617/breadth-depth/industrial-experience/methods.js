@@ -11,13 +11,13 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * markModules and markExemptedWaivedModules
  */
 
-export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules, requiredMCs)  {
+export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules, moduleChecked, requiredMCs)  {
   let markedIndustrialExperienceTrainingModulesAndMCs = {
     name: 'Industrial Experience Training',
     markedIndustrialExperienceTrainingModules: industrialExperienceModules,
     numberOfIndustrialExperienceTrainingModulesMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
