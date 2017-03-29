@@ -136,13 +136,13 @@ export const getAcadCohortDefaultPlannerIDs = function getAcadCohortDefaultPlann
     return [];
   }
 
-  let defaultPlannerIDs = resultCursor.fetch().cohortDefaultPlannerID;
+  let defaultPlannerIDs = resultCursor.fetch();
 
-  if(defaultPlannerIDs){
+  if(!defaultPlannerIDs){
     return [];
   }
 
-  return defaultPlannerIDs;
+  return defaultPlannerIDs.cohortDefaultPlannerID;
 }
 
 export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlannerIDs(cohortName){
