@@ -1,5 +1,5 @@
 import { AcademicCohort } from './acadCohort';
-import { Planner } from '../crud-controller/planner/planner';
+import { Planner } from '../../crud-controller/planner/planner';
 import { Match } from 'meteor/check';
 
 export const createNewCohort = function createCohort(cohortName) {
