@@ -5,7 +5,8 @@ import {insertOneModuleInSemester} from '../crud-controller/module/methods';
 import {insertNewAcademicYearInPlanner,
         insertNewSemesterInPlanner} from '../crud-controller/semester/methods';
 import {AcademicCohort} from '../database-controller/AcademicCohort/acadCohort';
-import {getCohortByName} from '../database-controller/AcademicCohort/methods';
+import {getCohortByName,
+        updateCohortDefaultPlannerID} from '../database-controller/AcademicCohort/methods';
 
 export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, canReplaceExistingID){
   const fileName = fileToBeParsed;
@@ -85,9 +86,6 @@ export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, 
       currentCohortPlannerIDs.push(newPlannerID);
 
     }
-
-    console.log(currentCohortPlannerIDs);
-    let currentAcademicCohort = getCohortByName(currentYear);
-    //currentAcademicCohort.d
+    updateCohortDefaultPlannerID(currentYear, currentCohortPlannerIDs);
   }
 }

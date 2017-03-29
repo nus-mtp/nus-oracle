@@ -1,4 +1,5 @@
 import { AcademicCohort } from './acadCohort';
+import { Planner } from '../crud-controller/planner/planner';
 import { Match } from 'meteor/check';
 
 export const createNewCohort = function createCohort(cohortName) {
@@ -126,6 +127,43 @@ export const getCohortByName = function getCohortByName(cohortName) {
 // obtain cohort by ID
 export const getCohortByID = function getCohortByID(cohortID) {
   return AcademicCohort.findOne({_id: cohortID});
+}
+
+export const getAcadCohortDefaultPlannerIDs = function getAcadCohortDefaultPlannerID(cohortName){
+  let resultCursor = AcademicCohort.find({cohortName: cohortName});
+  if (resultCursor.count() != 1){
+    console.log("there is no academic cohort with name " + cohortName + " in the database");
+    return [];
+  }
+
+  let defaultPlannerIDs = resultCursor.fetch().cohortDefaultPlannerID;
+
+  if(defaultPlannerIDs){
+    return [];
+  }
+
+  return defaultPlannerIDs;
+}
+
+export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlannerIDs(cohortName){
+  let result = getAcadCohortDefaultPlannerIDs(cohortName);
+  // result is an array
+  if (!(typeof result === 'object')){
+      return null;
+  }
+
+  if(result.length == 0){
+    return null;
+  }
+  // repackaged the result
+  const repackagedData = {}
+  for(var i = 0; i < result.length ; i ++){
+    // assumed the planner with the ID exists by db integrity
+    let currentPlannerName = Planner.findOne({_id:result[i]}).plannerName;
+    repackagedData.plannerName = result[i];
+  }
+
+  return repacakgedData;
 }
 
 export const getAcadCohortDataForSetup = function getCohortAndRepackaged() {

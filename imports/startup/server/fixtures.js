@@ -34,7 +34,7 @@ Meteor.startup(() => {
   //populateModuleFulfilmentCollection();
   //scrapeModuleMappingListingForULR1516();
   //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
-  //  parseDefaultPlanner(plannerFileToBeParsed[t]);
+  //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
   //}
   //scrapeModuleMappingListingForBeforeULR1516();
   //parseJSONFileAndStoreToDB();
