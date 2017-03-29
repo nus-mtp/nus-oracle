@@ -52,9 +52,9 @@ if(Meteor.isServer){
    })
 
    it('should insert new Arrays of planner ID if updateCohortDefaultPlannerID is called', function() {
-     const result = updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
+     updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
      const editedCohort = AcademicCohort.findOne({_id:result});
-     const plannerIDArray = editedCohort.cohortDefaultPlannerID;
+     const plannerIDArray = editedCohort["cohortDefaultPlannerID"];
      assert.equal(plannerIDArray.length, 2);
      assert.equal(plannerIDArray[0],"12");
      assert.equal(plannerIDArray[1],"23");
