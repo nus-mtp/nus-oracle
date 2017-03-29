@@ -23,10 +23,10 @@ import { populateAcadCohortCollection } from '../../api/database-conversion/coho
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
+
 
 Meteor.startup(() => {
-  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
-
   plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
 
   //populateFocusAreaCollection();
@@ -36,6 +36,7 @@ Meteor.startup(() => {
   //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
   //  parseDefaultPlanner(plannerFileToBeParsed[t]);
   //}
+  //scrapeModuleMappingListingForBeforeULR1516();
   //parseJSONFileAndStoreToDB();
 
   if (Modules.find({}).count() === 0) {

@@ -125,6 +125,7 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
                                                                    graduationRequirements[moduleRequirementTitle[0]].isFulfilled));
   }
 
+
   // find computer science breadth and depth requirement modules
     // find focus area requirement modules object
     let focusAreaMCSFulfilment = {};

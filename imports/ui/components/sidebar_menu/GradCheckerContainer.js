@@ -52,7 +52,7 @@ export default GradCheckerContainer = createContainer((props) => {
   //foundation = new Criteria(foundationReq);
   const items = [requirements];
   // const items = [foundation];
-  
+
   return { items };
-}, Nestable);
+ }, Nestable);
 //}, NestableGradChecker);
