@@ -2,7 +2,7 @@
 export const ENTER_CHAR_KEY_CODE = 13;
 
 /* Constants for Study Plan */
-export const MAX_STUDY_PLAN_NAME_LENGTH = 12;
+export const MAX_STUDY_PLAN_NAME_LENGTH = 11;
 
 /* Constants for Module Search Bar */
 export const SMALL_LINE_CHAR_LIMIT = 31;
