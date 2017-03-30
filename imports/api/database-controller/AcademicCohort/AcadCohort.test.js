@@ -3,10 +3,14 @@ import { AcademicCohort } from './acadCohort';
 import { createNewCohort,
          getAllAcadCohort,
          getAcadCohortDataForSetup,
+         getAcadCohortDefaultPlannerIDs,
+         getRepackagedDefaultPlannerIDs,
          getCohortByName,
          getCohortByID,
          insertFocusAreaToCohort,
-         removeFocusAreaFromCohort} from './methods';
+         removeFocusAreaFromCohort,
+         updateCohortDefaultPlannerID} from './methods';
+
 if(Meteor.isServer){
   describe('AcademicCohort on Server', function(){
    let result = 0;
@@ -33,14 +37,14 @@ if(Meteor.isServer){
    it('should accept cohort with correct name', function() {
      const newCohort = AcademicCohort.findOne({_id:result});
      assert.equal(newCohort.cohortName, 'AY 2015/2016');
-   })
+   });
 
    it('testing for deletion of focus area', function() {
      removeFocusAreaFromCohort('AY 2015/2016','dummy');
      const editedCohort = AcademicCohort.findOne({_id:result});
      const focusAreaArray = editedCohort.cohortFocusAreaID;
      assert.equal(focusAreaArray.length, 0);
-   })
+   });
 
    it('testing for inserting focus area', function() {
      insertFocusAreaToCohort('AY 2015/2016','dfdfd');
@@ -48,7 +52,28 @@ if(Meteor.isServer){
      const focusAreaArray = editedCohort.cohortFocusAreaID;
      assert.equal(focusAreaArray.length, 1);
      assert.equal(focusAreaArray[0],'dfdfd');
-   })
+   });
+
+   it('should insert new Arrays of planner ID if updateCohortDefaultPlannerID is called', function() {
+     updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
+     const editedCohort = AcademicCohort.findOne({_id:result});
+     const plannerIDArray = editedCohort["cohortDefaultPlannerID"];
+     assert.equal(plannerIDArray.length, 2);
+     assert.equal(plannerIDArray[0],"12");
+     assert.equal(plannerIDArray[1],"23");
+   });
+
+   it('should return empty array if there is no planner IDs stored in the acadCohort Document', function() {
+     const result = getAcadCohortDefaultPlannerIDs("AY 2015/2016");
+     assert.equal(result.length, 0);
+   });
+
+   it('should return array of stored plannerIDs in the acadCohort Document', function() {
+     updateCohortDefaultPlannerID("AY 2015/2016",["12","23"]);
+     const result = getAcadCohortDefaultPlannerIDs("AY 2015/2016");
+     assert.equal(result[0],"12");
+     assert.equal(result[1],"23");
+   });
 
   });
 }
@@ -86,6 +111,8 @@ describe('AcadCohort on Client', function() {
     for (i = 0; i < queryResult.length; i++){
       assert.equal(queryResult[i].label,queryResult[i].value);
     }
-  })
+  });
+
+
 });
 }

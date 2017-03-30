@@ -43,7 +43,7 @@ Planner.schema = new SimpleSchema({
   semesters: {
     type: [SemesterSchema],
   },
-
+  //TO-DO:
   focusArea: {
     type: [String],
   },
