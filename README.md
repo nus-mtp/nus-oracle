@@ -1,14 +1,16 @@
 #NUS Oracle
 
-## Branch Naming Convention
+## Vagrant box setup
 > Note this is unconfirmed yet since our group should decide on the branch codes     
 
-* Use words that summarise the purpose of the branch at the beginning of the branch name, e.g. **bug/module-searcher-component/query-parser, wip/NUSMods-parser, feature/core-mods-recommender**
-* Use slashes to separate parts
-* Delete branch when you’re done with it
+* Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual box](https://www.virtualbox.org/wiki/Downloads)
+* Run the command "vagrant init ubuntu/trusty64" to initialize vagrant a environment
+* Run the command "vagrant up", this should initialize your default provisioner, ubuntu/trusty64 in this case, and run all the commands as indicated in the Vagrantfile
+* Enter the VM with "vagrant ssh"
+* Run the command "mkdir -p nus_oracle/.meteor/local" then
+* Run the command "sudo mount --bind /home/vagrant/nus_oracle/.meteor/local/ /vagrant/.meteor/local/"
+* cd to the directory "/vagrant"
+* Run the command "meteor" to run the code in your local machine!
 
-#### Branch codes
-wip       Works in progress    
-feat      A feature we plan to add          
-bug       Bug fix or trials for bug fixing       
-junk      Throwaway branch created to experiment      
+#### Known issues
+* Currently, only server test cases can be ran if webdriver is Chromium-selenium. Currently, the alternative would be to use phantomjs as the webdriver however this has not yet been tested
