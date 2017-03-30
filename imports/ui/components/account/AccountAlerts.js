@@ -13,7 +13,6 @@ export const successMsgs = {
   SUCCESS_SETUP: "Setup is all done. Welcome to NUS Oracle!",
   SUCCESS_PASSWORD_CHANGED: "New password successfully changed!",
   SUCCESS_NEW_PASSWORD_SENT: "Password Reset e-mail has been sent! Please check your NUS e-mail",
-
 }
 
 export const warningMsgs = {

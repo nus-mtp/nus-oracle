@@ -44,7 +44,6 @@ export default class RestoreAccount extends React.Component {
                 this.state.repassword,
                 (errorObj, isValidPassword) => {
       if (!isValidPassword) {
-        console.log(errorObj.error);
         Bert.alert(errorObj.error, 'danger');
       } else {
 
@@ -53,7 +52,6 @@ export default class RestoreAccount extends React.Component {
             Bert.alert(error.reason, 'danger');
           } else {
             Meteor.call('unlockAcc');
-            console.log("UNLOCKED");
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
             this.props.onSuccess();
           }
@@ -71,6 +69,7 @@ export default class RestoreAccount extends React.Component {
           </h5>
 
           <div className="form-group">
+
             <FormInput placeholder="Token"
                        onChange={this.handleTokenChange.bind(this)} />
 
