@@ -11,13 +11,13 @@ import { searchByModuleCode } from '../../../../database-controller/module/metho
  * markModules and markExemptedWaivedModules
  */
 
-export const findULRRequirementModules = function findULRRequirementModules(academicCohort, studentSemesters, ULRModules, exemptedModules, waivedModules, requiredMCs) {
+export const findULRRequirementModules = function findULRRequirementModules(academicCohort, studentSemesters, ULRModules, exemptedModules, waivedModules, moduleChecked, requiredMCs) {
   let markedULRModulesAndMCs = {
     name: 'University Level Requirement',
     markedULRModules: ULRModules,
     numberOfULRMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
