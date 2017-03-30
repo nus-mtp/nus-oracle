@@ -27,7 +27,7 @@ import { populateModuleFulfilmentCollection } from '../../api/database-conversio
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
 
 Meteor.startup(() => {
-  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
+  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:natashaSMASH@smtp.gmail.com:587';
   //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
