@@ -1,7 +1,7 @@
 //Template that users will receive in their email address when they register a new account
 Accounts.emailTemplates.siteName = "nusOracle";
 Accounts.emailTemplates.from     = "nusOracle <admin@nusOracle.com>";
-
+//
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return "[nusOracle] Verify Your Email Address";
