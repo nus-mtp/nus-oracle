@@ -54,5 +54,5 @@ export default GradCheckerContainer = createContainer((props) => {
   // const items = [foundation];
 
   return { items };
- }, Nestable);
+}, Nestable);
 //}, NestableGradChecker);

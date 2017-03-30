@@ -15,11 +15,11 @@ export default class AddNewPlanner extends React.Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
   updateWindowDimensions() {

@@ -264,7 +264,7 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
   tabTitle: <div>default title node</div>,
-  tabStyle: {float: "left", width: "9em", backgroundColor: "#f6f8fa"},
+  tabStyle: {float: "left", width: "15em", backgroundColor: "#f6f8fa"},
   navSpanStyle: {},
   isActiveTab: false,
   enabledMouseOver: true,

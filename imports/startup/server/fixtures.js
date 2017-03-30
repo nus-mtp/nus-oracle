@@ -27,7 +27,6 @@ import { populateModuleFulfilmentCollection } from '../../api/database-conversio
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
 import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
 
-
 Meteor.startup(() => {
   plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
 

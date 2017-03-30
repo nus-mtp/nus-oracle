@@ -7,6 +7,7 @@ import { errorMsgs } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
+import FormInput from '../../common/FormInput.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
 
@@ -27,14 +28,14 @@ export default class RestoreAccount extends React.Component {
     };
   }
 
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+  handlePasswordChange(input) {
+    this.setState({password: input});
   }
-  handleRePasswordChange(event) {
-    this.setState({repassword: event.target.value});
+  handleRePasswordChange(input) {
+    this.setState({repassword: input});
   }
-  handleTokenChange(event) {
-    this.setState({token: event.target.value});
+  handleTokenChange(input) {
+    this.setState({token: input});
   }
 
   handleReset() {
@@ -43,7 +44,6 @@ export default class RestoreAccount extends React.Component {
                 this.state.repassword,
                 (errorObj, isValidPassword) => {
       if (!isValidPassword) {
-        console.log(errorObj.error);
         Bert.alert(errorObj.error, 'danger');
       } else {
 
@@ -52,7 +52,6 @@ export default class RestoreAccount extends React.Component {
             Bert.alert(error.reason, 'danger');
           } else {
             Meteor.call('unlockAcc');
-            console.log("UNLOCKED");
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
             this.props.onSuccess();
           }
@@ -70,26 +69,22 @@ export default class RestoreAccount extends React.Component {
           </h5>
 
           <div className="form-group">
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="Token" value={this.state.value}
-                onChange={this.handleTokenChange.bind(this)} />
-            </div>
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Password" value={this.state.value}
-                onChange={this.handlePasswordChange.bind(this)} />
-            </div>
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Re-enter Password" value={this.state.value}
-                onChange={this.handleRePasswordChange.bind(this)} />
-            </div>
+
+            <FormInput placeholder="Token"
+                       onChange={this.handleTokenChange.bind(this)} />
+
+            <FormInput type="password" placeholder="Password"
+                       onChange={this.handlePasswordChange.bind(this)} />
+
+            <FormInput type="password" placeholder="Re-enter Password"
+                       onChange={this.handleRePasswordChange.bind(this)} />
+
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                       buttonText="RESET PASSWORD"
                       onButtonClick={this.handleReset.bind(this)} />
             </div>
+
           </div>
         </div>
       </div>
