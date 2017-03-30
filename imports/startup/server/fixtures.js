@@ -19,6 +19,7 @@ import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 import { parseDefaultPlanner } from '../../api/database-conversion/samplePlannerParser';
+import { parseForLezzgo } from '../../api/database-conversion/plannerDataPullLezzgo';
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
 import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
@@ -40,7 +41,7 @@ Meteor.startup(() => {
   //scrapeModuleMappingListingForBeforeULR1516();
   //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseJSONFileAndStoreToDB();
-
+  parseForLezzgo();
 
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();

@@ -1,4 +1,5 @@
 //import Planner database
+//Academic Cohort need to already exists
 import {Planner} from '../crud-controller/planner/planner';
 import {createPlannerGivenUserID} from '../crud-controller/planner/methods';
 import {insertOneModuleInSemester} from '../crud-controller/module/methods';
