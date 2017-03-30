@@ -44,9 +44,10 @@ describe('grad-checker-ULR', function()  {
     const requirementName = 'University Level Requirement';
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedULRModulesAndMCs = findULRRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const markedULRModulesAndMCs = findULRRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[0]], 'GEH1001 fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[1]], 'GEQ1917 fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[2]], 'GER1000 fulfiled');

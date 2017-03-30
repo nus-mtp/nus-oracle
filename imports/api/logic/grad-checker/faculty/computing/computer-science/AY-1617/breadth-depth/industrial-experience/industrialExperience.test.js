@@ -43,9 +43,10 @@ describe('grad-checker-industrialExperience', function()  {
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
     const industrialExperienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedIndustrialExperienceAndMCs = findIndustrialExperienceTrainingModules(academicCohort, allSemesters, industrialExperienceModules, {}, {}, requiredMCs);
+    const markedIndustrialExperienceAndMCs = findIndustrialExperienceTrainingModules(academicCohort, allSemesters, industrialExperienceModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedIndustrialExperienceAndMCs.markedIndustrialExperienceTrainingModules[modules[0]], 'CP3880 fulfiled');
     assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3880'], 'CP3880 checked');
 
@@ -60,9 +61,10 @@ describe('grad-checker-industrialExperience', function()  {
     const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
 
     const industrialExperienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedIndustrialExperienceAndMCs = findIndustrialExperienceTrainingModules(academicCohort, allSemesters, industrialExperienceModules, {}, {}, requiredMCs);
+    const markedIndustrialExperienceAndMCs = findIndustrialExperienceTrainingModules(academicCohort, allSemesters, industrialExperienceModules, {}, {}, moduleChecked, requiredMCs);
 
     assert.isFalse(markedIndustrialExperienceAndMCs.markedIndustrialExperienceTrainingModules[modules[0]], 'CP3200 and CP3202 not fulfiled');
     assert.isTrue(markedIndustrialExperienceAndMCs.moduleChecked['CP3200'], 'CP3200 checked');

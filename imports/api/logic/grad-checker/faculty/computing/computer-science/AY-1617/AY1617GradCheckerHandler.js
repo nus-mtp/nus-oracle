@@ -61,6 +61,9 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
   let graduationRequirements = {};
 
+  // keep track of all modules that have been checked inside the planner
+  let moduleChecked = {};
+
   let UIFormatGraduationRequirement = {
     name: 'Graduation Requirements',
     children: [],
@@ -103,26 +106,65 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
    * Send all planner information to every requirement check
    */
 
-
-  // find university-level-requirements here
-  const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
-  const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
-  graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, requiredMCsULR);
-  if (Object.keys(graduationRequirements[moduleRequirementTitle[6]]).length > 0)  {
-  UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[6]].name,
-                                                                 graduationRequirements[moduleRequirementTitle[6]].markedULRModules,
-                                                                 graduationRequirements[moduleRequirementTitle[6]].isFulfilled));
-  }
-
   // find foundation requirement modules objects and call function from relevant academic year
   const foundationRequirements = allGradRequirements[moduleRequirementTitle[0]];
   const requiredMCsFoundation = allGraduationRequirementMCs[moduleRequirementTitle[0]];
-  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, foundationRequirements, studentExemptedModules, studentWaivedModules, requiredMCsFoundation);
+  graduationRequirements[moduleRequirementTitle[0]] = findFoundationRequirementModules(studentAcademicCohort, studentSemesters, foundationRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsFoundation);
+  moduleChecked = graduationRequirements[moduleRequirementTitle[0]].moduleChecked;
+
   if (Object.keys(graduationRequirements[moduleRequirementTitle[0]]).length > 0)  {
     UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[0]].name,
                                                                    graduationRequirements[moduleRequirementTitle[0]].markedFoundationModules,
                                                                    graduationRequirements[moduleRequirementTitle[0]].isFulfilled));
   }
+
+  // find IT-professionalism requirement modules objects
+  const ITRequirements = allGradRequirements[moduleRequirementTitle[4]];
+  const requiredMCsIT = allGraduationRequirementMCs[moduleRequirementTitle[4]];
+  graduationRequirements[moduleRequirementTitle[4]] = findITProfessionalismModules(studentAcademicCohort, studentSemesters, ITRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsIT);
+  moduleChecked = graduationRequirements[moduleRequirementTitle[4]].moduleChecked;
+
+  if (Object.keys(graduationRequirements[moduleRequirementTitle[4]]).length > 0)  {
+    UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[4]].name,
+                                                                   graduationRequirements[moduleRequirementTitle[4]].markedITProfessionalismModules,
+                                                                   graduationRequirements[moduleRequirementTitle[4]].isFulfilled));
+  }
+
+  // find math-science requirement modules objects
+  const mathScienceRequirements = allGradRequirements[moduleRequirementTitle[5]];
+  const requiredMCsMathSci = allGraduationRequirementMCs[moduleRequirementTitle[5]];
+  graduationRequirements[moduleRequirementTitle[5]] = findMathSciRequirementModules(studentAcademicCohort, studentSemesters, mathScienceRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsMathSci);
+  moduleChecked = graduationRequirements[moduleRequirementTitle[5]].moduleChecked;
+
+  if (Object.keys(graduationRequirements[moduleRequirementTitle[5]]).length > 0)  {
+    UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[5]].name,
+                                                                   graduationRequirements[moduleRequirementTitle[5]].markedMathSciModules,
+                                                                   graduationRequirements[moduleRequirementTitle[5]].isFulfilled));
+  }
+
+    // find computer systems team project requirement modules
+    const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
+    const requiredMCsTeamProject = allGraduationRequirementMCs[moduleRequirementTitle[2]];
+    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsTeamProject);
+    moduleChecked = graduationRequirements[moduleRequirementTitle[2]].moduleChecked;
+
+    if (Object.keys(graduationRequirements[moduleRequirementTitle[2]]).length > 0)  {
+      UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[2]].name,
+                                                                     graduationRequirements[moduleRequirementTitle[2]].markedTeamProjectModules,
+                                                                     graduationRequirements[moduleRequirementTitle[2]].isFulfilled));
+    }
+
+    // find Industrial experience training requirement modules
+    const industrialExperienceRequirements = allGradRequirements[moduleRequirementTitle[3]];
+    const requiredMCsIndustrialExperience = allGraduationRequirementMCs[moduleRequirementTitle[3]];
+    graduationRequirements[moduleRequirementTitle[3]] = findIndustrialExperienceTrainingModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsIndustrialExperience);
+    moduleChecked = graduationRequirements[moduleRequirementTitle[3]].moduleChecked;
+
+    if (Object.keys(graduationRequirements[moduleRequirementTitle[3]]).length > 0)  {
+      UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[3]].name,
+                                                                     graduationRequirements[moduleRequirementTitle[3]].markedIndustrialExperienceTrainingModules,
+                                                                     graduationRequirements[moduleRequirementTitle[3]].isFulfilled));
+    }
 
   // find computer science breadth and depth requirement modules
     // find focus area requirement modules object
@@ -166,7 +208,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
         continue;
       }
 
-      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules);
+      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
       focusAreaPrimaries.children.push(UIFormatFocusAreaConversion(oneFocusArea));
       if (oneFocusArea.isPrimaryTrue)  {
         focusAreaPrimaries.isFulfilled = true;
@@ -177,7 +219,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     }
 
     // check if student planner meet 24 MCs requirement
-    focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+    focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]], moduleChecked);
     graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
 
     if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled &&
@@ -191,44 +233,16 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
     //console.log(JSON.stringify(UIFormatGraduationRequirement));
 
-    // find computer systems team project requirement modules
-    const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
-    const requiredMCsTeamProject = allGraduationRequirementMCs[moduleRequirementTitle[2]];
-    graduationRequirements[moduleRequirementTitle[2]] = findTeamProjectRequirementModules(studentAcademicCohort, studentSemesters, teamProjectRequirements, studentExemptedModules, studentWaivedModules, requiredMCsTeamProject);
-    if (Object.keys(graduationRequirements[moduleRequirementTitle[2]]).length > 0)  {
-      UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[2]].name,
-                                                                     graduationRequirements[moduleRequirementTitle[2]].markedTeamProjectModules,
-                                                                     graduationRequirements[moduleRequirementTitle[2]].isFulfilled));
-    }
+  // find university-level-requirements here
+  const ULRRequirements = allGradRequirements[moduleRequirementTitle[6]];
+  const requiredMCsULR = allGraduationRequirementMCs[moduleRequirementTitle[6]];
+  graduationRequirements[moduleRequirementTitle[6]] = findULRRequirementModules(studentAcademicCohort, studentSemesters, ULRRequirements, studentExemptedModules, studentWaivedModules, moduleChecked, requiredMCsULR);
+  moduleChecked = graduationRequirements[moduleRequirementTitle[6]].moduleChecked;
 
-    // find Industrial experience training requirement modules
-    const industrialExperienceRequirements = allGradRequirements[moduleRequirementTitle[3]];
-    const requiredMCsIndustrialExperience = allGraduationRequirementMCs[moduleRequirementTitle[3]];
-    graduationRequirements[moduleRequirementTitle[3]] = findIndustrialExperienceTrainingModules(studentAcademicCohort, studentSemesters, industrialExperienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIndustrialExperience);
-    if (Object.keys(graduationRequirements[moduleRequirementTitle[3]]).length > 0)  {
-      UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[3]].name,
-                                                                     graduationRequirements[moduleRequirementTitle[3]].markedIndustrialExperienceTrainingModules,
-                                                                     graduationRequirements[moduleRequirementTitle[3]].isFulfilled));
-    }
-
-  // find IT-professionalism requirement modules objects
-  const ITRequirements = allGradRequirements[moduleRequirementTitle[4]];
-  const requiredMCsIT = allGraduationRequirementMCs[moduleRequirementTitle[4]];
-  graduationRequirements[moduleRequirementTitle[4]] = findITProfessionalismModules(studentAcademicCohort, studentSemesters, ITRequirements, studentExemptedModules, studentWaivedModules, requiredMCsIT);
-  if (Object.keys(graduationRequirements[moduleRequirementTitle[4]]).length > 0)  {
-    UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[4]].name,
-                                                                   graduationRequirements[moduleRequirementTitle[4]].markedITProfessionalismModules,
-                                                                   graduationRequirements[moduleRequirementTitle[4]].isFulfilled));
-  }
-
-  // find math-science requirement modules objects
-  const mathScienceRequirements = allGradRequirements[moduleRequirementTitle[5]];
-  const requiredMCsMathSci = allGraduationRequirementMCs[moduleRequirementTitle[5]];
-  graduationRequirements[moduleRequirementTitle[5]] = findMathSciRequirementModules(studentAcademicCohort, studentSemesters, mathScienceRequirements, studentExemptedModules, studentWaivedModules, requiredMCsMathSci);
-  if (Object.keys(graduationRequirements[moduleRequirementTitle[5]]).length > 0)  {
-    UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[5]].name,
-                                                                   graduationRequirements[moduleRequirementTitle[5]].markedMathSciModules,
-                                                                   graduationRequirements[moduleRequirementTitle[5]].isFulfilled));
+  if (Object.keys(graduationRequirements[moduleRequirementTitle[6]]).length > 0)  {
+  UIFormatGraduationRequirement.children.push(UIFormatConversion(graduationRequirements[moduleRequirementTitle[6]].name,
+                                                                 graduationRequirements[moduleRequirementTitle[6]].markedULRModules,
+                                                                 graduationRequirements[moduleRequirementTitle[6]].isFulfilled));
   }
 
   // find unrestricted-electives requirement modules objects
