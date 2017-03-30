@@ -157,13 +157,14 @@ export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlann
   }
   // repackaged the result
   const repackagedData = {}
+  console.log(result);
   for(var i = 0; i < result.length ; i ++){
     // assumed the planner with the ID exists by db integrity
-    let currentPlannerName = Planner.findOne({_id:result[i]}).plannerName;
-    repackagedData.plannerName = result[i];
+    let currentPlannerName = Planner.findOne({_id:result[i]}).name;
+    repackagedData[currentPlannerName] = result[i];
   }
 
-  return repacakgedData;
+  return repackagedData;
 }
 
 export const getAcadCohortDataForSetup = function getCohortAndRepackaged() {

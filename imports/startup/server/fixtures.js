@@ -14,7 +14,7 @@ import { ModuleFulfilments } from '../../api/database-controller/module-fulfilme
 import { Planner } from '../../api/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
 
-import { getAcadCohortDefaultPlannerIDs } from '../../api/database-controller/AcademicCohort/methods';
+import { getAcadCohortDefaultPlannerIDs} from '../../api/database-controller/AcademicCohort/methods';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
@@ -38,8 +38,9 @@ Meteor.startup(() => {
   //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
   //}
   //scrapeModuleMappingListingForBeforeULR1516();
+  //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseJSONFileAndStoreToDB();
-  
+
 
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
