@@ -46,6 +46,7 @@ export default class ChangePassword extends React.Component {
         if (error) {
           // Variety of errors when signing up
           Bert.alert(error.reason, 'danger');
+          this.props.onLoadComplete();
         } else {
           Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
           this.props.onSuccess();
@@ -53,8 +54,8 @@ export default class ChangePassword extends React.Component {
       });
     } else {
         Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
+        this.props.onLoadComplete();
     }
-    this.prop.onSuccess();
   }
 
   render() {

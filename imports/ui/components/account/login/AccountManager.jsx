@@ -94,15 +94,18 @@ export default class AccountManager extends React.Component {
           {this.state.isSigningUp ?
             <ModalContainer onHidden={this.handleHideSignUp.bind(this)}
                             content={<RegisterAccount onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onLoadComplete = {this.handleHideLoading.bind(this)}
                             onSubmit={this.handleLoading.bind(this)}/>} /> : null}
           {this.state.isForgetPassword ?
             <ModalContainer onHidden={this.handleHideForgetPassword.bind(this)}
                             content={<ForgetAccount
                             onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onLoadComplete = {this.handleHideLoading.bind(this)}
                             onSubmit={this.handleLoading.bind(this)}/>} /> : null}
           {FlowRouter.getQueryParam("acc")=="reset-password" ?
             <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
                             content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)}
+                            onLoadComplete = {this.handleHideLoading.bind(this)}
                             onSubmit={this.handleLoading.bind(this)} />} /> : null}
           {this.state.isLoading ?
             <ModalContainer onHidden={this.handleHideLoading.bind(this)}

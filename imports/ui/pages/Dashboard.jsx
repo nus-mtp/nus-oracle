@@ -70,10 +70,12 @@ export default class Dashboard extends React.Component {
                 onHidden = {this.handleHideChangePassword.bind(this)}
                 content ={ <ChangePassword
                 onSuccess={this.handleCloseAllWindows.bind(this)}
+                onLoadComplete = {this.handleHideLoading.bind(this)}
                 onSubmit={this.handleLoading.bind(this)}/>}/> : null}
             {this.state.isLoading ?
               <ModalContainer onHidden={this.handleHideLoading.bind(this)}
-                              content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
+                              content={<LoadingScreen
+                              onSuccess={this.handleCloseAllWindows.bind(this)} />} /> : null}
           </div>
         </div>
       </div>

@@ -39,7 +39,9 @@ export default class RegisterAccount extends React.Component {
   handleRePasswordChange(event) {
     this.setState({repassword: event.target.value});
   }
-
+  handleCloseLoader() {
+    this.props.onLoadComplete();
+  }
   handleSubmit() { // to verify registration
     this.props.onSubmit();
     let user = {
@@ -52,6 +54,7 @@ export default class RegisterAccount extends React.Component {
       }
     }
 
+
     Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
       if (validEmail) {
         Meteor.call('nusPasswordVerifier',
@@ -63,26 +66,31 @@ export default class RegisterAccount extends React.Component {
               if (error) {
                 // Variety of errors when signing up
                 Bert.alert(error.reason, 'danger');
+                this.handleCloseLoader();
               } else {
                 Meteor.call('sendVerificationLink', (error, response) => {
                   if (error) {
                     Bert.alert(error.reason, 'danger');
+                    this.handleCloseLoader();
                   } else {
                     Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
                     Meteor.logout();
+                    this.props.onSuccess();
                   }
                 });
               }
             });
           } else {
               Bert.alert(errorObj.error, 'danger');
+              this.handleCloseLoader();
           }
         });
       } else {
         Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
+        this.handleCloseLoader();
       }
     });
-    this.props.onSuccess();
+
   }
 
 

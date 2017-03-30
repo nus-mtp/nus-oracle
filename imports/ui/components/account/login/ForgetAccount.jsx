@@ -38,6 +38,7 @@ export default class ForgetAccount extends React.Component {
       if (error) {
         // Variety of errors when entering email
         Bert.alert(error.reason, 'danger');
+        this.props.onLoadComplete();
       } else {
         let userName = this.state.email;
 
@@ -45,8 +46,8 @@ export default class ForgetAccount extends React.Component {
         console.log(user);
 
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
+        this.props.onSuccess();
       }
-      this.props.onSuccess();
     });
   }
 

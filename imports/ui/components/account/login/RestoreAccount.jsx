@@ -46,11 +46,13 @@ export default class RestoreAccount extends React.Component {
       if (!isValidPassword) {
         console.log(errorObj.error);
         Bert.alert(errorObj.error, 'danger');
+        this.props.onLoadComplete();
       } else {
 
         Accounts.resetPassword(this.state.token, this.state.password, error => {
           if (error) {
             Bert.alert(error.reason, 'danger');
+            this.props.onLoadComplete();
           } else {
             Meteor.call('unlockAcc');
             console.log("UNLOCKED");
