@@ -43,8 +43,9 @@ describe('grad-checker-ITProfessionalism', function()  {
     const allSemesters = getAllSemestersInPlanner(plannerIDs[2]);
     const ITProfessionalismModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const moduleChecked = {};
 
-    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {}, requiredMCs);
+    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[0]], 'IS1103 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[1]], 'CS2101 fulfiled');
     assert.isFalse(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[2]], 'ES2660 not fulfiled');

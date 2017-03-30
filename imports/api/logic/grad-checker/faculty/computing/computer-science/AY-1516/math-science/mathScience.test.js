@@ -14,7 +14,7 @@ import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/s
 
 import { findMathSciRequirementModules } from './methods';
 
-describe('grad-checker-mathSci', function()  {
+describe('grad-checker-mathSci-1516', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];
@@ -44,9 +44,10 @@ describe('grad-checker-mathSci', function()  {
     const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
 
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[0]], 'MA1301 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[1]], 'MA1521 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[2]], 'MA1101R fulfiled');

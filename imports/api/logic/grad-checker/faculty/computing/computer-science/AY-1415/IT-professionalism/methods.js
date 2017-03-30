@@ -11,13 +11,15 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  * markModules and markExemptedWaivedModules
  */
 
-export const findITProfessionalismModules = function findITProfessionalismModules(academicCohort, studentSemesters, ITProfessionalismModules, exemptedModules, waivedModules, requiredMCs)  {
+export const findITProfessionalismModules = function findITProfessionalismModules(
+  academicCohort, studentSemesters, ITProfessionalismModules, exemptedModules,
+  waivedModules, moduleChecked, requiredMCs)  {
+
   let markedITProfessionalismModulesAndMCs = {
     name: 'IT Professionalism',
     markedITProfessionalismModules: ITProfessionalismModules,
     numberOfITProfessionalismModulesMarkedTrue: 0,
-    totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: moduleChecked,
     totalModuleMCs: 0,
     requiredMCs: requiredMCs,
     isFulfilled: false
