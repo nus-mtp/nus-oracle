@@ -5,6 +5,21 @@ Meteor.methods({
     const length = emailAddress.length;
     const domain = emailAddress.slice(-10,length);
     const correctDomain = "@u.nus.edu";
-    return correctDomain == domain;
+
+    let errorObj = {
+      incorrectDomain: false,
+    }
+
+    let errorExists = false;
+    if (correctDomain != domain) {
+      errorObj.incorrectDomain = true;
+      errorExists = true;
+    }
+
+    if (errorExists) {
+      throw new Meteor.Error(errorObj);
+    } else {
+      return true;
+    }
   }
 });
