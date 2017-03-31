@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PulseLoader from 'halogen/PulseLoader';
-import PacmanLoader from 'halogen/PacmanLoader';
+import PulseLoader from '../../common/halogen/PulseLoader';
+import PacmanLoader from '../../common/halogen/PacmanLoader';
 
 // Import success and error notifications
 import { successMsgs } from '../AccountAlerts.js';

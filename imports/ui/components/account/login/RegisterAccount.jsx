@@ -7,7 +7,7 @@ import {successMsgs,
 
 // Import React components
 import Button from '../../common/Button.jsx';
-var Loader = require('halogen/PulseLoader');
+var Loader = require('../../common/halogen/PulseLoader');
 //import verfification from '../../server/send-verification'
 /*
  To delete accounts,
