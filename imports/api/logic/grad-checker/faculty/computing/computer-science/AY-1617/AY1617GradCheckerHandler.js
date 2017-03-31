@@ -86,11 +86,12 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
   const allGraduationRequirementMCs = getGradRequirementMCs(cohortGradRequirementIDs);
 
   // retrieve focus area modules
-  const allFocusAreaPrimaryRequirements = getFocusAreaPrimaryRequirement(cohortInformation.cohortFocusAreaID);
-  const allFocusArea4KRequirements = getFocusArea4KRequirement(cohortInformation.cohortFocusAreaID);
-  const allFocusArea4KPrimaryRequirements = getFocusAreaPrimary4KRequirement(cohortInformation.cohortFocusAreaID);
-  const allFocusAreaNonPrimaryRequirements = getFocusAreaNonPrimaryRequirement(cohortInformation.cohortFocusAreaID);
-
+  const allStudentFocusAreas = {
+    focusAreaPrimaryModules: getFocusAreaPrimaryRequirement(cohortInformation.cohortFocusAreaID),
+    focusArea4KModules: getFocusArea4KRequirement(cohortInformation.cohortFocusAreaID),
+    focusAreaPrimary4KModules :getFocusAreaPrimary4KRequirement(cohortInformation.cohortFocusAreaID),
+    focusAreaNonPrimaryModules: getFocusAreaNonPrimaryRequirement(cohortInformation.cohortFocusAreaID)
+  };
 
   if (Object.keys(allGradRequirements).length === 0 || !allGradRequirements ||
       !allGraduationRequirementMCs) {
@@ -142,6 +143,8 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
                                                                    graduationRequirements[moduleRequirementTitle[5]].isFulfilled));
   }
 
+  // find computer science breadth and depth requirement modules
+
     // find computer systems team project requirement modules
     const teamProjectRequirements = allGradRequirements[moduleRequirementTitle[2]];
     const requiredMCsTeamProject = allGraduationRequirementMCs[moduleRequirementTitle[2]];
@@ -166,79 +169,17 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
                                                                      graduationRequirements[moduleRequirementTitle[3]].isFulfilled));
     }
 
-  // find computer science breadth and depth requirement modules
-    // find focus area requirement modules object
-    let focusAreaMCSFulfilment = {};
-    let focusAreaRequirements = {
-      name: moduleRequirementTitle[1],
-      children: [],
-      isFulfilled: false
-    };
-
-    let focusAreaPrimaries = {
-      name: "Area Primaries",
-      children: [],
-      isFulfilled: false
-    }
-
-    let focusAreaAtLeast12MCs = {
-      name: "At least 12 MCs of 4K modules",
-      children: [],
-      isFulfilled: false
-    }
-
-    // keep a count outside to check for total MCs for 4K modules
-    let total4KModuleMCs = 0;
-
-    // keep track for total modules checked for 4K modules
-    let module4KChecked = {};
-
-    const allStudentFocusAreas = {
-      focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
-      focusArea4KModules: allFocusArea4KRequirements,
-      focusAreaPrimary4KModules :allFocusArea4KPrimaryRequirements,
-      focusAreaNonPrimaryModules: allFocusAreaNonPrimaryRequirements
-    };
-
-
-    // for all focus area, find the ones fulfilled by the current planner
-    for (var i=0; i<focusAreaTitles.length; i++)  {
-      let focusArea = {
-        focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
-        focusArea4KModules: allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]],
-        focusAreaPrimary4KModules: allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]],
-        focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
-      }
-
-      if (!focusArea.focusAreaPrimaryModules || !focusArea.focusAreaPrimary4KModules || !focusArea.focusArea4KModules)  {
-        continue;
-      }
-
-      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], total4KModuleMCs, module4KChecked, studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
-
-      total4KModuleMCs = oneFocusArea.total4KModuleMCs;
-      module4KChecked = oneFocusArea.module4KChecked;
-
-      focusAreaPrimaries.children.push(UIFormatFocusAreaConversion(oneFocusArea));
-      if (oneFocusArea.isPrimaryTrue)  {
-        focusAreaPrimaries.isFulfilled = true;
-      }
-      if (oneFocusArea.is4KTrue) {
-        focusAreaAtLeast12MCs.isFulfilled = true;
-      }
-    }
-
+    // For all focus area, checks if planner fulfils the 2 focus area conditions, then converts it to UI format
+    const focusAreaRequirements = UIFormatAllFocusAreaConversion(moduleRequirementTitle[1], studentAcademicCohort, allStudentFocusAreas, focusAreaTitles, studentSemesters, studentExemptedModules, studentWaivedModules, moduleChecked);
     // check if student planner meet 24 MCs requirement
-    focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]], moduleChecked);
-    graduationRequirements[moduleRequirementTitle[1]] = focusAreaMCSFulfilment;
+    graduationRequirements[moduleRequirementTitle[1]] = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]], moduleChecked);
 
-    if (focusAreaPrimaries.isFulfilled && focusAreaAtLeast12MCs.isFulfilled &&
-        focusAreaMCSFulfilment.isFulfilled)  {
+    if (focusAreaRequirements.children[0].isFulfilled &&
+        focusAreaRequirements.children[1].isFulfilled &&
+        graduationRequirements[moduleRequirementTitle[1]].isFulfilled)  {
       focusAreaRequirements.isFulfilled =  true;
     }
 
-    focusAreaRequirements.children.push(focusAreaPrimaries);
-    focusAreaRequirements.children.push(focusAreaAtLeast12MCs);
     UIFormatGraduationRequirement.children.push(focusAreaRequirements);
 
     //console.log(JSON.stringify(UIFormatGraduationRequirement));
@@ -303,12 +244,98 @@ const UIFormatConversion = function UIFormatConversion(name, markedModules, isFu
 }
 
 /**
-* retrieves an object of UI formatted graduation requirements for a focus area
+* retrieves an object of UI formatted marked graduation requirement
+*  @param {object}  parent grad requirement object
+*  @param {object}  an object containing a list of modules in the format of modueCode:bool
+*  @return {{objects}}  UI formatted list for one set of marked requirements
+*
+*/
+const createUIFormat = function createUIFormat(tempGradRequirement, modules)  {
+  const keys = Object.keys(modules);
+
+  for (var i=0; i<keys.length; i++)  {
+    let gradRequirement = {
+      name: keys[i],
+      children: [],
+      isFulfilled: modules[keys[i]]
+    }
+    tempGradRequirement.children.push(gradRequirement);
+  }
+
+  return tempGradRequirement;
+}
+
+/**
+* retrieves an object of UI formatted UI formatted graduation requirements for focus area
+*  @param {object}  an object of focus area information
+*  @return {{objects}}  UI formatted list for focus area
+*
+*/
+const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(moduleRequirementTitle, studentAcademicCohort, allStudentFocusAreas, focusAreaTitles, studentSemesters, studentExemptedModules, studentWaivedModules, moduleChecked)  {
+  let focusAreaRequirements = {
+    name: moduleRequirementTitle,
+    children: [],
+    isFulfilled: false
+  }
+
+  let focusAreaPrimaries = {
+    name: "Area Primaries",
+    children: [],
+    isFulfilled: false
+  }
+
+  let focusAreaAtLeast12MCs = {
+    name: "At least 12 MCs of 4K modules",
+    children: [],
+    isFulfilled: false
+  }
+
+  // keep a count outside to check for total MCs for 4K modules
+  let total4KModuleMCs = 0;
+
+  // keep track for total modules checked for 4K modules
+  let module4KChecked = {};
+
+  // for all focus area, find the ones fulfilled by the current planner
+  for (var i=0; i<focusAreaTitles.length; i++)  {
+    let focusArea = {
+      focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
+      focusArea4KModules: allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]],
+      focusAreaPrimary4KModules: allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]],
+      focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
+    }
+
+    if (!focusArea.focusAreaPrimaryModules || !focusArea.focusAreaPrimary4KModules || !focusArea.focusArea4KModules)  {
+      continue;
+    }
+
+    let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], total4KModuleMCs, module4KChecked, studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
+
+    total4KModuleMCs = oneFocusArea.total4KModuleMCs;
+    module4KChecked = oneFocusArea.module4KChecked;
+
+    focusAreaPrimaries.children.push(UIFormatOneFocusAreaConversion(oneFocusArea));
+    if (oneFocusArea.isPrimaryTrue)  {
+      focusAreaPrimaries.isFulfilled = true;
+    }
+    if (oneFocusArea.is4KTrue) {
+      focusAreaAtLeast12MCs.isFulfilled = true;
+    }
+  }
+
+  focusAreaRequirements.children.push(focusAreaPrimaries);
+  focusAreaRequirements.children.push(focusAreaAtLeast12MCs);
+
+  return focusAreaRequirements;
+}
+
+/**
+* retrieves an object of UI formatted graduation requirements for one focus area
 *  @param {object}  focus area object containing all the graduation requirements for 1 focus area
 *  @return {{objects}}  UI formatted list of one requirements
 *
 */
-const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocusArea)  {
+const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(oneFocusArea)  {
   let tempGradRequirement = {
     name: oneFocusArea.name,
     children: [],
@@ -335,28 +362,6 @@ const UIFormatFocusAreaConversion = function UIFormatFocusAreaConversion(oneFocu
   tempGradRequirement.children.push(primaryModules);
   tempGradRequirement.children.push(fourThousandModules);
   tempGradRequirement.isFulfilled = oneFocusArea.isPrimaryTrue;
-
-  return tempGradRequirement;
-}
-
-/**
-* retrieves an object of UI formatted marked graduation requirement
-*  @param {object}  parent grad requirement object
-*  @param {object}  an object containing a list of modules in the format of modueCode:bool
-*  @return {{objects}}  UI formatted list for one set of marked requirements
-*
-*/
-const createUIFormat = function createUIFormat(tempGradRequirement, modules)  {
-  const keys = Object.keys(modules);
-
-  for (var i=0; i<keys.length; i++)  {
-    let gradRequirement = {
-      name: keys[i],
-      children: [],
-      isFulfilled: modules[keys[i]]
-    }
-    tempGradRequirement.children.push(gradRequirement);
-  }
 
   return tempGradRequirement;
 }
