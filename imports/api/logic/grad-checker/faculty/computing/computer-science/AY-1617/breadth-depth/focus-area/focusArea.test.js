@@ -54,6 +54,7 @@ describe('grad-checker-focusArea', function()  {
 
     //const studentFocusAreas = getFocusAreaRequirement(focusAreaReqIDs);
     const requiredMCs = getGradRequirementMCs(gradFocusAreaID)[requirementName];
+    const moduleChecked = {};
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
@@ -62,7 +63,7 @@ describe('grad-checker-focusArea', function()  {
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules
     }
 
-    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
+    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs, moduleChecked);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');
     assert.equal(focusAreaMCSFulfilment.requiredMCs, 24);
   })
@@ -81,6 +82,9 @@ describe('grad-checker-focusArea', function()  {
     const focusAreaPrimary4KModules = getFocusAreaPrimary4KRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
+    const moduleChecked = {};
+    let module4KChecked = {};
+    let total4KModuleMCs = 0;
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules[focusAreaName],
@@ -88,10 +92,15 @@ describe('grad-checker-focusArea', function()  {
       focusArea4KModules: focusArea4KModules[focusAreaName],
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules[focusAreaName]
     }
-    const markedFocusAreaModulesAndMCs = findFocusAreaModules(focusAreaName, academicCohort, allSemesters, studentFocusAreas, {}, {});
+    const markedFocusAreaModulesAndMCs = findFocusAreaModules(focusAreaName, total4KModuleMCs, module4KChecked, academicCohort, allSemesters, studentFocusAreas, {}, {}, moduleChecked);
 
     assert.isTrue(markedFocusAreaModulesAndMCs.isPrimaryTrue, 'primary focus area is fulfiled');
     assert.isTrue(markedFocusAreaModulesAndMCs.is4KTrue, '4k focus area is fulfiled');
+    assert.isTrue(markedFocusAreaModulesAndMCs.module4KChecked['CS4247'], 'CS4247 is true');
+    assert.isTrue(markedFocusAreaModulesAndMCs.module4KChecked['CS4246'], 'CS4246 is true');
+    assert.isTrue(markedFocusAreaModulesAndMCs.module4KChecked['CS5240'], 'CS5240 is true');
+    assert.isTrue(markedFocusAreaModulesAndMCs.module4KChecked['CS4350'], 'CS4350 is true');
+
     assert.equal(markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue, 4);
     assert.equal(markedFocusAreaModulesAndMCs.total4KModuleMCs, 16);
   })

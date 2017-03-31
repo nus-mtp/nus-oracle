@@ -187,6 +187,12 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
       isFulfilled: false
     }
 
+    // keep a count outside to check for total MCs for 4K modules
+    let total4KModuleMCs = 0;
+
+    // keep track for total modules checked for 4K modules
+    let module4KChecked = {};
+
     const allStudentFocusAreas = {
       focusAreaPrimaryModules: allFocusAreaPrimaryRequirements,
       focusArea4KModules: allFocusArea4KRequirements,
@@ -204,11 +210,15 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
         focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
       }
 
-      if (!focusArea.focusAreaPrimaryModules || !focusArea.focusArea4KModules || !focusArea.focusArea4KModules)  {
+      if (!focusArea.focusAreaPrimaryModules || !focusArea.focusAreaPrimary4KModules || !focusArea.focusArea4KModules)  {
         continue;
       }
 
-      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
+      let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], total4KModuleMCs, module4KChecked, studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
+
+      total4KModuleMCs = oneFocusArea.total4KModuleMCs;
+      module4KChecked = oneFocusArea.module4KChecked;
+
       focusAreaPrimaries.children.push(UIFormatFocusAreaConversion(oneFocusArea));
       if (oneFocusArea.isPrimaryTrue)  {
         focusAreaPrimaries.isFulfilled = true;
