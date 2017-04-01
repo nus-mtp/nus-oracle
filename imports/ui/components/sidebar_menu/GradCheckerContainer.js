@@ -17,6 +17,7 @@ export default GradCheckerContainer = createContainer((props) => {
 
   const listType = props.listType;
 
+  // TODO: Alternative implementation of GradChecker - Experiment - @walrys Wenhan
   const semesters = getAllSemestersInPlanner(props.activePlannerId);
   const exempted = getStudentExemptedModules();
   const waived = getStudentWaivedModules();
@@ -25,34 +26,14 @@ export default GradCheckerContainer = createContainer((props) => {
     modulesCompleted[0] = modulesCompleted[0].concat(Object.keys(semesters[i].moduleHashmap));
   modulesCompleted[1] = modulesCompleted[1].concat(Object.keys(exempted));
   modulesCompleted[2] = modulesCompleted[2].concat(Object.keys(waived));
+  foundation = new Criteria(AY1617,modulesCompleted);
+  const items = [foundation];
 
-  // const foundationReq =
-  //   { name: 'Computer Science Foundation', subreq:[0,
-  //       {name: "CS1010"},
-  //       {name: "CS1020"},
-  //       {name: "CS1231"}
-  //   ],
-  //   requiredMC:8, isStrictMC:false};
-  // const requirements;
-  // const requirements = getGraduationRequirements(semesters);
-  // foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
-  // criteria = new Criteria(foundationReq, modulesCompleted);
-
-  // TODO: Alternative implementation of GradChecker - Experiment - @walrys Wenhan
-  // criteria = new Criteria(AY1617,modulesCompleted);
-  // const items = [requirements];
-  // const items = [criteria];
-  // const items = AY1617(modulesCompleted);
-  // console.log(getStudentAcademicCohort());
-
+  // ORIGINAL: Original grad checker
   const requirements = getGraduationRequirements(semesters);
-
-  //console.log("Panel Reqs " + JSON.stringify(requirements));
-  //foundation = new Criteria(foundationReq.name, modulesCompleted, foundationReq.requiredMC , foundationReq.isStrictMC, foundationReq.subreq);
-  //foundation = new Criteria(foundationReq);
   const items = [requirements];
-  // const items = [foundation];
+
 
   return { items };
-}, Nestable);
-//}, NestableGradChecker);
+}, Nestable);         // for original implementation of grad checker
+// }, NestableGradChecker); // for Alternate implementation of grad checker
