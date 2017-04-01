@@ -27,7 +27,7 @@ export default GradCheckerContainer = createContainer((props) => {
   modulesCompleted[1] = modulesCompleted[1].concat(Object.keys(exempted));
   modulesCompleted[2] = modulesCompleted[2].concat(Object.keys(waived));
   foundation = new Criteria(AY1617,modulesCompleted);
-  const items = [foundation];
+  // const items = [foundation];
 
   // ORIGINAL: Original grad checker
   const requirements = getGraduationRequirements(semesters);
