@@ -1,5 +1,9 @@
 @import '../components/common/Constants.less';
 
+html {
+  overflow: hidden;
+}
+
 body {
   background-color: @body-bg-color;
 }
@@ -8,4 +12,9 @@ body {
 
 .card-typical-section ::-webkit-scrollbar {
     display: none;
+}
+
+// tab font colour
+.tabs-section-nav.tabs-section-nav-icons .nav-link.active{
+  color: #ff6600;
 }

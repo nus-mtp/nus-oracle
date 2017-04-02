@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 /* Import React components */
 import ReactClickOut from 'react-onclickout';
@@ -21,7 +22,8 @@ export default class Tab extends React.Component {
       onMouseOver: false,
       onClickDropdown: false,
       deleteIsConfirmed: false,
-      launchConfirmDelete: false
+      launchConfirmDelete: false,
+      dimension: { width: -1, left: -1}
     }
   }
 
@@ -43,6 +45,11 @@ export default class Tab extends React.Component {
    * Handlers for dropdown events
    */
   handleToggleDropdown(event) {
+
+    // close other opened dropdowns
+    var page = document.getElementsByTagName("BODY")[0];
+    page.click();
+
     this.setState({ onClickDropdown: !this.state.onClickDropdown });
   }
 
@@ -51,6 +58,18 @@ export default class Tab extends React.Component {
       onMouseOver: false,
       onClickDropdown: false
     });
+  }
+
+  handleRightClick(event){
+    // to disable right click context menu from appearing
+    event.preventDefault();
+    if(this.props.isActiveTab){
+      this.props.onClickTab(event);
+      this.handleToggleDropdown(event);
+    }
+    else{
+      this.props.onClickTab(event);
+    }
   }
 
   /**
@@ -100,6 +119,11 @@ export default class Tab extends React.Component {
     }
   }
 
+  // updates dimension of tab when loaded / reloaded
+  updateTabDimension(dimension){
+    this.setState({dimension: dimension});
+  }
+
   //======================================================
   // RENDER FUNCTIONS FOR DISTINCT UI PARTS WITHIN THE TAB
   //======================================================
@@ -111,10 +135,9 @@ export default class Tab extends React.Component {
   renderDropdownCaret() {
     return (
       <IconButton
-        icon="fa fa-sort-down"
-        style={{position: 'absolute', paddingTop: '0.15em', opacity: '0.8',
-        top:'0.3em', right: '0.5em', height: '1.5em', width: '1em'}}
-        displayColor="#505050" onMouseOverColor="#ff9100"
+        icon="fa fa-caret-down"
+        style={{float: "right", paddingLeft:"0.8em", margin:0}}
+        displayColor="#505050" onMouseOverColor="#ff6600"
         onButtonClick={this.handleToggleDropdown.bind(this)}
       />
     )
@@ -125,55 +148,31 @@ export default class Tab extends React.Component {
    *
    * @return    Dropdown menu React component with dropdown menu buttons
    */
-  renderDropDownMenu() {
+  renderDropDownMenu(dimension) {
     return (
-      <div className="card-typical"
-           onBlur={this.handleOnBlurDropdown.bind(this)}
-           style={{position: 'fixed', zIndex: '300', top: '2.7em',
-                   width: '7.75em', textAlign: 'left',
-                   WebkitBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
-                   MozBoxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)',
-                   boxShadow: '4px 4px 26px -6px rgba(0,0,0,0.5)'}}>
+      <ReactClickOut onClickOut={this.handleOnBlurDropdown.bind(this)}>
+        <div className="card-typical" onBlur={this.handleOnBlurDropdown.bind(this)}
+          style={{width: dimension.width + 'px', left: dimension.left + 'px'}}>
+          {/* Edit study plan name dropdown selection */}
+          {this.renderDropDownMenuSelection(
+            "dropdown-item",
+            "fa fa-edit",
+            {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
+            "Rename",
+            this.handleEditClick
+          )}
 
-        {/* Edit study plan name dropdown selection */}
-        {this.renderDropDownMenuSelection(
-          "dropdown-item",
-          "fa fa-edit",
-          {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
-          "Rename",
-          this.handleEditClick
-        )}
-
-        {/* Delete study plan dropdown selection */}
-        {this.renderDropDownMenuSelection(
-          "dropdown-item",
-          "fa fa-trash",
-          {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '1.0em'},
-          "Delete",
-          this.handleDeleteClick
-        )}
-
-        {this.state.launchConfirmDelete ?
-          <ModalContainer
-            onHidden={this.resetDeleteState.bind(this)}
-            content={
-              <DialogContainer
-                title={"Are you sure you want to delete this study plan, '" +
-                       this.props.tabTitle + "'?"}
-                content={
-                  <div>
-                    <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
-                            buttonText="Yes"
-                            onButtonClick={this.handleConfirmDelete.bind(this)} />
-                    <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
-                            buttonText="No"
-                            onButtonClick={this.resetDeleteState.bind(this)} />
-                  </div>
-                }
-              /> }
-          /> : null}
-      </div>
-    )
+          {/* Delete study plan dropdown selection */}
+          {this.renderDropDownMenuSelection(
+            "dropdown-item",
+            "fa fa-trash",
+            {position: 'relative', float: 'left', paddingTop: '0.35em', marginRight: '1.0em'},
+            "Delete",
+            this.handleDeleteClick
+          )}
+        </div>
+      </ReactClickOut>
+    );
   }
 
   /**
@@ -189,39 +188,71 @@ export default class Tab extends React.Component {
    */
   renderDropDownMenuSelection(className, iconClassName, iconStyle, text, clickHandler) {
     return (
-      <div className={className} onClick={clickHandler.bind(this)}>
-        <i className={iconClassName} style={iconStyle}></i>
-        <div>{text}</div>
-      </div>
+        <div className={className} onClick={clickHandler.bind(this)}>
+          <i className={iconClassName} style={iconStyle}></i>
+          <div>{text}</div>
+        </div>
     )
   }
 
   render() {
+    var onRightClick = this.props.onRightClickTab;
     return (
       /* ReactClickOut listens for and handles all click-outside events */
-      <ReactClickOut onClickOut={this.handleOnBlurDropdown.bind(this)} >
-        <li className='nav-item' style={this.props.tabStyle}
-            onClick={this.props.onClickTab}
-            onMouseEnter={this.handleOnMouseEnter.bind(this)}
-            onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-          <a className={this.setActiveTabClass("nav-link")} role='tab'>
-            <span className={this.props.navSpanClass} style={this.props.navSpanStyle}>
+      <ReactClickOut onClickOut={this.handleOnBlurDropdown.bind(this)}>
+          <li className='nav-item'
+              onClick={this.props.onClickTab}
+              onContextMenu={onRightClick ? onRightClick : this.handleRightClick.bind(this)}
+              onMouseEnter={this.handleOnMouseEnter.bind(this)}
+              onMouseLeave={this.handleOnMouseLeave.bind(this)}>
+            <a className={this.setActiveTabClass('nav-link')} role='tab'>
+              <span className={this.props.navSpanClass} style={this.props.navSpanStyle}
+                  ref={(el)=> {
+                    var node = ReactDOM.findDOMNode(el);
+                    if(node){
+                      if(this.state.dimension.left != node.getBoundingClientRect().left ||
+                      this.state.dimension.width != node.getBoundingClientRect().width){
+                        this.updateTabDimension(node.getBoundingClientRect());
+                      }
+                    }
+              }}>
 
-              {/* The label of this Tab is rendered here */}
-              { this.props.tabTitle }
+                {/* The label of this Tab is rendered here */}
+                { this.props.tabTitle }
 
-              {/* Render dropdown caret */}
-              { this.props.enabledDropdown && this.props.enabledMouseOver &&
-                !this.props.isEditingPlanName ?
-                this.renderDropdownCaret() : null }
+                {/* Render dropdown caret */}
+                { this.props.enabledDropdown && this.props.enabledMouseOver &&
+                  !this.props.isEditingPlanName ?
+                  this.renderDropdownCaret() : null }
 
-              {/* Toggle Dropdown menu for this tab */}
-              { this.props.enabledDropdown && this.state.onClickDropdown ?
-                this.renderDropDownMenu() : null }
+                {/* Toggle Dropdown menu for this tab */}
+                { this.props.enabledDropdown && this.state.onClickDropdown ?
+                  this.renderDropDownMenu(this.state.dimension) : null}
 
-            </span>
-          </a>
-        </li>
+                {/* Render delete modal */}
+                {this.state.launchConfirmDelete ?
+                  <ModalContainer
+                    onHidden={this.resetDeleteState.bind(this)}
+                    content={
+                      <DialogContainer
+                        title={"Are you sure you want to delete this study plan, '" +
+                               this.props.tabTitle + "'?"}
+                        content={
+                          <div>
+                            <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+                                    buttonText="Yes"
+                                    onButtonClick={this.handleConfirmDelete.bind(this)} />
+                            <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
+                                    buttonText="No"
+                                    onButtonClick={this.resetDeleteState.bind(this)} />
+                          </div>
+                        }
+                      /> }
+                  /> : null}
+
+              </span>
+            </a>
+          </li>
       </ReactClickOut>
     )
   }
@@ -230,9 +261,6 @@ export default class Tab extends React.Component {
 Tab.propTypes = {
   // Title of the tab (max: 15 chars, or a "..." will be rendered in place)
   tabTitle: React.PropTypes.node,
-
-  // Style object of this Tab
-  tabStyle: React.PropTypes.object,
 
   // String representation of the class of the span tag within a Tab
   navSpanClass: React.PropTypes.string,
@@ -264,7 +292,6 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
   tabTitle: <div>default title node</div>,
-  tabStyle: {float: "left", width: "15em", backgroundColor: "#f6f8fa"},
   navSpanStyle: {},
   isActiveTab: false,
   enabledMouseOver: true,
