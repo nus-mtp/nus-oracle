@@ -22,13 +22,13 @@ export default GradCheckerContainer = createContainer((props) => {
   modulesCompleted[1] = modulesCompleted[1].concat(Object.keys(exempted));
   modulesCompleted[2] = modulesCompleted[2].concat(Object.keys(waived));
   foundation = new Criteria(AY1617,modulesCompleted);
-  // const items = [foundation];
+  const items = [foundation];
 
   // ORIGINAL: Original grad checker
-  const requirements = getGraduationRequirements(semesters);
-  const items = [requirements];
+  // const requirements = getGraduationRequirements(semesters);
+  // const items = [requirements];
 
 
   return { items };
-}, Nestable);         // for original implementation of grad checker
-// }, NestableGradChecker); // for Alternate implementation of grad checker
+// }, Nestable);         // for original implementation of grad checker
+}, NestableGradChecker); // for Alternate implementation of grad checker
