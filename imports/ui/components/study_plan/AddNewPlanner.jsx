@@ -5,30 +5,9 @@ import SemModulesCardContainer from './SemModulesCardContainer.js';
 import { deleteAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
 
 export default class AddNewPlanner extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.handleWidth = 100;
-    this.state = { height: '0px' };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
-  }
-
-  updateWindowDimensions() {
-    this.setState({ height: window.innerHeight - 20 });
-  }
-
   render() {
     return (
-      <div className="add-customers-screen tbl" style={{height: (this.props.isFullscreen ? this.state.height : 'auto')}}>
+      <div className="add-customers-screen tbl">
         <div className="add-customers-screen-in">
           <h2>
             Create a new Study Plan
@@ -54,11 +33,3 @@ export default class AddNewPlanner extends React.Component {
     );
   }
 }
-AddNewPlanner.propTypes = {
- height: React.PropTypes.string,
- isFullscreen: React.PropTypes.bool
-};
-
-AddNewPlanner.defaultProps = {
- height:'400px'
-};

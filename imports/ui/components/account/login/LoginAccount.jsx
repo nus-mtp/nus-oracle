@@ -12,19 +12,12 @@ import { successMsgLoginName,
 
 // Import React components
 import Button from '../../common/Button.jsx';
+import FormInput from '../../common/FormInput.jsx';
 
 // Import file paths
 import { pathToLogin } from '../../../../startup/client/Router.jsx';
 import { pathToAcadDetailsSetup } from '../../../../startup/client/Router.jsx';
 import { pathToUserDashboard } from '../../../../startup/client/Router.jsx';
-
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
-
- */
 
 const MAX_PASSWORD_TRIES = 5;
 
@@ -38,12 +31,12 @@ export default class LoginAccount extends React.Component {
     };
   }
 
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
+  handleEmailChange(input) {
+    this.setState({email: input});
   }
 
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+  handlePasswordChange(input) {
+    this.setState({password: input});
   }
 
   handleClickOnSignUp() {
@@ -94,8 +87,8 @@ export default class LoginAccount extends React.Component {
       } else {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
-        let isVerified = Meteor.user().emails[0].verified; // TODO EMAIL VERIFICATION FUNCTION
-        // WORK-IN-PROGRESS ADRIAN
+        let isVerified = Meteor.user().emails[0].verified;
+
         if (Meteor.user().profile.accountLock) {
           Bert.alert(errorLockedAccount(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
@@ -131,33 +124,27 @@ export default class LoginAccount extends React.Component {
 
         <div className="col-md-6 blockui-element-container-default"
              style={{float: 'none', margin: '3.5em auto'}}>
-
           <div className="form-group" style={{textAlign: 'center'}}>
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="NUS E-mail" value={this.state.value}
-                onChange={this.handleEmailChange.bind(this)} />
-            </div>
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Password" value={this.state.value}
-                onChange={this.handlePasswordChange.bind(this)} />
-            </div>
+            <FormInput placeholder="NUS E-mail"
+                       onChange={this.handleEmailChange.bind(this)} />
 
-              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                      buttonText="LOGIN"
-                      onButtonClick={this.handleSubmit.bind(this)} />
+            <FormInput type="password" placeholder="Password"
+                       onChange={this.handlePasswordChange.bind(this)} />
 
-                <a className="dropdown-item"
-                   onClick={this.handleClickOnSignUp.bind(this)}>
-                  Create account
-                </a>
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                    buttonText="LOGIN"
+                    onButtonClick={this.handleSubmit.bind(this)} />
 
-                <a className="dropdown-item"
-                   onClick={this.handleClickOnForgetPassword.bind(this)}>
-                  Forgot Password?
-                </a>
+            <a className="dropdown-item"
+               onClick={this.handleClickOnSignUp.bind(this)}>
+              Create account
+            </a>
+
+            <a className="dropdown-item"
+               onClick={this.handleClickOnForgetPassword.bind(this)}>
+              Forgot Password?
+            </a>
 
           </div>
         </div>
