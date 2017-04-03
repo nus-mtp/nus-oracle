@@ -1,6 +1,8 @@
 import { Match } from 'meteor/check';
 import { Students } from './student';
 import { searchByModuleCode } from '../module/methods';
+import { getCohortByName,
+         getRepackagedDefaultPlannerIDs} from '../AcademicCohort/methods';
 
 // create new Student using the userID from the accountDB right after the sign up
 export const createNewStudent = function createNewStudent(userID, studentCohort, prevEducation){
@@ -285,4 +287,9 @@ export const deleteStudentWaivedModuleGivenStudentID = function deleteStudentWai
   delete studentWaivedModules[waivedModule];
 
   return Students.update(studentID, { $set: { studentWaivedModule: studentWaivedModules } });
+}
+
+export const getStudentRepackagedDefaultPlannerIDs = function getStudentRepackagedDefaultPlannerIDs() {
+  const studentCohort = getStudentAcademicCohort();
+  return getStudentRepackagedDefaultPlannerIDs(studentCohort);
 }
