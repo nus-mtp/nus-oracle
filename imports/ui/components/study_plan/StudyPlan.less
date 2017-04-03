@@ -1,3 +1,14 @@
+@import '../common/Constants.less';
+
+// ==================================
+//  Study Plan Styles
+// ==================================
+
+.with-side-menu .page-content{
+  padding-left: @sidebar-width;
+  overflow-x: hidden;
+}
+
 // ========================================
 //   Tab alignment
 // ========================================
@@ -28,9 +39,9 @@ ul.nav {
   overflow-x: hidden;
 }
 
-// remove default bottom margin
 .tabs-section {
   margin: 0;
+  background: @tab-container-color;
 }
 
 // ========================================
@@ -39,6 +50,7 @@ ul.nav {
 
 // hide tab horizontal scrollbar
 .tabs-section-nav.tabs-section-nav-icons{
+  border: none;
   overflow: hidden;
 }
 

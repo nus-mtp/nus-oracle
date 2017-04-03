@@ -125,8 +125,9 @@ export default class LoginAccount extends React.Component {
     return (
       <div>
         <div className="gallery-picture">
-          <img style={{height: '100%', width: '100%', marginTop: '2em'}}
-               src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
+          <img id="login-logo"
+               src="./images/logo/nusOracle-logo-colour.png"
+               alt="NUS_Oracle_logo" />
         </div>
 
         <div className="col-md-6 blockui-element-container-default"
