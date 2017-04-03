@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 // Import success and error notifications
-import {successMsgs,
-        errorMsgs } from '../AccountAlerts.js'
+import { successMsgs,
+         errorMsgs } from '../AccountAlerts.js'
 
 // Import React components
 import Button from '../../common/Button.jsx';
@@ -15,6 +15,8 @@ var Loader = require('../../common/halogen/PulseLoader');
  2) db.users.remove({_id:db.users.find()[0]._id})
  db.users.find({username:"3@gmail.com"}).userId
  */
+import FormInput from '../../common/FormInput.jsx';
+import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
 export default class RegisterAccount extends React.Component {
   constructor(props) {
@@ -23,21 +25,25 @@ export default class RegisterAccount extends React.Component {
       username: '',
       email: '',
       password:'',
-      repassword:''};
+      repassword:'',
+      emailErrorObj: null,
+      passwordErrorObj: null,
+    };
   }
 
-
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
-    this.setState({username: event.target.value});
+  handleEmailChange(input) {
+    this.setState({
+      email: input,
+      username: input
+    });
   }
 
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+  handlePasswordChange(input) {
+    this.setState({password: input});
   }
 
-  handleRePasswordChange(event) {
-    this.setState({repassword: event.target.value});
+  handleRePasswordChange(input) {
+    this.setState({repassword: input});
   }
   handleCloseLoader() {
     this.props.onLoadComplete();
@@ -53,15 +59,17 @@ export default class RegisterAccount extends React.Component {
         accountLock: false
       }
     }
-
-
-    Meteor.call('nusEmailVerifier', this.state.email, (error, validEmail) => {
+    Meteor.call('nusEmailVerifier', this.state.email, (emailErrorObj, validEmail) => {
       if (validEmail) {
+        this.setState({ emailErrorObj: null });
+
         Meteor.call('nusPasswordVerifier',
                     this.state.password,
                     this.state.repassword,
-                    (errorObj, isValidPassword) => {
-            if (isValidPassword) {
+                   (passwordErrorObj, isValidPassword) => {
+          if (isValidPassword) {
+            this.setState({ passwordErrorObj: null });
+
             Accounts.createUser( user, (error) => {
               if (error) {
                 // Variety of errors when signing up
@@ -81,18 +89,78 @@ export default class RegisterAccount extends React.Component {
               }
             });
           } else {
-              Bert.alert(errorObj.error, 'danger');
-              this.handleCloseLoader();
+            // Prepare state for User Feedback for wrong password entered
+            this.setState({ passwordErrorObj: passwordErrorObj.error });
+            this.handleCloseLoader();
           }
         });
       } else {
-        Bert.alert(errorMsgs.ERR_EMAIL_ENTERED_INVALID, 'danger');
+        // Prepare state for User Feedback for wrong NUS E-mail entered
+        this.setState({ emailErrorObj: emailErrorObj.error });
         this.handleCloseLoader();
       }
     });
 
   }
 
+  /**
+   * Renderer for NUS-email input validation
+   *
+   * @returns {Node} FormInputErrorBox component with the relevant error messages
+   *                 passed into it
+   */
+  renderEmailErrorBlock() {
+    let errorObj = this.state.emailErrorObj;
+    let emailErrorMsgs = [];
+
+    if (errorObj.incorrectDomain) {
+      emailErrorMsgs.push(errorMsgs.ERR_EMAIL_ENTERED_INVALID_DOMAIN);
+    }
+    if (errorObj.incorrectFormat) {
+      emailErrorMsgs.push(errorMsgs.ERR_EMAIL_ENTERED_INVALID_FORMAT);
+    }
+
+    return (
+      <FormInputErrorBox
+        title="NUS E-mail Errors" errorMsgList={emailErrorMsgs} />
+    );
+  }
+
+
+  /**
+   * Renderer for password input validation
+   *
+   * @returns {Node} FormInputErrorBox component with the relevant error messages
+   *                 passed into it
+   */
+  renderPasswordErrorBlock() {
+    let errorObj = this.state.passwordErrorObj;
+    let passwordErrorMsgs = [];
+
+    if (errorObj.hasNoLetter) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_NO_LETTER);
+    }
+    if (errorObj.hasNoNumeric) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_NO_NUMERIC);
+    }
+    if (errorObj.isNotMixCase) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_IS_NOT_MIX_CASE);
+    }
+    if (errorObj.isLessThanSixChars) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_TOO_SHORT);
+    }
+    if (errorObj.hasWhitespace) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_WHITESPACE);
+    }
+    if (errorObj.passwordsNotMatch) {
+      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_NOT_MATCH);
+    }
+
+    return (
+      <FormInputErrorBox
+        title="Password Errors" errorMsgList={passwordErrorMsgs} />
+    );
+  }
 
   render() {
     return (
@@ -105,23 +173,24 @@ export default class RegisterAccount extends React.Component {
           </h4>
 
           <div className="form-group">
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="NUS E-mail" value={this.state.value}
-                onChange={this.handleEmailChange.bind(this)} />
-            </div>
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Password" value={this.state.value}
-                onChange={this.handlePasswordChange.bind(this)} />
-            </div>
+            {/* If there are errors in the NUS e-mail input validation, we
+                to notify user */}
+            {this.state.emailErrorObj ? this.renderEmailErrorBlock() : null}
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Re-enter password" value={this.state.value}
-                onChange={this.handleRePasswordChange.bind(this)} />
-            </div>
+            <FormInput placeholder="NUS E-mail"
+                       onChange={this.handleEmailChange.bind(this)} />
+
+            {/* If there are errors in the password input validation, we
+                to notify user */}
+            {this.state.passwordErrorObj ? this.renderPasswordErrorBlock() : null}
+
+            <FormInput type="password" placeholder="Password"
+                       onChange={this.handlePasswordChange.bind(this)} />
+
+            <FormInput type="password" placeholder="Re-enter Password"
+                       onChange={this.handleRePasswordChange.bind(this)} />
+
           </div>
 
           <div className='form-group'>

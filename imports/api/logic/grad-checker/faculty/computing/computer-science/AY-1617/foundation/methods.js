@@ -12,12 +12,12 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  */
 
 
-export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, requiredMCs) {
+export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, moduleChecked, requiredMCs) {
   let markedFoundationModulesAndMCs = {
     name: 'Computer Science Foundation',
     markedFoundationModules: foundationModules,
     numberOfFoundationModulesMarkedTrue: 0,
-    moduleChecked: {},
+    moduleChecked: moduleChecked,
     totalModuleMCs: 0,
     requiredMCs: requiredMCs,
     isFulfilled: false

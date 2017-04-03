@@ -102,6 +102,7 @@ export default class AccountManager extends React.Component {
                             onSuccess={this.handleCloseAllWindows.bind(this)}
                             onLoadComplete = {this.handleHideLoading.bind(this)}
                             onSubmit={this.handleLoading.bind(this)}/>} /> : null}
+          {/* Launches Modal only of the query param in URL matches */}
           {FlowRouter.getQueryParam("acc")=="reset-password" ?
             <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
                             content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)}

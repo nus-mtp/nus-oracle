@@ -10,15 +10,21 @@ import { getFirstNChars } from '../../../../../utils/util'
  * The 2 methods above are where code for any new execptions to the calculation of
  * graduation requirement should be placed. If there are no exceptions, simply return
  * markModules and markExemptedWaivedModules
+ *
+ * IMPORTANT to note: ULR check for breadth is coded to work only for CS students
+ *                    To expand it to all students, makes sure exception check for breadth be updated for other faculties
  */
 
-export const findULRRequirementModules = function findULRRequirementModules(academicCohort, studentSemesters, ULRModules, exemptedModules, waivedModules, requiredMCs) {
+export const findULRRequirementModules = function findULRRequirementModules(
+  academicCohort, studentSemesters, ULRModules, exemptedModules,
+  waivedModules, moduleChecked, requiredMCs) {
+
   let markedULRModulesAndMCs = {
     name: 'University Level Requirement',
     markedULRModules: ULRModules,
     numberOfULRMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -31,6 +37,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     for (var i=0; i<keyNames.length; i++) {
     // check equivalent module fulfilment if available
     moduleFulfilment = getModuleFulfilment(keyNames[i]);
+
     if (Object.keys(moduleFulfilment).length <= 0)  {
       return {};
     }
@@ -39,7 +46,6 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-
     if (!markedULRModulesAndMCs.markedULRModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
@@ -47,6 +53,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
         // checks if in exempted or waived modules
         markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+
         if (markedULRModulesAndMCs.markedULRModules[keyNames[i]] ) {
           break;
         }
@@ -59,6 +66,7 @@ export const findULRRequirementModules = function findULRRequirementModules(acad
     }
   }
   // return { moduleCode: boolean } object
+
   return markedULRModulesAndMCs;
 }
 
@@ -100,15 +108,19 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedULRMo
 
 const markExceptions = function markExceptions(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
   // parse equivalent module here for checking breadth
-  if (originalModule == "Breadth One" || originalModule == "Breadth Two") {
+  if (originalModule === "Breadth One" || originalModule === "Breadth Two") {
     for (var i = 0; i < studentSemesters.length; i++) {
+      if (markedULRModulesAndMCs.markedULRModules[originalModule])  {
+        break;
+      }
       const modules = Object.keys(studentSemesters[i].moduleHashmap);
       for (var j=0; j<modules.length; j++)  {
-        let parsedPrefix = getFirstNChars(modules[j], 2);
-        if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
-            parsedPrefix === "CS" || parsedPrefix === "IS" ||
-            parsedPrefix === "IT")  {
-              break;
+        let parsedPrefixTwo = getFirstNChars(modules[j], 2);
+        let parsedPrefixThree = getFirstNChars(modules[j], 3);
+        if (parsedPrefixTwo === "CP" || parsedPrefixTwo === "BT" ||
+            parsedPrefixTwo === "CS" || parsedPrefixTwo === "IS" ||
+            parsedPrefixTwo === "IT" || parsedPrefixTwo === "SS")  {
+              continue;
         } else {
           if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
               markedULRModulesAndMCs.markedULRModules[originalModule] = true;
@@ -119,8 +131,8 @@ const markExceptions = function markExceptions(markedULRModulesAndMCs, studentSe
             }
           }
         }
-        return markedULRModulesAndMCs;
       }
+      return markedULRModulesAndMCs;
   }
   return markModules(markedULRModulesAndMCs, studentSemesters, equivalentModule, originalModule);
 }
@@ -128,13 +140,16 @@ const markExceptions = function markExceptions(markedULRModulesAndMCs, studentSe
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
   if (originalModule == "Breadth One" || originalModule == "Breadth Two") {
     for (var i = 0; i < exemptedModules.length; i++) {
+      if (markedULRModulesAndMCs.markedULRModules[originalModule])  {
+        break;
+      }
       let modules = Object.keys(exemptedModules);
       for (var j=0; j<modules.length; j++)  {
         let parsedPrefix = getFirstNChars(modules[j], 2);
         if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
             parsedPrefix === "CS" || parsedPrefix === "IS" ||
-            parsedPrefix === "IT")  {
-              break;
+            parsedPrefix === "IT" || parsedPrefixTwo === "SS")  {
+            continue;
         } else {
           if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
               markedULRModulesAndMCs.markedULRModules[originalModule] = true;
@@ -147,13 +162,16 @@ const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(marke
         }
       }
       for (var i = 0; i < waivedModules.length; i++) {
+        if (markedULRModulesAndMCs.markedULRModules[originalModule])  {
+          break;
+        }
         let modules = Object.keys(waivedModules);
         for (var j=0; j<modules.length; j++)  {
           let parsedPrefix = getFirstNChars(modules[j], 2);
           if (parsedPrefix === "CP" || parsedPrefix === "BT" ||
               parsedPrefix === "CS" || parsedPrefix === "IS" ||
-              parsedPrefix === "IT")  {
-                break;
+              parsedPrefix === "IT" || parsedPrefixTwo === "SS")  {
+              continue;
           } else {
             if (!markedULRModulesAndMCs.moduleChecked[modules[j]]) {
                 markedULRModulesAndMCs.markedULRModules[originalModule] = true;
@@ -163,8 +181,8 @@ const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(marke
               }
             }
           }
-          return markedULRModulesAndMCs;
         }
+        return markedULRModulesAndMCs;
   }
   return markExemptedWaivedModules(markedULRModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
 }

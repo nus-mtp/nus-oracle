@@ -43,7 +43,7 @@ export default class PanelProfile extends React.Component {
     let waivedToolTip =
       <ReactTooltip id='Waived' place="right" type="info" effect="solid">
         <span> <h5 style={{marginBottom: 0.8+"rem"}}>Example of waived modules:</h5>
-            Modules that you are not required to take but are converted to UEs<br/><br/>
+            Modules that are waived need to be replaced by a UE<br/><br/>
             EXAMPLES: <br/>
             <b>PC1221:</b> Students with A-level or H2 Physics<br/>
             have PC1221 waived</span>

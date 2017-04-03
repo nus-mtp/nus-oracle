@@ -14,26 +14,32 @@ import { ModuleFulfilments } from '../../api/database-controller/module-fulfilme
 import { Planner } from '../../api/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
 
+import { getAcadCohortDefaultPlannerIDs} from '../../api/database-controller/AcademicCohort/methods';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
-
-import '../../api/database-conversion/ULRAfter1516Scraper.js';
-
+import { parseDefaultPlanner } from '../../api/database-conversion/samplePlannerParser';
+import { parseForLezzgo } from '../../api/database-conversion/plannerDataPullLezzgo';
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
-  import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
+import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
 
 Meteor.startup(() => {
-  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:natashaSMASH@smtp.gmail.com:587';
-  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
+  plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
   //scrapeModuleMappingListingForULR1516();
+  //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
+  //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
+  //}
+  //scrapeModuleMappingListingForBeforeULR1516();
+  //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseJSONFileAndStoreToDB();
+  parseForLezzgo();
 
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();

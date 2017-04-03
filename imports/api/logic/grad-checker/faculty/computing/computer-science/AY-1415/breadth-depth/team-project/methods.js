@@ -11,13 +11,15 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * markModules and markExemptedWaivedModules
  */
 
-export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(academicCohort, studentSemesters, teamProjectModules, exemptedModules, waivedModules, requiredMCs)  {
+export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(
+  academicCohort, studentSemesters, teamProjectModules, exemptedModules,
+  waivedModules, moduleChecked, requiredMCs)  {
   let markedTeamProjectModulesAndMCs = {
     name: 'Computer Systems Team Project',
     markedTeamProjectModules: teamProjectModules,
     numberOfTeamProjectModulesMarkedTrue: 0,
+    moduleChecked: moduleChecked,
     totalModuleMCs: 0,
-    moduleChecked: {},
     requiredMCs: requiredMCs,
     isFulfilled: false
   };

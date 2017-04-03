@@ -34,6 +34,10 @@ const acadCohortSchema ={
   cohortGradRequirementID: {
     type: [String],
     optional: true
+  },
+  cohortDefaultPlannerID: {
+    type: [String],
+    optional: true
   }
 }
 
