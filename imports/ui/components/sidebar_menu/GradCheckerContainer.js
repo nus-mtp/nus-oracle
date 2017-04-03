@@ -13,16 +13,16 @@ export default GradCheckerContainer = createContainer((props) => {
   const listType = props.listType;
 
   // TODO: Alternative implementation of GradChecker - Experiment - @walrys Wenhan
-  // const semesters = getAllSemestersInPlanner(props.activePlannerId);
-  // const exempted = getStudentExemptedModules();
-  // const waived = getStudentWaivedModules();
-  // modulesCompleted = [[],[],[]];
-  // for(i in semesters)
-  //   modulesCompleted[0] = modulesCompleted[0].concat(Object.keys(semesters[i].moduleHashmap));
-  // modulesCompleted[1] = modulesCompleted[1].concat(Object.keys(exempted));
-  // modulesCompleted[2] = modulesCompleted[2].concat(Object.keys(waived));
-  // foundation = new Criteria(AY1617,modulesCompleted);
-  // const items = [foundation];
+//   const semesters = getAllSemestersInPlanner(props.activePlannerId);
+//   const exempted = getStudentExemptedModules();
+//   const waived = getStudentWaivedModules();
+//   modulesCompleted = [[],[],[]];
+//   for(i in semesters)
+//     modulesCompleted[0] = modulesCompleted[0].concat(Object.keys(semesters[i].moduleHashmap));
+//   modulesCompleted[1] = modulesCompleted[1].concat(Object.keys(exempted));
+//   modulesCompleted[2] = modulesCompleted[2].concat(Object.keys(waived));
+//   foundation = new Criteria(AY1617,modulesCompleted);
+//   const items = [foundation];
 //   return { items };
 // }, NestableGradChecker);         // for original implementation of grad checker
 

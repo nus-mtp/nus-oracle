@@ -16,5 +16,28 @@ body {
 
 // tab font colour
 .tabs-section-nav.tabs-section-nav-icons .nav-link.active{
-  color: #ff6600;
+  color: @primary-color;
+}
+
+// scroll-bar for all dropdown lists
+.Select-menu {
+  overflow-y: auto !important;
+}
+.Select-menu-outer, .ReactVirtualized__Grid.ReactVirtualized__List.VirtualSelectGrid{
+  border-radius: 0 0 15px 15px;
+}
+
+// module colours
+.dd-handle {
+  background: rgba(255, 102, 0, 0.2) !important;
+  border-radius: .5rem;
+  border: 1px solid @primary-color !important;
+  color: @primary-color !important;
+}
+
+.dd-handle:hover {
+  background: rgba(255, 102, 0, 0.6) !important;
+  border-radius: .5rem;
+  border: 1px solid @primary-color !important;
+  color: white !important;
 }

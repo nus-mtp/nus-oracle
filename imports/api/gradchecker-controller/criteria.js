@@ -105,27 +105,27 @@ export function Criteria(object, modulesCompleted){
       }
 
       // else loop through all equivalent modules if criteria is a module
-      else {
-        // if module fulfillment list does not exist (or its length == 0)
-        if(Object.keys(getModuleFulfilment(this.name)).length == 0 || getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent.length == 0){
-          return false;
-        }
-        var equivalentModules = getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent;
-        listA = modulesCompleted[0].concat(modulesCompleted[1]);
-
-        for(var i=0; i<equivalentModules.length; i++){
-          if(_.contains(listA , equivalentModules[i])){
-            this.fulfilledMC = searchByModuleCode(equivalentModules[i]).moduleMC;
-            return this.checkMC();
-          }
-          else if(_.contains(modulesCompleted[2],equivalentModules[i])){
-            this.fulfilledMC = 0;
-            this.toUE = true;
-            this.requiredMC = searchByModuleCode(equivalentModules[i]).moduleMC;
-            return this.checkMC();
-          }
-        }
-      }
+      // else {
+      //   // if module fulfillment list does not exist (or its length == 0)
+      //   if(Object.keys(getModuleFulfilment(this.name)).length == 0 || getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent.length == 0){
+      //     return false;
+      //   }
+      //   var equivalentModules = getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent;
+      //   listA = modulesCompleted[0].concat(modulesCompleted[1]);
+      //
+      //   for(var i=0; i<equivalentModules.length; i++){
+      //     if(_.contains(listA , equivalentModules[i])){
+      //       this.fulfilledMC = searchByModuleCode(equivalentModules[i]).moduleMC;
+      //       return this.checkMC();
+      //     }
+      //     else if(_.contains(modulesCompleted[2],equivalentModules[i])){
+      //       this.fulfilledMC = 0;
+      //       this.toUE = true;
+      //       this.requiredMC = searchByModuleCode(equivalentModules[i]).moduleMC;
+      //       return this.checkMC();
+      //     }
+      //   }
+      // }
 
       // console.log(this.name);
       // console.log(getModuleFulfilment(this.name));

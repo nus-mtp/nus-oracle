@@ -34,8 +34,7 @@ export default class AcadYrRow extends React.Component {
 
   render() {
     return (
-      <section className="activity-line-action"
-               style={{backgroundColor: this.getAcadYrHoverColor()}}>
+      <section className="activity-line-action">
         <div className="time">
 
           {this.props.acadYr}

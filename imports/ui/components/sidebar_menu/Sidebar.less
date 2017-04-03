@@ -88,8 +88,8 @@
   z-index: 10;
   width:  @sidebar-panel-width;
   left: @sidebar-menu-width;
-  padding-top: @logo-height;
   padding: 1em;
+  padding-top: @logo-height;
   background: @sidebar-color;
   border: none;
 }
@@ -105,7 +105,33 @@ nav.side-menu.side-menu-compact::-webkit-scrollbar, nav.side-menu-addl::-webkit-
   display: none;
 }
 
-// PROFILE PANEL
+// ==================================
+//  Panel Title Styles
+// ==================================
+
+// font styles
+.side-menu-addl .side-menu-addl-title .caption {
+    font-size: 1.5em;
+    font-weight: 100;
+    color: #eee;
+}
+
+// panel title icon
+.side-menu-addl .side-menu-addl-title i.font-icon {
+    font-size: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    right: 0;
+    border-radius: 40px;
+    color: #808080;
+    border: 1px solid #808080;
+  }
+
+// ==================================
+//  PROFILE PANEL
+// ==================================
 
 .editIcon{
   font-size: 1.5em;
@@ -113,6 +139,108 @@ nav.side-menu.side-menu-compact::-webkit-scrollbar, nav.side-menu-addl::-webkit-
 }
 
 .side-menu-addl .Select.Select--single.has-value {
-    width: 80%;
+    width: 100%;
     float: left;
+}
+
+// side panel list item text
+.side-menu-addl .side-menu-addl-list li.header a {
+  color: @secondary-color;
+}
+
+.side-menu-addl .side-menu-addl-list a {
+  border: 1px solid @secondary-color;
+  border-radius: 15px;
+  font-size: 1rem;
+  color: @secondary-color;
+}
+
+.side-menu-addl .side-menu-addl-list a:hover{
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 15px;
+}
+
+.side-menu-addl .side-menu-addl-list a.disabled {
+  border: none;
+}
+
+.side-menu-addl .side-menu-addl-list a.disabled:hover{
+  border: none;
+  background: none;
+  color: @secondary-color;
+}
+
+// exempted and waived boxes
+.side-menu-addl-list .card-grid-col .card-typical {
+  background: transparent;
+  margin-bottom: 1em;
+
+  border: none;
+  border-radius: 15px;
+  background: #888;
+}
+
+// fonts - exempted and waived boxes
+.card-typical .card-typical-linked {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+// module search box
+// initial appearance
+.side-menu-addl .Select-control {
+  background: @base-color;
+  border-color: @base-color;
+  color: #eee;
+  // border-radius: 15px;
+  box-shadow: none;
+}
+// focused
+.side-menu-addl .is-focused:not(.is-open) > .Select-control {
+  width: 100%;
+  border-color: @base-color;
+  box-shadow: none;
+}
+// focused text field
+.side-menu-addl .is-focused .Select-input > input {
+  color: white;
+  font-size: 1em;
+  font-weight: 900;
+}
+
+// module search box Virtualised Select
+.side-menu-addl .VirtualizedSelectOption{
+    background-color: #eee;
+    color: #777;
+}
+.side-menu-addl .VirtualizedSelectFocusedOption {
+    background-color: #777;
+    color: #fff;
+}
+
+// Prev edu / Acad Cohort
+.side-menu-addl .has-value.Select--single > .Select-control .Select-value .Select-value-label {
+// .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label.Select-value-label {
+  color: #eee;
+}
+
+
+// module colours
+.side-menu-addl .dd-handle {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: .5rem;
+  border: 1px solid #eee !important;
+  color: #eee !important;
+}
+
+.side-menu-addl .dd-handle:hover {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-radius: .5rem;
+  border: 1px solid white !important;
+  color: white !important;
 }
