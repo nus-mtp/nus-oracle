@@ -41,7 +41,7 @@ Meteor.startup(() => {
   //scrapeModuleMappingListingForBeforeULR1516();
   //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseJSONFileAndStoreToDB();
-  parseForLezzgo();
+  //parseForLezzgo();
 
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
