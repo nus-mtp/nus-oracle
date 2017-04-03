@@ -52,10 +52,9 @@ export default class PanelProfile extends React.Component {
       <nav className="side-menu-addl">
         <PanelHeader  title="My Profile" icon="font-icon font-icon-user" />
         <ul className="side-menu-addl-list">
-          <PanelListItem displayType="header" text="Change Password"  isEditable={false}
-          onClick = {this.handleChangePassword.bind(this)}/>
-          <PanelListItem displayType="header" text="E-mail"  isEditable={false}/>
           <PanelListItem displayType="" text={ (Meteor.user()) ? Meteor.user().username : "" }  isEditable={false}/>
+          <PanelListItem displayType="header" text="Change Password"  isEditable={true}
+          onClick = {this.handleChangePassword.bind(this)}/>
           <SidebarModulesCardContainer studentID="" listType="Exempted" tooltip={exemptedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
           <SidebarModulesCardContainer studentID="" listType="Waived" tooltip={waivedToolTip} handleInfoClick={this.openExemptedModuleInfoPage.bind()}/>
           <PanelListItem displayType="header" text="My Previous Education" isEditable={false}/>
