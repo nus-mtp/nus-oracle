@@ -44,8 +44,9 @@ describe('grad-checker-foundation', function()  {
 
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const moduleChecked = {};
 
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {}, requiredMCs);
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
@@ -70,6 +71,7 @@ describe('grad-checker-foundation', function()  {
 
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const moduleChecked = {};
 
     const exemptedModules = {
       CS1231: 'CS1231'
@@ -79,7 +81,7 @@ describe('grad-checker-foundation', function()  {
       CS3230: 'CS3230'
     }
 
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, exemptedModules, waivedModules);
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, exemptedModules, waivedModules, moduleChecked, requiredMCs);
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');

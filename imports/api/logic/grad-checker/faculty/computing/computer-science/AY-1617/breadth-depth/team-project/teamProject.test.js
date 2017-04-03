@@ -43,9 +43,10 @@ describe('grad-checker-teamProject', function()  {
     const allSemesters = getAllSemestersInPlanner(plannerIDs[4]);
 
     const teamProjectModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedTeamProjectModulesAndMCs = findTeamProjectRequirementModules(academicCohort, allSemesters, teamProjectModules, {}, {}, requiredMCs);
+    const markedTeamProjectModulesAndMCs = findTeamProjectRequirementModules(academicCohort, allSemesters, teamProjectModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedTeamProjectModulesAndMCs.markedTeamProjectModules[modules[0]], 'CS3283 fulfiled');
     assert.isTrue(markedTeamProjectModulesAndMCs.markedTeamProjectModules[modules[1]], 'CS3284 fulfiled');
     assert.isTrue(markedTeamProjectModulesAndMCs.moduleChecked['CS3283'], 'CS3283 checked');

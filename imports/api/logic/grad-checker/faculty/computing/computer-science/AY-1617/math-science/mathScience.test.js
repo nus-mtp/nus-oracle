@@ -42,9 +42,10 @@ describe('grad-checker-mathSci', function()  {
     const requirementName = 'Mathematics and Sciences'
     const allSemesters = getAllSemestersInPlanner(plannerIDs[3]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+    const moduleChecked = {};
 
-    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, moduleChecked, requiredMCs);
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[0]], 'MA1301 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[1]], 'MA1521 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[2]], 'MA1101R fulfiled');

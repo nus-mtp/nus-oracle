@@ -12,12 +12,15 @@ export const scrapeModuleMappingListingForBeforeULR1516 = function scrapeModuleM
   const gemA = "GEM A";
   const gemB = "GEM B";
   const singaporeStudies = "Singapore Studies";
+  const breadthOne = "Breadth One";
+  const breadthTwo = "Breadth Two";
 
   const DEFAULT_ACAD_YEAR = "AY 2014/2015";
 
   const gemA_Array = [];
   const gemB_Array = [];
   const SS = [];
+  const breadthArray = [];
 
   const isNotEmpty = function(string) {
     return string != '';
@@ -163,10 +166,19 @@ export const scrapeModuleMappingListingForBeforeULR1516 = function scrapeModuleM
   if (!moduleFulfilment.moduleMapping[DEFAULT_ACAD_YEAR]) {
     updateModuleMappingOfModuleFulfilment(DEFAULT_ACAD_YEAR, singaporeStudies, SS);
   }
+  if (ModuleFulfilments.find({moduleCode: breadthOne}).count() ==0) {
+    createNewModuleFulfilment(DEFAULT_ACAD_YEAR, breadthOne, breadthArray);
+  }
+  if (ModuleFulfilments.find({moduleCode: breadthTwo}).count() ==0) {
+    createNewModuleFulfilment(DEFAULT_ACAD_YEAR, breadthTwo, breadthArray);
+  }
 
   console.log(ModuleFulfilments.findOne({moduleCode:gemA}));
   console.log(ModuleFulfilments.findOne({moduleCode:gemB}));
   console.log(ModuleFulfilments.findOne({moduleCode:singaporeStudies}));
+  console.log(JSON.stringify(ModuleFulfilments.findOne({moduleCode:breadthOne})));
+  console.log(JSON.stringify(ModuleFulfilments.findOne({moduleCode:breadthTwo})));
+
 
   // Start from default academic year
   /*let currentAcademicYear = DEFAULT_ACAD_YEAR;

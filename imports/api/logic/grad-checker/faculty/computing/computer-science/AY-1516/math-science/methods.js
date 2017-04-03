@@ -11,13 +11,16 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  * markModules and markExemptedWaivedModules
  */
 
-export const findMathSciRequirementModules = function findMathSciRequirementModules(academicCohort, studentSemesters, mathSciModules, exemptedModules, waivedModules, requiredMCs) {
+export const findMathSciRequirementModules = function findMathSciRequirementModules(
+  academicCohort, studentSemesters, mathSciModules, exemptedModules,
+  waivedModules, moduleChecked, requiredMCs) {
+
   let markedMathSciModulesAndMCs = {
     name: 'Mathematics and Sciences',
     markedMathSciModules: mathSciModules,
     numberOfMathSciModulesMarkedTrue: 0,
+    moduleChecked: moduleChecked,
     totalModuleMCs: 0,
-    moduleChecked: {},
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
