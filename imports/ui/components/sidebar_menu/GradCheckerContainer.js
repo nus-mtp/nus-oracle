@@ -10,11 +10,6 @@ import Nestable from '../common/Nestable.jsx';
 import NestableGradChecker from '../common/NestableGradChecker.jsx';
 
 export default GradCheckerContainer = createContainer((props) => {
-  Meteor.subscribe('AcademicCohort');
-  Meteor.subscribe('FocusArea');
-  Meteor.subscribe('GraduationRequirements');
-  Meteor.subscribe('ModuleFulfilments');
-
   const listType = props.listType;
 
   // TODO: Alternative implementation of GradChecker - Experiment - @walrys Wenhan

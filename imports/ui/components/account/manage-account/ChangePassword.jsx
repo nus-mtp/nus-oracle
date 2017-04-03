@@ -40,19 +40,29 @@ export default class ForgetAccount extends React.Component {
   }
 
   handleChange() {
-    if (this.state.newPassword == this.state.newConfirmPassword) {
-      Accounts.changePassword(this.state.oldPassword, this.state.newPassword, (error) => {
-        if (error) {
-          // Variety of errors when signing up
-          Bert.alert(error.reason, 'danger');
+    // include check for verifier
+    Meteor.call('nusPasswordVerifier',
+                this.state.newPassword,
+                this.state.newConfirmPassword,
+                (errorObj, isValidPassword) => {
+      if (!isValidPassword) {
+        Bert.alert(errorObj.error.reason, 'danger');
+      } else {
+        if (this.state.newPassword == this.state.newConfirmPassword) {
+          Accounts.changePassword(this.state.oldPassword, this.state.newPassword, (error) => {
+            if (error) {
+              // Variety of errors when signing up
+              Bert.alert(error.reason, 'danger');
+            } else {
+              Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
+              this.props.onSuccess();
+            }
+          });
         } else {
-          Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
-          this.props.onSuccess();
+            Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
         }
-      });
-    } else {
-        Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
-    }
+      }
+    });
   }
 
   render() {
