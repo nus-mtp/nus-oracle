@@ -1,14 +1,27 @@
-#NUS Oracle
+# Welcome to the NUS Oracle GitHub Project Website!
 
-## Branch Naming Convention
-> Note this is unconfirmed yet since our group should decide on the branch codes     
+## Table Of Contents      
+**General**      
+[Project Goal](#project-goal)      
+[Key Features](#key-features)      
+[Getting Started](#getting-started)        
+[Contributing to NUS Oracle](#contributing-to-nus-oracle)        
+[Demo Video](#demo-video)        
+[The Team](#the-team)        
 
-* Use words that summarise the purpose of the branch at the beginning of the branch name, e.g. **bug/module-searcher-component/query-parser, wip/NUSMods-parser, feature/core-mods-recommender**
-* Use slashes to separate parts
-* Delete branch when you’re done with it
+## Project Goal
+NUS Oracle is a web app designed to help Computer Science students plan their 4-year candidature in the NUS School of Computing. 
 
-#### Branch codes
-wip       Works in progress    
-feat      A feature we plan to add          
-bug       Bug fix or trials for bug fixing       
-junk      Throwaway branch created to experiment      
+Coming up with a 4-year study plan can be stressful, tiresome and messy. Junior students may not be entirely familiar with the school's graduation requirements and senior students may want to try out different study plans to pursue different focus areas and interests. NUS Oracle follows you through your study planning process and lets you check graduation requirements, view interesting NUS modules and it saves all your study plans in one place.
+
+## Key Features
+
+## Getting Started
+
+## Contributing to NUS Oracle
+
+## Demo Video
+
+## The Team
+
+
