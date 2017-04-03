@@ -1,4 +1,5 @@
 import React from 'react'
+import RotateLoader from './halogen/RotateLoader';
 
 export default class Nestable extends React.Component{
   render(){
@@ -70,7 +71,9 @@ class OrderedList extends Nestable{
             {
               items.map((item, index) => {
               if(item.name === undefined)
-                return undefined;
+                return <div>
+                  <RotateLoader position='relative' color="#ff9702" />
+                </div>
               else if(item.children == undefined || item.children.length == 0 && item.name!== undefined){
                 //item is a single entry
                 return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled}/>;
@@ -87,7 +90,7 @@ class OrderedList extends Nestable{
         );
     }
     else {
-      return <div></div>;
+      return <RotateLoader postition='relative' color="#ff9702" />
     }
   }
 }

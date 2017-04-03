@@ -39,21 +39,25 @@ export default class RestoreAccount extends React.Component {
   }
 
   handleReset() {
+    this.props.onSubmit();
     Meteor.call('nusPasswordVerifier',
                 this.state.password,
                 this.state.repassword,
                 (errorObj, isValidPassword) => {
       if (!isValidPassword) {
         Bert.alert(errorObj.error, 'danger');
+        this.props.onLoadComplete();
       } else {
 
         Accounts.resetPassword(this.state.token, this.state.password, error => {
           if (error) {
             Bert.alert(error.reason, 'danger');
+            this.props.onLoadComplete();
           } else {
             Meteor.call('unlockAcc');
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
             this.props.onSuccess();
+            FlowRouter.reload();
           }
         });
       }

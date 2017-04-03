@@ -7,6 +7,14 @@ import { successMsgs,
 
 // Import React components
 import Button from '../../common/Button.jsx';
+var Loader = require('../../common/halogen/PulseLoader');
+//import verfification from '../../server/send-verification'
+/*
+ To delete accounts,
+ 1) meteor mongo
+ 2) db.users.remove({_id:db.users.find()[0]._id})
+ db.users.find({username:"3@gmail.com"}).userId
+ */
 import FormInput from '../../common/FormInput.jsx';
 import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
@@ -37,8 +45,11 @@ export default class RegisterAccount extends React.Component {
   handleRePasswordChange(input) {
     this.setState({repassword: input});
   }
-
+  handleCloseLoader() {
+    this.props.onLoadComplete();
+  }
   handleSubmit() { // to verify registration
+    this.props.onSubmit();
     let user = {
       username: this.state.email,
       email: this.state.email,
@@ -48,7 +59,6 @@ export default class RegisterAccount extends React.Component {
         accountLock: false
       }
     }
-
     Meteor.call('nusEmailVerifier', this.state.email, (emailErrorObj, validEmail) => {
       if (validEmail) {
         this.setState({ emailErrorObj: null });
@@ -64,14 +74,16 @@ export default class RegisterAccount extends React.Component {
               if (error) {
                 // Variety of errors when signing up
                 Bert.alert(error.reason, 'danger');
+                this.handleCloseLoader();
               } else {
                 Meteor.call('sendVerificationLink', (error, response) => {
                   if (error) {
                     Bert.alert(error.reason, 'danger');
+                    this.handleCloseLoader();
                   } else {
                     Bert.alert(successMsgs.SUCCESS_SIGNUP, 'success');
-                    this.props.onSuccess();
                     Meteor.logout();
+                    this.props.onSuccess();
                   }
                 });
               }
@@ -79,13 +91,16 @@ export default class RegisterAccount extends React.Component {
           } else {
             // Prepare state for User Feedback for wrong password entered
             this.setState({ passwordErrorObj: passwordErrorObj.error });
+            this.handleCloseLoader();
           }
         });
       } else {
         // Prepare state for User Feedback for wrong NUS E-mail entered
         this.setState({ emailErrorObj: emailErrorObj.error });
+        this.handleCloseLoader();
       }
     });
+
   }
 
   /**
@@ -99,7 +114,10 @@ export default class RegisterAccount extends React.Component {
     let emailErrorMsgs = [];
 
     if (errorObj.incorrectDomain) {
-      emailErrorMsgs.push(errorMsgs.ERR_EMAIL_ENTERED_INVALID);
+      emailErrorMsgs.push(errorMsgs.ERR_EMAIL_ENTERED_INVALID_DOMAIN);
+    }
+    if (errorObj.incorrectFormat) {
+      emailErrorMsgs.push(errorMsgs.ERR_EMAIL_ENTERED_INVALID_FORMAT);
     }
 
     return (
