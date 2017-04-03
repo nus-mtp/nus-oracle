@@ -3,7 +3,6 @@ Meteor.methods({
   unlockAcc() {
     //let userAccount = Accounts.users.findOne({username: });
     const userId = Meteor.userId();
-    console.log("asd");
     Meteor.users.update(userId, {
       $set: { "profile.accountLock" : false }
     });

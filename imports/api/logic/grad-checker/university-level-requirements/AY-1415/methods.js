@@ -46,7 +46,6 @@ export const findULRRequirementModules = function findULRRequirementModules(
     markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
     markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
 
-
     if (!markedULRModulesAndMCs.markedULRModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
@@ -54,6 +53,7 @@ export const findULRRequirementModules = function findULRRequirementModules(
         // checks if in exempted or waived modules
         markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+
         if (markedULRModulesAndMCs.markedULRModules[keyNames[i]] ) {
           break;
         }

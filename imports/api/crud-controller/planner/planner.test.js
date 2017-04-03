@@ -149,6 +149,7 @@ describe('planner', function () {
     assert.equal(originalPlanner.semesters.length, duplicatePlanner.semesters.length);
 
     removePlanner(id);
+  });
 
   it ('set planner name (only spaces)', function()  {
     const plannerIDs = getPlannerIDsGivenUserID(userID);
@@ -159,5 +160,3 @@ describe('planner', function () {
     assert.equal(numOfDocumentsUpdatedWithSemester, 0);
   });
 });
-
-})

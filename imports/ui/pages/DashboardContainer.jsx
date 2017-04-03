@@ -11,6 +11,12 @@ export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');
     Meteor.subscribe('Student');
     Meteor.subscribe('Modules');
+    
+    Meteor.subscribe('AcademicCohort');
+    Meteor.subscribe('FocusArea');
+    Meteor.subscribe('GraduationRequirements');
+    Meteor.subscribe('ModuleFulfilments');
+
     //const userID = '9f91pejfj912ras';
 
     const plannerIDs = getPlannerIDs();

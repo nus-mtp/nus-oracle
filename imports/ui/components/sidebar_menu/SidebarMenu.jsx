@@ -18,7 +18,8 @@ render(){
             return(
                 <SidebarMenuButton key={index}
                      buttonTitle={buttonTitle}
-                     onSwitchTab={logout}
+                     onSwitchTab={logout}  
+
                      isActiveTab={(activeMenuPanelIndex === index)}
                      buttonIcon={iconList[index]}/>
             );
