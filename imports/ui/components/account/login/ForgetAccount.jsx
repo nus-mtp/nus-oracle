@@ -24,12 +24,15 @@ export default class ForgetAccount extends React.Component {
   }
 
   handleSendResetEmail() {
+    this.props.onSubmit();
+
     Accounts.forgotPassword({
       email: this.state.email
     }, (error) => {
       if (error) {
         // Variety of errors when entering email
         Bert.alert(error.reason, 'danger');
+        this.props.onLoadComplete();
       } else {
         let userName = this.state.email;
 
