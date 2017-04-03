@@ -56,7 +56,7 @@ Planner.schema = new SimpleSchema({
 Planner.attachSchema(Planner.schema);
 
 if (Meteor.isServer) {
-  Meteor.publish('planner', function taskPublication () {
+  Meteor.publish('planner', function taskPublication (  ) {
     const studentID = getStudentID(this.userId);
     if (studentID === '') {
       return {};

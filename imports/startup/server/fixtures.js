@@ -25,11 +25,10 @@ import { populateAcadCohortCollection } from '../../api/database-conversion/coho
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
-import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper'//;
 
 Meteor.startup(() => {
   plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
-
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
