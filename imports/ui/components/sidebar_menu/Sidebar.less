@@ -1,22 +1,42 @@
-@import '../common/Constants.less';
+  @import '../common/Constants.less';
 
 // ==================================
-//  Study Plan Styles
+//  Logo
 // ==================================
 
-.with-side-menu .page-content{
-  padding-left: @sidebar-width;
-  overflow-x: hidden;
+#dashboard-logo {
+  height: 100%;
+}
+
+#dashboard-logo-container {
+  position: fixed;
+  width: @sidebar-width;
+  height: @logo-height;
+  background: @sidebar-color;
+  padding-left: 1em;
+  z-index: 85;
+}
+
+// ==================================
+//  Icons
+// ==================================
+
+.side-menu-list > li.brown .font-icon, .side-menu-list > li.brown .glyphicon, .side-menu-list > li.brown .fa{
+  color: #999999;
 }
 
 // ==================================
 //  Navbar Styles
 // ==================================
 
-// Navbar Width
+// Navbar
 .side-menu.side-menu-compact{
+  padding-top: @logo-height;
+  margin: 0;
   width: @sidebar-menu-width;
   overflow-x: hidden;
+  background: transparent;
+  border: none;
 
   @media (max-width: 991px){
     left: 0;
@@ -45,16 +65,33 @@
   opacity: 1;
 }
 
+// navbar button active
+.side-menu-list > li.opened {
+  background-color: @sidebar-active-color;
+}
+.side-menu-list > li.brown.opened a, .side-menu-list > li.brown.opened > span{
+  border-left-color: @sidebar-active-color;
+  border-left-color: @sidebar-highlights;
+}
+
+// navbar button hover
+.side-menu-list a:hover, .side-menu-list > li > span:hover {
+  background-color: @sidebar-hover-color;
+}
+
 // ==================================
 //  Panels Styles
 // ==================================
 
-// Panel width
+// Sidebar Panel
 .side-menu-addl{
   z-index: 10;
   width:  @sidebar-panel-width;
   left: @sidebar-menu-width;
+  padding-top: @logo-height;
   padding: 1em;
+  background: @sidebar-color;
+  border: none;
 }
 
 .sidemenuIcon{

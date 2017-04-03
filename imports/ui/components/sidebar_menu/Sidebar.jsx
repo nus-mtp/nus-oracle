@@ -28,6 +28,11 @@ export default class Sidebar extends React.Component {
     var activeMenuPanelIndex = this.state.activeMenuPanelIndex;
     return (
       <div className="my-side-menu">
+        <div id="dashboard-logo-container">
+          <img id="dashboard-logo"
+               src="./images/logo/nusOracle-logo-light.png"
+               alt="nus_oracle_logo_light" />
+        </div>
         <SidebarMenu  tabTitleList={tabTitleList}
                       activeMenuPanelIndex={activeMenuPanelIndex}
                       menuPanelsList={menuPanelsList}
