@@ -56,3 +56,4 @@ check
 session
 mrt:cheerio
 anonyfox:scrape
+force-ssl
