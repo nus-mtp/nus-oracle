@@ -125,8 +125,9 @@ export default class LoginAccount extends React.Component {
     return (
       <div>
         <div className="gallery-picture">
-          <img style={{height: '100%', width: '100%', marginTop: '2em'}}
-               src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
+          <img id="login-logo"
+               src="./images/logo/nusOracle-logo-colour.png"
+               alt="NUS_Oracle_logo" />
         </div>
 
         <div className="col-md-6 blockui-element-container-default"
@@ -134,12 +135,14 @@ export default class LoginAccount extends React.Component {
           <div className="form-group" style={{textAlign: 'center'}}>
 
             <FormInput placeholder="NUS E-mail"
+                       className="form-control login-email"
                        onChange={this.handleEmailChange.bind(this)} />
 
             <FormInput type="password" placeholder="Password"
+                       className="form-control login-password"
                        onChange={this.handlePasswordChange.bind(this)} />
 
-            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline login-button"
                     buttonText="LOGIN"
                     onButtonClick={this.handleSubmit.bind(this)} />
 
