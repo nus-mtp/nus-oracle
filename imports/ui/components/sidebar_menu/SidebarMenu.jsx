@@ -5,11 +5,6 @@ import { logout } from '../account/logout/LogoutAccount.jsx';
 
 export default class SidebarMenu extends React.Component {
 
-  handleLogout(index)  {
-    this.props.onSwitchTab(index);
-    logout();
-  };
-
 render(){
   var tabTitleList = this.props.tabTitleList;
   var iconList = this.props.iconList;
@@ -23,7 +18,7 @@ render(){
             return(
                 <SidebarMenuButton key={index}
                      buttonTitle={buttonTitle}
-                     onSwitchTab={this.handleLogout.bind(this, index)}
+                     onSwitchTab={logout}  
 
                      isActiveTab={(activeMenuPanelIndex === index)}
                      buttonIcon={iconList[index]}/>
