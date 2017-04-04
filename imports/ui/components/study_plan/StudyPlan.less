@@ -1,3 +1,14 @@
+@import '../common/Constants.less';
+
+// ==================================
+//  Study Plan Styles
+// ==================================
+
+.with-side-menu .page-content{
+  padding-left: @sidebar-width;
+  overflow-x: hidden;
+}
+
 // ========================================
 //   Tab alignment
 // ========================================
@@ -5,6 +16,10 @@
 // flush all tabs to left
 ul.nav {
     float: left;
+}
+
+.activity-line-action:nth-child(even) {
+  background-color: #FFF9F0;
 }
 
 // ========================================
@@ -21,16 +36,16 @@ ul.nav {
   height: 100%;
 }
 
-// enable scrolling in the study plan tab content box
+// enable scrolling in the study plan content box
 .tab-content-box {
   height: 93%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-// remove default bottom margin
 .tabs-section {
   margin: 0;
+  background: @tab-container-color;
 }
 
 // ========================================
@@ -39,6 +54,7 @@ ul.nav {
 
 // hide tab horizontal scrollbar
 .tabs-section-nav.tabs-section-nav-icons{
+  border: none;
   overflow: hidden;
 }
 
