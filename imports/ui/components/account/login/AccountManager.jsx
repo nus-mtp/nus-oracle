@@ -84,7 +84,7 @@ export default class AccountManager extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid" style={{width: "70%"}}>
+      <div className="container-fluid">
         <div className="page-center page-center-in">
           {this.state.isLoggingIn ?
             <LoginAccount onForgetPassword={this.handleForgetPassword.bind(this)}

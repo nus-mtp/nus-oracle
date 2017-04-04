@@ -158,7 +158,7 @@ export default class ModuleInfoTooltip extends React.Component {
     let module = this.props.module
 
     return (
-      <ReactTooltip id={module.moduleCode} place="bottom" effect="solid">
+      <ReactTooltip id={module.moduleCode} place="bottom" effect="solid" delayShow={300}>
         <div style={{width: '34em'}}>
 
           {/* Title of the tooltip */}
