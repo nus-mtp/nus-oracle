@@ -21,7 +21,7 @@ export default class PanelProfile extends React.Component {
   }
 
   openExemptedModuleInfoPage(){
-    window.open("http://www.comp.nus.edu.sg/programmes/ug/exemptions/polygrad/", "_blank");
+    window.open("http://www.comp.nus.edu.sg/programmes/ug/exemptions/", "_blank");
   }
 
   openWaivedModuleInfoPage(){
