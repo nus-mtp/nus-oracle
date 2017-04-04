@@ -135,12 +135,14 @@ export default class LoginAccount extends React.Component {
           <div className="form-group" style={{textAlign: 'center'}}>
 
             <FormInput placeholder="NUS E-mail"
+                       className="form-control login-email"
                        onChange={this.handleEmailChange.bind(this)} />
 
             <FormInput type="password" placeholder="Password"
+                       className="form-control login-password"
                        onChange={this.handlePasswordChange.bind(this)} />
 
-            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline login-button"
                     buttonText="LOGIN"
                     onButtonClick={this.handleSubmit.bind(this)} />
 
