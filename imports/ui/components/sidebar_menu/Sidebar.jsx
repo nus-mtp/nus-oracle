@@ -14,6 +14,9 @@ export default class Sidebar extends React.Component {
   handleChangePassword() {
     this.props.onChangePassword();
   }
+  handleLogout() {
+    this.props.onLogout();
+  }
   handleSwitchTab(index) {
     this.setState({activeMenuPanelIndex: index});
   }
@@ -37,7 +40,8 @@ export default class Sidebar extends React.Component {
                       activeMenuPanelIndex={activeMenuPanelIndex}
                       menuPanelsList={menuPanelsList}
                       iconList={iconList}
-                      onSwitchTab={this.handleSwitchTab.bind(this)}/>
+                      onSwitchTab={this.handleSwitchTab.bind(this)}
+                      onLogout = {this.handleLogout.bind(this)}/>
         {menuPanelsList[activeMenuPanelIndex]}
       </div>
     );

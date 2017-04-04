@@ -69,6 +69,8 @@ export default class LoginAccount extends React.Component {
   }
 
   handleSubmit() {
+    this.props.onSubmit();
+    console.log("loggingin");
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
       if (error) { // Login error
         if (error.reason == 'Incorrect password') {
@@ -84,6 +86,7 @@ export default class LoginAccount extends React.Component {
         } else { // Incorrect email, etc.
           Bert.alert(error.reason, 'danger');
         }
+        this.props.onSuccess();
       } else {
         this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
 
@@ -93,6 +96,7 @@ export default class LoginAccount extends React.Component {
           Bert.alert(errorLockedAccount(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
+          this.props.onSuccess();
         } else if (isVerified) {
           // Log only a valid and verified user in
           if (!Meteor.user().profile.hasSetup) {
@@ -104,14 +108,17 @@ export default class LoginAccount extends React.Component {
             Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
             FlowRouter.go(pathToUserDashboard);
           }
+
         } else {
           // Refresh login page if this email isn't verified yet
           Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
+          this.props.onSuccess();
         }
       }
     });
+
   }
 
   render() {
@@ -146,6 +153,7 @@ export default class LoginAccount extends React.Component {
                onClick={this.handleClickOnForgetPassword.bind(this)}>
               Forgot Password?
             </a>
+
 
           </div>
         </div>
