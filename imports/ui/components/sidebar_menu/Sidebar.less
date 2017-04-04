@@ -47,22 +47,52 @@
 .side-menu.side-menu-compact .side-menu-list .lbl{
   display: none;
   position: fixed;
-  transition: opacity 1s;
+  transition: opacity 0.3s;
+  color: #eee;
   opacity: 0;
 }
+
 
 // Show nav button text on hover
 .side-menu.side-menu-compact .side-menu-list .lbl.hovered{
   left: @sidebar-menu-width;
   padding: 1em;
+  padding-top: 2em;
   border-width: 1px;
   border-style: solid;
-  height: auto;
+  border: none;
+  height: 72px;
   display: inline-block;
   position: fixed;
-  background-color: white;
+  background-color: @sidebar-hover-color;
+  margin-top: -16px;
   transition: opacity 1s;
+  color: #eee !important;
   opacity: 1;
+  border-radius: 0 40px 40px 0;
+}
+
+// animate nav bar hover label
+.keyframes(@name; @arguments) {
+	@-moz-keyframes @name { @arguments(); }
+	@-webkit-keyframes @name { @arguments(); }
+	@keyframes @name { @arguments(); }
+}
+
+.animation(@arguments) {
+	-webkit-animation: @arguments;
+	-moz-animation: @arguments;
+	animation: @arguments;
+}
+
+.side-menu.side-menu-compact .side-menu-list .lbl.hovered {
+	.keyframes(
+    slide-out;
+    { 0% { opacity: 0; left: @sidebar-menu-width - 15px;}
+		  100% { opacity: 1; left: @sidebar-menu-width; }}
+  );
+
+	.animation(slide-out 0.2s ease-in);
 }
 
 // navbar button active
@@ -157,10 +187,10 @@ nav.side-menu.side-menu-compact::-webkit-scrollbar, nav.side-menu-addl::-webkit-
 
 .side-menu-addl .side-menu-addl-list a:hover{
   background: none;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff;
   background: rgba(255, 255, 255, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 15px;
 }
 
@@ -231,14 +261,14 @@ nav.side-menu.side-menu-compact::-webkit-scrollbar, nav.side-menu-addl::-webkit-
 
 
 // module colours
-.side-menu-addl .dd-handle {
+.side-menu-addl .card-grid-col .dd-handle {
   background: rgba(255, 255, 255, 0.2) !important;
   border-radius: .5rem;
   border: 1px solid #eee !important;
   color: #eee !important;
 }
 
-.side-menu-addl .dd-handle:hover {
+.side-menu-addl .card-grid-col .dd-handle:hover {
   background: rgba(255, 255, 255, 0.6) !important;
   border-radius: .5rem;
   border: 1px solid white !important;
