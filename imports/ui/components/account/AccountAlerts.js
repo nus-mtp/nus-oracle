@@ -32,6 +32,8 @@ export const errorMsgs = {
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your e-mail has not been verified. Please check",
+  ERR_EMAIL_FIELD_EMPTY: "Please input your NUS E-mail",
+  ERR_EMAIL_USER_NOT_FOUND: "This e-mail isn't recognized. Did you enter your NUS e-mail address correctly?",
   ERR_ACCOUNT_LOCK: "Your account has been locked. Please check",
   ERR_EMAIL_ENTERED_INVALID_DOMAIN: "Invalid NUS e-mail. Remember to end your e-mail address with '@u.nus.edu'",
   ERR_EMAIL_ENTERED_INVALID_FORMAT:"Invalid email format. Please check if there are invalid puncutations in your email",

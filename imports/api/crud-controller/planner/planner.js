@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { getStudentID } from '../../database-controller/student/methods';
+import { getStudentIDGivenUserID } from '../../database-controller/student/methods';
 
 // create class for planner
 class PlannerCollection extends Mongo.Collection {
@@ -56,11 +56,8 @@ Planner.schema = new SimpleSchema({
 Planner.attachSchema(Planner.schema);
 
 if (Meteor.isServer) {
-  Meteor.publish('planner', function taskPublication (  ) {
-    const studentID = getStudentID(this.userId);
-    if (studentID === '') {
-      return {};
-    }
+  Meteor.publish('planner', function taskPublication () {
+    let studentID = getStudentIDGivenUserID(this.userId);
     return Planner.find( { userID: studentID } );
   });
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../common/Button.jsx';
 import SemModulesCardContainer from './SemModulesCardContainer.js';
 
-import { deleteAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
+import { duplicatePlanner } from './../../../api/crud-controller/planner/methods.js';
 
 export default class AddNewPlanner extends React.Component {
   render() {

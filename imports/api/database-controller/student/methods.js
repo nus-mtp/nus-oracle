@@ -28,13 +28,27 @@ export const createNewStudent = function createNewStudent(userID, studentCohort,
 
 };
 
-// get student ID given userId
-export const getStudentID = function getStudentID(userId) {
+// retrieved student id given accountID
+export const getStudentIDGivenUserID = function getStudentIDGivenUserID(userID) {
   // account dependent meteor function
-  let id = userId;
+  let id = userID;
 
-  if (!id)  {
+  const student = Students.findOne( {'accountID': id} );
+
+  if (!student) {
+    return '';
+  }
+  return student._id;
+}
+
+// get student ID without student ID
+export const getStudentID = function getStudentID() {
+  // account dependent meteor function
+  let id = '';
+
+  try {
     id = Meteor.userId();
+  } catch (e) {
   }
 
   const student = Students.findOne( {'accountID': id} );
@@ -43,14 +57,14 @@ export const getStudentID = function getStudentID(userId) {
     return '';
   }
   return student._id;
-
 }
+
 // helper function
 export const getCurrentStudentDocument = function getCurrentStudentDocument(studentID) {
   return Students.findOne({_id: studentID});
 }
 
-export const getStudentAcademicCohort = function getCohort() {
+export const getStudentAcademicCohort = function getStudentAcademicCohort() {
   const studentID = getStudentID();
   if (!studentID) {
     return '';
@@ -140,7 +154,7 @@ export const deleteStudentExemptedModule = function deleteStudentExemptedModule(
   return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const getStudentWaivedModules = function getStudentAcademicCohort() {
+export const getStudentWaivedModules = function getStudentWaivedModules() {
   const studentID = getStudentID();
   if (!studentID) {
     return {};
@@ -291,5 +305,6 @@ export const deleteStudentWaivedModuleGivenStudentID = function deleteStudentWai
 
 export const getStudentRepackagedDefaultPlannerIDs = function getStudentRepackagedDefaultPlannerIDs() {
   const studentCohort = getStudentAcademicCohort();
-  return getStudentRepackagedDefaultPlannerIDs(studentCohort);
+  console.log(studentCohort);
+  return getRepackagedDefaultPlannerIDs(studentCohort);
 }
