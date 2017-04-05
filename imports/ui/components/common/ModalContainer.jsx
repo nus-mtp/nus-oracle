@@ -37,7 +37,9 @@ export default class ModalContainer extends React.Component {
     )
   }
 }
+
 ModalContainer.propTypes = {
   content: React.PropTypes.node,
+  disableHide: React.PropTypes.bool,
   onHidden: React.PropTypes.func
 }
