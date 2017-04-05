@@ -109,7 +109,7 @@ export default class AccountManager extends React.Component {
                             onLoadComplete = {this.handleHideLoading.bind(this)}
                             onSubmit={this.handleLoading.bind(this)} />} /> : null}
           {this.state.isLoading ?
-            <ModalContainer onHidden={this.handleHideLoading.bind(this)}
+            <ModalContainer disableHide={true}
                             content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)}
                             loadText= {this.state.loadMessage}/>} /> : null}
         </div>
