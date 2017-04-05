@@ -13,6 +13,9 @@ export default class AcadYrRow extends React.Component {
     }
   }
 
+  //======================================================
+  // EVENT HANDLERS
+  //======================================================
   handleDelAYButtonClick() {
     this.setState({ isDeleteAcadYr: true });
   }
@@ -26,6 +29,15 @@ export default class AcadYrRow extends React.Component {
     this.setState({ isDeleteAcadYr: false });
   }
 
+  //===================================================================
+  // RENDER FUNCTIONS FOR DISTINCT UI PARTS WITHIN THE ACADYRROW
+  //===================================================================
+  /**
+   * Renders the confirmation overlay when user clicks to delete
+   * an academic year's worth of modules.
+   *
+   * @return {Node} React component for delete confirmation overlay
+   */
   renderDeleteAcadYrConfirmation() {
     return (
       <TranslucentOverlay>
@@ -54,13 +66,15 @@ export default class AcadYrRow extends React.Component {
   render() {
     return (
       <section className="activity-line-action">
-
+        {/* Confirmation overlay when user clicks on delete acad year */}
         {this.state.isDeleteAcadYr ? this.renderDeleteAcadYrConfirmation() : null}
 
+        {/* Left hand section with acad year and additional buttons */}
         <div className="time">
+          {/* Academic Year Label */}
+          <strong>{this.props.acadYr}</strong>
 
-          {this.props.acadYr}
-
+          {/* Left hand section's Delete All button */}
           {this.props.isLastAcadYr ?
           <Button buttonClass="btn btn-inline btn-danger-outline"
                   style={{position: "relative",
@@ -74,19 +88,36 @@ export default class AcadYrRow extends React.Component {
                   onButtonClick={this.handleDelAYButtonClick.bind(this)}
           /> :
           null}
-
         </div>
+
+        {/* Cards layout to hold all of this acad year's modules */}
         <div className="cont">
           <div className="cont-in">
+
+            {/* Normal Semesters */}
             <div className="col-md-4">
-              <SemModulesCardContainer sem="Sem I" semesterIndex={this.props.semesterIndex[0]} plannerID={this.props.plannerID} />
+              <SemModulesCardContainer
+                sem="Sem I"
+                semesterIndex={this.props.semesterIndex[0]}
+                plannerID={this.props.plannerID} />
             </div>
             <div className="col-md-4">
-              <SemModulesCardContainer sem="Sem II" semesterIndex={this.props.semesterIndex[1]} plannerID={this.props.plannerID} />
+              <SemModulesCardContainer
+                sem="Sem II"
+                semesterIndex={this.props.semesterIndex[1]}
+                plannerID={this.props.plannerID} />
             </div>
+
+            {/* Special Semesters */}
             <div className="col-md-4">
-              <SemModulesCardContainer sem="Special Sem I" semesterIndex={this.props.semesterIndex[2]} plannerID={this.props.plannerID}/>
-              <SemModulesCardContainer sem="Special Sem II" semesterIndex={this.props.semesterIndex[3]} plannerID={this.props.plannerID}/>
+              <SemModulesCardContainer
+                sem="Special Sem I"
+                semesterIndex={this.props.semesterIndex[2]}
+                plannerID={this.props.plannerID} />
+              <SemModulesCardContainer
+                sem="Special Sem II"
+                semesterIndex={this.props.semesterIndex[3]}
+                plannerID={this.props.plannerID} />
             </div>
           </div>
         </div>
@@ -99,10 +130,13 @@ AcadYrRow.propTypes = {
   /**
    *  Array of the indices of all the semesters in this academic year.
    *  Namely, we have 2 normal sems and 2 special sems.
-   *  Normal sems are at positions 1 and 2, special sems are at positions 3 and 4.
+   *  Normal sems are at positions 1 and 2, special sems are at
+   *  positions 3 and 4.
    *
-   *  NOTE: The next academic year's semester indices are CONTINUED LIKE THIS:
-   *  Normal sems are at positions 5 and 6, special sems are at positions 7 and 8.
+   *  NOTE: The next academic year's semester indices are
+   *        CONTINUED LIKE THIS:
+   *        Normal sems are at positions 5 and 6, special sems
+   *        are at positions 7 and 8, and so on...
    */
   semesterIndex: React.PropTypes.array,
 
