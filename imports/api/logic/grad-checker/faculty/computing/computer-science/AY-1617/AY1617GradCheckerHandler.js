@@ -11,7 +11,8 @@ import { findMathSciRequirementModules } from './math-science/methods';
 import { findTeamProjectRequirementModules } from './breadth-depth/team-project/methods';
 import { findIndustrialExperienceTrainingModules } from './breadth-depth/industrial-experience/methods';
 import { checkFocusAreaFulfilmentMCs,
-         findFocusAreaModules } from './breadth-depth/focus-area/methods';
+         findFocusAreaPrimary,
+         findFocusArea4KModules } from './breadth-depth/focus-area/methods';
 import { findULRRequirementModules } from '../../../../university-level-requirements/AY-1617/methods';
 import { findUnrestrictedElectivesRequirementModules } from './unrestricted-electives/methods';
 
@@ -63,6 +64,9 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
 
   // keep track of all modules that have been checked inside the planner
   let moduleChecked = {};
+
+  //student info Object
+  let studentInfoObject = createStudentInfoObject(studentAcademicCohort, studentSemesters, studentExemptedModules, studentWaivedModules);
 
   let UIFormatGraduationRequirement = {
     name: 'Graduation Requirements',
@@ -170,9 +174,14 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     }
 
     // For all focus area, checks if planner fulfils the 2 focus area conditions, then converts it to UI format
-    const focusAreaRequirements = UIFormatAllFocusAreaConversion(moduleRequirementTitle[1], studentAcademicCohort, allStudentFocusAreas, focusAreaTitles, studentSemesters, studentExemptedModules, studentWaivedModules, moduleChecked);
+    let returnPackage = UIFormatAllFocusAreaConversion(moduleRequirementTitle[1], studentInfoObject, allStudentFocusAreas, focusAreaTitles);
+    const focusAreaRequirements = returnPackage.focusAreaRequirements;
+    const focusAreaModulesChecked = returnPackage.focusAreaModulesChecked;
+
     // check if student planner meet 24 MCs requirement
-    graduationRequirements[moduleRequirementTitle[1]] = checkFocusAreaFulfilmentMCs(studentSemesters, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]], moduleChecked);
+    graduationRequirements[moduleRequirementTitle[1]] = checkFocusAreaFulfilmentMCs(studentInfoObject, focusAreaModulesChecked, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
+    studentInfoObject = graduationRequirements[moduleRequirementTitle[1]].studentInfoObject;
+    //console.log(JSON.stringify(studentInfoObject.moduleChecked));
 
     if (focusAreaRequirements.children[0].isFulfilled &&
         focusAreaRequirements.children[1].isFulfilled &&
@@ -273,7 +282,12 @@ const createUIFormat = function createUIFormat(tempGradRequirement, modules)  {
 *  @return {{objects}}  UI formatted list for focus area
 *
 */
-const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(moduleRequirementTitle, studentAcademicCohort, allStudentFocusAreas, focusAreaTitles, studentSemesters, studentExemptedModules, studentWaivedModules, moduleChecked)  {
+const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(moduleRequirementTitle, studentInfoObject, allStudentFocusAreas, focusAreaTitles)  {
+  let returnPackage = {
+    focusAreaRequirements: {},
+    focusAreaModulesChecked: {}
+  }
+
   let focusAreaRequirements = {
     name: moduleRequirementTitle,
     children: [],
@@ -292,43 +306,57 @@ const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(m
     isFulfilled: false
   }
 
-  // keep a count outside to check for total MCs for 4K modules
-  let total4KModuleMCs = 0;
+  // object that focus area 4K modules will be using
+  let focusAreaAtLeast12MCsOf4KRequiredInfo = createFocusAreaAtLeast12MCsOf4KRequiredInfoObject();
 
-  // keep track for total modules checked for 4K modules
-  let module4KChecked = {};
+  // number of primary modules marked
+  let previousNumberOfPrimaryModulesMarked = 0;
+  let selectedFocusArea = {};
 
   // for all focus area, find the ones fulfilled by the current planner
   for (var i=0; i<focusAreaTitles.length; i++)  {
-    let focusArea = {
-      focusAreaPrimaryModules: allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]],
-      focusArea4KModules: allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]],
-      focusAreaPrimary4KModules: allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]],
-      focusAreaNonPrimaryModules: allStudentFocusAreas.focusAreaNonPrimaryModules[focusAreaTitles[i]]
-    }
+    // object that focus area primary check will be using
+    let focusAreaPrimaryRequiredInfo = createFocusAreaPrimaryRequiredInfoObject(focusAreaTitles[i]);
 
-    if (!focusArea.focusAreaPrimaryModules || !focusArea.focusAreaPrimary4KModules || !focusArea.focusArea4KModules)  {
+    focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules = allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]];
+    focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules =  allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]];
+    focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules = allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]];
+
+    if (!focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules ||
+        !focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules ||
+        !focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules)  {
       continue;
     }
 
-    let oneFocusArea = findFocusAreaModules(focusAreaTitles[i], total4KModuleMCs, module4KChecked, studentAcademicCohort, studentSemesters, focusArea, studentExemptedModules, studentWaivedModules, moduleChecked);
+    focusAreaPrimaryRequiredInfo = findFocusAreaPrimary(focusAreaPrimaryRequiredInfo, studentInfoObject);
+    focusAreaAtLeast12MCsOf4KRequiredInfo = findFocusArea4KModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject);
 
-    total4KModuleMCs = oneFocusArea.total4KModuleMCs;
-    module4KChecked = oneFocusArea.module4KChecked;
+    // check a module if the number of marked primary focus area is more than the previous value
+    if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue > previousNumberOfPrimaryModulesMarked)  {
+      selectedFocusArea = focusAreaPrimaryRequiredInfo.moduleChecked;
+      previousNumberOfPrimaryModulesMarked = focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue;
+    }
 
-    focusAreaPrimaries.children.push(UIFormatOneFocusAreaConversion(oneFocusArea));
-    if (oneFocusArea.isPrimaryTrue)  {
+    focusAreaPrimaries.children.push(UIFormatOneFocusAreaConversion(focusAreaPrimaryRequiredInfo));
+
+    if (focusAreaPrimaryRequiredInfo.isPrimaryTrue)  {
       focusAreaPrimaries.isFulfilled = true;
     }
-    if (oneFocusArea.is4KTrue) {
+    if (focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue) {
       focusAreaAtLeast12MCs.isFulfilled = true;
     }
   }
 
+  // append all modules checked into the moduleChecked of studentInfoObject and mark isFocusAreaMarked as true
+  const focusAreaModulesChecked = Object.assign(selectedFocusArea, focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked);
+
   focusAreaRequirements.children.push(focusAreaPrimaries);
   focusAreaRequirements.children.push(focusAreaAtLeast12MCs);
 
-  return focusAreaRequirements;
+  returnPackage.focusAreaRequirements = focusAreaRequirements;
+  returnPackage.focusAreaModulesChecked = focusAreaModulesChecked;
+
+  return returnPackage;
 }
 
 /**
@@ -337,9 +365,9 @@ const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(m
 *  @return {{objects}}  UI formatted list of one requirements
 *
 */
-const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(oneFocusArea)  {
+const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(focusAreaPrimaryRequiredInfo)  {
   let tempGradRequirement = {
-    name: oneFocusArea.name,
+    name: focusAreaPrimaryRequiredInfo.name,
     children: [],
     isFulfilled: false
   }
@@ -349,8 +377,8 @@ const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(o
     children: [],
     isFulfilled: false
   }
-  primaryModules = createUIFormat(primaryModules, oneFocusArea.markedFocusAreaPrimaryModules);
-  primaryModules.isFulfilled = oneFocusArea.threePrimaryModules;
+  primaryModules = createUIFormat(primaryModules, focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules);
+  primaryModules.isFulfilled = focusAreaPrimaryRequiredInfo.threePrimaryModules;
 
   // create 4k here
   let fourThousandModules =  {
@@ -358,12 +386,50 @@ const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(o
     children: [],
     isFulfilled: false
   }
-  fourThousandModules = createUIFormat(fourThousandModules, oneFocusArea.markedFocusAreaPrimary4KModules);
-  fourThousandModules.isFulfilled = oneFocusArea.one4KModules;
+  fourThousandModules = createUIFormat(fourThousandModules, focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules);
+  fourThousandModules.isFulfilled = focusAreaPrimaryRequiredInfo.one4KModules;
 
   tempGradRequirement.children.push(primaryModules);
   tempGradRequirement.children.push(fourThousandModules);
-  tempGradRequirement.isFulfilled = oneFocusArea.isPrimaryTrue;
+  tempGradRequirement.isFulfilled = focusAreaPrimaryRequiredInfo.isPrimaryTrue;
 
   return tempGradRequirement;
+}
+
+const createFocusAreaPrimaryRequiredInfoObject = function createFocusAreaPrimaryRequiredInfoObject(focusAreaName)  {
+  const focusAreaPrimaryRequiredInfo = {
+    name: focusAreaName,
+    markedFocusAreaPrimary3KAndLessModules: {},
+    markedFocusAreaPrimary4KModules: {},
+    numberOfFocusAreaPrimaryModulesMarkedTrue: 0,
+    minNumberOfPrimaryFocusArea: 3, // constant that require changing
+    minNumberOfPrimary4K: 1,  // constant that require changing
+    moduleChecked: {},
+    threePrimaryModules: false,
+    one4KModules: false,
+    isPrimaryTrue: false,
+  };
+  return focusAreaPrimaryRequiredInfo;
+}
+
+const createFocusAreaAtLeast12MCsOf4KRequiredInfoObject = function createFocusAreaAtLeast12MCsOf4KRequiredInfoObject() {
+  const focusAreaAtLeast12MCsOf4KRequiredInfo = {
+    markedFocusArea4KModules: {},
+    total4KModuleMCs: 0,
+    module4KChecked: {},
+    min4KModuleMCs: 12, // constant that require changing
+    is4KTrue: false,
+  };
+  return focusAreaAtLeast12MCsOf4KRequiredInfo;
+}
+
+const createStudentInfoObject = function createStudentInfoObject(studentAcademicCohort, studentSemesters, studentExemptedModules, studentWaivedModules)  {
+  const studentInfoObject = {
+    studentAcademicCohort: studentAcademicCohort,
+    studentSemesters: studentSemesters,
+    studentExemptedModules: studentExemptedModules,
+    studentWaivedModules: studentWaivedModules,
+    moduleChecked: {}
+  }
+  return studentInfoObject
 }
