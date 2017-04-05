@@ -305,6 +305,5 @@ export const deleteStudentWaivedModuleGivenStudentID = function deleteStudentWai
 
 export const getStudentRepackagedDefaultPlannerIDs = function getStudentRepackagedDefaultPlannerIDs() {
   const studentCohort = getStudentAcademicCohort();
-  console.log(studentCohort);
   return getRepackagedDefaultPlannerIDs(studentCohort);
 }
