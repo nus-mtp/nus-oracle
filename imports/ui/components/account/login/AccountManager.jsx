@@ -24,17 +24,18 @@ export default class AccountManager extends React.Component {
       loadMessage: loadingMsgs.LOAD_LOGGING_IN
     }
   }
+
+  //======================================================
+  // EVENT HANDLERS FOR OPENING AND CLOSING MODAL WINDOWS
+  //======================================================
   handleLoading() {
-    this.setState({
-      isLoading: true
-    });
+    this.setState({ isLoading: true });
   }
 
   handleHideLoading() {
-    this.setState({
-      isLoading: false
-    });
+    this.setState({ isLoading: false });
   }
+
   handleSignUp() {
     this.setState({
       loadMessage: loadingMsgs.LOAD_REGISTERING,
@@ -44,6 +45,7 @@ export default class AccountManager extends React.Component {
 
   handleHideSignUp() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_LOGGING_IN,
       isSigningUp: false
     });
   }
@@ -57,6 +59,7 @@ export default class AccountManager extends React.Component {
 
   handleHideForgetPassword() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_LOGGING_IN,
       isForgetPassword: false
     });
   }
@@ -69,9 +72,11 @@ export default class AccountManager extends React.Component {
 
   handleHideRestoreAccount() {
     this.setState({
+      loadMessage: loadingMsgs.LOAD_LOGGING_IN,
       isRestoreAccount: false
     });
   }
+
   handleCloseAllWindows() {
     this.setState({
       isSigningUp: false,
