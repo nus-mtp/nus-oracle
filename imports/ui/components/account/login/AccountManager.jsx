@@ -91,32 +91,67 @@ export default class AccountManager extends React.Component {
     return (
       <div className="container-fluid">
         <div className="page-center page-center-in">
+          {/* Log In Form */}
           {this.state.isLoggingIn ?
-            <LoginAccount onForgetPassword={this.handleForgetPassword.bind(this)}
-                          onSignUp={this.handleSignUp.bind(this)}
-                          onSubmit={this.handleLoading.bind(this)}
-                          onSuccess={this.handleCloseAllWindows.bind(this)}/> : null}
+            <LoginAccount
+              onForgetPassword={this.handleForgetPassword.bind(this)}
+              onSignUp={this.handleSignUp.bind(this)}
+              onSubmit={this.handleLoading.bind(this)}
+              onSuccess={this.handleCloseAllWindows.bind(this)}
+            /> :
+            null}
+
+          {/* Launch Modal for Sign Up form */}
           {this.state.isSigningUp ?
-            <ModalContainer onHidden={this.handleHideSignUp.bind(this)}
-                            content={<RegisterAccount onSuccess={this.handleCloseAllWindows.bind(this)}
-                            onLoadComplete = {this.handleHideLoading.bind(this)}
-                            onSubmit={this.handleLoading.bind(this)}/>} /> : null}
+            <ModalContainer
+              onHidden={this.handleHideSignUp.bind(this)}
+              content={
+                <RegisterAccount
+                  onSuccess={this.handleCloseAllWindows.bind(this)}
+                  onLoadComplete = {this.handleHideLoading.bind(this)}
+                  onSubmit={this.handleLoading.bind(this)}
+                />}
+            /> :
+            null}
+
+          {/* Launch Modal for Forget Password form */}
           {this.state.isForgetPassword ?
-            <ModalContainer onHidden={this.handleHideForgetPassword.bind(this)}
-                            content={<ForgetAccount
-                            onSuccess={this.handleCloseAllWindows.bind(this)}
-                            onLoadComplete = {this.handleHideLoading.bind(this)}
-                            onSubmit={this.handleLoading.bind(this)}/>} /> : null}
+            <ModalContainer
+              onHidden={this.handleHideForgetPassword.bind(this)}
+              content={
+                <ForgetAccount
+                  onSuccess={this.handleCloseAllWindows.bind(this)}
+                  onLoadComplete = {this.handleHideLoading.bind(this)}
+                  onSubmit={this.handleLoading.bind(this)}
+                />}
+            /> :
+            null}
+
+          {/* Forget Password reroute back to site after email verification */}
           {/* Launches Modal only of the query param in URL matches */}
           {FlowRouter.getQueryParam("acc")=="reset-password" ?
-            <ModalContainer onHidden={this.handleHideRestoreAccount.bind(this)}
-                            content={<RestoreAccount onSuccess={this.handleCloseAllWindows.bind(this)}
-                            onLoadComplete = {this.handleHideLoading.bind(this)}
-                            onSubmit={this.handleLoading.bind(this)} />} /> : null}
+            <ModalContainer
+              onHidden={this.handleHideRestoreAccount.bind(this)}
+              content={
+                <RestoreAccount
+                  onSuccess={this.handleCloseAllWindows.bind(this)}
+                  onLoadComplete = {this.handleHideLoading.bind(this)}
+                  onSubmit={this.handleLoading.bind(this)}
+                />}
+            /> :
+            null}
+
+          {/* Launching Modal for Loading screen */}
           {this.state.isLoading ?
-            <ModalContainer disableHide={true}
-                            content={<LoadingScreen onSuccess={this.handleCloseAllWindows.bind(this)}
-                            loadText= {this.state.loadMessage}/>} /> : null}
+            <ModalContainer
+              disableHide={true}
+              content={
+                <LoadingScreen
+                  onSuccess={this.handleCloseAllWindows.bind(this)}
+                  loadText= {this.state.loadMessage}
+                />}
+            /> :
+            null}
         </div>
       </div>
     );
