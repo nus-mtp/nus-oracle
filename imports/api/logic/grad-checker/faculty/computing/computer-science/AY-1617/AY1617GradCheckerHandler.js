@@ -57,7 +57,7 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
                            'Computer Graphics and Games', 'Computer Security',
                            'Database Systems', 'Multimedia Information Retrieval',
                            'Networking and Distributed Systems', 'Parallel Computing',
-                           'Programming Languages', 'Software Engineering'];
+                           'Programming Languages', 'Software Engineering', 'others'];
 
   let graduationRequirements = {};
 
@@ -203,8 +203,10 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     for (var i=0; i<moduleRequirementTitle.length-1; i++) {
       totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
     }
-    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters);
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters, studentExemptedModules);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
+
+  // check if module contains less than 60 MCs worth of 1k module
 
   return UIFormatGraduationRequirement;
 }

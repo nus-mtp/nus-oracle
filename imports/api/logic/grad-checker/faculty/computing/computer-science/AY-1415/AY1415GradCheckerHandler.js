@@ -206,7 +206,7 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
       //console.log(moduleRequirementTitle[i] + " : " + graduationRequirements[moduleRequirementTitle[i]].requiredMCs);
       totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
     }
-    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters);
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters, studentExemptedModules);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
   return UIFormatGraduationRequirement;
