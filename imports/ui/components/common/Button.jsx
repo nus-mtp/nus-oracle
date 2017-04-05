@@ -47,7 +47,7 @@ Button.propTypes = {
   type: React.PropTypes.string,
 
   /* Custom button text */
-  buttonText: React.PropTypes.string,
+  buttonText: React.PropTypes.node,
 
   /* Custom button icon JSX object */
   // Must be a JSX element, e.g. you can pass in something like
