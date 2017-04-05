@@ -70,7 +70,6 @@ export default class LoginAccount extends React.Component {
 
   handleSubmit() {
     this.props.onSubmit();
-    console.log("loggingin");
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
       if (error) { // Login error
         if (error.reason == 'Incorrect password') {

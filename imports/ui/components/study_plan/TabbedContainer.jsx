@@ -227,6 +227,7 @@ export default class TabbedContainer extends React.Component {
     return (
       <Tab key={index} ref={isActiveTab ? this.scrollToElement : null}
            navSpanClass="nav-link-in"
+           fullTabTitle={tabTitle}
            tabTitle={tabTitleComponent} enabledDropdown={isActiveTab}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}

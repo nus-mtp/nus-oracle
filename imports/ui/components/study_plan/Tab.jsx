@@ -236,7 +236,7 @@ export default class Tab extends React.Component {
                     content={
                       <DialogContainer
                         title={"Are you sure you want to delete this study plan, '" +
-                               this.props.tabTitle + "'?"}
+                               this.props.fullTabTitle + "'?"}
                         content={
                           <div>
                             <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}

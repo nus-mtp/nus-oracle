@@ -4,8 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 class AcadCohortCollection extends Mongo.Collection{
   insert(acadCohortData, callBack){
     const cohortDocument = acadCohortData;
-    let result;
-    //validate document
+
     return super.insert( cohortDocument, callBack);
   };
 
