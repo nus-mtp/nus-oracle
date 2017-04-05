@@ -6,15 +6,8 @@ import { successMsgs,
          errorMsgs } from '../AccountAlerts.js'
 
 // Import React components
-import Button from '../../common/Button.jsx';
 var Loader = require('../../common/halogen/PulseLoader');
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
- db.users.find({username:"3@gmail.com"}).userId
- */
+import Button from '../../common/Button.jsx';
 import FormInput from '../../common/FormInput.jsx';
 import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
@@ -45,11 +38,21 @@ export default class RegisterAccount extends React.Component {
   handleRePasswordChange(input) {
     this.setState({repassword: input});
   }
+
   handleCloseLoader() {
     this.props.onLoadComplete();
   }
-  handleSubmit() { // to verify registration
+
+  /**
+   * Handles a user sign up event.
+   * Calls the appropriate method to register the user's NUS email and password
+   * and sends the email verification letter to them..
+   * Also displays appropriate alert messages.
+   */
+  handleSubmit(event) {
+    event.preventDefault();
     this.props.onSubmit();
+    
     let user = {
       username: this.state.email,
       email: this.state.email,
@@ -59,6 +62,7 @@ export default class RegisterAccount extends React.Component {
         accountLock: false
       }
     }
+
     Meteor.call('nusEmailVerifier', this.state.email, (emailErrorObj, validEmail) => {
       if (validEmail) {
         this.setState({ emailErrorObj: null });
@@ -126,7 +130,6 @@ export default class RegisterAccount extends React.Component {
     );
   }
 
-
   /**
    * Renderer for password input validation
    *
@@ -165,24 +168,21 @@ export default class RegisterAccount extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <div className="box-typical box-typical-padding"
-             style={{textAlign: 'center'}}>
-
+        <div className="box-typical box-typical-padding" style={{textAlign: 'center'}}>
+          {/* Sign Up Heading */}
           <h4 className="m-t-lg">
             <strong>Sign Up for NUS Oracle</strong>
           </h4>
 
-          <div className="form-group">
-
-            {/* If there are errors in the NUS e-mail input validation, we
-                to notify user */}
+          <form className="form-group"
+                onSubmit={this.handleSubmit.bind(this)}>
+            {/* NUS Email Input Validation */}
             {this.state.emailErrorObj ? this.renderEmailErrorBlock() : null}
 
             <FormInput placeholder="NUS E-mail"
                        onChange={this.handleEmailChange.bind(this)} />
 
-            {/* If there are errors in the password input validation, we
-                to notify user */}
+            {/* Password Input Validation */}
             {this.state.passwordErrorObj ? this.renderPasswordErrorBlock() : null}
 
             <FormInput type="password" placeholder="Password"
@@ -191,13 +191,11 @@ export default class RegisterAccount extends React.Component {
             <FormInput type="password" placeholder="Re-enter Password"
                        onChange={this.handleRePasswordChange.bind(this)} />
 
-          </div>
-
-          <div className='form-group'>
+            {/* Button Confirmation to Sign Up */}
             <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                     buttonText="SIGN UP"
                     onButtonClick={this.handleSubmit.bind(this)} />
-          </div>
+          </form>
 
         </div>
       </div>
