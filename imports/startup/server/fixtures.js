@@ -53,7 +53,7 @@ Meteor.startup(() => {
     populateAY1617AcademicCohortFixture();
   }
   if (Planner.find({}).count() === 0) {
-    populatePlannerFixture();
+    //populatePlannerFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();
