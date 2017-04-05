@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../common/Button.jsx';
 import SemModulesCardContainer from './SemModulesCardContainer.js';
+import TranslucentOverlay from './../common/TranslucentOverlay.jsx';
 
 import { deleteAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
 
@@ -8,33 +9,54 @@ export default class AcadYrRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHover: false
+      isDeleteAcadYr: false
     }
   }
 
   handleDelAYButtonClick() {
+    this.setState({ isDeleteAcadYr: true });
+  }
+
+  handleConfirmDeleteAcadYr() {
     deleteAcademicYearInPlanner(this.props.plannerID);
+    this.setState({ isDeleteAcadYr: false });
   }
 
-  handleMouseEnterDel() {
-    this.setState({ isHover: true });
+  resetDeleteAcadYrState() {
+    this.setState({ isDeleteAcadYr: false });
   }
 
-  handleMouseLeaveDel() {
-    this.setState({ isHover: false });
-  }
-
-  getAcadYrHoverColor() {
-    if (this.state.isHover) {
-      return 'rgba(254, 64, 64, 0.17)'
-    } else {
-      return '#ffffff';
-    }
+  renderDeleteAcadYrConfirmation() {
+    return (
+      <TranslucentOverlay>
+        <div className="box-typical box-typical-padding"
+             style={{margin: '30px',
+                     color: '#ffffff',
+                     backgroundColor: 'transparent',
+                     border: 'transparent',
+                     textAlign: 'center'}}>
+          <h5 className="m-t-lg">
+            <strong>Are you sure you want to delete all modules in this academic year?</strong>
+          </h5>
+          <div>
+            <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+              buttonText="Yes"
+              onButtonClick={this.handleConfirmDeleteAcadYr.bind(this)} />
+            <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
+              buttonText="No"
+              onButtonClick={this.resetDeleteAcadYrState.bind(this)} />
+          </div>
+        </div>
+      </TranslucentOverlay>
+    );
   }
 
   render() {
     return (
       <section className="activity-line-action">
+
+        {this.state.isDeleteAcadYr ? this.renderDeleteAcadYrConfirmation() : null}
+
         <div className="time">
 
           {this.props.acadYr}
@@ -45,13 +67,12 @@ export default class AcadYrRow extends React.Component {
                           fontSize: "0.75em",
                           padding: "0.2em 0.75em 0.2em 0.65em",
                           margin: " 1em 0em 1em 0em"}}
-                  buttonText="Delete"
+                  buttonText="Delete All"
                   buttonIcon={
                     <i className="font-icon font-icon-trash"
                        style={{marginTop: "0.15em", marginRight: "0.5em"}}></i>}
                   onButtonClick={this.handleDelAYButtonClick.bind(this)}
-                  onMouseEnter={this.handleMouseEnterDel.bind(this)}
-                  onMouseLeave={this.handleMouseLeaveDel.bind(this)} /> :
+          /> :
           null}
 
         </div>
