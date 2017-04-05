@@ -18,8 +18,10 @@ export default class ModalContainer extends React.Component {
   }
 
   hide() {
-    this.props.onHidden();
-    this.setState({ show: false });
+    if(!this.props.disableHide){
+      this.props.onHidden();
+      this.setState({ show: false });
+    }
   }
 
   render() {
@@ -27,7 +29,7 @@ export default class ModalContainer extends React.Component {
       <Modal dialogClassName="custom-modal"
              show={this.state.show}
              onHide={this.hide.bind(this)}>
-        <Modal.Header closeButton></Modal.Header>
+        {/* {this.props.disableHide ? null : <Modal.Header closeButton></Modal.Header>} */}
         <Modal.Body>
           {this.props.content}
         </Modal.Body>
@@ -35,7 +37,6 @@ export default class ModalContainer extends React.Component {
     )
   }
 }
-
 ModalContainer.propTypes = {
   content: React.PropTypes.node,
   onHidden: React.PropTypes.func
