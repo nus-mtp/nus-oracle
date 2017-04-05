@@ -203,7 +203,7 @@ export const AY1516CSGradChecker = function AY1516CSGradChecker(studentSemesters
     for (var i=0; i<moduleRequirementTitle.length-1; i++) {
       totalRequiredMCs += graduationRequirements[moduleRequirementTitle[i]].requiredMCs;
     }
-    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters);
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(totalRequiredMCs, graduationMCs, studentSemesters, studentExemptedModules);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
   return UIFormatGraduationRequirement;
