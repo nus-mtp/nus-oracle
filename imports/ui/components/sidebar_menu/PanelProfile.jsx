@@ -25,31 +25,80 @@ export default class PanelProfile extends React.Component {
     window.open("http://www.comp.nus.edu.sg/programmes/ug/cs/curr/#_ftnref7", "_blank");
   }
 
+  /**
+   * Renders the tooltip to explain what exempted/waived means
+   *
+   * @param {String} id    Unique ID of this tooltip
+   * @param {String} title    Title of the tooltip
+   * @param {String} instructions    A description of exempted/waived
+   * @param {String} examples    Array of example objects in this format:
+   *   [
+   *     {
+   *       moduleCode: "LSM1301",
+   *       explanation: "Some explanation about why this is exempted/waived"
+   *     }, ...
+   *   ]
+   * @return {Node}    React component to display the tooltip
+   */
+  renderExemptedWaivedTooltip(id, title, instructions, examples) {
+    return (
+      <ReactTooltip id={id} place="right" effect="solid" delayShow={300}>
+        <div style={{width: '27em'}}>
+          <div className="tbl-row" style={{color: '#f2aa4c', fontSize: '1.75em'}}>
+            {title}
+          </div>
+          <div style={{fontSize: '1.2em', marginBottom: '20px'}}>
+            {instructions}
+          </div>
+          <div className="tbl-row">
+            <div style={{marginBottom: '5px'}}>
+              <b>EXAMPLES:</b>
+            </div>
+            {examples.map((example, index) => {
+              return (
+                <div key={index} style={{marginBottom: '5px'}}>
+                  <b>{example.moduleCode}: </b>
+                  {example.explanation}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </ReactTooltip>
+    );
+  }
+
   render() {
     let exemptedToolTip =
-      <ReactTooltip id='Exempted' place="right" type="info" effect="solid">
-        <div style={{width: '34em'}}>
-          <span>
-            <h5 style={{marginBottom: 0.8+"rem"}}>Exempted modules</h5>
-            You're <strong>not required to take these modules</strong> and they <strong>will not be converted to UEs</strong><br/><br/>
-            EXAMPLES:<br/>
-            <b>LS1301:</b>Students with GCE 'A' level or H2 Biology are exempted from LSM1301 <br/>
-            <b>CS1010:</b>Some Polytechnic students may be exempted from CS1010 if they took an equivalent course
-          </span>
-        </div>
-      </ReactTooltip>
+      this.renderExemptedWaivedTooltip(
+        "Exempted",
+        "Exempted Modules",
+        "You're not required to take these modules and they will not be converted to UEs",
+        [
+          {
+            moduleCode: "LSM1301",
+            explanation: "Students with GCE 'A' level or H2 Biology are exempted from LSM1301"
+          },
+          {
+            moduleCode: "CS1010",
+            explanation: "Some Polytechnic students may be exempted from CS1010 " +
+                         "if they have already taken an equivalent course"
+          }
+        ]
+      );
 
     let waivedToolTip =
-      <ReactTooltip id='Waived' place="right" type="info" effect="solid">
-        <div style={{width: '34em'}}>
-          <span>
-            <h5 style={{marginBottom: 0.8+"rem"}}>Waived modules</h5>
-            You'll need to <strong>replace these modules with a UE module</strong><br/><br/>
-            EXAMPLES:<br/>
-            <b>PC1221:</b>Students with GCE 'A' level or H2 Physics are waived from PC1221
-          </span>
-        </div>
-      </ReactTooltip>
+      this.renderExemptedWaivedTooltip(
+        "Waived",
+        "Waived Modules",
+        "You'll need to replace these modules with a UE module",
+        [
+          {
+            moduleCode: "PC1221",
+            explanation: "Students with GCE 'A' level or H2 Physics are waived from PC1221"
+          }
+        ]
+      );
 
     return (
       <nav className="side-menu-addl">
