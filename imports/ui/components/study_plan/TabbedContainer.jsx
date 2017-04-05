@@ -9,10 +9,10 @@ import scrollIntoView from 'scroll-into-view';
 // Import React components
 import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
+import ModalContainer from '../common/ModalContainer.jsx';
 import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
-import AddNewPlanner from './AddNewPlanner.jsx';
-import ModalContainer from '../common/ModalContainer.jsx';
+import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 
 // Import server-side methods
 import { createPlanner,
@@ -49,7 +49,11 @@ export default class TabbedContainer extends React.Component {
    * Display Add New Planner Dialog only when component is completely mounted
    */
   componentDidMount(){
-    this.setState({newPlannerDialog: <AddNewPlanner handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> });
+    this.setState({
+      newPlannerDialog:
+        <AddNewPlannerContainer
+          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)} />
+    });
   }
 
   //======================================================
@@ -328,7 +332,7 @@ export default class TabbedContainer extends React.Component {
     return(
       <ModalContainer
         onHidden={this.handleCancelAddPlanModal.bind(this)}
-        content={ <AddNewPlanner handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
+        content={ <AddNewPlannerContainer handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
       />
     );
   }
