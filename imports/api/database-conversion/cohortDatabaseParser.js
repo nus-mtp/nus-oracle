@@ -48,6 +48,7 @@ import { createNewGradRequirement,
          insertNewGradRequirementModuleData } from '../database-controller/graduation-requirement/methods';
 // import method to insert new academic cohort methods
 import { createNewCohort,
+         removeAllCohort,
          updateCohortGradRequirementIDs,
          getCohortByName,
          updateCohortFocusAreaIDs} from '../database-controller/AcademicCohort/methods';
@@ -61,8 +62,8 @@ const gradRequirementFile = 'GraduationRequirement.json';
 export const populateAcadCohortCollection = function() {
 //make sure to only run this script on server side.
   if(Meteor.isServer){
-    AcademicCohort.remove({});
-    GraduationRequirements.remove({});
+    removeAllCohort({});
+    GraduationRequirements.remove({});//just in case
 
     // get data
     const jsonFile = JSON.parse(Assets.getText(gradRequirementFile));

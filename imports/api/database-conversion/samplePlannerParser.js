@@ -28,22 +28,25 @@ export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, 
       continue;
     }
 
-    // fetch current cohort
+    // fetch current cohort)
     let currentCohort = cohortCursor.fetch()[0];
-    // get the list of IDs stored in the current cohort database
-    let currentCohortPlannerIDs = currentCohort.cohortDefaultPlannerID;
+    console.log(currentCohort);
+    // fetch the defaultPlannerID
+    let currentCohortPlannerIDs = AcademicCohort.find({"cohortName": currentYear}).fetch().cohortDefaultPlannerID;
 
     // check if you want to replace existing planner
     if (!allowReplaceID){
-      if ( currentCohortPlannerIDs && currentCohortPlannerIDs.length != 0){
+      if ( (currentCohortPlannerIDs != undefined) && currentCohortPlannerIDs.length > 0){
         console.log("there is already planner set for academic cohort " + currentYear + " and replacement of data is forbidden");
         continue;
       }
     }
 
     // if yes or id is empty, remove from the planner cohort and empty the id list
-    if(currentCohortPlannerIDs){
+    if( currentCohortPlannerIDs != undefined){
+      console.log("removing previous planner from the cohort document...");
       for(var j = 0; j < currentCohortPlannerIDs.length; j ++){
+        console.log("removing planner with ID: " + currentCohortPlannerIDs[j]);
         Planner.remove({_id: currentCohortPlannerIDs[j]});
       }
     }
@@ -62,7 +65,7 @@ export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, 
       let newPlannerID = createPlannerGivenUserID(currentPlannerName,[],"DefaultStudyPlanner");
       // get the semester object
       let currentPlannerSemesterObject = currentPlanner["semesters"];
-      console.log(currentPlannerSemesterObject);
+      //console.log(currentPlannerSemesterObject);
       // convert the semester object to the semester schema
       let currentPlannerKeys = Object.keys(currentPlannerSemesterObject);
 
@@ -83,7 +86,7 @@ export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, 
           insertOneModuleInSemester(k, currentSemesterModule[l], newPlannerID);
         }
       }
-      console.log(Planner.find({_id:newPlannerID}).fetch());
+      //console.log(Planner.find({_id:newPlannerID}).fetch());
       currentCohortPlannerIDs.push(newPlannerID);
 
     }
