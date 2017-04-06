@@ -1,7 +1,10 @@
 import React from 'react';
+
+// Import React Components
 import PanelHeader from '../common/PanelHeader.jsx'
-import Nestable from '../common/Nestable.jsx'
+import MCsCounterContainer from './MCsCounterContainer.js'
 import GradCheckerContainer from './GradCheckerContainer.js'
+
 import GridLoader from '../common/halogen/GridLoader.js';
 import * as constants from '../common/Constants.js';
 
@@ -24,6 +27,7 @@ export default class PanelRequirements extends React.Component {
     return (
       <nav className="side-menu-addl">
         <PanelHeader title="CS Degree Requirements" icon="font-icon font-icon-page" />
+        <MCsCounterContainer activePlannerId={this.props.activePlannerId}/>
         {this.state.isGradCheckerLoaded ? this.renderGradChecker(): <GridLoader color="#ff6600" />}
       </nav>
     );
