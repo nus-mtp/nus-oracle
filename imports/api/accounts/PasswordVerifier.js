@@ -7,13 +7,14 @@ Meteor.methods({
     const smallPassword = password.toLowerCase();
     const bigPassword = password.toUpperCase();
 
-    const isMixCase = smallPassword != password || bigPassword != password;
+    // Validity checks
+    const isSameCase = smallPassword == password || bigPassword == password;
     const hasNumber = (/\d/).test(password);
     const hasCharacter = (/[a-zA-Z]/).test(password);
     const hasWhitespace = (/\s/).test(password);
     const isLessThanSixChars = password.length < 6;
 
-    let errorObj = { // If all fields here are false, the password is valid
+    let errorObj = { // If all fields here are false, there isn't an error
       passwordsNotMatch: false,
       isNotMixCase: false,
       hasNoNumeric: false,
@@ -27,7 +28,7 @@ Meteor.methods({
       errorObj.passwordsNotMatch = true;
       errorExists = true;
     }
-    if (!isMixCase) {
+    if (isSameCase) {
       errorObj.isNotMixCase = true;
       errorExists = true;
     }

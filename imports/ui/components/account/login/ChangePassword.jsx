@@ -34,7 +34,7 @@ export default class ChangePassword extends React.Component {
 
   handleSubmit() {
     this.props.onSubmit();
-    
+
     // include check for verifier
     Meteor.call('nusPasswordVerifier',
                 this.state.newPassword,
@@ -55,8 +55,8 @@ export default class ChangePassword extends React.Component {
             }
           });
         } else {
-            Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
-            this.props.onLoadComplete();
+          Bert.alert(errorMsgs.ERR_PASSWORDS_NOT_MATCH, 'danger');
+          this.props.onLoadComplete();
         }
       }
     });

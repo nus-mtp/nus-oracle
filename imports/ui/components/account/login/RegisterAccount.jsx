@@ -52,7 +52,7 @@ export default class RegisterAccount extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.onSubmit();
-    
+
     let user = {
       username: this.state.email,
       email: this.state.email,
