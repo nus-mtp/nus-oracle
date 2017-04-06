@@ -11,6 +11,7 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  * markModules and markExemptedWaivedModules
  */
 
+const DEFAULT_MCS = 4;
 
 export const findFoundationRequirementModules = function findFoundationRequirementModules(studentInfoObject, foundationModules, requiredMCs) {
   let markedFoundationModulesAndMCs = {
@@ -19,6 +20,7 @@ export const findFoundationRequirementModules = function findFoundationRequireme
     numberOfFoundationModulesMarkedTrue: 0,
     moduleChecked: studentInfoObject.moduleChecked,
     totalModuleMCs: 0,
+    expectedMCs: 0,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -49,18 +51,19 @@ export const findFoundationRequirementModules = function findFoundationRequireme
         }
       }
     }
-    // calculate expectedMCs by using markedFoundationModules
-      // subtract totalMCs with expectedMCs
-
-      // add the difference to requiredMCs
 
     // checks if all modules in foundation has been marked true
     if (markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue === keyNames.length) {
-      markedFoundationModulesAndMCs.requiredMCs = markedFoundationModulesAndMCs.totalModuleMCs;
+      //markedFoundationModulesAndMCs.requiredMCs = markedFoundationModulesAndMCs.totalModuleMCs;
       markedFoundationModulesAndMCs.isFulfilled = true;
       break;
     }
   }
+
+  // subtract totalMCs with expectedMCs
+  const difference = markedFoundationModulesAndMCs.totalModuleMCs - markedFoundationModulesAndMCs.expectedMCs;
+  markedFoundationModulesAndMCs.requiredMCs += difference;
+
   return markedFoundationModulesAndMCs;
 }
 
@@ -69,6 +72,7 @@ const markModules = function markModules(markedFoundationModulesAndMCs, studentS
     if (studentSemesters[i].moduleHashmap[equivalentModule]) {
       // mark markedFoundationModules as true if module exists in studentPlanner/exemptedModules/waivedModules
       markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.expectedMCs += addExpectedModuleMC(originalModule);
       markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue += 1;
       if (!markedFoundationModulesAndMCs.moduleChecked[equivalentModule])  {
         markedFoundationModulesAndMCs.moduleChecked[equivalentModule] = true;
@@ -85,6 +89,7 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedFound
   if (Object.keys(exemptedModules).length !== 0)  {
     if (exemptedModules[equivalentModule])  {
       markedFoundationModulesAndMCs.markedFoundationModules[originalModule] = true;
+      markedFoundationModulesAndMCs.expectedMCs += addExpectedModuleMC(originalModule);
       markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue += 1;
       if (!markedFoundationModulesAndMCs.moduleChecked[equivalentModule])  {
         markedFoundationModulesAndMCs.moduleChecked[equivalentModule] = true;
@@ -111,4 +116,12 @@ const markExceptions = function markExceptions(markedFoundationModulesAndMCs, st
 
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
   return markExemptedWaivedModules(markedFoundationModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
+}
+
+const addExpectedModuleMC = function addExpectedModuleMC(originalModule)  {
+  const expectedMC = searchByModuleCode(originalModule).moduleMC;
+  if (!expectedMC)  {
+    return DEFAULT_MCS;
+  }
+  return expectedMC;
 }
