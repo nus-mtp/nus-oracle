@@ -16,7 +16,8 @@ import { AcademicCohort } from '../../api/database-controller/AcademicCohort/aca
 import { GraduationRequirements } from '../../api/database-controller/graduation-requirement/graduationRequirement';
 
 import { getAcadCohortDefaultPlannerIDs,
-         removeAllCohort} from '../../api/database-controller/AcademicCohort/methods';
+         removeAllCohort,
+         getRepackagedDefaultPlannerIDs} from '../../api/database-controller/AcademicCohort/methods';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
@@ -31,7 +32,7 @@ import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-c
 
 Meteor.startup(() => {
   plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
-  parseJSONFileAndStoreToDB();
+  //parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
@@ -42,7 +43,7 @@ Meteor.startup(() => {
   //scrapeModuleMappingListingForBeforeULR1516();
   //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseForLezzgo();
-
+  //console.log(getRepackagedDefaultPlannerIDs("AY 2016/2017"));
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
     populateIndustrialAttachmentModuleFixture();
