@@ -371,7 +371,7 @@ export default class TabbedContainer extends React.Component {
         </div>
 
         <div className='tab-content'>
-          <div role='tabpanel' className='tab-pane fade in active'
+          <div role='tabpanel' className='tab-pane fade in active' style={{overflowY: 'auto'}}
                id={'tab' + this.state.tabSelectedIndex}>
                  {
                    // Show add menu dialog when no planners in dashboard
