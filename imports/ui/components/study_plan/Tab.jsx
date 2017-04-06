@@ -73,14 +73,19 @@ export default class Tab extends React.Component {
   }
 
   /**
-   * Handlers for click events - click on Edit or Delete
+   * Handlers for click events - click on Edit, Duplicate or Delete
    */
   handleClickDropdown() {
     this.setState({ onClickDropdown: false });
   }
 
-  handleEditClick() {
+  handleRenameClick() {
     this.props.onClickEditTab();
+    this.handleClickDropdown();
+  }
+
+  handleDuplicateStudyPlanClick() {
+    this.props.onClickDuplicateTab();
     this.handleClickDropdown();
   }
 
@@ -159,7 +164,16 @@ export default class Tab extends React.Component {
             "fa fa-edit",
             {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
             "Rename",
-            this.handleEditClick
+            this.handleRenameClick
+          )}
+
+          {/* Duplicate study plan name dropdown selection */}
+          {this.renderDropDownMenuSelection(
+            "dropdown-item",
+            "fa fa-copy",
+            {position: 'relative', float: 'left', paddingTop: '0.25em', marginRight: '0.8em'},
+            "Duplicate",
+            this.handleDuplicateStudyPlanClick
           )}
 
           {/* Delete study plan dropdown selection */}
