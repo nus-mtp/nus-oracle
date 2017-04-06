@@ -11,13 +11,13 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  * markModules and markExemptedWaivedModules
  */
 
-export const findITProfessionalismModules = function findITProfessionalismModules(academicCohort, studentSemesters, ITProfessionalismModules, exemptedModules, waivedModules, moduleChecked, requiredMCs)  {
+export const findITProfessionalismModules = function findITProfessionalismModules(studentInfoObject, ITProfessionalismModules, requiredMCs)  {
   let markedITProfessionalismModulesAndMCs = {
     name: 'IT Professionalism',
     markedITProfessionalismModules: ITProfessionalismModules,
     numberOfITProfessionalismModulesMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: moduleChecked,
+    moduleChecked: studentInfoObject.moduleChecked,
     totalModuleMCs: 0,
     requiredMCs: requiredMCs,
     isFulfilled: false
@@ -35,16 +35,16 @@ export const findITProfessionalismModules = function findITProfessionalismModule
       return {};
     }
 
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedITProfessionalismModulesAndMCs = markExemptedWaivedExceptions(markedITProfessionalismModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedITProfessionalismModulesAndMCs = markExceptions(markedITProfessionalismModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[keyNames[i]])  {
           break;
         }

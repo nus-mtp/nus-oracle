@@ -38,15 +38,19 @@ describe('grad-checker-teamProject', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['Project I', 'Project II'];
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'Computer Systems Team Project';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[4]);
 
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[4]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
+    const requirementName = 'Computer Systems Team Project';
     const teamProjectModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
-    const moduleChecked = {};
 
-    const markedTeamProjectModulesAndMCs = findTeamProjectRequirementModules(academicCohort, allSemesters, teamProjectModules, {}, {}, moduleChecked, requiredMCs);
+    const markedTeamProjectModulesAndMCs = findTeamProjectRequirementModules(studentInfoObject, teamProjectModules, requiredMCs);
     assert.isTrue(markedTeamProjectModulesAndMCs.markedTeamProjectModules[modules[0]], 'CS3283 fulfiled');
     assert.isTrue(markedTeamProjectModulesAndMCs.markedTeamProjectModules[modules[1]], 'CS3284 fulfiled');
     assert.isTrue(markedTeamProjectModulesAndMCs.moduleChecked['CS3283'], 'CS3283 checked');
