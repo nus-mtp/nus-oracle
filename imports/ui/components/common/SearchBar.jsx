@@ -93,6 +93,7 @@ export default class SearchBar extends React.Component {
         optionHeight={this.computeLineHeight}
         options={allModules}
         filterOptions={filterOptions}
+        scrollMenuIntoView={false}
         onChange={this.handleSelectOption.bind(this)} />
     )
   }
