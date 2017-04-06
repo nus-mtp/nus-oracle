@@ -7,6 +7,7 @@ import { errorMsgs } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
+import FormInput from '../../common/FormInput.jsx';
 import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
@@ -22,25 +23,34 @@ export default class ChangePassword extends React.Component {
     };
   }
 
-  handleoldPasswordChange(event) {
-    this.setState({oldPassword: event.target.value});
+  //=============================================
+  // EVENT HANDLERS
+  //=============================================
+
+  handleoldPasswordChange(input) {
+    this.setState({oldPassword: input});
   }
 
-  handlenewPasswordChange(event) {
-    this.setState({newPassword: event.target.value});
+  handlenewPasswordChange(input) {
+    this.setState({newPassword: input});
   }
 
-  handlenewConfirmPasswordChange(event) {
-    this.setState({newConfirmPassword: event.target.value});
+  handlenewConfirmPasswordChange(input) {
+    this.setState({newConfirmPassword: input});
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    // Prevent browser from refreshing the page, so that we can still see input validation alerts
+    event.preventDefault();
+
     // include check for verifier
     Meteor.call('nusPasswordVerifier',
                 this.state.newPassword,
                 this.state.newConfirmPassword,
                 (passwordErrorObj, isValidPassword) => {
       if (isValidPassword) {
+        this.setState({ passwordErrorObj: null });
+
         // Spin loading bar while checking if old password and new password are valid
         this.props.onSubmit();
 
@@ -48,7 +58,13 @@ export default class ChangePassword extends React.Component {
         Accounts.changePassword(this.state.oldPassword, this.state.newPassword, (error) => {
           if (error) {
             // Variety of Meteor Account errors when signing up
-            Bert.alert(error.reason, 'danger');
+            if (error.reason == "Match failed") {
+              Bert.alert(errorMsgs.ERR_PASSWORD_NOT_ENTERED, 'danger');
+            } else if (error.reason == "Incorrect password") {
+              Bert.alert(errorMsgs.ERR_INCORRECT_OLD_PASSWORD, 'danger');
+            } else {
+              Bert.alert(error.reason, 'danger');
+            }
             this.props.onLoadComplete();
           } else {
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
@@ -92,7 +108,7 @@ export default class ChangePassword extends React.Component {
 
     return (
       <FormInputErrorBox
-        title="Password Errors" errorMsgList={passwordErrorMsgs} />
+        title="Errors for new passwords" errorMsgList={passwordErrorMsgs} />
     );
   }
 
@@ -106,34 +122,26 @@ export default class ChangePassword extends React.Component {
             <p><strong>Fill in your password details below:</strong></p>
           </h5>
 
-          <div className="form-group">
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Old Password" value={this.state.value}
-                onChange={this.handleoldPasswordChange.bind(this)} />
-            </div>
+          <form className="form-group"
+                onSubmit={this.handleSubmit.bind(this)}>
+
+            <FormInput type="password" placeholder="Old Password"
+                       onChange={this.handleoldPasswordChange.bind(this)} />
 
             {/* Password Input Validation */}
             {this.state.passwordErrorObj ? this.renderPasswordErrorBlock() : null}
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="New Password" value={this.state.value}
-                onChange={this.handlenewPasswordChange.bind(this)} />
-            </div>
+            <FormInput type="password" placeholder="New Password"
+                       onChange={this.handlenewPasswordChange.bind(this)} />
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Re-enter New Password" value={this.state.value}
-                onChange={this.handlenewConfirmPasswordChange.bind(this)} />
-            </div>
+            <FormInput type="password" placeholder="Re-enter New Password"
+                       onChange={this.handlenewConfirmPasswordChange.bind(this)} />
 
-            <div className='form-group'>
-              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                      buttonText="Change Password"
-                      onButtonClick={this.handleSubmit.bind(this)} />
-            </div>
-          </div>
+            {/* Button Confirmation to Change Password */}
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
+                    buttonText="Change Password"
+                    onButtonClick={this.handleSubmit.bind(this)} />
+          </form>
 
         </div>
       </div>
