@@ -81,7 +81,7 @@ export default class AcadYrRow extends React.Component {
                           fontSize: "0.75em",
                           padding: "0.2em 0.75em 0.2em 0.65em",
                           margin: " 1em 0em 1em 0em"}}
-                  buttonText="Delete All"
+                  buttonText="Delete"
                   buttonIcon={
                     <i className="font-icon font-icon-trash"
                        style={{marginTop: "0.15em", marginRight: "0.5em"}}></i>}
