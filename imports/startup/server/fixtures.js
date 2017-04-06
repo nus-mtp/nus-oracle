@@ -31,7 +31,7 @@ import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-c
 
 Meteor.startup(() => {
   plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
-  //parseJSONFileAndStoreToDB();
+  parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();

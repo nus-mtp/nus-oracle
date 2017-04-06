@@ -58,6 +58,6 @@ Planner.attachSchema(Planner.schema);
 if (Meteor.isServer) {
   Meteor.publish('planner', function taskPublication () {
     let studentID = getStudentIDGivenUserID(this.userId);
-    return Planner.find( { userID: studentID } );
+    return Planner.find( { userID: {$in:[studentID,"DefaultStudyPlanner"]} } );
   });
 }

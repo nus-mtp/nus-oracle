@@ -253,13 +253,17 @@ export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlann
     if (result.length == 0) {
         return null;
     }
+
+    if (result == undefined){
+      console.log("result for repackaged defaultPlanner IDs are undefined");
+    }
     // repackaged the result
     const repackagedData = {}
-    console.log(result);
     for (var i = 0; i < result.length; i++) {
         // assumed the planner with the ID exists by db integrity
-        let currentPlannerName = Planner.findOne({_id: result[i]}).name;
-        repackagedData[currentPlannerName] = result[i];
+        let currentPlannerID = result[i];
+        let currentPlanner = Planner.findOne({_id: currentPlannerID});
+        repackagedData[currentPlanner['name']] = currentPlannerID;
     }
 
     return repackagedData;
