@@ -64,7 +64,7 @@ export const getCurrentStudentDocument = function getCurrentStudentDocument(stud
   return Students.findOne({_id: studentID});
 }
 
-export const getStudentAcademicCohort = function getCohort() {
+export const getStudentAcademicCohort = function getStudentAcademicCohort() {
   const studentID = getStudentID();
   if (!studentID) {
     return '';
@@ -154,7 +154,7 @@ export const deleteStudentExemptedModule = function deleteStudentExemptedModule(
   return Students.update(studentID, { $set: { studentExemptedModule: studentExemptedModules } });
 }
 
-export const getStudentWaivedModules = function getStudentAcademicCohort() {
+export const getStudentWaivedModules = function getStudentWaivedModules() {
   const studentID = getStudentID();
   if (!studentID) {
     return {};
@@ -305,5 +305,5 @@ export const deleteStudentWaivedModuleGivenStudentID = function deleteStudentWai
 
 export const getStudentRepackagedDefaultPlannerIDs = function getStudentRepackagedDefaultPlannerIDs() {
   const studentCohort = getStudentAcademicCohort();
-  return getStudentRepackagedDefaultPlannerIDs(studentCohort);
+  return getRepackagedDefaultPlannerIDs(studentCohort);
 }

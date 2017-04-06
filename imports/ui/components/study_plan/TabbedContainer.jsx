@@ -9,10 +9,10 @@ import scrollIntoView from 'scroll-into-view';
 // Import React components
 import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
+import ModalContainer from '../common/ModalContainer.jsx';
 import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
-import AddNewPlanner from './AddNewPlanner.jsx';
-import ModalContainer from '../common/ModalContainer.jsx';
+import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 
 // Import server-side methods
 import { createPlanner,
@@ -49,7 +49,12 @@ export default class TabbedContainer extends React.Component {
    * Display Add New Planner Dialog only when component is completely mounted
    */
   componentDidMount(){
-    this.setState({newPlannerDialog: <AddNewPlanner handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> });
+    this.setState({
+      newPlannerDialog:
+        <AddNewPlannerContainer
+          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+          handleAddedTemplate={this.handleAddTemplate.bind(this)} />
+    });
   }
 
   //======================================================
@@ -113,16 +118,32 @@ export default class TabbedContainer extends React.Component {
   /**
    * Handler for hiding study plan modal
    */
-  handleCancelAddPlanModal() {
+  handleCloseAddPlanModal() {
     this.setState({ isModalVisible : false });
   }
 
+  /**
+   * Handles event where user already selected a study
+   * plan template that isn't a blank one
+   */
+  handleAddTemplate() {
+    this.setState({
+      isModalVisible : false,
+      tabSelectedIndex:this.props.plannerIDs.length
+    });
+  }
+
+  /**
+   * Handles event where user selected a blank study
+   * plan template
+   */
   handleAddBlankTemplate(){
     this.setState({
       isModalVisible : false,
       isAddingNewPlan : true
     });
   }
+
   /**
    * Handler for deleting study plan.
    *
@@ -227,6 +248,7 @@ export default class TabbedContainer extends React.Component {
     return (
       <Tab key={index} ref={isActiveTab ? this.scrollToElement : null}
            navSpanClass="nav-link-in"
+           fullTabTitle={tabTitle}
            tabTitle={tabTitleComponent} enabledDropdown={isActiveTab}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
@@ -326,8 +348,12 @@ export default class TabbedContainer extends React.Component {
   renderAddPlanModal(){
     return(
       <ModalContainer
-        onHidden={this.handleCancelAddPlanModal.bind(this)}
-        content={ <AddNewPlanner handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
+        onHidden={this.handleCloseAddPlanModal.bind(this)}
+        content={
+          <AddNewPlannerContainer
+            handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+            handleAddedTemplate={this.handleAddTemplate.bind(this)} />
+        }
       />
     );
   }
@@ -360,7 +386,7 @@ export default class TabbedContainer extends React.Component {
         </div>
 
         <div className='tab-content'>
-          <div role='tabpanel' className='tab-pane fade in active'
+          <div role='tabpanel' className='tab-pane fade in active' style={{overflowY: 'auto'}}
                id={'tab' + this.state.tabSelectedIndex}>
                  {
                    // Show add menu dialog when no planners in dashboard

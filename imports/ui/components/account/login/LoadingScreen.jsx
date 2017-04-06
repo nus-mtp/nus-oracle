@@ -26,7 +26,6 @@ export default class LoadingScreen extends React.Component {
     this.state = {
       message: this.props.loadText
     };
-    console.log(this.state.message);
   }
 
 
@@ -36,8 +35,6 @@ export default class LoadingScreen extends React.Component {
         <div className="box-typical box-typical-padding" style={{textAlign: 'center'}}>
 
           <h5 className="m-t-lg">
-            <p>Loading</p>
-
             <p><strong>{this.state.message}</strong></p>
           </h5>
           <PulseLoader postition='relative' color="#ff9702" />

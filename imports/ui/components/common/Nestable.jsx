@@ -72,7 +72,7 @@ class OrderedList extends Nestable{
             {
               items.map((item, index) => {
               if(item.name === undefined)
-                return <div className="loader-nestable">
+                return <div className="loader-nestable" key={index}>
                     <GridLoader color={color}/>
                   </div>
               else if(item.children == undefined || item.children.length == 0 && item.name!== undefined){

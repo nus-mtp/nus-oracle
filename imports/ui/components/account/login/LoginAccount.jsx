@@ -31,6 +31,10 @@ export default class LoginAccount extends React.Component {
     };
   }
 
+  //=============================================
+  // EVENT HANDLERS
+  //=============================================
+
   handleEmailChange(input) {
     this.setState({email: input});
   }
@@ -47,6 +51,11 @@ export default class LoginAccount extends React.Component {
     this.props.onForgetPassword();
   }
 
+  /**
+   * Handles a forget password event.
+   * Calls the appropriate method to send user instructions to reset his/her password.
+   * Also displays appropriate alert messages correspondingly.
+   */
   handleForgetPassword() {
     let email = this.state.email;
 
@@ -68,9 +77,18 @@ export default class LoginAccount extends React.Component {
     }
   }
 
-  handleSubmit() {
+  /**
+   * Handles a user login event.
+   * Calls the appropriate method to verify the user's email and password and
+   * then routes the user to the dashboard if he/she is indeed authorized.
+   * Also displays appropriate alert messages correspondingly.
+   */
+  handleSubmit(event) {
+    // Prevent browser from refreshing the page, so that we can still see
+    // input validation alerts
+    event.preventDefault();
     this.props.onSubmit();
-    console.log("loggingin");
+
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
       if (error) { // Login error
         if (error.reason == 'Incorrect password') {
@@ -124,15 +142,18 @@ export default class LoginAccount extends React.Component {
   render() {
     return (
       <div>
+        {/* Site Logo */}
         <div className="gallery-picture">
           <img id="login-logo"
                src="./images/logo/nusOracle-logo-colour.png"
                alt="NUS_Oracle_logo" />
         </div>
 
+        {/* Login Form */}
         <div className="col-md-6 blockui-element-container-default"
              style={{float: 'none', margin: '3.5em auto'}}>
-          <div className="form-group" style={{textAlign: 'center'}}>
+          <form className="form-group" style={{textAlign: 'center'}}
+                onSubmit={this.handleSubmit.bind(this)}>
 
             <FormInput placeholder="NUS E-mail"
                        className="form-control login-email"
@@ -144,6 +165,7 @@ export default class LoginAccount extends React.Component {
 
             <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline login-button"
                     buttonText="LOGIN"
+                    type="submit"
                     onButtonClick={this.handleSubmit.bind(this)} />
 
             <a className="dropdown-item"
@@ -155,10 +177,9 @@ export default class LoginAccount extends React.Component {
                onClick={this.handleClickOnForgetPassword.bind(this)}>
               Forgot Password?
             </a>
-
-
-          </div>
+          </form>
         </div>
+
       </div>
     );
   }
