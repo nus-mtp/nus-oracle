@@ -10,13 +10,6 @@ import Button from '../../common/Button.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
 
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
- */
-
 export default class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +32,9 @@ export default class ChangePassword extends React.Component {
     this.setState({newConfirmPassword: event.target.value});
   }
 
-  handleChange() {
+  handleSubmit() {
     this.props.onSubmit();
+    
     // include check for verifier
     Meteor.call('nusPasswordVerifier',
                 this.state.newPassword,
@@ -101,7 +95,7 @@ export default class ChangePassword extends React.Component {
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                       buttonText="Change Password"
-                      onButtonClick={this.handleChange.bind(this)} />
+                      onButtonClick={this.handleSubmit.bind(this)} />
             </div>
           </div>
 

@@ -8,6 +8,7 @@ import { errorMsgs } from '../AccountAlerts.js';
 // Import React components
 import Button from '../../common/Button.jsx';
 import FormInput from '../../common/FormInput.jsx';
+import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
 
@@ -23,21 +24,36 @@ export default class ForgetAccount extends React.Component {
     this.setState({email: input});
   }
 
-  handleSendResetEmail() {
+  /**
+   * Handles a user forget password event.
+   * Calls the appropriate method to reset the user's password and locks the
+   * user's account when password is confirmed to be reset.
+   * Also displays appropriate alert messages.
+   */
+  handleSendResetEmail(event) {
+    // Prevent browser from refreshing the page, so that we can still see
+    // input validation alerts
+    event.preventDefault();
     this.props.onSubmit();
 
     Accounts.forgotPassword({
       email: this.state.email
     }, (error) => {
       if (error) {
-        // Variety of errors when entering email
-        Bert.alert(error.reason, 'danger');
+        if (error.reason == "Must pass options.email") {
+          // When the user did not input anything into the email field
+          Bert.alert(errorMsgs.ERR_EMAIL_FIELD_EMPTY, 'danger');
+        } else if (error.reason == "User not found") {
+          // When the user inputs an incorrect NUS email address
+          Bert.alert(errorMsgs.ERR_EMAIL_USER_NOT_FOUND, 'danger');
+        } else {
+          // Variety of errors when entering email
+          Bert.alert(error.reason, 'danger');
+        }
         this.props.onLoadComplete();
       } else {
         let userName = this.state.email;
-
-        user = Meteor.call('lockAcc', userName);
-
+        Meteor.call('lockAcc', userName); // Locks user account
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
       }
@@ -54,7 +70,8 @@ export default class ForgetAccount extends React.Component {
             <p><strong>Fill in your NUS E-mail below:</strong></p>
           </h5>
 
-          <div className="form-group">
+          <form className="form-group"
+                onSubmit={this.handleSendResetEmail.bind(this)}>
 
             <FormInput placeholder="NUS E-mail"
                        onChange={this.handleEmailChange.bind(this)} />
@@ -62,10 +79,11 @@ export default class ForgetAccount extends React.Component {
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                       buttonText="SEND EMAIL"
+                      type="submit"
                       onButtonClick={this.handleSendResetEmail.bind(this)} />
             </div>
 
-          </div>
+          </form>
         </div>
 
       </div>

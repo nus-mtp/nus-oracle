@@ -11,16 +11,13 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  * markModules and markExemptedWaivedModules
  */
 
-export const findMathSciRequirementModules = function findMathSciRequirementModules(
-  academicCohort, studentSemesters, mathSciModules, exemptedModules,
-  waivedModules, moduleChecked, requiredMCs) {
-
+export const findMathSciRequirementModules = function findMathSciRequirementModules(studentInfoObject, mathSciModules, requiredMCs) {
   let markedMathSciModulesAndMCs = {
     name: 'Mathematics and Sciences',
     markedMathSciModules: mathSciModules,
     numberOfMathSciModulesMarkedTrue: 0,
-    moduleChecked: moduleChecked,
     totalModuleMCs: 0,
+    moduleChecked: studentInfoObject.moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -36,16 +33,16 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
     if (Object.keys(moduleFulfilment).length <= 0)  {
       return {};
     }
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedMathSciModulesAndMCs = markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedMathSciModulesAndMCs = markExemptedWaivedExceptions(markedMathSciModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedMathSciModulesAndMCs = markExceptions(markedMathSciModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedMathSciModulesAndMCs.markedMathSciModules[keyNames[i]])  {
           break;
         }

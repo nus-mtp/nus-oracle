@@ -38,16 +38,18 @@ describe('grad-checker-mathSci-1516', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
-    const academicCohort = 'AY 2015/2016';
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2015/2016',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
     const requirementName = 'Mathematics and Sciences'
-
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
     const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
-    const moduleChecked = {};
 
-    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, moduleChecked, requiredMCs);
+    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(studentInfoObject, mathScienceModules, requiredMCs);
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[0]], 'MA1301 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[1]], 'MA1521 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[2]], 'MA1101R fulfiled');

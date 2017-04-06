@@ -40,14 +40,19 @@ describe('grad-checker-ULR', function()  {
     const modules = ['Human Cultures', 'Asking Questions', 'Quantitative Reasoning',
                      'Singapore Studies', 'Thinking and Expression'];
 
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'University Level Requirement';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
-    const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
-    const moduleChecked = {};
+    const studentInfoObject = {
+     studentAcademicCohort: 'AY 2016/2017',
+     studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+     studentExemptedModules: {},
+     studentWaivedModules: {},
+     moduleChecked: {}
+    }
 
-    const markedULRModulesAndMCs = findULRRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, moduleChecked, requiredMCs);
+    const requirementName = 'University Level Requirement';
+    const ULRModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+
+    const markedULRModulesAndMCs = findULRRequirementModules(studentInfoObject, ULRModules, requiredMCs);
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[0]], 'GEH1001 fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[1]], 'GEQ1917 fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[modules[2]], 'GER1000 fulfiled');

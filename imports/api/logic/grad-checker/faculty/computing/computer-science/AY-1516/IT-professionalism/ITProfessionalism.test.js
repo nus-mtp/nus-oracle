@@ -38,14 +38,18 @@ describe('grad-checker-ITProfessionalism-1516', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['IS1103', 'CS2101'];
-    const academicCohort = 'AY 2015/2016';
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2015/2016',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[2]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
     const requirementName = 'IT Professionalism';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[2]);
     const ITProfessionalismModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
-    const moduleChecked = {};
 
-    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {}, moduleChecked, requiredMCs);
+    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(studentInfoObject, ITProfessionalismModules, requiredMCs);
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[0]], 'IS1103 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[1]], 'CS2101 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');
