@@ -53,7 +53,7 @@ export default class TabbedContainer extends React.Component {
       newPlannerDialog:
         <AddNewPlannerContainer
           handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
-          handleAddedTemplate={this.handleCloseAddPlanModal.bind(this)} />
+          handleAddedTemplate={this.handleAddTemplate.bind(this)} />
     });
   }
 
@@ -122,6 +122,21 @@ export default class TabbedContainer extends React.Component {
     this.setState({ isModalVisible : false });
   }
 
+  /**
+   * Handles event where user already selected a study
+   * plan template that isn't a blank one
+   */
+  handleAddTemplate() {
+    this.setState({
+      isModalVisible : false,
+      tabSelectedIndex:this.props.plannerIDs.length
+    });
+  }
+
+  /**
+   * Handles event where user selected a blank study
+   * plan template
+   */
   handleAddBlankTemplate(){
     this.setState({
       isModalVisible : false,
@@ -337,7 +352,7 @@ export default class TabbedContainer extends React.Component {
         content={
           <AddNewPlannerContainer
             handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
-            handleAddedTemplate={this.handleCloseAddPlanModal.bind(this)} />
+            handleAddedTemplate={this.handleAddTemplate.bind(this)} />
         }
       />
     );
