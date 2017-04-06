@@ -16,7 +16,7 @@ export const successMsgs = {
 }
 
 export const warningMsgs = {
-  WARNING_INPUT_EMAIL_TO_LOGIN: "Please enter your NUS e-mail address to log in!",
+  WARNING_INPUT_EMAIL_TO_LOGIN: "Please enter your NUS e-mail address & password to log in!",
   WARNING_CANCEL_SETUP: "Click again to leave this page",
   WARNING_SETUP: "Please complete setup before proceeding"
 }
