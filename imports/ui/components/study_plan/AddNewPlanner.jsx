@@ -21,7 +21,10 @@ export default class AddNewPlanner extends React.Component {
    * Event handler for adding a generic CS template
    */
   handleAddCSGenericTemplateClick() {
-    duplicatePlanner(this.props.genericCSPlannerName);
+    if (this.props.genericCSPlannerID) {
+      duplicatePlanner(this.props.genericCSPlannerID);
+      this.props.handleAddedTemplate();
+    }
   }
 
   /**
@@ -30,11 +33,11 @@ export default class AddNewPlanner extends React.Component {
    * @param {String} plannerName    Name of the planner to add
    */
   handleAddFocusAreaTemplate(plannerName) {
-    if (this.props.defaultPlannerIDs) {
-      let plannerIDToAdd = this.props.defaultPlannerIDs[plannerName];
+    if (this.props.focusAreaPlannerObjs) {
+      let plannerIDToAdd = this.props.focusAreaPlannerObjs[plannerName];
 
       if (plannerIDToAdd) {
-        duplicatePlanner(this.props.defaultPlannerIDs[plannerName]);
+        duplicatePlanner(plannerIDToAdd);
         this.props.handleAddedTemplate();
       }
     }
