@@ -17,7 +17,7 @@ export const successMsgs = {
 
 export const warningMsgs = {
   WARNING_INPUT_EMAIL_TO_LOGIN: "Please enter your NUS e-mail address & password to log in!",
-  WARNING_CANCEL_SETUP: "Click again to leave this page",
+  WARNING_CANCEL_SETUP: "Click again to cancel setup for now",
   WARNING_SETUP: "Please complete setup before proceeding"
 }
 
@@ -40,6 +40,7 @@ export const errorMsgs = {
   ERR_EMAIL_ENTERED_INVALID_FORMAT:"Invalid email format. Please check if there are invalid puncutations in your email",
   ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing"
 }
+
 export const loadingMsgs = {
   LOAD_LOGGING_IN: "Logging you in",
   LOAD_LOGGING_OUT: "Thank you for using NUS Oracle",
