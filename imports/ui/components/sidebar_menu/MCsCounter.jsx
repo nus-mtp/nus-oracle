@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * This React class implements the component for displaying the total number
+ * of MCs the student has completed.
+ *
+ * If the student has reached the required number of MCs to graduate, the UI
+ * reflects this change as well.
+ */
 export default class MCsCounter extends React.Component {
   /**
    * Render grad status icon depending on whether the user has met the number
