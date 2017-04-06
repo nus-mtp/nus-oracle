@@ -13,16 +13,23 @@ export default class AddNewPlanner extends React.Component {
    * Event handler for selection of a blank study plan template. We will
    * let the attached handler in a parent component handle this event.
    */
-  handleClickOnAddBlankTemplate() {
+  handleAddBlankTemplateClick() {
     this.props.handleAddBlankTemplate();
   }
 
   /**
-   * Event handler for selection of study plan template
+   * Event handler for adding a generic CS template
+   */
+  handleAddCSGenericTemplateClick() {
+    duplicatePlanner(this.props.genericCSPlannerName);
+  }
+
+  /**
+   * Event handler for selection of a focus area study plan template
    *
    * @param {String} plannerName    Name of the planner to add
    */
-  handlePlannerClick(plannerName) {
+  handleAddFocusAreaTemplate(plannerName) {
     if (this.props.defaultPlannerIDs) {
       let plannerIDToAdd = this.props.defaultPlannerIDs[plannerName];
 
@@ -41,26 +48,32 @@ export default class AddNewPlanner extends React.Component {
    *                template buttons
    */
   renderFocusAreaTemplateButtons() {
-    if (this.props.defaultPlannerIDs) {
-      return(
-        <div className="gallery-grid">
-          {Object.keys(this.props.defaultPlannerIDs).map((plannerName, index) => {
-            if (plannerName !== this.props.genericCSPlannerName) {
-              // Only render focus area study plan templates,
-              // not the CS Foundation template
-              return(
-                <StudyPlanTemplateButton
-                  key={index}
-                  alignmentClass="col-md-4"
-                  bgColor="#f99834"
-                  icon={<i className="fa fa-file-text-o"></i>}
-                  templateTitle={plannerName}
-                  onClick={this.handlePlannerClick.bind(this, plannerName)} />
-              );
-            }
-          })}
-        </div>
-      );
+    return(
+      <div className="gallery-grid">
+        {Object.keys(this.props.focusAreaPlannerObjs).map((plannerName, index) => {
+          // Only render focus area study plan templates,
+          // not the CS Foundation template
+          return(
+            <StudyPlanTemplateButton
+              key={index}
+              alignmentClass="col-md-4"
+              bgColor="#f99834"
+              icon={<i className="fa fa-file-text-o"></i>}
+              templateTitle={plannerName}
+              onClick={this.handleAddFocusAreaTemplate.bind(this, plannerName)} />
+          );
+        })}
+      </div>
+    );
+  }
+
+  getAlignmentClass() {
+    // If there are no generic CS planners, the Add Blank Study Plan Template
+    // button will be centralized
+    if (this.props.genericCSPlannerName) {
+      return "col-md-6";
+    } else {
+      return "col-md-6 col-md-offset-3";
     }
   }
 
@@ -73,26 +86,41 @@ export default class AddNewPlanner extends React.Component {
           <h4><b>Choose a template</b></h4>
 
           {/* Study Plan Template Buttons */}
-          <p className="lead color-blue-grey-lighter">General Templates</p>
-          <StudyPlanTemplateButton
-            alignmentClass="col-md-6"
-            bgColor="#0275d8"
-            icon={<i className="fa fa-file-o"></i>}
-            templateTitle={"Blank"}
-            onClick={this.handleClickOnAddBlankTemplate.bind(this)} />
+          <div className="row">
+            <p className="lead color-blue-grey-lighter">
+              General Templates
+            </p>
 
-          <StudyPlanTemplateButton
-            alignmentClass="col-md-6"
-            bgColor="#0275d8"
-            icon={<i className="fa fa-file-code-o"></i>}
-            templateTitle={"CS Foundation"}
-            onClick={
-              this.handlePlannerClick.bind(
-                this, this.props.genericCSPlannerName)}
-          />
+            {/* Add Blank Study Plan Button */}
+            <StudyPlanTemplateButton
+              alignmentClass={this.getAlignmentClass()}
+              bgColor="#0275d8"
+              icon={<i className="fa fa-file-o"></i>}
+              templateTitle={"Start from scratch!"}
+              onClick={this.handleAddBlankTemplateClick.bind(this)} />
 
-          <p className="lead color-blue-grey-lighter">Focus Area Templates</p>
-          {this.renderFocusAreaTemplateButtons()}
+            {/* Add CS Generic Study Plan Template Button */}
+            {this.props.genericCSPlannerName ?
+              <StudyPlanTemplateButton
+                alignmentClass="col-md-6"
+                bgColor="#0275d8"
+                icon={<i className="fa fa-file-code-o"></i>}
+                templateTitle={"CS Foundation"}
+                onClick={this.handleAddCSGenericTemplateClick.bind(this)} /> :
+              null
+            }
+          </div>
+
+          {/* Focus Area Study Plan Template Buttons */}
+          <div className="row">
+            {this.props.focusAreaPlannerObjs ?
+              <div>
+                <p className="lead color-blue-grey-lighter">Focus Area Templates</p>
+                {this.renderFocusAreaTemplateButtons()}
+              </div> :
+              null
+            }
+          </div>
         </div>
       </div>
     );
