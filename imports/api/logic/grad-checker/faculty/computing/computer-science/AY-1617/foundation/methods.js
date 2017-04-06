@@ -12,12 +12,12 @@ import { searchByModuleCode } from '../../../../../../../database-controller/mod
  */
 
 
-export const findFoundationRequirementModules = function findFoundationRequirementModules(academicCohort, studentSemesters, foundationModules, exemptedModules, waivedModules, moduleChecked, requiredMCs) {
+export const findFoundationRequirementModules = function findFoundationRequirementModules(studentInfoObject, foundationModules, requiredMCs) {
   let markedFoundationModulesAndMCs = {
     name: 'Computer Science Foundation',
     markedFoundationModules: foundationModules,
     numberOfFoundationModulesMarkedTrue: 0,
-    moduleChecked: moduleChecked,
+    moduleChecked: studentInfoObject.moduleChecked,
     totalModuleMCs: 0,
     requiredMCs: requiredMCs,
     isFulfilled: false
@@ -35,15 +35,15 @@ export const findFoundationRequirementModules = function findFoundationRequireme
       return {};
     }
 
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
-        markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markExemptedWaivedExceptions(markedFoundationModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedFoundationModulesAndMCs = markExceptions(markedFoundationModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedFoundationModulesAndMCs.markedFoundationModules[keyNames[i]])  {
           break;
         }
