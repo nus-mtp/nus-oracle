@@ -52,7 +52,8 @@ export default class TabbedContainer extends React.Component {
     this.setState({
       newPlannerDialog:
         <AddNewPlannerContainer
-          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)} />
+          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+          handleAddedTemplate={this.handleCloseAddPlanModal.bind(this)} />
     });
   }
 
@@ -117,7 +118,7 @@ export default class TabbedContainer extends React.Component {
   /**
    * Handler for hiding study plan modal
    */
-  handleCancelAddPlanModal() {
+  handleCloseAddPlanModal() {
     this.setState({ isModalVisible : false });
   }
 
@@ -127,6 +128,7 @@ export default class TabbedContainer extends React.Component {
       isAddingNewPlan : true
     });
   }
+
   /**
    * Handler for deleting study plan.
    *
@@ -331,8 +333,12 @@ export default class TabbedContainer extends React.Component {
   renderAddPlanModal(){
     return(
       <ModalContainer
-        onHidden={this.handleCancelAddPlanModal.bind(this)}
-        content={ <AddNewPlannerContainer handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
+        onHidden={this.handleCloseAddPlanModal.bind(this)}
+        content={
+          <AddNewPlannerContainer
+            handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+            handleAddedTemplate={this.handleCloseAddPlanModal.bind(this)} />
+        }
       />
     );
   }

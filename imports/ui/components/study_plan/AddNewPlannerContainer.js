@@ -6,10 +6,11 @@ import { getStudentRepackagedDefaultPlannerIDs } from './../../../api/database-c
 import AddNewPlanner from './AddNewPlanner.jsx';
 
 export default AddNewPlannerContainer = createContainer((props) => {
+  const genericCSPlannerName = "Generic CS Module";
   let defaultPlannerIDs = getStudentRepackagedDefaultPlannerIDs();
-  console.log(defaultPlannerIDs);
 
   return {
-
+    defaultPlannerIDs,
+    genericCSPlannerName,
   };
 }, AddNewPlanner);
