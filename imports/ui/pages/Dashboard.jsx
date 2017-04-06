@@ -4,7 +4,7 @@ import React from 'react';
 import ModalContainer from '../components/common/ModalContainer.jsx';
 import Sidebar from '../components/sidebar_menu/Sidebar';
 import StudyPlan from '../components/study_plan/StudyPlan';
-import ChangePassword from '../components/account/manage-account/ChangePassword.jsx';
+import ChangePassword from '../components/account/login/ChangePassword.jsx';
 import LoadingScreen from './../components/account/login/LoadingScreen.jsx';
 
 export default class Dashboard extends React.Component {

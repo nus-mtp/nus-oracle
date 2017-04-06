@@ -4,13 +4,14 @@ import React from 'react';
 // Import React components
 import Button from '../../common/Button.jsx';
 import ModalContainer from '../../common/ModalContainer.jsx';
+import LoadingScreen from './LoadingScreen.jsx';
 import LoginAccount from './LoginAccount.jsx';
 import RegisterAccount from './RegisterAccount.jsx';
 import ForgetAccount from './ForgetAccount.jsx';
-import LoadingScreen from './LoadingScreen.jsx';
 import RestoreAccount from './RestoreAccount.jsx';
-import ChangPassword from '../manage-account/ChangePassword.jsx';
-import {loadingMsgs} from './../AccountAlerts.js'
+
+// Import constants
+import { loadingMsgs } from './../AccountAlerts.js'
 
 export default class AccountManager extends React.Component {
   constructor(props) {

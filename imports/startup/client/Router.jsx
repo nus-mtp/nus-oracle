@@ -4,7 +4,7 @@ import { mount } from 'react-mounter';
 
 // Import React Components
 import App from '../../ui/pages/App.jsx';
-import MainLayout from '../../ui/components/account/main-layout/MainLayout.jsx';
+import MainLayout from '../../ui/components/account/MainLayout.jsx';
 import AccountManager from '../../ui/components/account/login/AccountManager.jsx';
 import SetUpAcadDetail from '../../ui/components/account/acad-details/SetUpAcadDetail.jsx';
 
@@ -14,25 +14,18 @@ export const pathToAcadDetailsSetup = "/acadSetup";
 export const pathToUserDashboard = "/userDashboard";
 
 var profile;
-//Tracker.autorun(function () {
 
-    //profile = Meteor.user();
-    //console.log("Tracker");
-    //console.log(profile);
-
-//});
-/*
-* Help to triggersEnter to authenticate and redirect if user acccess dashbaord
-*/
+/**
+ * Help to triggersEnter to authenticate and redirect if user acccess dashbaord
+ */
 function redirectFromDashboard (ctx, redirect) {
-  if (!Meteor.userId()){// || !Meteor.user().emails[0].verified) {
+  if (!Meteor.userId()) {
     FlowRouter.go(pathToLogin);
     } else {
       Meteor.subscribe("user-profile", {
         onReady: function() {
           if (!Meteor.user().profile.hasSetup) {
-            //console.log("I am in hacker voice")
-              FlowRouter.go(pathToAcadDetailsSetup);
+            FlowRouter.go(pathToAcadDetailsSetup);
           }
         }
       });

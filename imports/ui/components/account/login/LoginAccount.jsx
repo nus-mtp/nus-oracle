@@ -84,13 +84,15 @@ export default class LoginAccount extends React.Component {
    * Also displays appropriate alert messages correspondingly.
    */
   handleSubmit(event) {
-    // Prevent browser from refreshing the page, so that we can still see
-    // input validation alerts
+    // Prevent browser from refreshing the page, so that we can still see input validation alerts
     event.preventDefault();
+
+    // Handles loading screen
     this.props.onSubmit();
 
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      if (error) { // Login error
+      if (error) {
+        /* ERROR WITH LOGIN INPUT */
         if (error.reason == 'Incorrect password') {
           // Incorrect password entered by user
           let numPasswordTries = this.state.passwordErr + 1;
@@ -100,33 +102,39 @@ export default class LoginAccount extends React.Component {
             this.handleForgetPassword();
           }
         } else if (error.reason == 'User not found') {
+          // User's NUS email isn't in the database, mostly because haven't signed up yet
           Bert.alert(errorMsgUnrecognizedEmail(this.state.email), 'danger');
-        } else { // Incorrect email, etc.
+        } else if (error.reason == 'Match failed') {
+          // User submitted empty form, we do nothing and don't raise any alerts
+          Bert.alert(warningMsgs.WARNING_INPUT_EMAIL_TO_LOGIN, 'danger');
+        } else {
+          // Other reasons
           Bert.alert(error.reason, 'danger');
         }
+        // Close all alert windows after errors have been handled
         this.props.onSuccess();
       } else {
-        this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
-
-        let isVerified = Meteor.user().emails[0].verified;
+        /* SUCCESSFUL LOGIN */
+        // Reset incorrect attempts counter
+        this.setState({ passwordErr: 0 });
 
         if (Meteor.user().profile.accountLock) {
+          // Check if the user's account is locked out for security reasons
           Bert.alert(errorLockedAccount(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
           this.props.onSuccess();
-        } else if (isVerified) {
-          // Log only a valid and verified user in
+        } else if (Meteor.user().emails[0].verified) {
+          // Check if email is verified or not
           if (!Meteor.user().profile.hasSetup) {
-            // Newly-signed-up users
+            // Newly-signed-up users without a setup yet
             Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
             FlowRouter.go(pathToAcadDetailsSetup);
           } else {
-            //Actual redirect to dashbaord
+            // Verified users who have set up their academic profile --> Directed to dashbaord
             Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
             FlowRouter.go(pathToUserDashboard);
           }
-
         } else {
           // Refresh login page if this email isn't verified yet
           Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger');
