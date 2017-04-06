@@ -10,7 +10,8 @@ import { insertOneModuleInSemester,
          getAllModulesInSemester,
          getOneModuleInSemester,
          deleteOneModuleInSemester,
-         deleteAllModulesInSemester } from './methods';
+         deleteAllModulesInSemester,
+         getTotalMCsForAllModules } from './methods';
 import { m_insertOneModuleInSemester,
          m_getAllModulesInSemester,
          m_getOneModuleInSemester,
@@ -123,6 +124,13 @@ describe('modules', function () {
 
     const module = deleteAllModulesInSemester(userID);
     assert.equal(Object.keys(module).length, 0);
+  });
+
+  it ('calculates all module MCs given plannerID', function ()  {
+    const plannerIDs = getPlannerIDsGivenUserID(userID);
+    const totalMCs = getTotalMCsForAllModules(plannerIDs[0]);
+
+    assert.equal(totalMCs, 128);
   });
 
   it ('get all module using meteor methods', function() {
