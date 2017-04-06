@@ -17,6 +17,7 @@ import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 // Import server-side methods
 import { createPlanner,
          removePlanner,
+         duplicatePlanner,
          setPlannerName } from '../../../api/crud-controller/planner/methods.js';
 
  // Import common constants and utilities
@@ -52,7 +53,8 @@ export default class TabbedContainer extends React.Component {
     this.setState({
       newPlannerDialog:
         <AddNewPlannerContainer
-          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)} />
+          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+          handleAddedTemplate={this.handleAddTemplate.bind(this)} />
     });
   }
 
@@ -117,16 +119,32 @@ export default class TabbedContainer extends React.Component {
   /**
    * Handler for hiding study plan modal
    */
-  handleCancelAddPlanModal() {
+  handleCloseAddPlanModal() {
     this.setState({ isModalVisible : false });
   }
 
+  /**
+   * Handles event where user already selected a study
+   * plan template that isn't a blank one
+   */
+  handleAddTemplate() {
+    this.setState({
+      isModalVisible : false,
+      tabSelectedIndex:this.props.plannerIDs.length
+    });
+  }
+
+  /**
+   * Handles event where user selected a blank study
+   * plan template
+   */
   handleAddBlankTemplate(){
     this.setState({
       isModalVisible : false,
       isAddingNewPlan : true
     });
   }
+
   /**
    * Handler for deleting study plan.
    *
@@ -147,9 +165,19 @@ export default class TabbedContainer extends React.Component {
   }
 
   /**
+   * Handler for duplicating a study plan
+   *
+   * @param {[String]} plannerID    Planner ID of the planner to
+   *                                duplicate.
+   */
+  handleDuplicateStudyPlanClick(plannerID) {
+    duplicatePlanner(plannerID);
+  }
+
+  /**
    * Handler for editing a study plan's name
    *
-   * @param {[String]} plannerID    Planner ID of the planner the user is going
+   * @param {[String]} plannerID    Planner ID of the planner
    *                                to edit.
    */
   handleEditStudyPlan(plannerID) {
@@ -235,6 +263,7 @@ export default class TabbedContainer extends React.Component {
            tabTitle={tabTitleComponent} enabledDropdown={isActiveTab}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+           onClickDuplicateTab={this.handleDuplicateStudyPlanClick.bind(this, plannerID)}
            onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
            isEditingPlanName={this.state.isEditingPlanName}
            isActiveTab={isActiveTab} />
@@ -331,8 +360,12 @@ export default class TabbedContainer extends React.Component {
   renderAddPlanModal(){
     return(
       <ModalContainer
-        onHidden={this.handleCancelAddPlanModal.bind(this)}
-        content={ <AddNewPlannerContainer handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
+        onHidden={this.handleCloseAddPlanModal.bind(this)}
+        content={
+          <AddNewPlannerContainer
+            handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+            handleAddedTemplate={this.handleAddTemplate.bind(this)} />
+        }
       />
     );
   }
@@ -365,7 +398,7 @@ export default class TabbedContainer extends React.Component {
         </div>
 
         <div className='tab-content'>
-          <div role='tabpanel' className='tab-pane fade in active'
+          <div role='tabpanel' className='tab-pane fade in active' style={{overflowY: 'auto'}}
                id={'tab' + this.state.tabSelectedIndex}>
                  {
                    // Show add menu dialog when no planners in dashboard

@@ -231,7 +231,7 @@ export const getCohortByID = function getCohortByID(cohortID) {
 export const getAcadCohortDefaultPlannerIDs = function getAcadCohortDefaultPlannerID(cohortName) {
     let resultCursor = AcademicCohort.find({cohortName: cohortName});
     if (resultCursor.count() != 1) {
-        console.log("there is no academic cohort with name " + cohortName + " in the database");
+        // console.log("there is no academic cohort with name " + cohortName + " in the database");
         return [];
     }
 
