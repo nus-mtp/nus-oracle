@@ -17,6 +17,7 @@ import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 // Import server-side methods
 import { createPlanner,
          removePlanner,
+         duplicatePlanner,
          setPlannerName } from '../../../api/crud-controller/planner/methods.js';
 
  // Import common constants and utilities
@@ -164,9 +165,19 @@ export default class TabbedContainer extends React.Component {
   }
 
   /**
+   * Handler for duplicating a study plan
+   *
+   * @param {[String]} plannerID    Planner ID of the planner to
+   *                                duplicate.
+   */
+  handleDuplicateStudyPlanClick(plannerID) {
+    duplicatePlanner(plannerID);
+  }
+
+  /**
    * Handler for editing a study plan's name
    *
-   * @param {[String]} plannerID    Planner ID of the planner the user is going
+   * @param {[String]} plannerID    Planner ID of the planner
    *                                to edit.
    */
   handleEditStudyPlan(plannerID) {
@@ -252,6 +263,7 @@ export default class TabbedContainer extends React.Component {
            tabTitle={tabTitleComponent} enabledDropdown={isActiveTab}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+           onClickDuplicateTab={this.handleDuplicateStudyPlanClick.bind(this, plannerID)}
            onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
            isEditingPlanName={this.state.isEditingPlanName}
            isActiveTab={isActiveTab} />
