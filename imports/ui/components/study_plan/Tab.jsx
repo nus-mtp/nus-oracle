@@ -214,59 +214,59 @@ export default class Tab extends React.Component {
     return (
       /* ReactClickOut listens for and handles all click-outside events */
       <ReactClickOut onClickOut={this.handleOnBlurDropdown.bind(this)}>
-          <li className='nav-item'
-              onClick={this.props.onClickTab}
-              onContextMenu={onRightClick ? onRightClick : this.handleRightClick.bind(this)}
-              onMouseEnter={this.handleOnMouseEnter.bind(this)}
-              onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-            <a className={this.setActiveTabClass('nav-link')} role='tab'>
-              <span className={this.props.navSpanClass} style={this.props.navSpanStyle}
-                  ref={(el)=> {
-                    var node = ReactDOM.findDOMNode(el);
-                    if(node){
-                      if(this.state.dimension.left != node.getBoundingClientRect().left ||
-                      this.state.dimension.width != node.getBoundingClientRect().width){
-                        this.updateTabDimension(node.getBoundingClientRect());
-                      }
+        <li className='nav-item'
+            onClick={this.props.onClickTab}
+            onContextMenu={onRightClick ? onRightClick : this.handleRightClick.bind(this)}
+            onMouseEnter={this.handleOnMouseEnter.bind(this)}
+            onMouseLeave={this.handleOnMouseLeave.bind(this)}>
+          <a className={this.setActiveTabClass('nav-link')} role='tab'>
+            <span className={this.props.navSpanClass} style={this.props.navSpanStyle}
+                ref={(el)=> {
+                  var node = ReactDOM.findDOMNode(el);
+                  if(node){
+                    if(this.state.dimension.left != node.getBoundingClientRect().left ||
+                    this.state.dimension.width != node.getBoundingClientRect().width){
+                      this.updateTabDimension(node.getBoundingClientRect());
                     }
-              }}>
+                  }
+            }}>
 
-                {/* The label of this Tab is rendered here */}
-                { this.props.tabTitle }
+            {/* The label of this Tab is rendered here */}
+            { this.props.tabTitle }
 
-                {/* Render dropdown caret */}
-                { this.props.enabledDropdown && this.props.enabledMouseOver &&
-                  !this.props.isEditingPlanName ?
-                  this.renderDropdownCaret() : null }
+            {/* Render dropdown caret */}
+            { this.props.enabledDropdown && this.props.enabledMouseOver &&
+              !this.props.isEditingPlanName ?
+              this.renderDropdownCaret() : null }
 
-                {/* Toggle Dropdown menu for this tab */}
-                { this.props.enabledDropdown && this.state.onClickDropdown ?
-                  this.renderDropDownMenu(this.state.dimension) : null}
+            {/* Toggle Dropdown menu for this tab */}
+            { this.props.enabledDropdown && this.state.onClickDropdown ?
+              this.renderDropDownMenu(this.state.dimension) : null}
 
-                {/* Render delete modal */}
-                {this.state.launchConfirmDelete ?
-                  <ModalContainer
-                    onHidden={this.resetDeleteState.bind(this)}
+            {/* Render Delete Confirmation Modal */}
+            {this.state.launchConfirmDelete ?
+              <ModalContainer
+                onHidden={this.resetDeleteState.bind(this)}
+                content={
+                  <DialogContainer
+                    title={"Are you sure you want to delete this study plan, '" +
+                           this.props.fullTabTitle + "'?"}
                     content={
-                      <DialogContainer
-                        title={"Are you sure you want to delete this study plan, '" +
-                               this.props.fullTabTitle + "'?"}
-                        content={
-                          <div>
-                            <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
-                                    buttonText="Yes"
-                                    onButtonClick={this.handleConfirmDelete.bind(this)} />
-                            <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
-                                    buttonText="No"
-                                    onButtonClick={this.resetDeleteState.bind(this)} />
-                          </div>
-                        }
-                      /> }
-                  /> : null}
+                      <div>
+                        <Button buttonClass={"btn btn-rounded btn-inline btn-warning-outline"}
+                                buttonText="Yes"
+                                onButtonClick={this.handleConfirmDelete.bind(this)} />
+                        <Button buttonClass={"btn btn-rounded btn-inline btn-secondary-outline"}
+                                buttonText="No"
+                                onButtonClick={this.resetDeleteState.bind(this)} />
+                      </div>
+                    }
+                  /> }
+              /> : null}
 
-              </span>
-            </a>
-          </li>
+            </span>
+          </a>
+        </li>
       </ReactClickOut>
     )
   }
