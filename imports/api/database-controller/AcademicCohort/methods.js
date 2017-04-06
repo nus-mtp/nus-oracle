@@ -2,6 +2,9 @@ import {AcademicCohort} from './acadCohort';
 import {Planner} from '../../crud-controller/planner/planner';
 import {GraduationRequirements} from '../graduation-requirement/graduationRequirement';
 import {Match} from 'meteor/check';
+//change this as you see fit when you want to populate the database
+//make sure that this name is consistent throughout your json file
+const CS_FOUNDATION_PLANNER_NAME = "CS Foundation"
 
 export const createNewCohort = function createCohort(cohortName) {
     const newCohortDocument = {
@@ -253,15 +256,26 @@ export const getRepackagedDefaultPlannerIDs = function getRepackagedDefaultPlann
     if (result.length == 0) {
         return null;
     }
+
+    if (result == undefined){
+      console.log("result for repackaged defaultPlanner IDs are undefined");
+    }
     // repackaged the result
-    const repackagedData = {}
+    const repackagedFocusArea = {};
+    const repackagedFoundation = {};
     for (var i = 0; i < result.length; i++) {
         // assumed the planner with the ID exists by db integrity
-        let currentPlannerName = Planner.findOne({_id: result[i]}).name;
-        repackagedData[currentPlannerName] = result[i];
+        let currentPlannerID = result[i];
+        let currentPlanner = Planner.findOne({_id: currentPlannerID});
+
+        if(currentPlanner['name'] === CS_FOUNDATION_PLANNER_NAME){
+          repackagedFoundation[currentPlanner['name']] = currentPlannerID;
+          continue;
+        }
+        repackagedFocusArea[currentPlanner['name']] = currentPlannerID;
     }
 
-    return repackagedData;
+    return [repackagedFoundation,repackagedFocusArea];
 }
 
 export const getAcadCohortDataForSetup = function getCohortAndRepackaged() {
