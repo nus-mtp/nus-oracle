@@ -49,6 +49,11 @@ export const findFoundationRequirementModules = function findFoundationRequireme
         }
       }
     }
+    // calculate expectedMCs by using markedFoundationModules
+      // subtract totalMCs with expectedMCs
+
+      // add the difference to requiredMCs
+
     // checks if all modules in foundation has been marked true
     if (markedFoundationModulesAndMCs.numberOfFoundationModulesMarkedTrue === keyNames.length) {
       markedFoundationModulesAndMCs.requiredMCs = markedFoundationModulesAndMCs.totalModuleMCs;

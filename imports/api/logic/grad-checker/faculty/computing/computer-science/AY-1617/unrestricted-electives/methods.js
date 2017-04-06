@@ -16,9 +16,7 @@ export const findUnrestrictedElectivesRequirementModules = function findUnrestri
     for (var j=0; j<modules.length; j++)  {
       if (!studentInfoObject.moduleChecked[modules[j]]) {
         electiveMCs += searchByModuleCode(modules[j]).moduleMC;
-        console.log(modules[j]);
       }
-      //console.log(modules[j] + " " + totalMCsInPlanner);
     }
   }
 
@@ -27,8 +25,13 @@ export const findUnrestrictedElectivesRequirementModules = function findUnrestri
   for (var i=0; i<exemptedModules.length; i++) {
     if (!studentInfoObject.moduleChecked[exemptedModules[i]]) {
       electiveMCs += searchByModuleCode(exemptedModules[i]).moduleMC;
-      console.log(exemptedModules[i]);
     }
+  }
+
+  // loop through waived modules and subtract to totalMCs
+  let waivedModules = Object.keys(studentInfoObject.studentWaivedModules);
+  for (var i=0; i<waivedModules.length; i++) {
+    totalRequiredMCs -= searchByModuleCode(waivedModules[i]).moduleMC;
   }
 
   if (electiveMCs >= (graduationMCs - totalRequiredMCs))  {
