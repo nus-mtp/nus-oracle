@@ -7,15 +7,10 @@ import { errorMsgs } from '../AccountAlerts.js';
 
 // Import React components
 import Button from '../../common/Button.jsx';
+import FormInput from '../../common/FormInput.jsx';
+import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
-
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
- */
 
 export default class ForgetAccount extends React.Component {
   constructor(props) {
@@ -25,23 +20,40 @@ export default class ForgetAccount extends React.Component {
     };
   }
 
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
+  handleEmailChange(input) {
+    this.setState({email: input});
   }
 
-  handleSendResetEmail() {
+  /**
+   * Handles a user forget password event.
+   * Calls the appropriate method to reset the user's password and locks the
+   * user's account when password is confirmed to be reset.
+   * Also displays appropriate alert messages.
+   */
+  handleSendResetEmail(event) {
+    // Prevent browser from refreshing the page, so that we can still see
+    // input validation alerts
+    event.preventDefault();
+    this.props.onSubmit();
+
     Accounts.forgotPassword({
       email: this.state.email
     }, (error) => {
       if (error) {
-        // Variety of errors when entering email
-        Bert.alert(error.reason, 'danger');
+        if (error.reason == "Must pass options.email") {
+          // When the user did not input anything into the email field
+          Bert.alert(errorMsgs.ERR_EMAIL_FIELD_EMPTY, 'danger');
+        } else if (error.reason == "User not found") {
+          // When the user inputs an incorrect NUS email address
+          Bert.alert(errorMsgs.ERR_EMAIL_USER_NOT_FOUND, 'danger');
+        } else {
+          // Variety of errors when entering email
+          Bert.alert(error.reason, 'danger');
+        }
+        this.props.onLoadComplete();
       } else {
         let userName = this.state.email;
-
-        user = Meteor.call('lockAcc', userName);
-        console.log(user);
-
+        Meteor.call('lockAcc', userName); // Locks user account
         Bert.alert(successMsgs.SUCCESS_NEW_PASSWORD_SENT, 'success');
         this.props.onSuccess();
       }
@@ -58,18 +70,20 @@ export default class ForgetAccount extends React.Component {
             <p><strong>Fill in your NUS E-mail below:</strong></p>
           </h5>
 
-          <div className="form-group">
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="NUS E-mail" value={this.state.value}
-                onChange={this.handleEmailChange.bind(this)} />
-            </div>
+          <form className="form-group"
+                onSubmit={this.handleSendResetEmail.bind(this)}>
+
+            <FormInput placeholder="NUS E-mail"
+                       onChange={this.handleEmailChange.bind(this)} />
+
             <div className='form-group'>
               <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
                       buttonText="SEND EMAIL"
+                      type="submit"
                       onButtonClick={this.handleSendResetEmail.bind(this)} />
             </div>
-          </div>
+
+          </form>
         </div>
 
       </div>

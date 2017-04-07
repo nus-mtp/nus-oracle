@@ -1,25 +1,29 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 // Import React libraries
 import Select from 'react-select';
 import ReactClickOut from 'react-onclickout';
+import scrollIntoView from 'scroll-into-view';
 
 // Import React components
 import Button from '../common/Button.jsx';
 import IconButton from '../common/IconButton.jsx';
+import ModalContainer from '../common/ModalContainer.jsx';
 import Tab from './Tab.jsx';
 import AcadYrSectionContainer from './AcadYrSectionContainer.js';
-import AddNewPlanner from './AddNewPlanner.jsx';
-import ModalContainer from '../common/ModalContainer.jsx';
+import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 
 // Import server-side methods
 import { createPlanner,
          removePlanner,
+         duplicatePlanner,
          setPlannerName } from '../../../api/crud-controller/planner/methods.js';
 
  // Import common constants and utilities
  import { ENTER_CHAR_KEY_CODE,
-          MAX_STUDY_PLAN_NAME_LENGTH } from '../common/Constants.js';
+          MAX_STUDY_PLAN_NAME_LENGTH,
+          MIN_STUDY_PLAN_NAME_LENGTH } from '../common/Constants.js';
  import { isDefinedObj,
           getFirstNChars } from '../../../utils/util.js';
 
@@ -33,12 +37,25 @@ export default class TabbedContainer extends React.Component {
   constructor() {
     super();
     this.state = {
+      newPlannerDialog: null,
       tabSelectedIndex: 0,
       isAddingNewPlan: false,
       isModalVisible: false,
       isEditingPlanName: false,
       planNameToEdit: false
     }
+  }
+
+  /**
+   * Display Add New Planner Dialog only when component is completely mounted
+   */
+  componentDidMount(){
+    this.setState({
+      newPlannerDialog:
+        <AddNewPlannerContainer
+          handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+          handleAddedTemplate={this.handleAddTemplate.bind(this)} />
+    });
   }
 
   //======================================================
@@ -68,6 +85,7 @@ export default class TabbedContainer extends React.Component {
         if (this.state.isAddingNewPlan) {
           this.setState({ isAddingNewPlan: false });
           createPlanner(userInputStudyPlanName, ["focusArea"]);
+          this.setState({tabSelectedIndex:this.props.plannerIDs.length});
         }
       }
     }
@@ -81,18 +99,14 @@ export default class TabbedContainer extends React.Component {
    */
   handleCancelAddStudyPlan(event) {
     this.setState({ isAddingNewPlan: false });
-
     // If the user already entered a name, add study plan for convenience
     if (isDefinedObj(event)) {
       let userInputStudyPlanName = event.target.value;
       if (userInputStudyPlanName) {
         createPlanner(userInputStudyPlanName, ["focusArea"]);
+        this.setState({tabSelectedIndex:this.props.plannerIDs.length});
       }
     }
-  }
-
-  handleCancelAddPlanModale(event) {
-    this.setState({ isModalVisible: false });
   }
 
   /**
@@ -102,13 +116,35 @@ export default class TabbedContainer extends React.Component {
     this.setState({ isModalVisible : true });
   }
 
+  /**
+   * Handler for hiding study plan modal
+   */
+  handleCloseAddPlanModal() {
+    this.setState({ isModalVisible : false });
+  }
+
+  /**
+   * Handles event where user already selected a study
+   * plan template that isn't a blank one
+   */
+  handleAddTemplate() {
+    this.setState({
+      isModalVisible : false,
+      tabSelectedIndex:this.props.plannerIDs.length
+    });
+  }
+
+  /**
+   * Handles event where user selected a blank study
+   * plan template
+   */
   handleAddBlankTemplate(){
     this.setState({
       isModalVisible : false,
-      isAddingNewPlan : true,
-      tabSelectedIndex: this.props.plannerIDs.length
+      isAddingNewPlan : true
     });
   }
+
   /**
    * Handler for deleting study plan.
    *
@@ -129,9 +165,19 @@ export default class TabbedContainer extends React.Component {
   }
 
   /**
+   * Handler for duplicating a study plan
+   *
+   * @param {[String]} plannerID    Planner ID of the planner to
+   *                                duplicate.
+   */
+  handleDuplicateStudyPlanClick(plannerID) {
+    duplicatePlanner(plannerID);
+  }
+
+  /**
    * Handler for editing a study plan's name
    *
-   * @param {[String]} plannerID    Planner ID of the planner the user is going
+   * @param {[String]} plannerID    Planner ID of the planner
    *                                to edit.
    */
   handleEditStudyPlan(plannerID) {
@@ -179,6 +225,12 @@ export default class TabbedContainer extends React.Component {
     }
   }
 
+  scrollToElement(el){
+    var node = ReactDOM.findDOMNode(el);
+    if(node)
+      scrollIntoView(node, {time:500});
+  }
+
   //===================================================================
   // RENDER FUNCTIONS FOR DISTINCT UI PARTS WITHIN THE TABBEDCONTAINER
   //===================================================================
@@ -195,23 +247,26 @@ export default class TabbedContainer extends React.Component {
    */
   renderTab(tabTitle, index, plannerID) {
     let tabTitleComponent = tabTitle;
+    let isActiveTab = (this.state.tabSelectedIndex === index);
 
     // Enable the input field only for the study plan the user wants to edit
     if (this.state.planNameToEdit == plannerID && this.state.isEditingPlanName) {
       tabTitleComponent = this.renderTabTitleInput(tabTitle, plannerID);
     } else {
-      tabTitleComponent = this.renderTabTitle(tabTitle, plannerID)
+      tabTitleComponent = this.renderTabTitle(tabTitle, plannerID, isActiveTab);
     }
 
     return (
-      <Tab key={index}
-           navSpanClass="nav-link-in" navSpanStyle={{position: "relative"}}
-           tabTitle={tabTitleComponent}
+      <Tab key={index} ref={isActiveTab ? this.scrollToElement : null}
+           navSpanClass="nav-link-in"
+           fullTabTitle={tabTitle}
+           tabTitle={tabTitleComponent} enabledDropdown={isActiveTab}
            onClickTab={this.handleClickTab.bind(this, index)}
            onClickDeleteTab={this.handleDeleteStudyPlanClick.bind(this, index)}
+           onClickDuplicateTab={this.handleDuplicateStudyPlanClick.bind(this, plannerID)}
            onClickEditTab={this.handleEditStudyPlan.bind(this, plannerID)}
            isEditingPlanName={this.state.isEditingPlanName}
-           isActiveTab={(this.state.tabSelectedIndex === index)} />
+           isActiveTab={isActiveTab} />
     )
   }
 
@@ -224,13 +279,20 @@ export default class TabbedContainer extends React.Component {
    * @param {[String]} plannerID     ID of this tab's study plan
    * @return    Shortened String representation of this tab title.
    */
-  renderTabTitle(tabTitle, plannerID) {
+
+  renderTabTitle(tabTitle, plannerID, isActiveTab) {
     let trimmedTabTitle =  getFirstNChars(tabTitle, MAX_STUDY_PLAN_NAME_LENGTH);
     if (trimmedTabTitle.length < tabTitle.length) {
       // If the tab title was so long that it got trimmed
       trimmedTabTitle += "...";
     }
-    return trimmedTabTitle
+    // If the tab title was too short
+    else if(isActiveTab && trimmedTabTitle.length < MIN_STUDY_PLAN_NAME_LENGTH){
+      let space = '\u2003';
+      while(trimmedTabTitle.length < 6)
+        trimmedTabTitle = space + trimmedTabTitle + space;
+    }
+    return trimmedTabTitle;
   }
 
   /**
@@ -243,8 +305,8 @@ export default class TabbedContainer extends React.Component {
   renderTabTitleInput(tabTitle, plannerID) {
     return(
       <input autoFocus type="text" defaultValue={tabTitle}
-             placeholder={tabTitle}
-             className="form-control" style={{height: "1.5em"}}
+             placeholder={tabTitle} style={{width: '7em'}}
+             className= "form-control studyplan-tab-name-input"
              onKeyPress={this.handleEditStudyPlanName.bind(this, plannerID)}
              onBlur={this.handleCancelEditStudyPlan.bind(this, plannerID)} />
     )
@@ -259,12 +321,11 @@ export default class TabbedContainer extends React.Component {
    */
   renderAddPlanTab() {
     return (
-      <Tab navSpanClass="nav-link-in" navSpanStyle={{padding: "0.37em"}}
-           enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
+        <Tab navSpanClass="nav-link-in" ref={this.scrollToElement}
+           enabledMouseOver={false} enabledDropdown={false} isActiveTab={this.props.plannerIDs.length==0}
            tabTitle={
-             <input autoFocus type="text" className="form-control"
-                    placeholder="Untitled"
-                    style={{height: "1.5em"}}
+             <input autoFocus type="text" className="form-control studyplan-tab-name-input"
+                    placeholder="Untitled" style={{width: '7em'}}
                     onKeyPress={this.handleEnterStudyPlanName.bind(this)}
                     onBlur={this.handleCancelAddStudyPlan.bind(this)} />
            }
@@ -282,15 +343,31 @@ export default class TabbedContainer extends React.Component {
   renderAddPlanButton() {
     return (
       <Tab enabledMouseOver={false} enabledDropdown={false} isActiveTab={false}
-           tabStyle={{float: "left", width: "3em", backgroundColor: "#f6f8fa"}}
+           navSpanClass="nav-link-in"
+           navLinkClass="add-planner-btn"
+           onRightClickTab={()=>{}}
+           onClickTab={this.handleAddStudyPlanClick.bind(this)}
            tabTitle={
              <IconButton
                icon="glyphicon glyphicon-plus"
-               style={{margin: '0.75em 0.25em'}}
-               displayColor="#505050" onMouseOverColor="#00a8ff"
+               style={{margin:0}}
+               displayColor="#999" onMouseOverColor="#595959"
                onButtonClick={this.handleAddStudyPlanClick.bind(this)} />}
       />
     )
+  }
+
+  renderAddPlanModal(){
+    return(
+      <ModalContainer
+        onHidden={this.handleCloseAddPlanModal.bind(this)}
+        content={
+          <AddNewPlannerContainer
+            handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}
+            handleAddedTemplate={this.handleAddTemplate.bind(this)} />
+        }
+      />
+    );
   }
 
   render() {
@@ -298,8 +375,8 @@ export default class TabbedContainer extends React.Component {
     var plannerIDs = this.props.plannerIDs;
 
     return (
-      <section className='tabs-section' style={{margin: 0}}>
-        <div className='tabs-section-nav tabs-section-nav-icons' style={{border: 0}}>
+      <section className='tabs-section'>
+        <div className='tabs-section-nav tabs-section-nav-icons'>
           <div className='tbl'>
             <ul className='nav' role='tablist'>
 
@@ -311,14 +388,7 @@ export default class TabbedContainer extends React.Component {
               {/* Renders the tab used to enter a new study plan's name when
                   user clicks on "Add" study plan button */}
               {this.state.isAddingNewPlan ? this.renderAddPlanTab() : null}
-              {this.state.isModalVisible ?
-                <ModalContainer content={
-                  <AddNewPlanner
-                    isFullscreen={false}
-                    handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/>}
-                    onHidden={this.handleCancelAddPlanModale.bind(this)}
-                onHidden={this.handleCancelAddPlanModale.bind(this)}/>
-              : null}
+              {this.state.isModalVisible ? this.renderAddPlanModal(): null}
 
               {/* "Add" study plan button with a "+" symbol */}
               {plannerIDs.length!=0 ? this.renderAddPlanButton() : null}
@@ -327,12 +397,12 @@ export default class TabbedContainer extends React.Component {
           </div>
         </div>
 
-        <div className='tab-content' style={{padding: '8px', marginTop: '-1px'}}>
-          <div role='tabpanel' className='tab-pane fade in active'
+        <div className='tab-content'>
+          <div role='tabpanel' className='tab-pane fade in active' style={{overflowY: 'auto'}}
                id={'tab' + this.state.tabSelectedIndex}>
                  {
                    // Show add menu dialog when no planners in dashboard
-                   (plannerIDs.length == 0 && !this.state.isAddingNewPlan) ? <AddNewPlanner isFullscreen={true} handleAddBlankTemplate={this.handleAddBlankTemplate.bind(this)}/> : null
+                   (plannerIDs.length == 0 && !this.state.isAddingNewPlan) ? this.state.newPlannerDialog : null
                  }
 
             {/* Renders a Academic Year content panel under each tab. */}

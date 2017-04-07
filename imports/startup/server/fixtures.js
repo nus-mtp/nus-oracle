@@ -13,29 +13,37 @@ import { Students } from '../../api/database-controller/student/student';
 import { ModuleFulfilments } from '../../api/database-controller/module-fulfilment/moduleFulfilment';
 import { Planner } from '../../api/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
+import { GraduationRequirements } from '../../api/database-controller/graduation-requirement/graduationRequirement';
 
+import { getAcadCohortDefaultPlannerIDs,
+         removeAllCohort,
+         getRepackagedDefaultPlannerIDs} from '../../api/database-controller/AcademicCohort/methods';
 import { moduleInformationParser,
          moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
-
-import '../../api/database-conversion/ULRAfter1516Scraper.js';
-
+import { parseDefaultPlanner } from '../../api/database-conversion/samplePlannerParser';
+import { parseForLezzgo } from '../../api/database-conversion/plannerDataPullLezzgo';
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
-  import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
+import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
-import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper';
-
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper'//;
 
 Meteor.startup(() => {
+  plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
+  //parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
   //scrapeModuleMappingListingForULR1516();
+  //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
+  //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
+  //}
   //scrapeModuleMappingListingForBeforeULR1516();
-  //parseJSONFileAndStoreToDB();
-
+  //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
+  //parseForLezzgo();
+  //console.log(getRepackagedDefaultPlannerIDs("AY 2016/2017"));
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
     populateIndustrialAttachmentModuleFixture();
@@ -46,7 +54,7 @@ Meteor.startup(() => {
     populateAY1617AcademicCohortFixture();
   }
   if (Planner.find({}).count() === 0) {
-    populatePlannerFixture();
+    //populatePlannerFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();

@@ -2,6 +2,11 @@ import { searchByModuleCode } from '../database-controller/module/methods';
 import { getModuleFulfilment } from '../database-controller/module-fulfilment/methods';
 import { getStudentAcademicCohort } from '../database-controller/student/methods.js';
 
+Meteor.subscribe('AcademicCohort');
+Meteor.subscribe('FocusArea');
+Meteor.subscribe('GraduationRequirements');
+Meteor.subscribe('ModuleFulfilments');
+
 /**
 * Creates a graduation criteria given the following parameters for the requirement
 *  @param {string}  name of the planner
@@ -39,8 +44,17 @@ export function Criteria(object, modulesCompleted){
     this.toUE = object.toUE;
   }
 
+  this.isDummyText = function(){
+    // if it has subreq, it is not a dummy text
+    if(this.subreq)
+      return false;
+    // if it is valid module code object, return false
+    return (Object.keys(searchByModuleCode(this.name)).length == 0);
+  }
+
   this.isModule = function() {
-    return (this.subreq === undefined || this.subreq === null || this.subreq.length == 0);
+    // return ((Object.keys(searchByModuleCode(this.name)).length != 0) && this.subreq === undefined || this.subreq === null || this.subreq.length == 0);
+    return (Object.keys(searchByModuleCode(this.name)).length != 0);
   }
 
   this.isSingular = function(){
@@ -49,7 +63,11 @@ export function Criteria(object, modulesCompleted){
       this.subreq = this.subreq[0];
       return true;
     }
-    return !(Object.prototype.toString.call(this.subreq) === '[object Array]');
+    // if subreq is not null and not an Array return true
+    if(this.subreq)
+      return !(Object.prototype.toString.call(this.subreq) === '[object Array]');
+    // else return false
+    return false;
   }
 
   // to be performed ONLY AFTER subreq check
@@ -61,6 +79,10 @@ export function Criteria(object, modulesCompleted){
   }
 
   this.isFulfilled = function(){
+    // if criteria is a dummy text
+    if(this.isDummyText()){
+      return false;
+    }
 
     //  if criteria is a single module check if it is in planner
     if(this.isModule()){
@@ -82,19 +104,31 @@ export function Criteria(object, modulesCompleted){
         return true && this.checkMC();
       }
 
-      // //else loop through all equivalent modules
-
+      // else loop through all equivalent modules if criteria is a module
       // else {
-      //   for(equivalent in getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent){
-      //     if(_.contains(modulesCompleted, equivalent)){
-      //       this.fulfilledMC = searchByModuleCode(equivalent).moduleMC;
+      //   // if module fulfillment list does not exist (or its length == 0)
+      //   if(Object.keys(getModuleFulfilment(this.name)).length == 0 || getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent.length == 0){
+      //     return false;
+      //   }
+      //   var equivalentModules = getModuleFulfilment(this.name).moduleMapping[getStudentAcademicCohort()].moduleEquivalent;
+      //   listA = modulesCompleted[0].concat(modulesCompleted[1]);
+      //
+      //   for(var i=0; i<equivalentModules.length; i++){
+      //     if(_.contains(listA , equivalentModules[i])){
+      //       this.fulfilledMC = searchByModuleCode(equivalentModules[i]).moduleMC;
+      //       return this.checkMC();
+      //     }
+      //     else if(_.contains(modulesCompleted[2],equivalentModules[i])){
+      //       this.fulfilledMC = 0;
+      //       this.toUE = true;
+      //       this.requiredMC = searchByModuleCode(equivalentModules[i]).moduleMC;
       //       return this.checkMC();
       //     }
       //   }
       // }
 
       // console.log(this.name);
-      // console.log(JSON.stringify(getModuleFulfilment(this.name)));
+      // console.log(getModuleFulfilment(this.name));
       // console.log(JSON.stringify(getModuleFulfilment("CS1010")));
 
       return false;
@@ -146,7 +180,10 @@ export function Criteria(object, modulesCompleted){
 
   // Gets all MC in criteria and it's subrequirements to be added to/deducted from UE
   this.getMCforUE = function(){
-    if(this.isModule()){
+    if (this.isDummyText()){
+      return 0;
+    }
+    else if(this.isModule()){
       return (this.toUE ? this.requiredMC - this.fulfilledMC : 0);
     }
     else if(this.isSingular()){

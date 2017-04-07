@@ -44,6 +44,34 @@ const TERM_SEM = 'semester';
 let acadYear = '';
 let acadYearURL = '';
 
+//ES2660, because its not found in NUSMOD
+const missingMods = [{
+  moduleCode: "ES2660",
+  moduleName: "Communicating in the Information Age",
+  moduleDescription: "In a context of prolific production and convenient access to content and innovation in the Information Age, how should one critically process and clearly communicate ideas to various audiences? In this module, students will learn to question and articulate their analysis of assumptions and assertions on issues facing the Information Age through processes such as identifying bias and substantiating arguments. The Ennis’ (1986, 2001) taxonomy of critical thinking dispositions will be employed to develop students’ analytical thinking skills and their ability to articulate cogent responses to arguments or to defend their own positions in both written and oral form. This module is taught over 1 semester with 2 two-hour sectional teachings per week.",
+
+  modulePrerequisite:"1. Students who are required to take ES1000 Basic English and/or ES1103 English for Academic Purposes, must pass those modules before they are allowed to read this module./n2. Only SoC students matriculated in AY2016/2017 and after, are allowed to take ES2660.",
+  moduleCorequisite:  "",
+  modulePreclusion: "GET1006 and GEK1901",
+  moduleMC: 4,
+  termOffered: [{
+    "termYear": "AY 2015/2016",
+    "semester": 1
+  },
+  {
+    "termYear": "AY 2015/2016",
+    "semester": 2
+  },
+  {
+    "termYear": "AY 2016/2017",
+    "semester": 1
+  },
+  {
+    "termYear": "AY 2016/2017",
+    "semester": 2
+  }]
+}];
+
 //Set the academic years for insertion into the module database and the format for URL
 const setFileAcademicYear = function setAcademicYear(index) {
   acadYear = MODULE_YEAR_LIST[index];
@@ -67,6 +95,7 @@ const parseJSONFileAndStoreToDB = function parseAndStore() {
     moduleJSONArray = updateJSONModuleArrayToSchema(moduleJSONArray, rawModuleListJSON, MODULE_YEAR_LIST[yearIndex]);
     console.log(acadYearURL + " , " + moduleJSONArray.length);
   }
+  moduleJSONArray = insertMissingModToJSON(moduleJSONArray,missingMods);
   storeJSONArrayToDB(moduleJSONArray);
   writeJSONToFile(moduleJSONArray);
 };
@@ -88,7 +117,6 @@ const updateJSONModuleArrayToSchema = function updateJSON(modListData, rawJSONDa
   }
   return modListData;
 };
-
 
 // Takes the single module(data) from the list of modules  and inject it into the existing module array list (modListData)
 const updateSingleModuleToModuleSchema = function updateModule(modListData, data){
@@ -180,6 +208,16 @@ const writeJSONToFile = function writetoFile(ModuleJSON) {
   const JSONFileName = "./moduleDatabase.json";
   jsonfile.writeFile(JSONFileName, ModuleJSON);
 }
+
+const insertMissingModToJSON = function insertMissingModToJson(modListData, missingModArray){
+  for(var i = 0; i < missingModArray.length ; i++){
+    let currentArray = missingModArray[i];
+    console.log(currentArray);
+    modListData = modListData.concat(currentArray);
+  }
+  return modListData;
+}
+
 export {
   parseJSONFileAndStoreToDB,
 };

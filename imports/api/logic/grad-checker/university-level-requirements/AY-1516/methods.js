@@ -11,16 +11,13 @@ import { searchByModuleCode } from '../../../../database-controller/module/metho
  * markModules and markExemptedWaivedModules
  */
 
-export const findULRRequirementModules = function findULRRequirementModules(
-  academicCohort, studentSemesters, ULRModules, exemptedModules,
-  waivedModules, moduleChecked, requiredMCs) {
-
+export const findULRRequirementModules = function findULRRequirementModules(studentInfoObject, ULRModules, requiredMCs) {
   let markedULRModulesAndMCs = {
     name: 'University Level Requirement',
     markedULRModules: ULRModules,
     numberOfULRMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: moduleChecked,
+    moduleChecked: studentInfoObject.moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -37,17 +34,17 @@ export const findULRRequirementModules = function findULRRequirementModules(
       return {};
     }
 
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedULRModulesAndMCs.markedULRModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedULRModulesAndMCs = markExemptedWaivedExceptions(markedULRModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedULRModulesAndMCs = markExceptions(markedULRModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedULRModulesAndMCs.markedULRModules[keyNames[i]] ) {
           break;
         }

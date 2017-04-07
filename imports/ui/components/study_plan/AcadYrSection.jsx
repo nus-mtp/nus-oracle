@@ -19,7 +19,7 @@ export default class AcadYrSection extends React.Component {
     const listOfSemesters = this.props.listOfSemesters;
 
     return (
-      <article className="activity-line-item box-typical">
+      <article className="activity-line-item box-typical tab-content-box">
         <div className="activity-line-action-list">
 
           {listOfSemesters.map((semester, rank) => {

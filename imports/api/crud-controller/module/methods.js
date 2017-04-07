@@ -46,7 +46,7 @@ export const getAllModulesInSemester = function getAllModulesInSemester(semester
  *
  */
  export const insertOneModuleInSemester = function insertOneModuleInSemester(semesterIndex, moduleCode, plannerID) {
-  // checks if module exists in database
+   // checks if module exists in database
   if (Object.keys(searchByModuleCode(moduleCode)).length === 0) {
     return {};
   }
@@ -191,3 +191,24 @@ export const deleteAllModulesInSemester = function deleteAllModulesInSemester(se
 
   return oneSemester.moduleHashmap;
 };
+
+export const getTotalMCsForAllModules = function getTotalMCsForAllModules(plannerID) {
+  const planner = Planner.findOne(plannerID);
+  let totalMCs = 0;
+  if (!planner) {
+    return totalMCs;
+  }
+  const retrievedSemesters = planner.semesters;
+  if (!retrievedSemesters) {
+    return totalMCs;
+  }
+
+  for (var i=0; i<retrievedSemesters.length; i++) {
+    const oneSemester = Object.keys(retrievedSemesters[i].moduleHashmap);
+    for (var j=0; j<oneSemester.length; j++)  {
+      totalMCs += searchByModuleCode(oneSemester[j]).moduleMC;
+    }
+  }
+
+  return totalMCs;
+}
