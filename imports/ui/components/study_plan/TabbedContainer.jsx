@@ -128,6 +128,9 @@ export default class TabbedContainer extends React.Component {
    * plan template that isn't a blank one
    */
   handleAddTemplate() {
+    let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
+    this.props.handleSelectTab(indexOfStudyPlanTabAdded);
+
     this.setState({
       isModalVisible : false,
       tabSelectedIndex:this.props.plannerIDs.length
@@ -139,6 +142,9 @@ export default class TabbedContainer extends React.Component {
    * plan template
    */
   handleAddBlankTemplate(){
+    let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
+    this.props.handleSelectTab(indexOfStudyPlanTabAdded);
+
     this.setState({
       isModalVisible : false,
       isAddingNewPlan : true

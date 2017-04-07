@@ -181,7 +181,6 @@ export const AY1617CSGradChecker = function AY1617CSGradChecker(studentSemesters
     // check if student planner meet 24 MCs requirement
     graduationRequirements[moduleRequirementTitle[1]] = checkFocusAreaFulfilmentMCs(studentInfoObject, focusAreaModulesChecked, allStudentFocusAreas, allGraduationRequirementMCs[moduleRequirementTitle[1]]);
     studentInfoObject = graduationRequirements[moduleRequirementTitle[1]].studentInfoObject;
-    //console.log(JSON.stringify(studentInfoObject.moduleChecked));
 
     if (focusAreaRequirements.children[0].isFulfilled &&
         focusAreaRequirements.children[1].isFulfilled &&
@@ -316,8 +315,6 @@ const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(m
     focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules = allStudentFocusAreas.focusAreaPrimaryModules[focusAreaTitles[i]];
     focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules =  allStudentFocusAreas.focusAreaPrimary4KModules[focusAreaTitles[i]];
     focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules = allStudentFocusAreas.focusArea4KModules[focusAreaTitles[i]];
-
-    console.log(JSON.stringify(focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules));
 
     if (!focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules ||
         !focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules ||
