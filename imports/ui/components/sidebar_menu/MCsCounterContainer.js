@@ -7,14 +7,25 @@ import MCsCounter from './MCsCounter.jsx';
 // Import logic functions
 import { getTotalMCsForAllModules } from './../../../api/crud-controller/module/methods.js';
 
+/**
+ * Checks if the number of MCs is valid to be printed onscreen.
+ *
+ * Valid Display Format:
+ * Display if takenMCs is not undefined, not NaN and we accept it even if it is 0
+ *
+ * @return {Boolean} True if is in valid display format, false otherwise
+ */
+function isValidMCsValue(takenMCs) {
+  return takenMCs || takenMCs == 0 || !isNaN(takenMCs);
+}
+
 export default MCsCounterContainer = createContainer((props) => {
   const maxMCs = 160;
   let takenMCs = getTotalMCsForAllModules(props.activePlannerId);
-  console.log(takenMCs);
 
   // Set display format for number of MCs
   let numMCs = "";
-  if (takenMCs) {
+  if (isValidMCsValue(takenMCs)) {
     numMCs = takenMCs + ""; // Convert to string format
   }
 

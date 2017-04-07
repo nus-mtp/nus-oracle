@@ -83,9 +83,13 @@ export default class TabbedContainer extends React.Component {
 
       if (event.charCode == ENTER_CHAR_KEY_CODE) { // If pressed ENTER
         if (this.state.isAddingNewPlan) {
-          this.setState({ isAddingNewPlan: false });
+          let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
+          this.setState({
+            isAddingNewPlan: false, 
+            tabSelectedIndex: indexOfStudyPlanTabAdded
+          });
+          this.props.handleSelectTab(indexOfStudyPlanTabAdded);
           createPlanner(userInputStudyPlanName, ["focusArea"]);
-          this.setState({tabSelectedIndex:this.props.plannerIDs.length});
         }
       }
     }
@@ -128,6 +132,9 @@ export default class TabbedContainer extends React.Component {
    * plan template that isn't a blank one
    */
   handleAddTemplate() {
+    let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
+    this.props.handleSelectTab(indexOfStudyPlanTabAdded);
+
     this.setState({
       isModalVisible : false,
       tabSelectedIndex:this.props.plannerIDs.length
@@ -139,6 +146,8 @@ export default class TabbedContainer extends React.Component {
    * plan template
    */
   handleAddBlankTemplate(){
+    let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
+
     this.setState({
       isModalVisible : false,
       isAddingNewPlan : true
