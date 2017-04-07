@@ -18,6 +18,7 @@
     "domkit": "0.0.1",
     "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
+    "meteor-node-stubs": "^0.2.6",
     "raf": "^3.3.0",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
@@ -56,8 +57,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "chromedriver": "^2.28.0",
-    "enzyme": "^2.7.1",
+    "chromedriver": "^2.29.0",
+    "enzyme": "^2.8.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-import-resolver-meteor": "^0.3.4",
@@ -66,8 +67,8 @@
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-react": "^6.9.0",
     "react": "~15.4.2",
-    "react-addons-test-utils": "~15.4.2",
-    "react-dom": "~15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
     "selenium-webdriver": "^3.0.0-beta-2"
   }
 }

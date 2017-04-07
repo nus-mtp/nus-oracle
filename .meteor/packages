@@ -57,3 +57,5 @@ session
 mrt:cheerio
 anonyfox:scrape
 force-ssl
+dispatch:phantomjs-tests@0.0.5
+dispatch:mocha-phantomjs
