@@ -24,6 +24,10 @@ export default class RegisterAccount extends React.Component {
     };
   }
 
+  //=============================================
+  // EVENT HANDLERS
+  //=============================================
+
   handleEmailChange(input) {
     this.setState({
       email: input,
@@ -50,9 +54,10 @@ export default class RegisterAccount extends React.Component {
    * Also displays appropriate alert messages.
    */
   handleSubmit(event) {
+    // Prevent browser from refreshing the page, so that we can still see input validation alerts
     event.preventDefault();
     this.props.onSubmit();
-    
+
     let user = {
       username: this.state.email,
       email: this.state.email,
@@ -74,10 +79,16 @@ export default class RegisterAccount extends React.Component {
           if (isValidPassword) {
             this.setState({ passwordErrorObj: null });
 
-            Accounts.createUser( user, (error) => {
+            Accounts.createUser(user, (error) => {
               if (error) {
-                // Variety of errors when signing up
-                Bert.alert(error.reason, 'danger');
+                // Variety of Meteor Account errors when signing up
+                if (error.reason == "Match failed") {
+                  Bert.alert(errorMsgs.ERR_PASSWORD_NOT_ENTERED, 'danger');
+                } else if (error.reason == "Incorrect password") {
+                  Bert.alert(errorMsgs.ERR_INCORRECT_PASSWORD, 'danger');
+                } else {
+                  Bert.alert(error.reason, 'danger');
+                }
                 this.handleCloseLoader();
               } else {
                 Meteor.call('sendVerificationLink', (error, response) => {

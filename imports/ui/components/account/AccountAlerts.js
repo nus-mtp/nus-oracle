@@ -22,7 +22,10 @@ export const warningMsgs = {
 }
 
 export const errorMsgs = {
+  // Passwords
+  ERR_PASSWORD_NOT_ENTERED: "No password entered, please enter your password!",
   ERR_INCORRECT_PASSWORD: "Incorrect password entered",
+  ERR_INCORRECT_OLD_PASSWORD: "Incorrect old password entered",
   ERR_PASSWORDS_GET_ON_MY_LEVEL: "Password needs upper and lower case letters, numbers, non-alphanumeric characters and no whitespace",
   ERR_PASSWORDS_NOT_MATCH: "Passwords do not match",
   ERR_PASSWORDS_IS_NOT_MIX_CASE: "Must have a mix of upper and lower case letters",
@@ -30,7 +33,8 @@ export const errorMsgs = {
   ERR_PASSWORDS_HAS_NO_LETTER: "Must have at least 1 letter",
   ERR_PASSWORDS_TOO_SHORT: "Must have at least 6 characters",
   ERR_PASSWORDS_HAS_WHITESPACE: "Must not have any whitespace",
-  ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
+
+  // Emails
   ERR_EMAIL_UNRECOGNIZED: "is not recognized. Have you created an account yet?",
   ERR_EMAIL_UNVERIFIED: "Your e-mail has not been verified. Please check",
   ERR_EMAIL_FIELD_EMPTY: "Please input your NUS E-mail",
@@ -38,7 +42,10 @@ export const errorMsgs = {
   ERR_ACCOUNT_LOCK: "Your account has been locked. Please check",
   ERR_EMAIL_ENTERED_INVALID_DOMAIN: "Invalid NUS e-mail. Remember to end your e-mail address with '@u.nus.edu'",
   ERR_EMAIL_ENTERED_INVALID_FORMAT:"Invalid email format. Please check if there are invalid puncutations in your email",
-  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing"
+
+  // Others
+  ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
+  ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing",
 }
 
 export const loadingMsgs = {
