@@ -9,6 +9,9 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * The 2 methods above are where code for any new execptions to the calculation of
  * graduation requirement should be placed. If there are no exceptions, simply return
  * markModules and markExemptedWaivedModules
+ *
+ * Currently assumes that all modules are 4 MCs and that it is not
+ * possible to fulfil all conditions and transfer any leftover MCs to UEs
  */
 
 export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(studentInfoObject, teamProjectModules, requiredMCs)  {
@@ -50,7 +53,7 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
       }
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
-      markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
+      //markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
       markedTeamProjectModulesAndMCs.isFulfilled = true;
       break;
     }
