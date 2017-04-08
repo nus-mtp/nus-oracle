@@ -13,6 +13,9 @@ import { getFirstNChars } from '../../../../../utils/util'
  *
  * IMPORTANT to note: ULR check for breadth is coded to work only for CS students
  *                    To expand it to all students, makes sure exception check for breadth be updated for other faculties
+ *
+ * Currently assumes that all modules are 4 MCs and that it is not
+ * possible to fulfil all conditions and transfer any leftover MCs to UEs
  */
 
 export const findULRRequirementModules = function findULRRequirementModules(studentInfoObject, ULRModules, requiredMCs) {
@@ -57,7 +60,7 @@ export const findULRRequirementModules = function findULRRequirementModules(stud
       }
     }
     if (markedULRModulesAndMCs.numberOfULRMarkedTrue === keyNames.length) {
-      markedULRModulesAndMCs.requiredMCs = markedULRModulesAndMCs.totalModuleMCs;
+      //markedULRModulesAndMCs.requiredMCs = markedULRModulesAndMCs.totalModuleMCs;
       markedULRModulesAndMCs.isFulfilled = true;
       break;
     }

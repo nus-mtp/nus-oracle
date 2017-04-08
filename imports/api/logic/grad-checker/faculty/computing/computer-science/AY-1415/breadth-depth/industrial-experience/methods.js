@@ -9,6 +9,9 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * The 2 methods above are where code for any new execptions to the calculation of
  * graduation requirement should be placed. If there are no exceptions, simply return
  * markModules and markExemptedWaivedModules
+ *
+ * Currently assumes that all modules are 4 MCs and that it is not
+ * possible to fulfil all conditions and transfer any leftover MCs to UEs
  */
 
 export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(studentInfoObject, industrialExperienceModules, requiredMCs)  {
@@ -51,7 +54,7 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
       }
     }
     if (markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue === keyNames.length) {
-      markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
+      //markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
       markedIndustrialExperienceTrainingModulesAndMCs.isFulfilled = true;
       break;
     }

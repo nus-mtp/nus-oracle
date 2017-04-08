@@ -9,6 +9,10 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * only modify
  * 1. findFocusAreaPrimary
  * 2. findFocusArea4KModules
+ *
+ * Current behaviour of focus area DOES NOT account for duplicated modules in
+ * different parts of your planner. If you do have duplicated focus area modules,
+ * focus area will be prematurely completed
  */
 
 // focus area MCs are assumed to be at 4MCs and no focus area with more than 4MCs
@@ -20,6 +24,7 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
   const focusAreaNonPrimaryKeys = studentFocusAreas.focusAreaNonPrimaryModules;
   //const modulesChecked = {};
   let totalMCs = 0;
+  let spareMCs = 0;
   let fulfilmentRequirement = {
     requiredMCs: requiredMCs,
     studentInfoObject: studentInfoObject,
@@ -39,7 +44,11 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
       let modulePrimaryKeys = Object.keys(focusAreaPrimaryKeys[modulePrimaryFocusAreaNames[j]]);
       for (var k=0; k<modulePrimaryKeys.length; k++)  {
         if (fulfilmentRequirement.studentInfoObject.studentSemesters[i].moduleHashmap[modulePrimaryKeys[k]] && !focusAreaModulesChecked[modulePrimaryKeys[k]])  {
-          totalMCs += searchByModuleCode(modulePrimaryKeys[k]).moduleMC;
+          if (studentInfoObject.moduleChecked[modulePrimaryKeys[k]])  {
+            spareMCs += searchByModuleCode(modulePrimaryKeys[k]).moduleMC;
+          } else {
+            totalMCs += searchByModuleCode(modulePrimaryKeys[k]).moduleMC;
+          }
           if (totalMCs <= fulfilmentRequirement.requiredMCs)  {
             focusAreaModulesChecked[modulePrimaryKeys[k]] = true;
           }
@@ -55,7 +64,11 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
       let module4KKeys = Object.keys(focusArea4KKeys[module4KFocusAreaNames[j]]);
       for (var k=0; k<module4KKeys.length; k++)  {
         if (fulfilmentRequirement.studentInfoObject.studentSemesters[i].moduleHashmap[module4KKeys[k]] && !focusAreaModulesChecked[module4KKeys[k]])  {
-          totalMCs += searchByModuleCode(module4KKeys[k]).moduleMC;
+          if (studentInfoObject.moduleChecked[module4KKeys[k]])  {
+            spareMCs += searchByModuleCode(module4KKeys[k]).moduleMC;
+          } else {
+            totalMCs += searchByModuleCode(module4KKeys[k]).moduleMC;
+          }
           if (totalMCs <= fulfilmentRequirement.requiredMCs)  {
             focusAreaModulesChecked[module4KKeys[k]] = true;
           }
@@ -71,7 +84,11 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
       let modulePrimary4KKeys = Object.keys(focusAreaPrimary4KKeys[modulePrimary4KFocusAreaNames[j]]);
       for (var k=0; k<modulePrimary4KKeys.length; k++)  {
         if (fulfilmentRequirement.studentInfoObject.studentSemesters[i].moduleHashmap[modulePrimary4KKeys[k]] && !focusAreaModulesChecked[modulePrimary4KKeys[k]])  {
-          totalMCs += searchByModuleCode(modulePrimary4KKeys[k]).moduleMC;
+          if (studentInfoObject.moduleChecked[modulePrimary4KKeys[k]])  {
+            spareMCs += searchByModuleCode(modulePrimary4KKeys[k]).moduleMC;
+          } else {
+            totalMCs += searchByModuleCode(modulePrimary4KKeys[k]).moduleMC;
+          }
           if (totalMCs <= fulfilmentRequirement.requiredMCs)  {
             focusAreaModulesChecked[modulePrimary4KKeys[k]] = true;
           }
@@ -87,13 +104,21 @@ export const checkFocusAreaFulfilmentMCs = function checkFocusAreaFulfilmentMCs(
       let moduleNonPrimaryKeys = Object.keys(focusAreaNonPrimaryKeys[moduleNonPrimaryFocusAreaNames[j]]);
       for (var k=0; k<moduleNonPrimaryKeys.length; k++)  {
         if (fulfilmentRequirement.studentInfoObject.studentSemesters[i].moduleHashmap[moduleNonPrimaryKeys[k]] && !focusAreaModulesChecked[moduleNonPrimaryKeys[k]])  {
-          totalMCs += searchByModuleCode(moduleNonPrimaryKeys[k]).moduleMC;
+          if (studentInfoObject.moduleChecked[moduleNonPrimaryKeys[k]])  {
+            spareMCs += searchByModuleCode(moduleNonPrimaryKeys[k]).moduleMC;
+          } else {
+            totalMCs += searchByModuleCode(moduleNonPrimaryKeys[k]).moduleMC;
+          }
           if (totalMCs <= fulfilmentRequirement.requiredMCs)  {
             focusAreaModulesChecked[moduleNonPrimaryKeys[k]] = true;
           }
         }
       }
     }
+  }
+
+  if (totalMCs < fulfilmentRequirement.requiredMCs) {
+    totalMCs += spareMCs;
   }
 
   if (totalMCs >= fulfilmentRequirement.requiredMCs) {
@@ -113,20 +138,12 @@ export const findFocusAreaPrimary = function findFocusAreaPrimary(focusAreaPrima
   for (var i=0; i<focusAreaPrimary4KKeys.length; i++) {
     focusAreaPrimaryRequiredInfo = markPrimary4KExemptedWaivedModules(focusAreaPrimaryRequiredInfo, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, focusAreaPrimary4KKeys[i]);
     focusAreaPrimaryRequiredInfo = markPrimary4KModules(focusAreaPrimaryRequiredInfo, studentInfoObject.studentSemesters, focusAreaPrimary4KKeys[i]);
-    // checks if primary has at least 1 4K
-    if (focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules[focusAreaPrimary4KKeys[i]]) {
-      focusAreaPrimaryRequiredInfo.one4KModules = true;
-    }
   }
 
   // check primary non 4Ks
   for (var i=0; i<focusAreaPrimaryKeys.length; i++) {
     focusAreaPrimaryRequiredInfo = markPrimaryExemptedWaivedModules(focusAreaPrimaryRequiredInfo, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, focusAreaPrimaryKeys[i]);
     focusAreaPrimaryRequiredInfo = markPrimaryModules(focusAreaPrimaryRequiredInfo, studentInfoObject.studentSemesters, focusAreaPrimaryKeys[i]);
-    // checks if primary has at least 3 modules
-    if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue >= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
-      focusAreaPrimaryRequiredInfo.threePrimaryModules = true;
-    }
   }
 
   if (focusAreaPrimaryRequiredInfo.threePrimaryModules && focusAreaPrimaryRequiredInfo.one4KModules)  {
@@ -149,12 +166,8 @@ export const findFocusArea4KModules = function findFocusArea4KModules(focusAreaA
   for (var i=0; i<keyNames.length; i++) {
     focusAreaAtLeast12MCsOf4KRequiredInfo = mark4KExemptedWaivedModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i]);
     focusAreaAtLeast12MCsOf4KRequiredInfo = mark4KModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject.studentSemesters, keyNames[i]);
-    // Set 4K condition true if more than minModule4K mcs have been fulfiled
-    if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs >= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
-      focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue = true;
-      break;
-    }
   }
+  //console.log(JSON.stringify(focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked));
 
   return focusAreaAtLeast12MCsOf4KRequiredInfo;
 }
@@ -164,11 +177,15 @@ const markPrimaryModules = function markModules(focusAreaPrimaryRequiredInfo, st
     if (studentSemesters[i].moduleHashmap[originalModule]) {
       focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules[originalModule] = true;
       focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue += 1;
-      if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue <= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+      if (!focusAreaPrimaryRequiredInfo.threePrimaryModules) {
         focusAreaPrimaryRequiredInfo.moduleChecked[originalModule] = true;
       }
       break;
     }
+  }
+  // checks if primary has at least 3 modules
+  if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue >= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+    focusAreaPrimaryRequiredInfo.threePrimaryModules = true;
   }
   return focusAreaPrimaryRequiredInfo;
 }
@@ -184,6 +201,14 @@ const markPrimary4KModules = function markModules(focusAreaPrimaryRequiredInfo, 
       break;
     }
   }
+  // checks if primary has at least 1 4K
+  if (focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules[originalModule]) {
+    focusAreaPrimaryRequiredInfo.one4KModules = true;
+  }
+  // checks if primary has at least 3 modules
+  if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue >= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+    focusAreaPrimaryRequiredInfo.threePrimaryModules = true;
+  }
   return focusAreaPrimaryRequiredInfo;
 }
 
@@ -192,7 +217,7 @@ const markPrimaryExemptedWaivedModules = function markExemptedWaivedModules(focu
     if (exemptedModules[originalModule])  {
       focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules[originalModule] = true;
       focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue += 1;
-      if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue <= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+      if (!focusAreaPrimaryRequiredInfo.threePrimaryModules) {
         focusAreaPrimaryRequiredInfo.moduleChecked[originalModule] = true;
       }
     }
@@ -201,10 +226,15 @@ const markPrimaryExemptedWaivedModules = function markExemptedWaivedModules(focu
     if (waivedModules[originalModule]) {
       focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary3KAndLessModules[originalModule] = true;
       focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue += 1;
-      if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue <= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+      if (!focusAreaPrimaryRequiredInfo.threePrimaryModules) {
         focusAreaPrimaryRequiredInfo.moduleChecked[originalModule] = true;
       }
     }
+  }
+  // checks if primary has at least 3 modules
+  if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue >= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+    focusAreaPrimaryRequiredInfo.threePrimaryModules = true;
+    return focusAreaPrimaryRequiredInfo;
   }
   return focusAreaPrimaryRequiredInfo;
 }
@@ -228,6 +258,14 @@ const markPrimary4KExemptedWaivedModules = function markExemptedWaivedModules(fo
       }
     }
   }
+  // checks if primary has at least 1 4K
+  if (focusAreaPrimaryRequiredInfo.markedFocusAreaPrimary4KModules[originalModule]) {
+    focusAreaPrimaryRequiredInfo.one4KModules = true;
+  }
+  // checks if primary has at least 3 modules
+  if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue >= focusAreaPrimaryRequiredInfo.minNumberOfPrimaryFocusArea) {
+    focusAreaPrimaryRequiredInfo.threePrimaryModules = true;
+  }
   return focusAreaPrimaryRequiredInfo;
 }
 
@@ -236,11 +274,15 @@ const mark4KModules = function mark4KModules(focusAreaAtLeast12MCsOf4KRequiredIn
     if (studentSemesters[i].moduleHashmap[originalModule] && !focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked[originalModule]) {
       focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules[originalModule] = true;
       focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs += searchByModuleCode(originalModule).moduleMC;
-      if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs <= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
+      if (!focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue) {
         focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked[originalModule] = true;
       }
       break;
     }
+  }
+  // Set 4K condition true if more than minModule4K mcs have been fulfiled
+  if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs >= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
+    focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue = true;
   }
   return focusAreaAtLeast12MCsOf4KRequiredInfo;
 }
@@ -250,7 +292,7 @@ const mark4KExemptedWaivedModules = function mark4KExemptedWaivedModules(focusAr
     if (exemptedModules[originalModule] && !focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked[originalModule])  {
       focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules[originalModule] = true;
       focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs += searchByModuleCode(originalModule).moduleMC;
-      if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs <= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
+      if (!focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue) {
         focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked[originalModule] = true;
       }
     }
@@ -258,10 +300,14 @@ const mark4KExemptedWaivedModules = function mark4KExemptedWaivedModules(focusAr
   if (Object.keys(waivedModules).length !== 0)  {
     if (waivedModules[originalModule] && !focusAreaAtLeast12MCsOf4KRequiredInfo.module4KChecked[originalModule]) {
       focusAreaAtLeast12MCsOf4KRequiredInfo.markedFocusArea4KModules[originalModule] = true;
-      if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs <= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
+      if (!focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue) {
         focusAreaAtLeast12MCsOf4KRequiredInfo.moduleChecked[originalModule] = true;
       }
     }
+  }
+  // Set 4K condition true if more than minModule4K mcs have been fulfiled
+  if (focusAreaAtLeast12MCsOf4KRequiredInfo.total4KModuleMCs >= focusAreaAtLeast12MCsOf4KRequiredInfo.min4KModuleMCs) {
+    focusAreaAtLeast12MCsOf4KRequiredInfo.is4KTrue = true;
   }
   return focusAreaAtLeast12MCsOf4KRequiredInfo;
 }

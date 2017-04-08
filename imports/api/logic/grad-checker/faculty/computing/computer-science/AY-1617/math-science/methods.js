@@ -49,7 +49,7 @@ export const findMathSciRequirementModules = function findMathSciRequirementModu
       }
     }
     if (markedMathSciModulesAndMCs.numberOfMathSciModulesMarkedTrue === keyNames.length) {
-      markedMathSciModulesAndMCs.requiredMCs = markedMathSciModulesAndMCs.totalModuleMCs;
+      //markedMathSciModulesAndMCs.requiredMCs = markedMathSciModulesAndMCs.totalModuleMCs;
       markedMathSciModulesAndMCs.isFulfilled = true;
       break;
     }
