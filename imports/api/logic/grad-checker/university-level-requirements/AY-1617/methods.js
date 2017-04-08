@@ -51,7 +51,7 @@ export const findULRRequirementModules = function findULRRequirementModules(stud
       }
     }
     if (markedULRModulesAndMCs.numberOfULRMarkedTrue === keyNames.length) {
-      markedULRModulesAndMCs.requiredMCs = markedULRModulesAndMCs.totalModuleMCs;
+      //markedULRModulesAndMCs.requiredMCs = markedULRModulesAndMCs.totalModuleMCs;
       markedULRModulesAndMCs.isFulfilled = true;
       break;
     }

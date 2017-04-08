@@ -325,7 +325,7 @@ const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(m
     focusAreaPrimaryRequiredInfo = findFocusAreaPrimary(focusAreaPrimaryRequiredInfo, studentInfoObject);
     focusAreaAtLeast12MCsOf4KRequiredInfo = findFocusArea4KModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject);
 
-    // check a module if the number of marked primary focus area is more than the previous value
+    // selects the focus area with the greatest number of modules fulfilled
     if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue > previousNumberOfPrimaryModulesMarked)  {
       selectedFocusArea = focusAreaPrimaryRequiredInfo.moduleChecked;
       previousNumberOfPrimaryModulesMarked = focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue;
