@@ -50,7 +50,7 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
       }
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
-      markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
+      //markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
       markedTeamProjectModulesAndMCs.isFulfilled = true;
       break;
     }

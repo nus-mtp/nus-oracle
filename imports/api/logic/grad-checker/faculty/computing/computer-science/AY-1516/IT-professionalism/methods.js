@@ -51,7 +51,7 @@ export const findITProfessionalismModules = function findITProfessionalismModule
       }
     }
     if (markedITProfessionalismModulesAndMCs.numberOfITProfessionalismModulesMarkedTrue === keyNames.length) {
-      markedITProfessionalismModulesAndMCs.requiredMCs = markedITProfessionalismModulesAndMCs.totalModuleMCs;
+      //markedITProfessionalismModulesAndMCs.requiredMCs = markedITProfessionalismModulesAndMCs.totalModuleMCs;
       markedITProfessionalismModulesAndMCs.isFulfilled = true;
       break;
     }
