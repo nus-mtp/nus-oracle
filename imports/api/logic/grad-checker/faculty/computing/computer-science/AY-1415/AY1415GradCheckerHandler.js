@@ -210,6 +210,7 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
     graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(graduationRequirements, graduationMCs, studentInfoObject);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
+    //console.log(JSON.stringify(studentInfoObject.moduleChecked));
   // check if module contains less than 60 MCs worth of 1k module
 
   return UIFormatGraduationRequirement;
@@ -326,7 +327,7 @@ const UIFormatAllFocusAreaConversion = function UIFormatAllFocusAreaConversion(m
     focusAreaPrimaryRequiredInfo = findFocusAreaPrimary(focusAreaPrimaryRequiredInfo, studentInfoObject);
     focusAreaAtLeast12MCsOf4KRequiredInfo = findFocusArea4KModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject);
 
-    // check a module if the number of marked primary focus area is more than the previous value
+    // selects the focus area with the greatest number of modules fulfilled
     if (focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue > previousNumberOfPrimaryModulesMarked)  {
       selectedFocusArea = focusAreaPrimaryRequiredInfo.moduleChecked;
       previousNumberOfPrimaryModulesMarked = focusAreaPrimaryRequiredInfo.numberOfFocusAreaPrimaryModulesMarkedTrue;
