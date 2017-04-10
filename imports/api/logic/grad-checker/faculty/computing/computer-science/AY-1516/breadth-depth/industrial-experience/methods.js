@@ -51,7 +51,7 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
       }
     }
     if (markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue === keyNames.length) {
-      markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
+      //markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
       markedIndustrialExperienceTrainingModulesAndMCs.isFulfilled = true;
       break;
     }
