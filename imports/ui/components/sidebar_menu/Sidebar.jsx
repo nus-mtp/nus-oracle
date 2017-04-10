@@ -36,8 +36,8 @@ export default class Sidebar extends React.Component {
     // var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me", "Logout"];
     var menuPanelsList = [<PanelProfile onChangePassword = {this.handleChangePassword.bind(this)}/>,
                           <PanelRequirements activePlannerId={this.props.activePlannerId}/>];
-    var tabTitleList = ["My Profile", "Requirements", "Logout"];
-    var iconList = ["user", "tasks", "power-off"];
+    var tabTitleList = ["My Profile", "Requirements", "Useful Links", "Logout"];
+    var iconList = ["user", "tasks", "external-link", "power-off"];
     var activeMenuPanelIndex = this.state.activeMenuPanelIndex;
     return (
       <div className="my-side-menu">
