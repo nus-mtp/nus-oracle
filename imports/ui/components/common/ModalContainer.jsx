@@ -29,7 +29,6 @@ export default class ModalContainer extends React.Component {
       <Modal dialogClassName="custom-modal"
              show={this.state.show}
              onHide={this.hide.bind(this)}>
-        {/* {this.props.disableHide ? null : <Modal.Header closeButton></Modal.Header>} */}
         <Modal.Body>
           {this.props.content}
         </Modal.Body>
