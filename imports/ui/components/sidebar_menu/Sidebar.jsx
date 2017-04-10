@@ -3,6 +3,7 @@ import SidebarMenu from './SidebarMenu.jsx';
 import SidebarPanel from './SidebarPanel.jsx';
 import PanelRequirements from './PanelRequirements.jsx'
 import PanelProfile from './PanelProfile.jsx'
+import PanelLinks from './PanelLinks.jsx'
 import LoadingScreen from '../account/login/LoadingScreen.jsx';
 import ModalContainer from '../common/ModalContainer.jsx';
 import { logout } from '../account/logout/LogoutAccount.jsx';
@@ -35,7 +36,8 @@ export default class Sidebar extends React.Component {
     // var menuPanelsList = [<PanelProfile />, <PanelRequirements />, <SidebarPanel />, <SidebarPanel />, <SidebarPanel />];
     // var tabTitleList = ["My Profile", "Requirements", "Module Bin", "Exempted", "Recommend Me", "Logout"];
     var menuPanelsList = [<PanelProfile onChangePassword = {this.handleChangePassword.bind(this)}/>,
-                          <PanelRequirements activePlannerId={this.props.activePlannerId}/>];
+                          <PanelRequirements activePlannerId={this.props.activePlannerId}/>,
+                          <PanelLinks />];
     var tabTitleList = ["My Profile", "Requirements", "Useful Links", "Logout"];
     var iconList = ["user", "tasks", "external-link", "power-off"];
     var activeMenuPanelIndex = this.state.activeMenuPanelIndex;
