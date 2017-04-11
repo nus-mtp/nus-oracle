@@ -17,7 +17,6 @@ const PREV_EDUCATION = [
 ]
 
 const ACAD_COHORT = [
-  { label: 'AY 2012/2013', value:'AY 2012/2013' },
   { label: 'AY 2013/2014', value:'AY 2013/2014' },
   { label: 'AY 2014/2015', value:'AY 2014/2015' },
   { label: 'AY 2015/2016', value:'AY 2015/2016' },
