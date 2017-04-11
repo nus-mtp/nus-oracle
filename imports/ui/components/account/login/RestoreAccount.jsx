@@ -38,8 +38,11 @@ export default class RestoreAccount extends React.Component {
     this.setState({token: input});
   }
 
-  handleReset() {
+  handleReset(event) {
+    // Prevent browser from refreshing the page, so that we can still see input validation alerts
+    event.preventDefault();
     this.props.onSubmit();
+
     Meteor.call('nusPasswordVerifier',
                 this.state.password,
                 this.state.repassword,
@@ -49,11 +52,16 @@ export default class RestoreAccount extends React.Component {
         this.props.onLoadComplete();
       } else {
         this.setState({ passwordErrorObj: null });
-        Accounts.resetPassword(this.state.token, this.state.password, error => {
-          if (error) {
+        Accounts.resetPassword(this.state.token, this.state.password, (error) => {
+          if (error.reason == "Token expired") {
+            Bert.alert(errorMsgs.ERR_TOKEN_UNRECOGNIZED, 'danger');
+            this.props.onLoadComplete();
+          } else if (error) {
+            // Any other Meteor error will get captured onscreen
             Bert.alert(error.reason, 'danger');
             this.props.onLoadComplete();
           } else {
+            // Able to successfully change password (no more errors)
             Meteor.call('unlockAcc');
             Bert.alert(successMsgs.SUCCESS_PASSWORD_CHANGED, 'success');
             this.props.onSuccess();
@@ -63,6 +71,7 @@ export default class RestoreAccount extends React.Component {
       }
     });
   }
+
   renderPasswordErrorBlock() {
     let errorObj = this.state.passwordErrorObj;
     let passwordErrorMsgs = [];
@@ -87,9 +96,10 @@ export default class RestoreAccount extends React.Component {
     }
     return (
       <FormInputErrorBox
-        title="Errors for new passwords" errorMsgList={passwordErrorMsgs} />
+        title="Password errors" errorMsgList={passwordErrorMsgs} />
     );
   }
+
   render() {
     return (
       <div className="container-fluid">
@@ -99,7 +109,7 @@ export default class RestoreAccount extends React.Component {
             <p><strong>Fill in your token and new password below:</strong></p>
           </h5>
 
-          <div className="form-group">
+          <form className="form-group" onSubmit={this.handleReset.bind(this)}>
 
             <FormInput placeholder="Token"
                        onChange={this.handleTokenChange.bind(this)} />
@@ -117,7 +127,7 @@ export default class RestoreAccount extends React.Component {
                       onButtonClick={this.handleReset.bind(this)} />
             </div>
 
-          </div>
+          </form>
         </div>
       </div>
     );
