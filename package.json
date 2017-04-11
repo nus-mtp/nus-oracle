@@ -5,7 +5,7 @@
     "start": "meteor run",
     "ci-test": "meteor npm run ci-test-unit",
     "ci-add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
-    "ci-test-unit": "meteor test --once --driver-package dispatch:mocha",
+    "ci-test-unit": "meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
