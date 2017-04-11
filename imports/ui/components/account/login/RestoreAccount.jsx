@@ -8,13 +8,14 @@ import { errorMsgs } from '../AccountAlerts.js';
 // Import React components
 import Button from '../../common/Button.jsx';
 import FormInput from '../../common/FormInput.jsx';
-import FormInputErrorBox from '../../common/FormInputErrorBox.jsx';
 
 import { Accounts } from 'meteor/accounts-base';
 
+//import verfification from '../../server/send-verification'
 /*
- This component loads the ModalContainer to restore the account with the use of token
- accessible via the /#/?acc=reset-password directory
+ To delete accounts,
+ 1) meteor mongo
+ 2) db.users.remove({_id:db.users.find()[0]._id})
  */
 
 export default class RestoreAccount extends React.Component {
@@ -23,8 +24,7 @@ export default class RestoreAccount extends React.Component {
     this.state = {
       token: '',
       password: '',
-      repassword: '',
-      passwordErrorObj: null,
+      repassword: ''
     };
   }
 
@@ -43,12 +43,12 @@ export default class RestoreAccount extends React.Component {
     Meteor.call('nusPasswordVerifier',
                 this.state.password,
                 this.state.repassword,
-                (passwordErrorObj, isValidPassword) => {
+                (errorObj, isValidPassword) => {
       if (!isValidPassword) {
-        this.setState({ passwordErrorObj: passwordErrorObj.error });
+        Bert.alert(errorObj.error, 'danger');
         this.props.onLoadComplete();
       } else {
-        this.setState({ passwordErrorObj: null });
+
         Accounts.resetPassword(this.state.token, this.state.password, error => {
           if (error) {
             Bert.alert(error.reason, 'danger');
@@ -63,33 +63,6 @@ export default class RestoreAccount extends React.Component {
       }
     });
   }
-  renderPasswordErrorBlock() {
-    let errorObj = this.state.passwordErrorObj;
-    let passwordErrorMsgs = [];
-
-    if (errorObj.hasNoLetter) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_NO_LETTER);
-    }
-    if (errorObj.hasNoNumeric) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_NO_NUMERIC);
-    }
-    if (errorObj.isNotMixCase) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_IS_NOT_MIX_CASE);
-    }
-    if (errorObj.isLessThanSixChars) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_TOO_SHORT);
-    }
-    if (errorObj.hasWhitespace) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_HAS_WHITESPACE);
-    }
-    if (errorObj.passwordsNotMatch) {
-      passwordErrorMsgs.push(errorMsgs.ERR_PASSWORDS_NOT_MATCH);
-    }
-    return (
-      <FormInputErrorBox
-        title="Errors for new passwords" errorMsgList={passwordErrorMsgs} />
-    );
-  }
   render() {
     return (
       <div className="container-fluid">
@@ -103,8 +76,7 @@ export default class RestoreAccount extends React.Component {
 
             <FormInput placeholder="Token"
                        onChange={this.handleTokenChange.bind(this)} />
-           {/* Password Input Validation */}
-           {this.state.passwordErrorObj ? this.renderPasswordErrorBlock() : null}
+
             <FormInput type="password" placeholder="Password"
                        onChange={this.handlePasswordChange.bind(this)} />
 
