@@ -9,21 +9,21 @@ By understanding some of the guidelines we have set in this document, we hope yo
 
 Table Of Contents
 ------------
-* [Things to know before you get started](#things-to-know)
+* [Things to know before you get started](#things-to-know-before-you-get-started)
   * [Setting Up](#setting-up)
-* [How can I contribute?](#how-to-contribute)
-  * [Reporting bugs](#bugs)
-  * [Feature Improvement suggestions](#improvement)
-  * [New feature suggestions](#new)
+* [How can I contribute?](#how-can-i-contribute?)
+  * [Reporting bugs](#reporting-bugs)
+  * [Feature Improvement suggestions](#feature-improvement-suggestions)
+  * [New feature suggestions](#new-feature-suggestions)
 * [Workflow](#workflow)
-* [Folder structure](#folder)
+* [Folder structure](#folder-structure)
   * [Top level](#top-level)
   * [Imports](#imports)
-* [Style-guide](#style)
+* [Style-guide](#style-guide)
   * [API](#api)
   * [UI](#ui)
 * [Additional Notes](#additional-notes)
-  * [Pull Requests and commit](#pull-requests)   
+  * [Pull Requests and commit](#pull-requests-and-commit)   
 
 Things to know before I get started
 ------------
