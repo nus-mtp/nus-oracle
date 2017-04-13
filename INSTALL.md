@@ -5,6 +5,8 @@ Table of Contents
 -----------------
 * [Overview](#overview)      
 * [Meteor](#installing-meteor)        
+* [Running the app](#running-nus-oracle)
+* [Testing the app](#testing-nus-oracle)
 * [Vagrant](#installing-vagrant)        
 * [Coding Environment Setup](#coding-environment-setup)         
   * [Atom Text Editor](#atom-text-editor)         
@@ -28,9 +30,18 @@ Meteor is the full-stack web application platform that NUS Oracle is built on. L
 + Clone our repository
 + Enter the root directory of the cloned repository using `cd`. Ensure that it is running on Meteor version
 1.4.x by typing `meteor --version`
-+ Enter ``meteor npm install`` to install all npm package dependencies into the folder
-+ Run the meteor app with the command `meteor`
+
+Running NUS Oracle
+------------------
++ Run the command ``meteor npm install`` to install all npm package dependencies
++ Run the app with the command `meteor`
 + Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
+
+Testing NUS Oracle
+------------------
++ Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
++ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run with `cmd` administrator privileges.
++ Then, run the command `meteor test --driver-package dispatch:mocha`
 
 Installing Vagrant
 -------------------
