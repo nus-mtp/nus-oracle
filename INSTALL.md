@@ -21,8 +21,8 @@ There are 2 ways for you to set up your development environment.
 
 Installing Meteor
 -----------------
-Meteor is the full-stack web application platform that NUS Oracle is built on. You may read up about Meteor at their official website [here](http://docs.meteor.com/#/full/).
-+ Download Meteor on to your machine by going to the official [Meteor](https://www.meteor.com/install) website
+Meteor is the full-stack web application platform that NUS Oracle is built on. Learn more about Meteor at their official website [here](http://docs.meteor.com/#/full/).
++ Download Meteor on to your machine by going to the official Meteor website [here](https://www.meteor.com/install)
   * For Unix / OSX users, run `curl https://install.meteor.com/ | sh` in the terminal
   * For Windows users, you should download the installer provided on the above website
 + Clone our repository
