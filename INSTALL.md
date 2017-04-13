@@ -23,26 +23,28 @@ There are 2 ways you can set up the development environment to work on the code 
 ### Installing Meteor.js
 
 + Download Meteor on to your machine by going to the [Meteor](https://www.meteor.com/install#!) website
-  * For Unix / OSX users, run "curl https://install.meteor.com/ | sh" in the terminal
+  * For Unix / OSX users, run _**"curl https://install.meteor.com/ | sh"**_ in the terminal
   * For Windows, download the installer provided on their website
 + Clone our repository
-+ Enter the root directory of the cloned repository using "cd". Ensure that it is running on Meteor version
-1.4.x by typing "meteor --version"
-+ Enter "meteor npm install" to install all npm package dependencies into the folder
++ Enter the root directory of the cloned repository using _**"cd"**_. Ensure that it is running on Meteor version
+1.4.x by typing _**"meteor --version"**_
++ Enter _**"meteor npm install"**_ to install all npm package dependencies into the folder
 + Run the meteor app with the command "meteor"
 + Go to localhost:3000 on your browser and the front page of our website should render!
 
 ### Installing Vagrant
 
 + Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual Box](https://www.virtualbox.org/wiki/Downloads), the one that states "Virtual Box 5.1.18 platform packages"
-+ Run "vagrant up" to initialize the default provisioner, ubuntu/trusty64
-+ Enter the Virtual box VM with "vagrant ssh"
-+ Run ["mkdir -p nus_oracle/.meteor/local"](why-create-a-directory-inside-vagrant)
-+ Run ["sudo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local"](why-create-a-directory-inside-vagrant)
-+ Run "cd/vagrant" to move to the directory
-+ Run "meteor" in that directory to run the code on your local machine!
-+ Exit the VM by running "exit"
-+ Release the resources used by the VM using "vagrant destroy"
++ Run _**"vagrant up"**_ to initialize the default provisioner, ubuntu/trusty64
++ Enter the Virtual box VM with _**"vagrant ssh"**_
++ Run _**"mkdir -p nus_oracle/.meteor/local"**_ 
+  * check the footnotes for why this must be done
++ Run _**"sudo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local"**_ 
+  * check the footnotes for why this must be done
++ Run _**"cd/vagrant"**_ to move to the directory
++ Run _**"meteor"**_ in that directory to run the code on your local machine!
++ Exit the VM by running _**"exit"**_
++ Release the resources used by the VM using _**"vagrant destroy"**_
 + Check out the following links for additional help in setting up the Vagrant environment
   * [How to use vagrant on Windows](http://tech.osteel.me/posts/2015/01/25/how-to-use-vagrant-on-windows.html)
   * [Meteor in Window using Vagrant](https://gist.github.com/gabrielhpugliese/5855677)
