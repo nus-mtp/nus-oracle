@@ -9,8 +9,7 @@ By understanding some of the guidelines we have set here, we hope that you'll be
 
 Table Of Contents
 -----------------
-* [Things to know before you get started](#things-to-know-before-you-get-started)
-  * [Setting Up](#setting-up)
+* [Setting Up](#setting-up)
 * [How can I contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Feature Improvements](#feature-improvements)
@@ -22,9 +21,6 @@ Table Of Contents
   * [UI](#ui)
 * [Additional Notes](#additional-notes)
   * [Pull Requests and Commits](#pull-requests-and-commits)   
-
-Things to know before you get started
--------------------------------------
 
 # Setting Up
 To begin contributing to the codebase, it is highly recommended that you clone the repository and setup your development environment. You can find out how to set up NUS Oracle from a set of installation instructions for Mac/Windows users [here](https://github.com/nus-mtp/nus-oracle/blob/master/INSTALL.md).
