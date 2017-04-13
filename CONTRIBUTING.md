@@ -17,13 +17,11 @@ Table Of Contents
   * [Suggestions for New Features](#suggestions-for-new-features)
 * [Workflow](#workflow)
 * [Folder structure](#folder-structure)
-  * [Top level](#top-level)
-  * [Imports](#imports)
 * [Style-guide](#style-guide)
-  * [API](#api)
+  * [API](#API_(Logic_and_Database))
   * [UI](#ui)
 * [Additional Notes](#additional-notes)
-  * [Pull Requests and commit](#pull-requests-and-commit)   
+  * [Pull Requests and Commits](#pull-requests-and-commits)   
 
 Things to know before you get started
 -------------------------------------
@@ -92,81 +90,95 @@ Folder structure
 ----------------
 This section explains how folders are structured in NUS Oracle.
 
-### Top level
 ```
 .
-├── _config.yml
-├── _drafts
-|   ├── begin-with-the-crazy-ideas.textile
+├── .vagrant
+    Your Vagrant machines are stored here
+├── .meteor
+|   metadata related to Meteor is stored here. You may find information regarding our Meteor version and Meteor package dependencies
+├── client
+    └── stylesheets
+        CSS Classes used in our project
+    └── main.js
+        Main entry point, client-side, that sets up the site's navigation routes, e.g. for the homepage, to determine which component should be rendered
+├── imports
+    └── api
+        Domain logic is all contained within this folder, named after their architecture component counterparts
+    └── startup
+        Scripts needed to handle the modules to be invoked upon app startup
+        └── client
+            Handles React routes used to render the correct UI components for a particular page
+        └── server
+            Handles initial server-side code initialization for accounts setup and fixtures for fake data
+    └── ui
+        └── components
+            Contains all the React components used in the View layer
+            └── account
+                Contains UI components related to account management, e.g. Login, Signup, Forget Password, Acad Details
+            └── common
+                Contains often-reused generic React components, e.g. Module, Button or Form Inputs
+            └── sidebar_menu
+                Contains all UI components contained in the sidebar on the left of the screen
+            └── study_plan
+                Contains all UI components contained in the study plan area on the right of the screen
+        └── pages
+            Contains top-level React components used mainly for navigation. E.g. Dashboard.jsx handles what account-related component gets rendered onscreen and how the Sidebar and Study Planner on the right get rendered.
+    └── utils
+        Utility functions used throughout the application - server and client side
+├── node_modules
+    Contains all node packages. Please do not commit any file here into the repository.
+├── public
+    Contains all the images, fonts and module JSON files that are exposed to the public
+├── server
+    Contains a main.js file that imports server startup scripts and manages account setup
+├── wiki    
+     Contains the image files referenced to in our Github Wiki page
 ```
-`/.meteor`
-  * All meteor packages downloaded from [Atmosphere](https://atmospherejs.com/) reside here
-`/client`
-  * Contains all the stylesheets and HTML files. Also contains the main.js file that imports from /imports/startup that renders the page
-`/imports`
-  * Contains most of the functions, classes and UI components. 
-    `/api`
-       * Contains all the non-UI code base. With reference to the architecture, it contains the Student Logic controller, Profile logic, Database handler, Database conversion and Database export code
-    `/startup`
-       * Client folder contains the Router information
-       * Server folder contains fixtures that will run on startup
-    `/ui`
-       * Contains all the React components that is used in the UI. With reference to the architecture, it contains Student View
-    `/utils`
-       * Contains all the utility functions that the project uses
-`/public`
-  * Contains all the images, fonts and module JSON files that are exposed to the public
-`/server`
-  * Contains the main.js file that imports from server startup inside imports
-`/wiki`
-  * Contains the files referenced to in our Github Wiki page
-
-### Imports
-
 
 Style-guide
 -----------
+This is how the project code and folders are organized. The API and UI follow different conventions so make sure to follow these general rules when writing your code.
 
-This is how the project code and folders are organized. Both API and UI follow different conventions so make sure to follow these general rules when writing your code.
-
-### API
-
+### API (Logic and Database)
 #### Folders and files
-
-Folders at the top level are named according to the architecture diagram.
-Any subfolders are grouped logically as defined by the coder
-At the lowest level, there should be at least 2 files that describes the sub-folder
-
+Folders at the top level are named according to the architecture diagram
 * methods.js
   * Contains all the functions for this sub-folder
 * Folder-name.tests.js
   * Contains the test cases for functions defined in methods.js
-
 * Folder-name.js
   * Contains any self defined Javascript objects as defined in Object-Oriented programming
 * meteor-methods.js
   * Contains functions that wraps all the functions written in methods.js by meteor methods that handles input validation
 
-#### Code
-
-* Imports should be kept at the top of the file and it should only use the meteor defined “imports” and not the jQuery version “require()”
-* Comment all functions above by describing what the parameters are.
+#### In-code Documentation
+* Provide comments for all functions above by describing what its parameters and return value types are.
 
 ### UI
+#### Folders and files
+Each folder should contain a number of React elements which are related
+* ReactComponent.jsx
+  * Contains a React component called "ReactComponent" based on its own class description
+* ReactComponent.test.js
+  * Contains the test cases for "ReactComponent". Test cases should then be added into the corresponding `./ui-tests` folder where all UI tests reside in
 
+#### In-code Documentation
+* Include a class description for every React component made, explaining what that component is for or how it might work. 
+* Include `PropTypes` definitions for every React component to ensure that there is sufficient TypeChecking.
+* (Optional) Include a `defaultProps` definition for every React component if you'd like to.
 
 Additional Notes
--------------------
-
-### Pull requests and commit
-For consistency, ensure that your pull requests and commits adhere to the following convention
+-----------------
+### Pull requests and Commits
+For consistency, ensure that your pull requests and commits adhere to the following convention:
 
 #### Commits
-* The first word in a commit should be a verb in present tense and capital letters
+* The first word in a commit should be a verb in present tense and contain only capital letters
   * Eg. FIX bug where tab disappears when changing academic cohort
 * Ensure that merged branches do not have the default merged messages. Provide a message that describes which branch you merged with or squash the commits.
   * Eg. MERGED with natasha UI branch
 
 #### Pull requests
-* If you are not a developer in the NUSOracle team but are making a pull request, make sure to merge it with the dev branch only
-* If you are in the NUSOracle team, create a branch with your name in it. If you wish to merge into the dev branch, use only the branch with your name.
+* If you are **not** a developer in the NUS Oracle team and you're making a pull request, make sure to merge it with the `development` branch only for testing purposes before we roll it out to the main branch.
+* If you are in the NUS Oracle developer team, create a branch with your name in it. If you wish to merge into the `development` branch, you may merge into it using only the branch with your name.  
+
