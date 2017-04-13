@@ -3,12 +3,12 @@ Setting up your Development Environment
 
 Table of Contents
 -----------------
-[Overview](#overview)
-  * [Meteor](#installing-meteor)
-  * [Vagrant](#installing-vagrant)
-* [Coding Environment Setup](#other-coding-environment-setup)
-  * [Atom Text Editor](#atom-text-editor)
-* [Footnotes](#footnotes)
+* [Overview](#overview)      
+* [Meteor](#installing-meteor)        
+* [Vagrant](#installing-vagrant)        
+* [Coding Environment Setup](#other-coding-environment-setup)         
+  * [Atom Text Editor](#atom-text-editor)         
+* [Footnotes](#footnotes)       
 
 
 Overview
@@ -19,7 +19,8 @@ There are 2 ways for you to set up your development environment.
 
 > We recommend the first option to install **Meteor** as it is the primary source of new updates and any changes will be reflected in the Meteor environment first.
 
-### Installing Meteor
+Installing Meteor
+-----------------
 Meteor is the full-stack web application platform that NUS Oracle is built on. You may read up about Meteor at their official website [here](http://docs.meteor.com/#/full/).
 + Download Meteor on to your machine by going to the official [Meteor](https://www.meteor.com/install) website
   * For Unix / OSX users, run `curl https://install.meteor.com/ | sh` in the terminal
@@ -31,7 +32,8 @@ Meteor is the full-stack web application platform that NUS Oracle is built on. Y
 + Run the meteor app with the command `meteor`
 + Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
 
-### Installing Vagrant
+Installing Vagrant
+-------------------
 Vagrant is a tool for developers to easily create a virtual environment on your local component that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.
 **Instructions for both Mac and Windows users:**
 + Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual Box](https://www.virtualbox.org/wiki/Downloads), the one that states "Virtual Box 5.1.18 platform packages"
