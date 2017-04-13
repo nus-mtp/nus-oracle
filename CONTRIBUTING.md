@@ -1,20 +1,20 @@
-Contributing to NUSOracle
-====================================================
+Contributing to NUS Oracle
+===========================
 
 Foreword
-------------
-Hello there dear reader! Congratulations! By reading this, you have taken your first step in contributing to the web app that will ultimately determine the roadmap of all NUS students ahead.
+--------
+Hello there dear reader! Congratulations! By reading this, you'd have taken your first step towards contributing to the web app that will ultimately determine the study plan roadmap of allllllll NUS students!!! :D
 
-By understanding some of the guidelines we have set in this document, we hope you will be able to contribute to this repository in an organized fashion! Of course, these are merely guidelines so they are not set in stone. Feel free to propose changes if you think it will improve the system.
+By understanding some of the guidelines we have set here, we hope that you'll be able to contribute to this repository in an organized fashion! Of course, these are merely guidelines so they are not set in stone. Feel free to propose changes if you think it will improve the system.
 
 Table Of Contents
-------------
+-----------------
 * [Things to know before you get started](#things-to-know-before-you-get-started)
   * [Setting Up](#setting-up)
 * [How can I contribute?](#how-can-i-contribute)
-  * [Reporting bugs](#reporting-bugs)
-  * [Feature Improvement suggestions](#feature-improvement-suggestions)
-  * [New feature suggestions](#new-feature-suggestions)
+  * [Reporting Bugs](#reporting-bugs)
+  * [Feature Improvements](#feature-improvements)
+  * [Suggestions for New Features](#suggestions-for-new-features)
 * [Workflow](#workflow)
 * [Folder structure](#folder-structure)
   * [Top level](#top-level)
@@ -26,60 +26,49 @@ Table Of Contents
   * [Pull Requests and commit](#pull-requests-and-commit)   
 
 Things to know before you get started
-------------
+-------------------------------------
 
 # Setting Up
-To begin contributing to the codebase, it is highly recommended you clone the repository and setup the development environment. You can find out how to setup NUSOracle in the INSTALL.md file.
+To begin contributing to the codebase, it is highly recommended that you clone the repository and setup your development environment. You can find out how to set up NUS Oracle from a set of installation instructions for Mac/Windows users [here](https://github.com/nus-mtp/nus-oracle/blob/master/INSTALL.md).
 
 How can I contribute?
-------------
+---------------------
+### Reporting Bugs
+Bugs are logged inside our GitHub issue tracker page, with the [BUG] tag.
 
-### Reporting bugs
+#### Checklist before filing a bug report!
+Be sure to do the following to see if we already have an existing issue that's similar to yours:
+* Read through the list of known issues in the NUSOracle FAQs page
+* Do a cursory search in our GitHub issue tracker to find out if that bug has already been filed
 
-Bugs are logged inside our Github issue tracker page
+Once you're sure that you have a *hot* new bug in your hands, do remember to include the following in your filed issue:
+* A concise issue title that describes the bug in layman terms
+* Steps to reproduce the bug in the issue's description
+* [BUG] label tagged to your issue
+* An additional label identifying a specific part of the code/component where the bug is occurring
+  * Eg. If it has to do with the graduation checker not calculating unrestricted electives correctly, tag it under [GRADCHECKER]
+* A link to your pull request that contains the bug fix
 
-#### Pre-conditions
+### Feature Improvements
+Improvement suggestions are logged inside the GitHub issue tracker page, with the [IMPROVEMENT] tag.
 
-> Ensure that you have already checked the following locations to prevent duplicate reports
+#### Checklist before submitting issues for feature improvements!
+Check make sure your suggestion:
+* Improves the performance of an existing section of the code
+* Refactors or improves upon the existing code structure
+  * E.g. The Graduation Requirement JSON schema in the `Logic` component is formatted differently from the UI's required schema because of how `Logic` manipulates this information. A feature improvement would be to create a new Graduation Requirement `Logic` component that can calculate it and format the result into the required schema for the UI.
+* Has not been suggested before
 
-* The NUSOracle FAQs page that contains a list of known issues
-* Do a cursory search in our GitHub issue tracker to find out if the bug has already been filed
-
-Once the pre-conditions are fulfilled, ensure that your issue has the following information
-
-* A concise title that describes the bug in layman terms
-* Describe how the bug is replicated in the description
-* Tag it with the [BUG] tag
-* If you have an idea where the bug is occurring, tag it with the relevant tag
-  * Eg. If it has to do with the graduation checker not calculating your unrestricted electives correctly, tag it under [LOGIC]
-* If you have implemented the bug fix
-  * Link it to the pull request
-
-### Feature Improvement suggestions
-Improvement suggestions are logged inside the Github issue tracker page
-
-#### Pre-conditions
-
-> Ensure that you have already checked the following locations to prevent duplicate reports
-
-* It improves the performance of an existing section of the code
-* It structures the code differently to the original
-  * Eg. The graduation requirement JSON information in the logic component is formatted differently from the UI because of how logic manipulates the information. A feature improvement would be to create a new graduation requirement logic component that can calculate it in the same format as the UI.
-* This feature improvement has not yet been suggested
-
-Once the pre-conditions are fulfilled, ensure that your issue has the following information
-
+Once you're super certain that you've got a great way to improve NUS Oracle's codebase or logic, do remember to include the following in your filed issue:
 * A concise title that describes the part of the code you wish to modify in layman terms.
-* Give a high level explanation of how your solution would improve the feature
-* Tag it with the [IMPROVEMENT] tag and the part of the code base it will be modifying
-  * Eg. The suggestion would be using an algorithm to perform module retrieval by indexing modules differently. Therefore, you should tag it with the [DATABASE] and [LOGIC] tag.
-* If you have not implemented the improvement
-  * List down the folders and the files you wish to modify and improve in the description
-* If you have implemented the improvement
-  * Link it to the pull request
+* An explanation of how your solution would improve a particular feature or part of the codebase.
+* [IMPROVEMENT] label and a label of the part of the codebase this improvement will be modifying
+  * E.g. A suggestion might be to use an algorithm to perform module retrieval by indexing modules more efficient. Since this issue involves both the database and logic components, you should tag this issue with the [DATABASE] and [LOGIC] tag.
+* List down the folders and the files you wish to modify and improve in the description (optional)
+* A link to your pull request that contains the improvement
 
-### New feature suggestions
-New feature suggestions are logged into the Github issue tracker page. Use this if you wish to implement a new feature but are unsure if this is the right way to do it and we can discuss it there!
+### Suggestions for New Features
+New feature suggestions are logged into the GitHub issue tracker page. Use this if you wish to implement a new feature but are unsure if this is the right way to do it and we can discuss it there!
 
 #### Pre-conditions
 > Ensure that the issue you are opening fulfils at least one of the following condition to be considered as a new feature
@@ -91,7 +80,6 @@ New feature suggestions are logged into the Github issue tracker page. Use this 
 Note that your new feature suggestions will most likely change and be broken down into smaller issues that can be understood for implementation.
 
 Once the pre-conditions are fulfilled, ensure that your issue has the following information
-
 * A high level title that describes your new feature
 * Provide a layman explanation of how you are going about implementing this feature.
 * Provide a link to the pull request if you have already done the implementation so that people can look at it and how to improve it
