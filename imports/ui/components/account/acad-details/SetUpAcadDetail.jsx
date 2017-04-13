@@ -10,7 +10,7 @@ import {  successMsgs,
           errorMsgs} from '../AccountAlerts.js';
 
 // Student-database methods
-import { createNewStudent } from '../../../../api/database-controller/student/methods';
+import { createNewStudent } from '../../../../api/profile/student/methods';
 
 // Import file paths
 import { pathToLogin } from '../../../../startup/client/Router.jsx';

@@ -1,6 +1,6 @@
 import { getStudentAcademicCohort,
          getStudentExemptedModules,
-         getStudentWaivedModules } from '../../database-controller/student/methods';
+         getStudentWaivedModules } from '../../profile/student/methods';
 import { AY1617CSGradChecker } from '../../logic/grad-checker/faculty/computing/computer-science/AY-1617/AY1617GradCheckerHandler.js';
 import { AY1516CSGradChecker } from '../../logic/grad-checker/faculty/computing/computer-science/AY-1516/AY1516GradCheckerHandler.js';
 import { AY1415CSGradChecker } from '../../logic/grad-checker/faculty/computing/computer-science/AY-1415/AY1415GradCheckerHandler.js';

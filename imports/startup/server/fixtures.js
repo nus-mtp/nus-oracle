@@ -9,7 +9,7 @@ import { populateModuleFulfilmentFixture,
 import { populateAY1617AcademicCohortFixture } from '../../api/test-fixtures/academicCohort';
 
 import { Modules } from '../../api/database-controller/module/module';
-import { Students } from '../../api/database-controller/student/student';
+import { Students } from '../../api/profile/student/student';
 import { ModuleFulfilments } from '../../api/database-controller/module-fulfilment/moduleFulfilment';
 import { Planner } from '../../api/student-logic-controller/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
@@ -18,11 +18,8 @@ import { GraduationRequirements } from '../../api/database-controller/graduation
 import { getAcadCohortDefaultPlannerIDs,
          removeAllCohort,
          getRepackagedDefaultPlannerIDs} from '../../api/database-controller/AcademicCohort/methods';
-import { moduleInformationParser,
-         moduleListParser } from '../../api/database-conversion/moduleInformationParser';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
 import { parseDefaultPlanner } from '../../api/database-conversion/samplePlannerParser';
-import { parseForLezzgo } from '../../api/database-conversion/plannerDataPullLezzgo';
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
 import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';

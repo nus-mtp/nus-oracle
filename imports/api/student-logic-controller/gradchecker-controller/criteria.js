@@ -1,6 +1,6 @@
 import { searchByModuleCode } from '../../database-controller/module/methods';
 import { getModuleFulfilment } from '../../database-controller/module-fulfilment/methods';
-import { getStudentAcademicCohort } from '../../database-controller/student/methods.js';
+import { getStudentAcademicCohort } from '../../profile/student/methods.js';
 
 Meteor.subscribe('AcademicCohort');
 Meteor.subscribe('FocusArea');

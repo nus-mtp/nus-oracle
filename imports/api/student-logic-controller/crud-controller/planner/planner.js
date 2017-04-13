@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { getStudentIDGivenUserID } from '../../../database-controller/student/methods';
+import { getStudentIDGivenUserID } from '../../../profile/student/methods';
 
 // create class for planner
 class PlannerCollection extends Mongo.Collection {

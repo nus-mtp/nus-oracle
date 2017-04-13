@@ -1,5 +1,5 @@
 import { successMsgs,
-         errorMsgs } from './../../ui/components/account/AccountAlerts.js'
+         errorMsgs } from './../../../ui/components/account/AccountAlerts.js'
 
 //Method to ensure Email is a valid domain
 Meteor.methods({

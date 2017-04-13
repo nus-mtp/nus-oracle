@@ -1,7 +1,7 @@
 import { Planner } from '../planner/planner';
 import { increaseAcadYearByOne } from '../../../../utils/util';
 import { getStudentAcademicCohort,
-         getStudentID } from '../../../database-controller/student/methods';
+         getStudentID } from '../../../profile/student/methods';
 
 /**
  * insert academic year into planner
