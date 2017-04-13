@@ -44,10 +44,12 @@ export default class IconButton extends React.Component {
     let iconColor = this.state.mouseHoverColor;
 
     // Clone a new object since we cannot mutate a state directly in React
-    let style = JSON.parse(JSON.stringify(this.props.style));
-
-    // Set this button icon's color
-    style.color = iconColor;
+    let style = null;
+    if (this.props.style) {
+      // Set this button icon's color
+      style = JSON.parse(JSON.stringify(this.props.style));
+      style.color = iconColor;
+    }
 
     return (
       <i className={this.props.icon} style={style}

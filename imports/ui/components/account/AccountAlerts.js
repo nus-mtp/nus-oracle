@@ -46,6 +46,7 @@ export const errorMsgs = {
   // Others
   ERR_EXCEEDED_LOGIN_ATTEMPTS: "Password reset. Too many login attempts. Please check",
   ERR_SETUP_INCOMPLETE: "Please enter all three fields before continuing",
+  ERR_TOKEN_UNRECOGNIZED: "This token is unrecognized. Please check your NUS E-mail for a valid token",
 }
 
 export const loadingMsgs = {
