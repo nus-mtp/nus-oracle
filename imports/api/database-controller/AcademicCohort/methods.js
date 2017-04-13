@@ -1,5 +1,5 @@
 import {AcademicCohort} from './acadCohort';
-import {Planner} from '../../crud-controller/planner/planner';
+import {Planner} from '../../student-logic-controller/crud-controller/planner/planner';
 import {GraduationRequirements} from '../graduation-requirement/graduationRequirement';
 import {Match} from 'meteor/check';
 //change this as you see fit when you want to populate the database

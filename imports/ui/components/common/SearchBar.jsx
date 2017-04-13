@@ -8,7 +8,7 @@ import VirtualizedSelect from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
 
 // Import logic methods
-import { getAllModules } from '../../../api/searcher-controller/controller.js';
+import { getAllModules } from '../../../api/student-logic-controller/searcher-controller/controller.js';
 
 // Import constants for char limits and line height limits for search options
 import { SMALL_LINE_CHAR_LIMIT,

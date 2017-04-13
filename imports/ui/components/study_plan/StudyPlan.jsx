@@ -1,7 +1,7 @@
 import React from 'react';
 import TabbedContainer from './TabbedContainer.jsx';
 import { getPlannerName,
-         getPlannerUserID } from '../../../api/crud-controller/planner/methods.js';
+         getPlannerUserID } from '../../../api/student-logic-controller/crud-controller/planner/methods.js';
 
 export default class StudyPlan extends React.Component {
   render() {

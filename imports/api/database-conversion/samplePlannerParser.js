@@ -1,10 +1,10 @@
 //import Planner database
 //Academic Cohort need to already exists
-import {Planner} from '../crud-controller/planner/planner';
-import {createPlannerGivenUserID} from '../crud-controller/planner/methods';
-import {insertOneModuleInSemester} from '../crud-controller/module/methods';
+import {Planner} from '../student-logic-controller/crud-controller/planner/planner';
+import {createPlannerGivenUserID} from '../student-logic-controller/crud-controller/planner/methods';
+import {insertOneModuleInSemester} from '../student-logic-controller/crud-controller/module/methods';
 import {insertNewAcademicYearInPlanner,
-        insertNewSemesterInPlanner} from '../crud-controller/semester/methods';
+        insertNewSemesterInPlanner} from '../student-logic-controller/crud-controller/semester/methods';
 import {AcademicCohort} from '../database-controller/AcademicCohort/acadCohort';
 import {getCohortByName,
         updateCohortDefaultPlannerID} from '../database-controller/AcademicCohort/methods';

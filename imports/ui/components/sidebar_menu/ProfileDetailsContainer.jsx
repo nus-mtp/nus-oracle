@@ -5,7 +5,7 @@ import { getStudentAcademicCohort } from '../../../api/database-controller/stude
 import { getStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
 import { updateStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
 import { updateStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
-import { updateStudentPlannerAcademicYear} from '../../../api/crud-controller/planner/methods.js'
+import { updateStudentPlannerAcademicYear} from '../../../api/student-logic-controller/crud-controller/planner/methods.js'
 import InlineEdit from 'react-edit-inline';
 import ProfileDetails from './ProfileDetails.jsx';
 import Select from 'react-select';

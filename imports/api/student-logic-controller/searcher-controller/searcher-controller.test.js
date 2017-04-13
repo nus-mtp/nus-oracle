@@ -1,7 +1,7 @@
 import { assert, expect } from 'meteor/practicalmeteor:chai';
 import { sendQuery } from '../searcher-controller/controller';
 import  { populateModuleFixture,
-          dePopulateModuleFixture } from '../test-fixtures/modules';
+          dePopulateModuleFixture } from '../../test-fixtures/modules';
 
 
 describe('search-controller', function() {

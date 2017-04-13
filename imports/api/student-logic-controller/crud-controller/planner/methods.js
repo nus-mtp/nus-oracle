@@ -1,5 +1,5 @@
 import { Planner } from './planner';
-import { getStudentID } from '../../database-controller/student/methods';
+import { getStudentID } from '../../../database-controller/student/methods';
 import { updateSemesterAcademicYearInPlanner } from '../semester/methods';
 /**
  * creates a planner

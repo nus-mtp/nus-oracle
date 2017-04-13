@@ -18,7 +18,7 @@ import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 import { createPlanner,
          removePlanner,
          duplicatePlanner,
-         setPlannerName } from '../../../api/crud-controller/planner/methods.js';
+         setPlannerName } from '../../../api/student-logic-controller/crud-controller/planner/methods.js';
 
  // Import common constants and utilities
  import { ENTER_CHAR_KEY_CODE,
@@ -85,7 +85,7 @@ export default class TabbedContainer extends React.Component {
         if (this.state.isAddingNewPlan) {
           let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
           this.setState({
-            isAddingNewPlan: false, 
+            isAddingNewPlan: false,
             tabSelectedIndex: indexOfStudyPlanTabAdded
           });
           this.props.handleSelectTab(indexOfStudyPlanTabAdded);

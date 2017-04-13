@@ -15,7 +15,7 @@ import { getFocusAreaPrimaryRequirement,
          getFocusAreaRequirement } from '../../../../../../../../database-controller/focus-area/methods';
 import { getGradRequirementMCs } from '../../../../../../../../database-controller/graduation-requirement/methods';
 
-import { getAllSemestersInPlanner } from '../../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { checkFocusAreaFulfilmentMCs,
          findFocusAreaPrimary,

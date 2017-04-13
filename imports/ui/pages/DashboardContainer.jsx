@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 // Import logic methods
-import { getPlannerIDs } from '../../api/crud-controller/planner/methods.js';
+import { getPlannerIDs } from '../../api/student-logic-controller/crud-controller/planner/methods.js';
 
 // Import React components
 import Dashboard from './Dashboard.jsx';
@@ -11,7 +11,7 @@ export default DashboardContainer = createContainer(() => {
     Meteor.subscribe('planner');
     Meteor.subscribe('Student');
     Meteor.subscribe('Modules');
-    
+
     Meteor.subscribe('AcademicCohort');
     Meteor.subscribe('FocusArea');
     Meteor.subscribe('GraduationRequirements');

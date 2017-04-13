@@ -7,7 +7,7 @@ import SidebarModulesCard from './SidebarModulesCard.jsx';
 // Import logic functions
 import { getStudentExemptedModules } from '../../../api/database-controller/student/methods.js';
 import { getStudentWaivedModules } from '../../../api/database-controller/student/methods.js';
-import { findModuleInfo } from './../../../api/searcher-controller/controller.js';
+import { findModuleInfo } from './../../../api/student-logic-controller/searcher-controller/controller.js';
 
 export default SidebarModulesCardContainer = createContainer((props) => {
   const listType = props.listType;

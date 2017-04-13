@@ -11,7 +11,7 @@ import { populateAY1617AcademicCohortFixture } from '../../api/test-fixtures/aca
 import { Modules } from '../../api/database-controller/module/module';
 import { Students } from '../../api/database-controller/student/student';
 import { ModuleFulfilments } from '../../api/database-controller/module-fulfilment/moduleFulfilment';
-import { Planner } from '../../api/crud-controller/planner/planner';
+import { Planner } from '../../api/student-logic-controller/crud-controller/planner/planner';
 import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
 import { GraduationRequirements } from '../../api/database-controller/graduation-requirement/graduationRequirement';
 
