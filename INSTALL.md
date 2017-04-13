@@ -6,7 +6,7 @@ Table of Contents
 * [Overview](#overview)      
 * [Meteor](#installing-meteor)        
 * [Vagrant](#installing-vagrant)        
-* [Coding Environment Setup](#other-coding-environment-setup)         
+* [Coding Environment Setup](#coding-environment-setup)         
   * [Atom Text Editor](#atom-text-editor)         
 * [Footnotes](#footnotes)       
 
