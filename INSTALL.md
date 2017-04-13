@@ -29,7 +29,7 @@ There are 2 ways you can set up the development environment to work on the code 
 + Enter the root directory of the cloned repository using _**"cd"**_. Ensure that it is running on Meteor version
 1.4.x by typing _**"meteor --version"**_
 + Enter _**"meteor npm install"**_ to install all npm package dependencies into the folder
-+ Run the meteor app with the command "meteor"
++ Run the meteor app with the command _**"meteor"**_
 + Go to localhost:3000 on your browser and the front page of our website should render!
 
 ### Installing Vagrant
