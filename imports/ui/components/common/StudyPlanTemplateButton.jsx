@@ -64,8 +64,8 @@ export default class StudyPlanTemplateButton extends React.Component {
             <div style={{padding: "5px", wordWrap: "break-word"}}>
               <b>{this.props.templateTitle}</b>
             </div>
-
           </div>
+
         </article>
       </div>
     );
@@ -73,9 +73,21 @@ export default class StudyPlanTemplateButton extends React.Component {
 }
 
 StudyPlanTemplateButton.propTypes = {
+  /* Custom button CSS */
+  // String representation of the CSS class.
   alignmentClass: React.PropTypes.string,
+
+  // Hex representation of the color of this button's background
   bgColor: React.PropTypes.string,
+
+  // The Study Plan template's title
   templateTitle: React.PropTypes.string,
+
+  /* Custom button icon JSX object */
+  // Must be a JSX element, e.g. you can pass in something like
+  // <i className="my-icon-class-name" style={{ color: red }}>My Icon!</i>
   icon: React.PropTypes.element,
+
+  // Handler for button clicks
   onClick: React.PropTypes.func,
 }

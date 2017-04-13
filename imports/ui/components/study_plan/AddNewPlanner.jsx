@@ -129,3 +129,27 @@ export default class AddNewPlanner extends React.Component {
     );
   }
 }
+
+AddNewPlanner.propTypes = {
+  // Generic CS Planner refers to a study plan that only contains CS foundation
+  // modules. So a typical planner name would be "CS Foundation"
+  genericCSPlannerName: React.PropTypes.string,
+
+  // ID of the Generic CS Planner
+  genericCSPlannerID: React.PropTypes.string,
+
+  // JSON Object representation of a mapping of
+  // {
+  //   name_of_focus_area_planner1 : ID_of_focus_area_planner_1,
+  //   name_of_focus_area_planner2 : ID_of_focus_area_planner_2
+  //   ...
+  // }
+  //
+  // e.g.
+  // {
+  //   "programming_languages" : "JaiWE123jJiawe1212",
+  //   ...
+  // }
+  //
+  focusAreaPlannerObjs: React.PropTypes.object
+}

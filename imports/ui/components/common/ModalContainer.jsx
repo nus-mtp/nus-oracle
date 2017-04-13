@@ -6,8 +6,8 @@ import { Modal } from 'react-bootstrap'
  * Animations for the window are applied once this component is mounted.
  */
 export default class ModalContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       show: false
     }
@@ -17,6 +17,9 @@ export default class ModalContainer extends React.Component {
     this.setState({ show: true });
   }
 
+  /**
+   * Hides this modal if the disableHide flag is off
+   */
   hide() {
     if(!this.props.disableHide){
       this.props.onHidden();
@@ -38,6 +41,13 @@ export default class ModalContainer extends React.Component {
 }
 
 ModalContainer.propTypes = {
+  // Content of this ModalContainer. Can be any JSX element
   content: React.PropTypes.node,
+
+  // Set to true if you want to prevent this Modal from being hidden by
+  // the user (e.g. by clicking outside the Modal window), false otherwise.
+  disableHide: React.PropTypes.bool,
+
+  // Listener for when user clicks to hide this Modal
   onHidden: React.PropTypes.func
 }
