@@ -53,7 +53,7 @@ Once you're sure that you have a *hot* new bug in your hands, do remember to inc
 Improvement suggestions are logged inside the GitHub issue tracker page, with the [IMPROVEMENT] tag.
 
 #### Checklist before submitting issues for feature improvements!
-Check make sure your suggestion:
+Please make sure that your suggestion:
 * Improves the performance of an existing section of the code
 * Refactors or improves upon the existing code structure
   * E.g. The Graduation Requirement JSON schema in the `Logic` component is formatted differently from the UI's required schema because of how `Logic` manipulates this information. A feature improvement would be to create a new Graduation Requirement `Logic` component that can calculate it and format the result into the required schema for the UI.
@@ -70,62 +70,59 @@ Once you're super certain that you've got a great way to improve NUS Oracle's co
 ### Suggestions for New Features
 New feature suggestions are logged into the GitHub issue tracker page. Use this if you wish to implement a new feature but are unsure if this is the right way to do it and we can discuss it there!
 
-#### Pre-conditions
-> Ensure that the issue you are opening fulfils at least one of the following condition to be considered as a new feature
+#### Checklist before submitting issues for feature improvements!
+First, please ensure that the issue you are creating does not already exist inside our GitHub issue tracker. Note that your new feature suggestions may be changed and be broken down into smaller issues used for implementation.
 
-* The feature does not already exists inside our GitHub issue tracker
-* The feature does not exist in our codebase
-* The feature can be integrated into our code architecture without changing significant portions of the code
-
-Note that your new feature suggestions will most likely change and be broken down into smaller issues that can be understood for implementation.
-
-Once the pre-conditions are fulfilled, ensure that your issue has the following information
-* A high level title that describes your new feature
-* Provide a layman explanation of how you are going about implementing this feature.
-* Provide a link to the pull request if you have already done the implementation so that people can look at it and how to improve it
-* Provide an explain where in the architecture this new feature would fit in.
+Once you're confident that your suggested feature would benefit many NUS students, ensure that your filed issue has the following information:
+* A title that describes your new feature.
+* A layman explanation of how you are going about implementing this feature.
+* A link to the pull request if you have already done the implementation so that people can look at it and how to improve it.
+* An rough explanation about how this new feature would fit into the existing architecture.
 
 Workflow
-----------------
-
-To facilitate the approval of pull requests, we suggest the following set of procedures when writing code for contribution
-
-- Create the relevant folders inside /imports. You can find how the folders are structured in the Folder Structure section.
-- Inside the folder, create your .js or .jsx file and write your code inside as defined in the style-guides section
-- Create test cases for all the functions and different possible scenarios that might happen when this function runs. How test cases are written is documented in the Tests section
-  * For UI code, create your test cases inside the ui/components/common/ui-tests folder
-  * For non-UI code, create your test cases in the same folder as where you wrote your .js file
+---------
+To facilitate the approval of pull requests, we suggest the following this set of procedures when writing code for contribution
+- Create relevant folders inside `/imports` related to your feature. You can find how the folders are structured in the Folder Structure section below.
+- Inside the folder, create your .js or .jsx file and write your code inside as defined in the style-guides section below.
+- Create test cases for all the functions and different possible scenarios that might happen when this function runs. How test cases are written is documented in the Tests section below as well.
+  * For UI code, create a folder named `/ui-tests` in the same folder containing your implemented UI component, if no `/ui-tests` folder currently exists. You may then put all the test cases for UI components within the enclosing folder into `/ui-tests`.
+  * For code related to Logic/Database, create your test cases in the same folder where you wrote your .js file. It is optional to create a specific folder for test cases here.
 
 Folder structure
----------------------------
-
-Folder structure differs between UI and the API. This section explains how folders are structured to ensure consistency
+----------------
+This section explains how folders are structured in NUS Oracle.
 
 ### Top level
-* .meteor
-  * Where all meteor packages downloaded from Atmosphere reside
-* client
-  * Contains all the stylesheets and react.js elements. Also contains the main.js file that imports from /imports/startup that renders the page
-* imports
-  * Contains all the main codebase of the system
-* public
-  * Contains all the images, fonts and module json files that are exposed to the public
-* server
-  * Contains main.js file that imports from server startup inside imports
-* Wiki
+```
+.
+├── _config.yml
+├── _drafts
+|   ├── begin-with-the-crazy-ideas.textile
+```
+`/.meteor`
+  * All meteor packages downloaded from [Atmosphere](https://atmospherejs.com/) reside here
+`/client`
+  * Contains all the stylesheets and HTML files. Also contains the main.js file that imports from /imports/startup that renders the page
+`/imports`
+  * Contains most of the functions, classes and UI components. 
+    `/api`
+       * Contains all the non-UI code base. With reference to the architecture, it contains the Student Logic controller, Profile logic, Database handler, Database conversion and Database export code
+    `/startup`
+       * Client folder contains the Router information
+       * Server folder contains fixtures that will run on startup
+    `/ui`
+       * Contains all the React components that is used in the UI. With reference to the architecture, it contains Student View
+    `/utils`
+       * Contains all the utility functions that the project uses
+`/public`
+  * Contains all the images, fonts and module JSON files that are exposed to the public
+`/server`
+  * Contains the main.js file that imports from server startup inside imports
+`/wiki`
   * Contains the files referenced to in our Github Wiki page
 
 ### Imports
 
-* api
-  * Contains all the non-UI code base. With reference to the architecture, it contains the Student Logic controller, Profile logic, Database handler, Database conversion and Database export code
-* startup
-  * Client folder contains the Router information
-  * Server folder contains fixtures that will run on startup
-* ui
-  * Contains all the React components that is used in the UI. With reference to the architecture, it contains Student View
-* utils
-  * Contains all the utility functions that the project uses
 
 Style-guide
 -----------
