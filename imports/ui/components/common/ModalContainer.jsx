@@ -13,6 +13,9 @@ export default class ModalContainer extends React.Component {
     }
   }
 
+/**
+ * Show component when successfully mounted
+ */
   componentDidMount() {
     this.setState({ show: true });
   }
