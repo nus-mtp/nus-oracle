@@ -31,16 +31,16 @@ import { scrapeModuleMappingListingForULR1516 } from '../../api/database-convers
 import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper'//;
 
 Meteor.startup(() => {
-  plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
+  plannerFileToBeParsed = ["DefaultStudyPlanner1314.json","DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
   //parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
-  //populateModuleFulfilmentCollection();
-  //scrapeModuleMappingListingForULR1516();
+  populateModuleFulfilmentCollection();
+  scrapeModuleMappingListingForULR1516();
   //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
   //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
   //}
-  //scrapeModuleMappingListingForBeforeULR1516();
+  scrapeModuleMappingListingForBeforeULR1516();
   //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseForLezzgo();
   //console.log(getRepackagedDefaultPlannerIDs("AY 2016/2017"));
@@ -54,7 +54,7 @@ Meteor.startup(() => {
     populateAY1617AcademicCohortFixture();
   }
   if (Planner.find({}).count() === 0) {
-    //populatePlannerFixture();
+    populatePlannerFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();

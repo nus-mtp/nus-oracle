@@ -2,6 +2,7 @@ import {AcademicCohort} from './acadCohort';
 import {Planner} from '../../crud-controller/planner/planner';
 import {GraduationRequirements} from '../graduation-requirement/graduationRequirement';
 import {Match} from 'meteor/check';
+
 //change this as you see fit when you want to populate the database
 //make sure that this name is consistent throughout your json file
 const CS_FOUNDATION_PLANNER_NAME = "CS Foundation"
@@ -61,8 +62,11 @@ export const removeCohort = function removeCohort(cohortName) {
     //delete all default planner related to the academic cohort.
     //all this planner is unique to the academic cohort.
     cohortDefaultPlanners = cohortDocument.cohortDefaultPlannerID;
-    for(var i = 0; i < cohortDefaultPlanners.length; i++){
-      Planner.remove({_id: cohortDefaultPlanners[i]});
+
+    if(cohortDefaultPlanners){
+      for(var i = 0; i < cohortDefaultPlanners.length; i++){
+        Planner.remove({_id: cohortDefaultPlanners[i]});
+      }
     }
 
     // finally, remove cohort
