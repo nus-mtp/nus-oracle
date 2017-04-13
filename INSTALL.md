@@ -40,7 +40,7 @@ Running NUS Oracle
 Testing NUS Oracle
 ------------------
 + Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
-+ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run with `cmd` administrator privileges.
++ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run `cmd` with administrator privileges.
 + Then, run the command `meteor test --driver-package dispatch:mocha`
 
 Installing Vagrant
