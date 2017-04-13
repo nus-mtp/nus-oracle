@@ -85,7 +85,7 @@ export default class TabbedContainer extends React.Component {
         if (this.state.isAddingNewPlan) {
           let indexOfStudyPlanTabAdded = this.props.plannerIDs.length;
           this.setState({
-            isAddingNewPlan: false, 
+            isAddingNewPlan: false,
             tabSelectedIndex: indexOfStudyPlanTabAdded
           });
           this.props.handleSelectTab(indexOfStudyPlanTabAdded);
@@ -431,9 +431,13 @@ export default class TabbedContainer extends React.Component {
 }
 
 TabbedContainer.propTypes = {
-  // List of all the tab titles to render
-  // (max: MAX_STUDY_PLAN_NAME_LENGTH chars, or "..." will be added to the back)
-  tabTitleList: React.PropTypes.node,
+  // List of all tab titles to render
+  // Note: The maximum number of chars that can fit the tab is determined by
+  // the MAX_STUDY_PLAN_NAME_LENGTH constant, else, a "..." will be rendered
+  // in place.
+  tabTitleList: React.PropTypes.array,
+
+  // Handler when user clicks on a particular Tab to select it
   handleSelectTab: React.PropTypes.func,
 
   // List of all plannerIDs to render
