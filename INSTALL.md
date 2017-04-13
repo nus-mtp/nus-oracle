@@ -1,82 +1,79 @@
-Installing the Coding Environment
-====================================================
+Setting up your Development Environment
+=======================================
 
-Table of Content
-------------
+Table of Contents
+-----------------
+[Overview](#overview)
+  * [Meteor](#installing-meteor)
+  * [Vagrant](#installing-vagrant)
+* [Coding Environment Setup](#other-coding-environment-setup)
+  * [Atom Text Editor](#atom-text-editor)
+* [Footnotes](#footnotes)
 
-* [Installing the necessary development environment](installing-the-necessary-development-environment)
-  * [Meteor.js](installing-meteor.js)
-  * [Vagrant](installing-vagrant)
-* [Other coding environment setup](other-coding-environment-setup)
-  * [Atom Text Editor](atom-text-editor)
-* [Footnotes](footnotes)
 
-Installing the necessary development environment
-------------
+Overview
+--------
+There are 2 ways for you to set up your development environment.
+* Install Meteor
+* Set up a virtual environment using Vagrant
 
-There are 2 ways you can set up the development environment to work on the code base.
-* Installing Meteor.js
-* Using Vagrant
+> We recommend the first option to install **Meteor** as it is the primary source of new updates and any changes will be reflected in the Meteor environment first.
 
-> We recommend installing Meteor in your machine as the development environment as it is the primary source of new updates and any changes will be reflected in the meteor environment first.
-
-### Installing Meteor.js
-
-+ Download Meteor on to your machine by going to the [Meteor](https://www.meteor.com/install#!) website
-  * For Unix / OSX users, run _**"curl https://install.meteor.com/ | sh"**_ in the terminal
-  * For Windows, download the installer provided on their website
+### Installing Meteor
+Meteor is the full-stack web application platform that NUS Oracle is built on. You may read up about Meteor at their official website [here](http://docs.meteor.com/#/full/).
++ Download Meteor on to your machine by going to the official [Meteor](https://www.meteor.com/install) website
+  * For Unix / OSX users, run `curl https://install.meteor.com/ | sh` in the terminal
+  * For Windows users, you should download the installer provided on the above website
 + Clone our repository
-+ Enter the root directory of the cloned repository using _**"cd"**_. Ensure that it is running on Meteor version
-1.4.x by typing _**"meteor --version"**_
-+ Enter _**"meteor npm install"**_ to install all npm package dependencies into the folder
-+ Run the meteor app with the command _**"meteor"**_
-+ Go to localhost:3000 on your browser and the front page of our website should render!
++ Enter the root directory of the cloned repository using `cd`. Ensure that it is running on Meteor version
+1.4.x by typing `meteor --version`
++ Enter ``meteor npm install`` to install all npm package dependencies into the folder
++ Run the meteor app with the command `meteor`
++ Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
 
 ### Installing Vagrant
-
+Vagrant is a tool for developers to easily create a virtual environment on your local component that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.
+**Instructions for both Mac and Windows users:**
 + Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual Box](https://www.virtualbox.org/wiki/Downloads), the one that states "Virtual Box 5.1.18 platform packages"
-+ Run _**"vagrant up"**_ to initialize the default provisioner, ubuntu/trusty64
-+ Enter the Virtual box VM with _**"vagrant ssh"**_
-+ Run _**"mkdir -p nus_oracle/.meteor/local"**_ 
++ Run `vagrant up` to initialize the default provisioner, `ubuntu/trusty64`
++ Enter the Virtual box VM with `vagrant ssh`
++ Run `mkdir -p nus_oracle/.meteor/local`
   * check the footnotes for why this must be done
-+ Run _**"sudo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local"**_ 
++ Run `udo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local`
   * check the footnotes for why this must be done
-+ Run _**"cd/vagrant"**_ to move to the directory
-+ Run _**"meteor"**_ in that directory to run the code on your local machine!
-+ Exit the VM by running _**"exit"**_
-+ Release the resources used by the VM using _**"vagrant destroy"**_
-+ Check out the following links for additional help in setting up the Vagrant environment
++ Run `cd/vagrant` to move to the directory
++ Run `meteor` in that directory to run the code on your local machine!
++ Exit the VM with the command `exit`
++ Release the resources used by the VM using `vagrant destroy`
++ Check out the following links for additional help in setting up your Vagrant environment
   * [How to use vagrant on Windows](http://tech.osteel.me/posts/2015/01/25/how-to-use-vagrant-on-windows.html)
   * [Meteor in Window using Vagrant](https://gist.github.com/gabrielhpugliese/5855677)
 
-Other coding environment setup
-----------------------------------
+
+Coding Environment Setup
+------------------------
+This is the coding environment setup that NUS Oracle uses. Here's a collection of all the helpful tools that we found throughout the course of our project. 
+
+These tools are optional for developing on NUS Oracle. However, if you're just starting out as a developer and you're not sure what kinds of tools you should use to help you code, here are some for you to try out!
 
 ### Atom Text Editor
-
-> Our team uses Atom as the text editor environment to code the project. It is fairly lightweight and has many useful
-packages that can be found easily inside the in-built package manager browser.
+Atom is a fairly lightweight text editor which has many useful packages that can be found easily inside its in-built package manager browser.
 
 #### Installing Atom
-
-* To install Atom, head over to the [atom.io](https://atom.io)
-* You can also find a use list of Atom shortcut buttons on this [github page](https://github.com/nwinkler/atom-keyboard-shortcuts)
-
-#### Important configurations in Atom
+* To install Atom, head over to the [atom.io](https://atom.io) website and follow the installation instructions.
+* You can also find a use list of Atom shortcut buttons on this [github page](https://github.com/nwinkler/atom-keyboard-shortcuts).
 
 #### Useful packages in Atom
-
-> All these packages can be found and downloaded by going to the top-bar, click on "Atom" and selecting the "Preference"
-tab
+Once you've installed Atom, you are now ready to download some useful packages that'll help you to write better code and making it much more enjoyable too! All these packages may be downloaded by clicking on `Atom` and selecting the `Preference` tab on the top navigation bar.
 
 * Emmet
   * Press Tab for syntax shortcuts for HTML, CSS less. Cheatsheet can be found [here](https://docs.emmet.io/cheat-sheet/)
 * Language-javascript-jsx
-  * Coloring for React jsx syntax
+  * Syntax coloring for React jsx syntax
 * Minimap
-  * See your code structure on the side
+  * See your entire code structure on the side
 * Project manager
-  * Easy access between different projects in Atom
+  * Easy switch between different projects/folders within Atom
 * Javascript-snippets
   * syntax shortcuts
 * Atom-beautify
@@ -88,9 +85,8 @@ tab
 * Pigments
   * Displays color in your code to immediately see what color a HEX is
 
+
 Footnotes
-----------------------------------
-
+----------
 ### Why create a directory inside Vagrant?
-
 The 2 commands that you have to run here is to change the default location where meteor stores the temporary database when running the code on a local machine. The information should be stored in the VM partition rather than the main computer (the partition that your current computer is running on) so this command enables that change
