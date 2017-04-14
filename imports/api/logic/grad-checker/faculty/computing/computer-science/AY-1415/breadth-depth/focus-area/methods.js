@@ -1,18 +1,17 @@
 import { searchByModuleCode } from '../../../../../../../../database-controller/module/methods';
 
 /* Explanation for new AY creation
- * There are 2 functions called by the AYXX/XX grad checker handler:
+ * There are 3 functions called by the AYXX/XX grad checker handler:
  * 1. checkFocusAreaFulfilmentMCs
- * 2. findFocusAreaModules
+ * 2. findFocusAreaPrimary
+ * 3. findFocusArea4KModules
  *
  * When migrating to new AY, unless there are huge changes in graduation calculation,
- * only modify
+ * the functions that should be modified are
  * 1. findFocusAreaPrimary
  * 2. findFocusArea4KModules
+ * 3. checkFocusAreaFulfilmentMCs
  *
- * Current behaviour of focus area DOES NOT account for duplicated modules in
- * different parts of your planner. If you do have duplicated focus area modules,
- * focus area will be prematurely completed
  */
 
 // focus area MCs are assumed to be at 4MCs and no focus area with more than 4MCs
