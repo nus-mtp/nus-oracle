@@ -1,12 +1,10 @@
-// for loginaccount.jsx to reset wrong password
+// for loginaccount.jsx to unlock account for logging in again after changing password
 Meteor.methods({
   unlockAcc() {
-    //let userAccount = Accounts.users.findOne({username: });
     const userId = Meteor.userId();
     Meteor.users.update(userId, {
       $set: { "profile.accountLock" : false }
     });
     return userId;
-      //return Accounts.setPassword(userId, newPassword);
   }
 });

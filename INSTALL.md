@@ -6,8 +6,9 @@ Table of Contents
 * [Overview](#overview)      
 * [Meteor](#installing-meteor)        
 * [Running the app](#running-nus-oracle)
-* [Testing the app](#testing-nus-oracle)
-* [Vagrant](#installing-vagrant)        
+* [Vagrant](#installing-vagrant)
+* [Accessing the development database](#accessing-the-development-database)        
+* [Running test cases](#running-test-cases)
 * [Coding Environment Setup](#coding-environment-setup)         
   * [Atom Text Editor](#atom-text-editor)         
 * [Footnotes](#footnotes)       
@@ -37,24 +38,19 @@ Running NUS Oracle
 + Run the app with the command `meteor`
 + Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
 
-Testing NUS Oracle
-------------------
-+ Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
-+ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run `cmd` with administrator privileges.
-+ Then, run the command `meteor test --driver-package dispatch:mocha`
-
 Installing Vagrant
 -------------------
 Vagrant is a tool for developers to easily create a virtual environment on your local component that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.        
-           
+
 **Instructions for both Mac and Windows users:**
 + Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual Box](https://www.virtualbox.org/wiki/Downloads), the one that states "Virtual Box 5.1.18 platform packages"
-+ Run `vagrant up` to initialize the default provisioner, `ubuntu/trusty64`
++ Download the nus-oracle vagrant box from this [link](https://drive.google.com/open?id=0BxPzpcyaJ1SjM0dENExvNlhRV2s)
++ Add the vagrant box into your list of vagrant boxes with `vagrant box add nus_oracle nus_oracle.box`
++ Run `vagrant up` to initialize the nus_oracle box
+  * Make sure you have our Vagrantfile in the same directory as where `vagrant up` was ran
 + Enter the Virtual box VM with `vagrant ssh`
-+ Run `mkdir -p nus_oracle/.meteor/local`
-  * check the footnotes for why this must be done
-+ Run `udo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local`
-  * check the footnotes for why this must be done
++ Run `sudo mount --bind /home/vagrant/nus_oracle/.meteor/local /vagrant/.meteor/local`
+  * check the [footnotes](#footnotes) for why this must be done
 + Run `cd/vagrant` to move to the directory
 + Run `meteor` in that directory to run the code on your local machine!
 + Exit the VM with the command `exit`
@@ -63,10 +59,19 @@ Vagrant is a tool for developers to easily create a virtual environment on your 
   * [How to use vagrant on Windows](http://tech.osteel.me/posts/2015/01/25/how-to-use-vagrant-on-windows.html)
   * [Meteor in Window using Vagrant](https://gist.github.com/gabrielhpugliese/5855677)
 
+Accessing the development database
+------------------------------------
+Running `meteor` on the database would only give you access to test fixture information. If you wish to develop on a local machine with full access to a database, please contact us at `nusoracle@gmail.com` where we would provide you with the relevant files and details to how to run the application locally with full database access.
+
+Running test cases
+------------------
++ Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
++ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run `cmd` with administrator privileges.
++ Then, run the command `meteor test --driver-package dispatch:mocha`
 
 Coding Environment Setup
 ------------------------
-This is the coding environment setup that NUS Oracle uses. Here's a collection of all the helpful tools that we found throughout the course of our project. 
+This is the coding environment setup that NUS Oracle uses. Here's a collection of all the helpful tools that we found throughout the course of our project.
 
 These tools are optional for developing on NUS Oracle. However, if you're just starting out as a developer and you're not sure what kinds of tools you should use to help you code, here are some for you to try out!
 
