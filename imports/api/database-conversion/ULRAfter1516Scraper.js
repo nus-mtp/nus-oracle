@@ -7,6 +7,10 @@ import { createNewModuleFulfilment,
 // import method to update academic year counting
 import { increaseAcadYearByOne } from '../../utils/util';
 
+
+// The following scraper script scrape information for ULR module mapping for cohort 15/16 onwards.
+// All result is stored in the moduleFUlfilment collection DB.
+
 export const scrapeModuleMappingListingForULR1516 = function scrapeModuleMapping(){
 const humanCultureModuleFulfilmentDefault = "Human Cultures";
 const questionModuleFulfilmentDefault = "Asking Question";
@@ -94,11 +98,11 @@ while(AcademicCohort.find({cohortName: currentAcademicYear}).count() != 0){
 
   currentAcademicYear = increaseAcadYearByOne(currentAcademicYear);
 }
-console.log(currentAcademicYear);
+//console.log(currentAcademicYear);
 
-console.log(ModuleFulfilments.findOne({moduleCode:questionModuleFulfilmentDefault}));
-console.log(ModuleFulfilments.findOne({moduleCode:thinkingModuleFulfilmentDefault}));
-console.log(ModuleFulfilments.findOne({moduleCode:singaporeModuleFulfilmentDefault}));
-console.log(ModuleFulfilments.findOne({moduleCode:humanCultureModuleFulfilmentDefault}));
-console.log(ModuleFulfilments.findOne({moduleCode:reasoningModuleFulfilmentDefault}));
+//console.log(ModuleFulfilments.findOne({moduleCode:questionModuleFulfilmentDefault}));
+//console.log(ModuleFulfilments.findOne({moduleCode:thinkingModuleFulfilmentDefault}));
+//console.log(ModuleFulfilments.findOne({moduleCode:singaporeModuleFulfilmentDefault}));
+//console.log(ModuleFulfilments.findOne({moduleCode:humanCultureModuleFulfilmentDefault}));
+//console.log(ModuleFulfilments.findOne({moduleCode:reasoningModuleFulfilmentDefault}));
 }
