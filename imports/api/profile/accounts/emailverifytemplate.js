@@ -3,9 +3,11 @@ Accounts.emailTemplates.siteName = "nusOracle";
 Accounts.emailTemplates.from     = "nusOracle <admin@nusOracle.com>";
 
 Accounts.emailTemplates.verifyEmail = {
+    //used to modify subject of email
   subject() {
     return "[nusOracle] Verify Your Email Address";
   },
+  //used to modify message of email
   text( user, url ) {
     let emailAddress   = user.emails[0].address,
         supportEmail   = "support@nusOracle.com",
