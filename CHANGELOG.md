@@ -32,7 +32,7 @@
     - Supported Addition and Deletion of Study Planner.
     - Supported Addition and Deletion of new Academic Row in Study Planner.
     - Supported Addition, Deletion and Searching of Modules in Study Planner. 
-* ** Sidebar**
+* **Sidebar**
     - Profile Tab
         - Profile Tab now displays User's email
         - Profile Tab now displays User's list of exempted and waived module. Modules can be added or deleted by User
