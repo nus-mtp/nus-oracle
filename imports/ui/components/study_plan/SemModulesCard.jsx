@@ -4,8 +4,8 @@ import React from 'react';
 import ModulesCard from './../common/ModulesCard.jsx';
 
 // Import Logic Controller Methods
-import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
-import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
+import { insertOneModuleInSemester } from '../../../api/student-logic-controller/crud-controller/module/methods.js';
+import { deleteOneModuleInSemester } from '../../../api/student-logic-controller/crud-controller/module/methods.js';
 
 /**
  * React Component that implements the container for a semester's worth of

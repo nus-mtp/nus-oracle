@@ -5,12 +5,6 @@ import React from 'react';
  * Check out the PropTypes below to see how to set your own styles
  */
 export default class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHover: false
-    }
-  }
 
   /**
    * Handles button clicks on this button

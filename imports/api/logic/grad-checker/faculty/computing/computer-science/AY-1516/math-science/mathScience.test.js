@@ -10,7 +10,7 @@ import { populateAY1516GraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findMathSciRequirementModules } from './methods';
 

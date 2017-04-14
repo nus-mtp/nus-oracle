@@ -3,7 +3,7 @@ import Button from '../common/Button.jsx';
 import SemModulesCardContainer from './SemModulesCardContainer.js';
 import TranslucentOverlay from './../common/TranslucentOverlay.jsx';
 
-import { deleteAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
+import { deleteAcademicYearInPlanner } from '../../../api/student-logic-controller/crud-controller/semester/methods.js';
 
 export default class AcadYrRow extends React.Component {
   constructor(props) {

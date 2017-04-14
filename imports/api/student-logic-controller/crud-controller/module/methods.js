@@ -1,5 +1,5 @@
 import { Planner } from '../planner/planner';
-import { searchByModuleCode } from '../../database-controller/module/methods';
+import { searchByModuleCode } from '../../../database-controller/module/methods';
 
 /**
  * retrieves all modules in a semester

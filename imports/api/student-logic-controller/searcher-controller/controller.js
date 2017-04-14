@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { searchByModuleCodeAndNameRegex,
          searchByModuleCode,
-         retrieveAllModule } from '../database-controller/module/methods';
+         retrieveAllModule } from '../../database-controller/module/methods';
 
 // Module Database from a public loaded clientside
-import { moduleDatabase } from './../../../public/nus_modules/moduleDatabase.js';
+import { moduleDatabase } from './../../../../public/nus_modules/moduleDatabase.js';
 
 //==============================================================
 // METHODS FOR LOCAL DATABASE CALLS
