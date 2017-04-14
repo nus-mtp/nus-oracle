@@ -1,6 +1,12 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+/**
+Academic Cohort stores the information relevant to the student's cohort, including suggested planner IDs, focus Areas IDs, and
+Graduation Requirement IDs,
 
+Because of this, it is expected that all these informations are already present, or created at the same time the cohort document
+is created. For example, take a look at the cohortDataBaseParser.js under database-conversion folder
+*/
 class AcadCohortCollection extends Mongo.Collection{
   insert(acadCohortData, callBack){
     const cohortDocument = acadCohortData;

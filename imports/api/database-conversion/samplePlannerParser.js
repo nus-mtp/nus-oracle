@@ -1,5 +1,4 @@
-//import Planner database
-//Academic Cohort need to already exists
+
 import {Planner} from '../student-logic-controller/crud-controller/planner/planner';
 import {createPlannerGivenUserID} from '../student-logic-controller/crud-controller/planner/methods';
 import {insertOneModuleInSemester} from '../student-logic-controller/crud-controller/module/methods';
@@ -9,6 +8,36 @@ import {AcademicCohort} from '../database-controller/academic-cohort/acadCohort'
 import {getCohortByName,
         updateCohortDefaultPlannerID} from '../database-controller/academic-cohort/methods';
 
+//Parse manually written planner and stored it into DB.
+//Academic Cohort need to already exists. Be careful if you want to store this since you need to make sure the old planner ID is removed propery.
+
+/**
+Sample Planner:
+{"AY 2013/2014": [{
+"plannerName": "CS Foundation",
+"semesters":{
+  "1":["CS1010","CS1231"],
+  "2":["CS1020","CS2100","MA1521"],
+  "4":[],
+  "3":[],
+  "5":["CS2010","CS1231","CS2105"],
+  "6":["CS2103T","CS2101","MA1101R"],
+  "7":[],
+  "8":[],
+  "9":["CS2106","CS3201","ST2334"],
+  "10":["CS3230","CS3202"],
+  "11":[],
+  "12":["CP4101"],
+  "13":[],
+  "14":[],
+  "15":[],
+  "16":[]
+}
+}
+]}
+*/
+
+// each cohort planner is stored separately for ease of maintaning the file.
 export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, canReplaceExistingID){
   const fileName = fileToBeParsed;
   const allowReplaceID = canReplaceExistingID

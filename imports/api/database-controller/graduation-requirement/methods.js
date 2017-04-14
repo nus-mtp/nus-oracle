@@ -39,6 +39,7 @@ export const insertNewGradRequirementModuleData = function insertNewGraduationRe
 /** This method handles the creation of object list that is  going to be stored in the graduation Requirement Document
   * The module that is stored in the graduation requirement need to be present in the module database
   * @param {[String]} moduleList: list of module that is going to be stored
+  * @return{object} object that is going to be stored under requirementModules attributes in the GraduationRequirement Document
   */
 export const createModuleListObject = function createModuleListObject(moduleList) {
   // TO-DO: Check for module validity

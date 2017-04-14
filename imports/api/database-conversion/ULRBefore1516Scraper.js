@@ -8,6 +8,10 @@ import { createNewModuleFulfilment,
 import { increaseAcadYearByOne } from '../../utils/util';
 import { searchByModuleCodeRegex } from '../database-controller/module/methods';
 
+
+// The following scraper script scrape information for ULR module mapping for cohort before 15/16.
+// All result is stored in the moduleFUlfilment collection DB.
+
 export const scrapeModuleMappingListingForBeforeULR1516 = function scrapeModuleMappingListingForBeforeULR1516(){
   const gemA = "GEM A";
   const gemB = "GEM B";

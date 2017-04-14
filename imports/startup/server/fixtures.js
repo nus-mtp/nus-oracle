@@ -27,17 +27,25 @@ import { populateModuleFulfilmentCollection } from '../../api/database-conversio
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
 import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper'//;
 
+/**
+At the moment, this is where populating of DB is done. Decision to keep it here is so that we can make use of the existing package that helps
+to check the DB data integrity and validity.
+
+When you are populating the data to DB, make sure you have the relevant MONGO_URL key and set it before running meteor locally.
+Also, when you make push to the remote repository, do remember to comment all method related to populating the DBs so it won't be run when
+the web app is redeployed.
+*/
 Meteor.startup(() => {
   plannerFileToBeParsed = ["DefaultStudyPlanner1314.json","DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
   //parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
-  populateModuleFulfilmentCollection();
-  scrapeModuleMappingListingForULR1516();
+  //populateModuleFulfilmentCollection();
+  //scrapeModuleMappingListingForULR1516();
   //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
   //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
   //}
-  scrapeModuleMappingListingForBeforeULR1516();
+  //scrapeModuleMappingListingForBeforeULR1516();
   //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
   //parseForLezzgo();
   //console.log(getRepackagedDefaultPlannerIDs("AY 2016/2017"));
