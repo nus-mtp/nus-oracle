@@ -1,7 +1,7 @@
 # CHANGELOG
 **Change Log** lists down features that are implemented after each weekly sprint and is **visible** on NUS Oracle. 
 
-### Week 5
+### WEEK 5
 * **Study Plan Dashboard**
     - Added static mockup for study plan tabs
     - Added static mockup for module cards that hold 1 semester's modules
