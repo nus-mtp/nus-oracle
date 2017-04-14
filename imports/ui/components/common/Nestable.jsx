@@ -7,7 +7,7 @@ export default class Nestable extends React.Component{
 
     return(
       <div className="dd" id="nestable">
-        <OrderedList items={items}/>
+        <OrderedList items={items} isCollapsed={false}/>
       </div>
     );
   }
