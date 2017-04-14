@@ -3,8 +3,8 @@ import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 
 // Import logic methods
-import { getAllModulesInSemester } from '../../../api/crud-controller/module/methods.js';
-import { findModuleInfo } from './../../../api/searcher-controller/controller.js';
+import { getAllModulesInSemester } from '../../../api/student-logic-controller/crud-controller/module/methods.js';
+import { findModuleInfo } from './../../../api/student-logic-controller/searcher-controller/controller.js';
 
 // Import React components
 import SemModulesCard from './SemModulesCard.jsx';

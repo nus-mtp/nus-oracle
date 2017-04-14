@@ -1,12 +1,54 @@
 // Collasable List Item
+
+@incomplete-color: #bbb;
+@highlight-color: #fff;
+@fulfilled-color: #595;
+@fulfilled-hover-color: #afa;
+
 .dd-list .dd-list {
   padding-left: 10px;
 }
 
 .fulfilled {
-  background-color: rgb(175, 255, 207);
+  background-color: transparent;
+  color: @fulfilled-color;
+  border-color: @fulfilled-color;
 }
 
-.unfulfilled {
-  background-color: white;
+.dd-handle.fulfilled:hover{
+  color: @fulfilled-hover-color;
+  border-color: @fulfilled-hover-color;
+}
+
+.incomplete {
+  background-color: transparent;
+  border-color: @incomplete-color;
+  color: @incomplete-color;
+}
+
+.dd-handle:hover, .dd-handle.incomplete:hover{
+  background-color: transparent;
+  border-color: @highlight-color;
+  color: @highlight-color;
+}
+
+.loader-nestable {
+  margin: auto;
+  display: flex;
+  -webkit-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 25%;
+  flex-basis: 25%;
+  max-width: 25%;
+  height: 200px;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
 }

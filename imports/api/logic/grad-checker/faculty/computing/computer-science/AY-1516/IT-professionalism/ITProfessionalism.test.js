@@ -10,11 +10,11 @@ import { populateAY1516GraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findITProfessionalismModules } from './methods';
 
-describe('grad-checker-ITProfessionalism', function()  {
+describe('grad-checker-ITProfessionalism-1516', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];
@@ -38,13 +38,18 @@ describe('grad-checker-ITProfessionalism', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['IS1103', 'CS2101'];
-    const academicCohort = 'AY 2015/2016';
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2015/2016',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[2]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
     const requirementName = 'IT Professionalism';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[2]);
     const ITProfessionalismModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
 
-    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(academicCohort, allSemesters, ITProfessionalismModules, {}, {}, requiredMCs);
+    const markedITProfessionalismModulesAndMCs = findITProfessionalismModules(studentInfoObject, ITProfessionalismModules, requiredMCs);
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[0]], 'IS1103 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.markedITProfessionalismModules[modules[1]], 'CS2101 fulfiled');
     assert.isTrue(markedITProfessionalismModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');

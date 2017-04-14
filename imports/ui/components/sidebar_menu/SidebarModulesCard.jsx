@@ -5,10 +5,10 @@ import ModulesCard from '../common/ModulesCard.jsx';
 import IconButton from '../common/IconButton.jsx';
 
 // Import logic functions
-import { addStudentExemptedModule } from '../../../api/database-controller/student/methods.js';
-import { deleteStudentExemptedModule } from '../../../api/database-controller/student/methods.js';
-import { addStudentWaivedModule } from '../../../api/database-controller/student/methods.js';
-import { deleteStudentWaivedModule } from '../../../api/database-controller/student/methods.js';
+import { addStudentExemptedModule,
+         deleteStudentExemptedModule,
+         addStudentWaivedModule,
+         deleteStudentWaivedModule } from '../../../api/profile/student/methods.js';
 
 /**
  * React Component that implements the container for a semester's worth of

@@ -8,7 +8,7 @@ import VirtualizedSelect from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
 
 // Import logic methods
-import { getAllModules } from '../../../api/searcher-controller/controller.js';
+import { getAllModules } from '../../../api/student-logic-controller/searcher-controller/controller.js';
 
 // Import constants for char limits and line height limits for search options
 import { SMALL_LINE_CHAR_LIMIT,
@@ -18,8 +18,8 @@ import { SMALL_LINE_CHAR_LIMIT,
          LARGE_LINE_HEIGHT } from '../common/Constants.js';
 
 /**
- * Prepare the module database that is saved serverside for ALL
- * SemModulesCard components so that you do not need to reactively
+ * Prepare the module database that is saved clientside for ALL
+ * SearchBar components so that you do not need to reactively
  * load the database again. (Done for clientside performance improvement).
  */
 const allModules = getAllModules();
@@ -41,10 +41,10 @@ export default class SearchBar extends React.Component {
   }
 
   /**
-   * Handles the event when a user selects an option  from the dropdown.
+   * Handles the event when a user selects an option from the dropdown.
    * Even if the user presses Enter, an option listed in the dropdown will
-   * be added to the study plan. So, in a way, you can guarantee that a valid
-   * option from the list of options will be selected.
+   * be added to the study plan. So, you can guarantee that a valid option
+   * from the list of options will be selected.
    *
    * @param {[Object]}    Object representing the chosen dropdown selection
    */
@@ -63,6 +63,8 @@ export default class SearchBar extends React.Component {
    * Note: The constants used here are very conservative to cater to smaller screens.
    *
    * @param {[Object]}    Module object containing valid fields
+   * @returns {Integer}    Line height in pixels as needed by the react-select
+   *                       search bar's accepted parameters
    */
   computeLineHeight(option) {
     let module = option.option;
@@ -91,6 +93,7 @@ export default class SearchBar extends React.Component {
         optionHeight={this.computeLineHeight}
         options={allModules}
         filterOptions={filterOptions}
+        scrollMenuIntoView={false}
         onChange={this.handleSelectOption.bind(this)} />
     )
   }

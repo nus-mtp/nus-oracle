@@ -10,11 +10,11 @@ import { populateAY1415GraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findULRRequirementModules } from './methods';
 
-describe('grad-checker-ULR', function()  {
+describe('grad-checker-ULR-1415', function()  {
   let plannerIDs = [];
   let graduationIDs = [];
   let fulfilmentIDs = [];
@@ -39,13 +39,19 @@ describe('grad-checker-ULR', function()  {
   it ('checks if ULR returns correct boolean values', function() {
     const ULRModules = ['GEM A', 'GEM B', 'Breadth One',
                      'Breadth Two', 'Singapore Studies'];
-    const academicCohort = 'AY 2014/2015';
+
+   const studentInfoObject = {
+     studentAcademicCohort: 'AY 2014/2015',
+     studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+     studentExemptedModules: {},
+     studentWaivedModules: {},
+     moduleChecked: {}
+   }
     const requirementName = 'University Level Requirement';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
-    const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const ULRGradReqModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const markedULRModulesAndMCs = findULRRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const markedULRModulesAndMCs = findULRRequirementModules(studentInfoObject, ULRGradReqModules, requiredMCs);
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[0]], 'GEM A fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[1]], 'GEM B fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[2]], 'Breadth One fulfiled');
@@ -65,13 +71,19 @@ describe('grad-checker-ULR', function()  {
   it ('checks if ULR fails check due to CS1010 in planner', function() {
     const ULRModules = ['GEM A', 'GEM B', 'Breadth One',
                      'Breadth Two', 'Singapore Studies'];
-    const academicCohort = 'AY 2014/2015';
+
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2014/2015',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[1]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
     const requirementName = 'University Level Requirement';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
-    const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const ULRGradReqModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const markedULRModulesAndMCs = findULRRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const markedULRModulesAndMCs = findULRRequirementModules(studentInfoObject, ULRGradReqModules, requiredMCs);
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[0]], 'GEM A fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[1]], 'GEM B fulfiled');
     assert.isTrue(markedULRModulesAndMCs.markedULRModules[ULRModules[2]], 'Breadth One fulfiled');

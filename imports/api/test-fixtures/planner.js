@@ -1,7 +1,7 @@
 import { createPlannerGivenUserID,
-         removePlanner } from '../crud-controller/planner/methods';
-import { insertNewSemesterInPlanner } from '../crud-controller/semester/methods';
-import { insertOneModuleInSemester } from '../crud-controller/module/methods';
+         removePlanner } from '../student-logic-controller/crud-controller/planner/methods';
+import { insertNewSemesterInPlanner } from '../student-logic-controller/crud-controller/semester/methods';
+import { insertOneModuleInSemester } from '../student-logic-controller/crud-controller/module/methods';
 
 export const populatePlannerFixture = function populatePlannerFixture() {
   const userIDs = '9f91pejfj912ras';
@@ -96,9 +96,9 @@ export const populate1415ULRFixture = function populate1415ULRFixture() {
 
   const plannerIDs = [];
 
-  const academicYear = ['AY 2014/2015', 'AY 2014/2015'];
-  const semesterNum = [1, 2];
-  const semesterIndex = [0, 1];
+  const academicYear = ['AY 2014/2015'];
+  const semesterNum = [1];
+  const semesterIndex = [0];
 
   plannerIDs.push(createPlannerGivenUserID(plannerNames[0], focusAreas[0], userIDs));
   plannerIDs.push(createPlannerGivenUserID(plannerNames[1], focusAreas[0], userIDs));

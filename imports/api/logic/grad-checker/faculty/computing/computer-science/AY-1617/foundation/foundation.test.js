@@ -10,7 +10,7 @@ import { populateGraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findFoundationRequirementModules } from './methods';
 
@@ -38,14 +38,21 @@ describe('grad-checker-foundation', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['CS1010', 'CS1020', 'CS2010', 'CS3230'];
-    const academicCohort = 'AY 2016/2017';
+
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
+
     const requirementName = 'Computer Science Foundation';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
 
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, {}, {}, requiredMCs);
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(studentInfoObject, foundationModules, requiredMCs);
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');
@@ -64,22 +71,23 @@ describe('grad-checker-foundation', function()  {
   it ('checks if equivalent, waived and exempted modules return correct boolean values', function() {
     // planner[1] contains 1010X instead of 1010
     const modules = ['CS1010', 'CS1020', 'CS2010'];
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'Computer Science Foundation';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[1]);
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[1]),
+      studentExemptedModules: {
+        CS1231: 'CS1231'
+      },
+      studentWaivedModules: {
+        CS3230: 'CS3230'
+      },
+      moduleChecked: {}
+    }
 
+    const requirementName = 'Computer Science Foundation';
     const foundationModules = getGradRequirementModules(graduationIDs)[requirementName];
     const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
 
-    const exemptedModules = {
-      CS1231: 'CS1231'
-    }
-
-    const waivedModules = {
-      CS3230: 'CS3230'
-    }
-
-    const markedFoundationModulesAndMCs = findFoundationRequirementModules(academicCohort, allSemesters, foundationModules, exemptedModules, waivedModules);
+    const markedFoundationModulesAndMCs = findFoundationRequirementModules(studentInfoObject, foundationModules, requiredMCs);
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[0]], 'CS1010 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[1]], 'CS1020 fulfiled');
     assert.isTrue(markedFoundationModulesAndMCs.markedFoundationModules[modules[2]], 'CS2010 fulfiled');

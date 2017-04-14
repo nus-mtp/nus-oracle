@@ -10,7 +10,7 @@ import { populateGraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findMathSciRequirementModules } from './methods';
 
@@ -38,13 +38,19 @@ describe('grad-checker-mathSci', function()  {
 
   it ('checks if find modules correct boolean values', function() {
     const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'Mathematics and Sciences'
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[3]);
-    const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
-    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName]
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[3]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
 
-    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(academicCohort, allSemesters, mathScienceModules, {}, {}, requiredMCs);
+    const requirementName = 'Mathematics and Sciences'
+    const mathScienceModules = getGradRequirementModules(graduationIDs)[requirementName];
+    const requiredMCs = getGradRequirementMCs(graduationIDs)[requirementName];
+
+    const markedMathScienceModulesAndMCs = findMathSciRequirementModules(studentInfoObject, mathScienceModules, requiredMCs);
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[0]], 'MA1301 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[1]], 'MA1521 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[2]], 'MA1101R fulfiled');

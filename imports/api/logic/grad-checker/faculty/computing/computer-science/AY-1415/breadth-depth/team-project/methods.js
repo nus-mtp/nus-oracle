@@ -9,15 +9,18 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * The 2 methods above are where code for any new execptions to the calculation of
  * graduation requirement should be placed. If there are no exceptions, simply return
  * markModules and markExemptedWaivedModules
+ *
+ * Currently assumes that all modules are 4 MCs and that it is not
+ * possible to fulfil all conditions and transfer any leftover MCs to UEs
  */
 
-export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(academicCohort, studentSemesters, teamProjectModules, exemptedModules, waivedModules, requiredMCs)  {
+export const findTeamProjectRequirementModules = function findTeamProjectRequirementModules(studentInfoObject, teamProjectModules, requiredMCs)  {
   let markedTeamProjectModulesAndMCs = {
     name: 'Computer Systems Team Project',
     markedTeamProjectModules: teamProjectModules,
     numberOfTeamProjectModulesMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: studentInfoObject.moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -34,23 +37,23 @@ export const findTeamProjectRequirementModules = function findTeamProjectRequire
       return {};
     }
 
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedTeamProjectModulesAndMCs = markModules(markedTeamProjectModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedTeamProjectModulesAndMCs = markExemptedWaivedModules(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedTeamProjectModulesAndMCs = markModules(markedTeamProjectModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedTeamProjectModulesAndMCs = markExemptedWaivedModules(markedTeamProjectModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]] && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedTeamProjectModulesAndMCs = markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedTeamProjectModulesAndMCs = markExemptedWaivedExceptions(markedTeamProjectModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedTeamProjectModulesAndMCs = markExceptions(markedTeamProjectModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedTeamProjectModulesAndMCs.markedTeamProjectModules[keyNames[i]])  {
           break;
         }
       }
     }
     if (markedTeamProjectModulesAndMCs.numberOfTeamProjectModulesMarkedTrue === keyNames.length) {
-      markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
+      //markedTeamProjectModulesAndMCs.requiredMCs = markedTeamProjectModulesAndMCs.totalModuleMCs;
       markedTeamProjectModulesAndMCs.isFulfilled = true;
       break;
     }

@@ -9,15 +9,18 @@ import { searchByModuleCode } from '../../../../../../../../database-controller/
  * The 2 methods above are where code for any new execptions to the calculation of
  * graduation requirement should be placed. If there are no exceptions, simply return
  * markModules and markExemptedWaivedModules
+ *
+ * Currently assumes that all modules are 4 MCs and that it is not
+ * possible to fulfil all conditions and transfer any leftover MCs to UEs
  */
 
-export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(academicCohort, studentSemesters, industrialExperienceModules, exemptedModules, waivedModules, requiredMCs)  {
+export const findIndustrialExperienceTrainingModules = function findIndustrialExperienceTrainingModules(studentInfoObject, industrialExperienceModules, requiredMCs)  {
   let markedIndustrialExperienceTrainingModulesAndMCs = {
     name: 'Industrial Experience Training',
     markedIndustrialExperienceTrainingModules: industrialExperienceModules,
     numberOfIndustrialExperienceTrainingModulesMarkedTrue: 0,
     totalModuleMCs: 0,
-    moduleChecked: {},
+    moduleChecked: studentInfoObject.moduleChecked,
     requiredMCs: requiredMCs,
     isFulfilled: false
   };
@@ -34,24 +37,24 @@ export const findIndustrialExperienceTrainingModules = function findIndustrialEx
       return {};
     }
 
-    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[academicCohort].moduleEquivalent;
-    markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, keyNames[i], keyNames[i]);
-    markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, keyNames[i], keyNames[i]);
+    moduleFulfilmentMappingEquivalent = moduleFulfilment.moduleMapping[studentInfoObject.studentAcademicCohort].moduleEquivalent;
+    markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentInfoObject.studentSemesters, keyNames[i], keyNames[i]);
+    markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, keyNames[i], keyNames[i]);
 
     if (!markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]]
         && moduleFulfilmentMappingEquivalent.length !== 0) {
       for (var j = 0; j < moduleFulfilmentMappingEquivalent.length; j++)  {
         // check if equivalent module exists in studentPlanner, exemptedModules, waivedModules
         // checks if in exempted or waived modules
-        markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, exemptedModules, waivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
-        markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedIndustrialExperienceTrainingModulesAndMCs = markExemptedWaivedExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentInfoObject.studentExemptedModules, studentInfoObject.studentWaivedModules, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
+        markedIndustrialExperienceTrainingModulesAndMCs = markExceptions(markedIndustrialExperienceTrainingModulesAndMCs, studentInfoObject.studentSemesters, moduleFulfilmentMappingEquivalent[j], keyNames[i]);
         if (markedIndustrialExperienceTrainingModulesAndMCs.markedIndustrialExperienceTrainingModules[keyNames[i]])  {
           break;
         }
       }
     }
     if (markedIndustrialExperienceTrainingModulesAndMCs.numberOfIndustrialExperienceTrainingModulesMarkedTrue === keyNames.length) {
-      markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
+      //markedIndustrialExperienceTrainingModulesAndMCs.requiredMCs = markedIndustrialExperienceTrainingModulesAndMCs.totalModuleMCs;
       markedIndustrialExperienceTrainingModulesAndMCs.isFulfilled = true;
       break;
     }

@@ -9,32 +9,38 @@ import { populateModuleFulfilmentFixture,
 import { populateAY1617AcademicCohortFixture } from '../../api/test-fixtures/academicCohort';
 
 import { Modules } from '../../api/database-controller/module/module';
-import { Students } from '../../api/database-controller/student/student';
+import { Students } from '../../api/profile/student/student';
 import { ModuleFulfilments } from '../../api/database-controller/module-fulfilment/moduleFulfilment';
-import { Planner } from '../../api/crud-controller/planner/planner';
-import { AcademicCohort } from '../../api/database-controller/AcademicCohort/acadCohort';
+import { Planner } from '../../api/student-logic-controller/crud-controller/planner/planner';
+import { AcademicCohort } from '../../api/database-controller/academic-cohort/acadCohort';
+import { GraduationRequirements } from '../../api/database-controller/graduation-requirement/graduationRequirement';
 
-import { moduleInformationParser,
-         moduleListParser } from '../../api/database-conversion/moduleInformationParser';
+import { getAcadCohortDefaultPlannerIDs,
+         removeAllCohort,
+         getRepackagedDefaultPlannerIDs} from '../../api/database-controller/academic-cohort/methods';
 import { parseJSONFileAndStoreToDB} from '../../api/database-conversion/moduleJSONParser';
-
-import '../../api/database-conversion/ULRAfter1516Scraper.js';
-
+import { parseDefaultPlanner } from '../../api/database-conversion/samplePlannerParser';
 import { populateFocusAreaCollection } from '../../api/database-conversion/focusAreaParser';
-  import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
+import { populateAcadCohortCollection } from '../../api/database-conversion/cohortDatabaseParser';
 import { populateModuleFulfilmentCollection } from '../../api/database-conversion/moduleFulfilmentParser';
 
 import { scrapeModuleMappingListingForULR1516 } from '../../api/database-conversion/ULRAfter1516Scraper';
+import { scrapeModuleMappingListingForBeforeULR1516 } from '../../api/database-conversion/ULRBefore1516Scraper'//;
 
 Meteor.startup(() => {
-  process.env.MAIL_URL = 'smtp://nusoracle%40gmail.com:rainbowheadstudio@smtp.gmail.com:587';
-  //process.env.MONGO_URL = 'mongodb://tio:1234@ds145289.mlab.com:45289/nus-oracle';
+  plannerFileToBeParsed = ["DefaultStudyPlanner1617.json", "DefaultStudyPlanner1516.json"];
+  //parseJSONFileAndStoreToDB();
   //populateFocusAreaCollection();
   //populateAcadCohortCollection();
   //populateModuleFulfilmentCollection();
   //scrapeModuleMappingListingForULR1516();
-  //parseJSONFileAndStoreToDB();
-
+  //for(var t = 0; t< plannerFileToBeParsed.length ; t++){
+  //  parseDefaultPlanner(plannerFileToBeParsed[t], true);
+  //}
+  //scrapeModuleMappingListingForBeforeULR1516();
+  //console.log(JSON.stringify(getRepackagedDefaultPlannerIDs("AY 2016/2017")));
+  //parseForLezzgo();
+  //console.log(getRepackagedDefaultPlannerIDs("AY 2016/2017"));
   if (Modules.find({}).count() === 0) {
     populateModuleFixture();
     populateIndustrialAttachmentModuleFixture();
@@ -45,7 +51,7 @@ Meteor.startup(() => {
     populateAY1617AcademicCohortFixture();
   }
   if (Planner.find({}).count() === 0) {
-    populatePlannerFixture();
+    //populatePlannerFixture();
   }
   if (ModuleFulfilments.find({}).count() === 0) {
     populateModuleFulfilmentFixture();

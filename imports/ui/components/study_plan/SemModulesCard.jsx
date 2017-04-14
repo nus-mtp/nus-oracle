@@ -4,8 +4,8 @@ import React from 'react';
 import ModulesCard from './../common/ModulesCard.jsx';
 
 // Import Logic Controller Methods
-import { insertOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
-import { deleteOneModuleInSemester } from '../../../api/crud-controller/module/methods.js';
+import { insertOneModuleInSemester } from '../../../api/student-logic-controller/crud-controller/module/methods.js';
+import { deleteOneModuleInSemester } from '../../../api/student-logic-controller/crud-controller/module/methods.js';
 
 /**
  * React Component that implements the container for a semester's worth of
@@ -50,11 +50,10 @@ export default class SemModulesCard extends React.Component {
           BoxShadow: '3px 3px 23px -6px rgba(0,0,0,0.35)'}}
         footer={
           <div className="card-typical-section"
-               style={{padding: '0.5em 1em 0.5em 1em'}}>
-            <div className="card-typical-linked">
-              {this.props.sem}
-            </div>
-          </div>}
+               style={{padding: '5px 20px', color: '#999', fontSize: '0.9em'}}>
+            {this.props.sem}
+          </div>
+        }
         handleSelectModule={this.handleSelectModule.bind(this)}
         handleDeleteModule={this.handleDeleteModule.bind(this)} />
     );

@@ -1,0 +1,52 @@
+// ========================================
+//   Dropdown Menu Styles
+// ========================================
+
+  .nav-link-in .card-typical {
+    opacity: 1;
+
+    position: fixed;
+    top: 3em;
+    z-index: 300;
+    text-align: left;
+
+    background: #fff; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#fff, #eee); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fff, #eee); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#fff, #eee); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fff, #eee); /* Standard syntax */
+
+    border: none;
+    border-radius: 0 0 15px 15px;
+
+    -webkit-box-shadow: 2px 5px 10px -4px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 5px 10px -4px rgba(0,0,0,0.5);
+    -box-shadow: 2px 5px 10px -4px rgba(0,0,0,0.5);
+  }
+
+// ========================================
+//   Dropdown Menu Animation
+// ========================================
+
+// animate the dropdown menu
+  .keyframes(@name; @arguments) {
+  	@-moz-keyframes @name { @arguments(); }
+  	@-webkit-keyframes @name { @arguments(); }
+  	@keyframes @name { @arguments(); }
+  }
+
+  .animation(@arguments) {
+  	-webkit-animation: @arguments;
+  	-moz-animation: @arguments;
+  	animation: @arguments;
+  }
+
+  .nav-link-in .card-typical {
+  	.keyframes(
+      slide-in;
+      { 0% { opacity: 0; margin-top: -15px;}
+  		  100% { opacity: 1; margin-top: 0px;} }
+    );
+
+  	.animation(slide-in 0.2s ease-in)
+  }

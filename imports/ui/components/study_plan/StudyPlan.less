@@ -1,0 +1,86 @@
+@import '../common/Constants.less';
+
+// ==================================
+//  Study Plan Styles
+// ==================================
+
+.with-side-menu .page-content{
+  padding-left: @sidebar-width;
+  overflow-x: hidden;
+}
+
+// ========================================
+//   Tab alignment
+// ========================================
+
+// flush all tabs to left
+ul.nav {
+    float: left;
+}
+
+.activity-line-action:nth-child(even) {
+  background-color: #FFF9F0;
+}
+
+// ========================================
+//   Tab Content
+// ========================================
+
+// Make tab content occupy 100% of space
+// (fixes tab disappearing bug on modal hide)
+.tab-content {
+  height: 100vh;
+  overflow: hidden;
+}
+.tab-pane.fade.in.active {
+  height: 100%;
+}
+
+// enable scrolling in the study plan content box
+.tab-content-box {
+  height: 93%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tabs-section {
+  margin: 0;
+  background: @tab-container-color;
+}
+
+// ========================================
+//   Scroll bar
+// ========================================
+
+// hide tab horizontal scrollbar
+.tabs-section-nav.tabs-section-nav-icons{
+  border: none;
+  overflow: hidden;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+    // thickness of horizontal slider
+    height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #eee;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #999;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #ddd;
+}

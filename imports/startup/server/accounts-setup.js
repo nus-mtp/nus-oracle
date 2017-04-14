@@ -1,10 +1,10 @@
-import '../../api/accounts/emailverifytemplate';
-import './../../api/accounts/emailResetPasswordTemplate';
-import '../../api/accounts/NusEmailVerifier';
-import '../../api/accounts/PasswordVerifier';
-import '../../api/accounts/unLockAccount';
-import '../../api/accounts/LockAccount';
-import '../../api/accounts/send-verification';
+import '../../api/profile/accounts/emailverifytemplate';
+import './../../api/profile/accounts/emailResetPasswordTemplate';
+import '../../api/profile/accounts/NusEmailVerifier';
+import '../../api/profile/accounts/PasswordVerifier';
+import '../../api/profile/accounts/unLockAccount';
+import '../../api/profile/accounts/LockAccount';
+import '../../api/profile/accounts/send-verification';
 
 
 Meteor.publish('user-profile', function() {

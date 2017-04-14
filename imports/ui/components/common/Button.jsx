@@ -5,41 +5,19 @@ import React from 'react';
  * Check out the PropTypes below to see how to set your own styles
  */
 export default class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHover: false
-    }
-  }
 
   /**
    * Handles button clicks on this button
    */
-  handleClick() {
-    this.props.onButtonClick();
-  }
-
-  /**
-   * Handles button hovers on this button
-   */
-  handleMouseEnter() {
-    if (this.props.onMouseEnter) {
-      this.props.onMouseEnter();
-    }
-  }
-
-  handleMouseLeave() {
-    if (this.props.onMouseLeave) {
-      this.props.onMouseLeave();
-    }
+  handleClick(event) {
+    this.props.onButtonClick(event);
   }
 
   render() {
     return (
       <button className={this.props.buttonClass} style={this.props.style}
-              onClick={this.handleClick.bind(this)}
-              onMouseEnter={this.handleMouseEnter.bind(this)}
-              onMouseLeave={this.handleMouseLeave.bind(this)}>
+              type={this.props.type}
+              onClick={this.handleClick.bind(this)}>
         {this.props.buttonIcon}
         {this.props.buttonText}
       </button>
@@ -58,14 +36,18 @@ Button.propTypes = {
   // { float:'right', paddingTop: '0.15em' } as a style
   style: React.PropTypes.object,
 
+  /* Type of button */
+  // Standard HTML type, e.g. "submit", "button"
+  type: React.PropTypes.string,
+
   /* Custom button text */
-  buttonText: React.PropTypes.string,
+  buttonText: React.PropTypes.node,
 
   /* Custom button icon JSX object */
   // Must be a JSX element, e.g. you can pass in something like
   // <i className="my-icon-class-name" style={{ color: red }}>My Icon!</i>
-  buttonIcon: React.PropTypes.element,
+  buttonIcon: React.PropTypes.node,
 
-  // Handler for button clicks
-  onButtonClick: React.PropTypes.func
+  /* Event listener for button clicks */
+  onButtonClick: React.PropTypes.func,
 }

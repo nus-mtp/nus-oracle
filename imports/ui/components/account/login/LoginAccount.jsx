@@ -12,19 +12,12 @@ import { successMsgLoginName,
 
 // Import React components
 import Button from '../../common/Button.jsx';
+import FormInput from '../../common/FormInput.jsx';
 
 // Import file paths
 import { pathToLogin } from '../../../../startup/client/Router.jsx';
 import { pathToAcadDetailsSetup } from '../../../../startup/client/Router.jsx';
 import { pathToUserDashboard } from '../../../../startup/client/Router.jsx';
-
-//import verfification from '../../server/send-verification'
-/*
- To delete accounts,
- 1) meteor mongo
- 2) db.users.remove({_id:db.users.find()[0]._id})
-
- */
 
 const MAX_PASSWORD_TRIES = 5;
 
@@ -38,12 +31,16 @@ export default class LoginAccount extends React.Component {
     };
   }
 
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
+  //=============================================
+  // EVENT HANDLERS
+  //=============================================
+
+  handleEmailChange(input) {
+    this.setState({email: input});
   }
 
-  handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+  handlePasswordChange(input) {
+    this.setState({password: input});
   }
 
   handleClickOnSignUp() {
@@ -54,6 +51,11 @@ export default class LoginAccount extends React.Component {
     this.props.onForgetPassword();
   }
 
+  /**
+   * Handles a forget password event.
+   * Calls the appropriate method to send user instructions to reset his/her password.
+   * Also displays appropriate alert messages correspondingly.
+   */
   handleForgetPassword() {
     let email = this.state.email;
 
@@ -75,9 +77,22 @@ export default class LoginAccount extends React.Component {
     }
   }
 
-  handleSubmit() {
+  /**
+   * Handles a user login event.
+   * Calls the appropriate method to verify the user's email and password and
+   * then routes the user to the dashboard if he/she is indeed authorized.
+   * Also displays appropriate alert messages correspondingly.
+   */
+  handleSubmit(event) {
+    // Prevent browser from refreshing the page, so that we can still see input validation alerts
+    event.preventDefault();
+
+    // Handles loading screen
+    this.props.onSubmit();
+
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      if (error) { // Login error
+      if (error) {
+        /* ERROR WITH LOGIN INPUT */
         if (error.reason == 'Incorrect password') {
           // Incorrect password entered by user
           let numPasswordTries = this.state.passwordErr + 1;
@@ -87,27 +102,36 @@ export default class LoginAccount extends React.Component {
             this.handleForgetPassword();
           }
         } else if (error.reason == 'User not found') {
+          // User's NUS email isn't in the database, mostly because haven't signed up yet
           Bert.alert(errorMsgUnrecognizedEmail(this.state.email), 'danger');
-        } else { // Incorrect email, etc.
+        } else if (error.reason == 'Match failed') {
+          // User submitted empty form, we do nothing and don't raise any alerts
+          Bert.alert(warningMsgs.WARNING_INPUT_EMAIL_TO_LOGIN, 'danger');
+        } else {
+          // Other reasons
           Bert.alert(error.reason, 'danger');
         }
+        // Close all alert windows after errors have been handled
+        this.props.onSuccess();
       } else {
-        this.setState({ passwordErr: 0 }); // Reset incorrect attempts counter
+        /* SUCCESSFUL LOGIN */
+        // Reset incorrect attempts counter
+        this.setState({ passwordErr: 0 });
 
-        let isVerified = Meteor.user().emails[0].verified; // TODO EMAIL VERIFICATION FUNCTION
-        // WORK-IN-PROGRESS ADRIAN
         if (Meteor.user().profile.accountLock) {
+          // Check if the user's account is locked out for security reasons
           Bert.alert(errorLockedAccount(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
-        } else if (isVerified) {
-          // Log only a valid and verified user in
+          this.props.onSuccess();
+        } else if (Meteor.user().emails[0].verified) {
+          // Check if email is verified or not
           if (!Meteor.user().profile.hasSetup) {
-            // Newly-signed-up users
+            // Newly-signed-up users without a setup yet
             Bert.alert(warningMsgs.WARNING_SETUP, 'warning');
             FlowRouter.go(pathToAcadDetailsSetup);
           } else {
-            //Actual redirect to dashbaord
+            // Verified users who have set up their academic profile --> Directed to dashbaord
             Bert.alert(successMsgLoginName(Meteor.user().username), 'success');
             FlowRouter.go(pathToUserDashboard);
           }
@@ -116,51 +140,54 @@ export default class LoginAccount extends React.Component {
           Bert.alert(errorMsgUnverifiedEmail(Meteor.user().username), 'danger');
           FlowRouter.go(pathToLogin);
           Meteor.logout();
+          this.props.onSuccess();
         }
       }
     });
+
   }
 
   render() {
     return (
       <div>
+        {/* Site Logo */}
         <div className="gallery-picture">
-          <img style={{height: '100%', width: '100%', marginTop: '2em'}}
-               src="./logo/NUS_Oracle_logo.jpg" alt="NUS_Oracle_logo" />
+          <img id="login-logo"
+               src="./images/logo/nusOracle-logo-colour.png"
+               alt="NUS_Oracle_logo" />
         </div>
 
+        {/* Login Form */}
         <div className="col-md-6 blockui-element-container-default"
              style={{float: 'none', margin: '3.5em auto'}}>
+          <form className="form-group" style={{textAlign: 'center'}}
+                onSubmit={this.handleSubmit.bind(this)}>
 
-          <div className="form-group" style={{textAlign: 'center'}}>
-            <div className="form-group">
-              <input className="form-control" type="text"
-                placeholder="NUS E-mail" value={this.state.value}
-                onChange={this.handleEmailChange.bind(this)} />
-            </div>
+            <FormInput placeholder="NUS E-mail"
+                       className="form-control login-email"
+                       onChange={this.handleEmailChange.bind(this)} />
 
-            <div className="form-group">
-              <input className="form-control" type="password"
-                placeholder="Password" value={this.state.value}
-                onChange={this.handlePasswordChange.bind(this)} />
-            </div>
+            <FormInput type="password" placeholder="Password"
+                       className="form-control login-password"
+                       onChange={this.handlePasswordChange.bind(this)} />
 
-              <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline"
-                      buttonText="LOGIN"
-                      onButtonClick={this.handleSubmit.bind(this)} />
+            <Button buttonClass="btn btn-rounded btn-inline btn-warning-outline login-button"
+                    buttonText="LOGIN"
+                    type="submit"
+                    onButtonClick={this.handleSubmit.bind(this)} />
 
-                <a className="dropdown-item"
-                   onClick={this.handleClickOnSignUp.bind(this)}>
-                  Create account
-                </a>
+            <a className="dropdown-item"
+               onClick={this.handleClickOnSignUp.bind(this)}>
+              Create account
+            </a>
 
-                <a className="dropdown-item"
-                   onClick={this.handleClickOnForgetPassword.bind(this)}>
-                  Forgot Password?
-                </a>
-
-          </div>
+            <a className="dropdown-item"
+               onClick={this.handleClickOnForgetPassword.bind(this)}>
+              Forgot Password?
+            </a>
+          </form>
         </div>
+
       </div>
     );
   }

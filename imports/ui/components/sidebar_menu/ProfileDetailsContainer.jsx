@@ -1,11 +1,11 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { getStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
-import { getStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
-import { updateStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
-import { updateStudentPreviousEducation } from '../../../api/database-controller/student/methods.js';
-import { updateStudentPlannerAcademicYear} from '../../../api/crud-controller/planner/methods.js'
+import { getStudentAcademicCohort,
+         getStudentPreviousEducation,
+         updateStudentAcademicCohort,
+         updateStudentPreviousEducation } from '../../../api/profile/student/methods.js';
+import { updateStudentPlannerAcademicYear} from '../../../api/student-logic-controller/crud-controller/planner/methods.js'
 import InlineEdit from 'react-edit-inline';
 import ProfileDetails from './ProfileDetails.jsx';
 import Select from 'react-select';

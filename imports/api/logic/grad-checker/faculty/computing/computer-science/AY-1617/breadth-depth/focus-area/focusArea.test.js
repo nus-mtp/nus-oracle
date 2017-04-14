@@ -15,10 +15,11 @@ import { getFocusAreaPrimaryRequirement,
          getFocusAreaRequirement } from '../../../../../../../../database-controller/focus-area/methods';
 import { getGradRequirementMCs } from '../../../../../../../../database-controller/graduation-requirement/methods';
 
-import { getAllSemestersInPlanner } from '../../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { checkFocusAreaFulfilmentMCs,
-         findFocusAreaModules } from './methods';
+         findFocusAreaPrimary,
+         findFocusArea4KModules } from './methods';
 
 describe('grad-checker-focusArea', function()  {
   let plannerIDs = [];
@@ -43,10 +44,15 @@ describe('grad-checker-focusArea', function()  {
   });
 
   it ('checks if find focus area MCs return true', function() {
-    const academicCohort = 'AY 2016/2017';
-    const requirementName = 'Computer Science Focus Area' ;
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
 
+    const requirementName = 'Computer Science Focus Area' ;
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
     const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
     const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
@@ -54,6 +60,7 @@ describe('grad-checker-focusArea', function()  {
 
     //const studentFocusAreas = getFocusAreaRequirement(focusAreaReqIDs);
     const requiredMCs = getGradRequirementMCs(gradFocusAreaID)[requirementName];
+    const focusAreaModulesChecked = {};
 
     const studentFocusAreas = {
       focusAreaPrimaryModules: focusAreaPrimaryModules,
@@ -62,38 +69,66 @@ describe('grad-checker-focusArea', function()  {
       focusAreaNonPrimaryModules: focusAreaNonPrimaryModules
     }
 
-    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(allSemesters, studentFocusAreas, requiredMCs);
+    const focusAreaMCSFulfilment = checkFocusAreaFulfilmentMCs(studentInfoObject, focusAreaModulesChecked, studentFocusAreas, requiredMCs);
     assert.isTrue(focusAreaMCSFulfilment.isFulfilled, 'focus area is fulfiled');
-    assert.equal(focusAreaMCSFulfilment.requiredMCs, 24);
   })
 
-  it ('checks if focus area requirement modules return true', function() {
-    const academicCohort = 'AY 2016/2017';
+  it ('checks if primary focus area requirement modules return true', function() {
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
+
     const focusAreaName = 'Computer Graphics and Games';
-    const allSemesters = getAllSemestersInPlanner(plannerIDs[0]);
-    //const focusAreaModules = getFocusAreaRequirement(focusAreaReqIDs);
-
-    //const focusAreaPrimaryModules = focusAreaModules.focusAreaPrimaryModules;
-    //const focusArea4KModules = focusAreaModules.focusArea4KModules;
-    //const focusAreaNonPrimaryModules = focusAreaModules.focusAreaNonPrimaryModules;
-
     const focusAreaPrimaryModules = getFocusAreaPrimaryRequirement(focusAreaReqIDs);
     const focusAreaPrimary4KModules = getFocusAreaPrimary4KRequirement(focusAreaReqIDs);
-    const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
-    const focusAreaNonPrimaryModules = getFocusAreaNonPrimaryRequirement(focusAreaReqIDs);
 
-    const studentFocusAreas = {
-      focusAreaPrimaryModules: focusAreaPrimaryModules[focusAreaName],
-      focusAreaPrimary4KModules: focusAreaPrimary4KModules[focusAreaName],
-      focusArea4KModules: focusArea4KModules[focusAreaName],
-      focusAreaNonPrimaryModules: focusAreaNonPrimaryModules[focusAreaName]
-    }
-    const markedFocusAreaModulesAndMCs = findFocusAreaModules(focusAreaName, academicCohort, allSemesters, studentFocusAreas, {}, {});
+    const focusAreaPrimaryRequiredInfo = {
+      name: focusAreaName,
+      markedFocusAreaPrimary3KAndLessModules: focusAreaPrimaryModules[focusAreaName],
+      markedFocusAreaPrimary4KModules: focusAreaPrimary4KModules[focusAreaName],
+      numberOfFocusAreaPrimaryModulesMarkedTrue: 0,
+      minNumberOfPrimaryFocusArea: 3, // constant that require changing
+      minNumberOfPrimary4K: 1,  // constant that require changing
+      moduleChecked: {},
+      threePrimaryModules: false,
+      one4KModules: false,
+      isPrimaryTrue: false,
+    };
 
+    const markedFocusAreaModulesAndMCs = findFocusAreaPrimary(focusAreaPrimaryRequiredInfo, studentInfoObject);
+
+    assert.isTrue(markedFocusAreaModulesAndMCs.threePrimaryModules, '3 primary focus area is fulfiled');
+    assert.isTrue(markedFocusAreaModulesAndMCs.one4KModules, 'at least 1 4k primary focus area is fulfiled');
     assert.isTrue(markedFocusAreaModulesAndMCs.isPrimaryTrue, 'primary focus area is fulfiled');
-    assert.isTrue(markedFocusAreaModulesAndMCs.is4KTrue, '4k focus area is fulfiled');
-    assert.equal(markedFocusAreaModulesAndMCs.numberOfFocusAreaPrimaryModulesMarkedTrue, 4);
-    assert.equal(markedFocusAreaModulesAndMCs.total4KModuleMCs, 16);
+  })
+
+  it ('checks if at least 12 MCs of focus area requirement modules return true', function() {
+    const studentInfoObject = {
+      studentAcademicCohort: 'AY 2016/2017',
+      studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
+      studentExemptedModules: {},
+      studentWaivedModules: {},
+      moduleChecked: {}
+    }
+
+    const focusAreaName = 'Computer Graphics and Games';
+    const focusArea4KModules = getFocusArea4KRequirement(focusAreaReqIDs);
+
+    const focusAreaAtLeast12MCsOf4KRequiredInfo = {
+      markedFocusArea4KModules: focusArea4KModules[focusAreaName],
+      total4KModuleMCs: 0,
+      module4KChecked: {},
+      min4KModuleMCs: 12, // constant that require changing
+      is4KTrue: false,
+    };
+
+    const markedFocusAreaModulesAndMCs = findFocusArea4KModules(focusAreaAtLeast12MCsOf4KRequiredInfo, studentInfoObject);
+
+    assert.isTrue(markedFocusAreaModulesAndMCs.is4KTrue, 'at least 12MCs of 4K focus area is fulfiled');
   })
 
 });

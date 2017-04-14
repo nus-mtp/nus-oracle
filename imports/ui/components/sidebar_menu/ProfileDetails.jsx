@@ -33,6 +33,7 @@ export default class ProfileDetails extends React.Component{
                             options={this.props.options} value={info}
                             onChange={this.handleOnChange.bind(this)}
                             autofocus={true}
+                            scrollMenuIntoView={false}
                             onBlur={this.handleCancelEdit.bind(this)}/>
        return(<PanelListItem  text={text}
                               isEditable={true}

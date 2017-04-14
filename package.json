@@ -3,20 +3,18 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "lint": "eslint .;exit 0",
-    "pretest": "npm run lint --silent",
     "ci-test": "meteor npm run ci-test-unit",
-    "ci-remove-drivers": "meteor remove dispatch:mocha aldeed:browser-tests",
     "ci-add-drivers": "meteor add dispatch:mocha aldeed:browser-tests",
-    "ci-test-unit": "meteor test --once --driver-package dispatch:mocha-phantomjs",
-    "local-remove-drivers": "meteor remove dispatch:mocha-phantomjs dispatch:phantomjs-tests",
-    "local-add-drivers": "meteor add dispatch:mocha-phantomjs dispatch:phantomjs-tests@=0.0.5"
+    "ci-test-unit": "meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
-    "babel-runtime": "^6.22.0",
+    "babel-runtime": "^6.23.0",
     "dnd": "^0.1.0",
+    "domkit": "0.0.1",
     "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
+    "meteor-node-stubs": "^0.2.6",
+    "raf": "^3.3.0",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.2",
@@ -25,14 +23,16 @@
     "react-bootstrap": "^0.30.8",
     "react-dnd": "^2.2.4",
     "react-dnd-html5-backend": "^2.2.4",
-    "react-dom": "^15.4.2",
+    "react-dom": "~15.4.2",
     "react-edit-inline": "^1.0.8",
     "react-mounter": "^1.2.0",
     "react-onclickout": "^2.0.5",
     "react-select": "^1.0.0-rc.3",
     "react-select-fast-filter-options": "^0.2.1",
     "react-tooltip": "^3.2.7",
-    "react-virtualized-select": "^2.4.0"
+    "react-virtualized-select": "^2.4.0",
+    "scroll-into-view": "^1.8.0",
+    "sinon": "^2.1.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -53,8 +53,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "chromedriver": "^2.27.3",
-    "enzyme": "^2.7.1",
+    "chromedriver": "^2.29.0",
+    "enzyme": "^2.8.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-import-resolver-meteor": "^0.3.4",
@@ -62,9 +62,11 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-react": "^6.9.0",
-    "react": "^15.4.2",
+    "jsdom": "9.12.0",
+    "jsdom-global": "2.1.1",
+    "react": "~15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
-    "selenium-webdriver": "^3.0.0-beta-2"
+    "selenium-webdriver": "2.52.0"
   }
 }
