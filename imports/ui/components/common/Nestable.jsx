@@ -13,6 +13,9 @@ export default class Nestable extends React.Component{
   }
 }
 
+/**
+ * Component for rendering a non-list item
+ */
 class Item extends Nestable{
   render(){
     var isFulfilled = this.props.isFulfilled;
@@ -21,13 +24,15 @@ class Item extends Nestable{
       <li className="dd-item" >
         <div className={"dd-handle" + (isFulfilled ? " fulfilled" : " incomplete")} style={styles.item}>
             {this.props.itemName}
-            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
         </div>
       </li>
     );
   }
 }
 
+/**
+* Component that renders an expandable/collapsable list item
+ */
 class ListItem extends Nestable{
   constructor(){
     super();
@@ -52,7 +57,6 @@ class ListItem extends Nestable{
                 style={styles.collapseIcon}>
             </i>
             {listName}
-            {/* {(this.props.toUE ? this.props.getMCforUE : null)} */}
         </div>
         <OrderedList items={this.props.items} isCollapsed={isCollapsed}/>
       </li>
@@ -60,6 +64,10 @@ class ListItem extends Nestable{
   }
 }
 
+
+/**
+ * Component that renders Items and List items based on the received 'items'
+ */
 class OrderedList extends Nestable{
   render(){
     var items = this.props.items;
@@ -76,14 +84,12 @@ class OrderedList extends Nestable{
                     <GridLoader color={color}/>
                   </div>
               else if(item.children == undefined || item.children.length == 0 && item.name!== undefined){
-                //item is a single entry
+                // item is a single entry
                 return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled}/>;
-                // return <Item itemName={item.name} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
               else {
                 //item is a list
                 return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled}/>;
-                // return <ListItem listName={item.name} items={item.children} key={index} isFulfilled={item.isFulfilled()} toUE={item.toUE} getMCforUE={item.getMCforUE()}/>;
               }
             })
           }
@@ -120,3 +126,27 @@ const styles = ({
     height: "auto"
   }
 });
+
+Nestable.propTypes = {
+  /* nestable list object to be rendered */
+  items: React.PropTypes.object
+}
+
+Item.propTypes = {
+  /* nestable list object to be rendered */
+  isFulfilled: React.PropTypes.bool,
+  itemName: React.PropTypes.string
+}
+
+ListItem.propTypes = {
+  /* nestable list object to be rendered */
+  isFulfilled: React.PropTypes.bool,
+  isCollapsed: React.PropTypes.bool,
+  listName: React.PropTypes.string
+}
+
+OrderedList.propTypes = {
+  /* nestable list object to be rendered */
+  items: React.PropTypes.object,
+  isCollapsed: React.PropTypes.bool
+}
