@@ -1,12 +1,14 @@
-//Defines the template that will be sent to users' email while verifying accounts
-//this sample
+//Defines the template that will be sent to users' email while resetting Password
+//after being deactivated
 Accounts.emailTemplates.siteName = "nusOracle";
 Accounts.emailTemplates.from     = "nusOracle <admin@nusOracle.com>";
 
   Accounts.emailTemplates.resetPassword = {
+     //used to modify subject of email
     subject() {
       return "[nusOracle] Reset Your Password";
     },
+    //used to modify message of email
     text( user, url ) {
       let emailAddress   = user.emails[0].address,
           supportEmail   = "support@nusOracle.com",

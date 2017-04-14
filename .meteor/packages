@@ -57,3 +57,4 @@ session
 mrt:cheerio
 anonyfox:scrape
 force-ssl
+dispatch:mocha-browser
