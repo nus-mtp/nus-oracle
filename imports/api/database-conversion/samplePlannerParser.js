@@ -5,9 +5,9 @@ import {createPlannerGivenUserID} from '../student-logic-controller/crud-control
 import {insertOneModuleInSemester} from '../student-logic-controller/crud-controller/module/methods';
 import {insertNewAcademicYearInPlanner,
         insertNewSemesterInPlanner} from '../student-logic-controller/crud-controller/semester/methods';
-import {AcademicCohort} from '../database-controller/AcademicCohort/acadCohort';
+import {AcademicCohort} from '../database-controller/academic-cohort/acadCohort';
 import {getCohortByName,
-        updateCohortDefaultPlannerID} from '../database-controller/AcademicCohort/methods';
+        updateCohortDefaultPlannerID} from '../database-controller/academic-cohort/methods';
 
 export const parseDefaultPlanner = function parseDefaultPlanner(fileToBeParsed, canReplaceExistingID){
   const fileName = fileToBeParsed;
