@@ -16,6 +16,8 @@ NUS Oracle is a web app designed to help Computer Science students plan their 4-
 
 Coming up with a 4-year study plan can be stressful, tiresome and messy. Junior students may not be entirely familiar with the school's graduation requirements and senior students may want to try out different study plans to pursue different focus areas and interests. NUS Oracle follows you through your study planning process and lets you check graduation requirements, view interesting NUS modules and it saves all your study plans in one place.
 
+You can visit our website [HERE!](https://nus-oracle.herokuapp.com)
+
 Key Features
 ------------
 Conveniently craft your study plans on a single platform
