@@ -40,7 +40,7 @@ Running NUS Oracle
 
 Installing Vagrant
 -------------------
-Vagrant is a tool for developers to easily create a virtual environment on your local component that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.        
+Vagrant is a tool for developers to easily create a virtual environment on your local computer that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.        
 
 **Instructions for both Mac and Windows users:**
 + Install [Vagrant](https://www.vagrantup.com/downloads.html) and [Virtual Box](https://www.virtualbox.org/wiki/Downloads), the one that states "Virtual Box 5.1.18 platform packages"
