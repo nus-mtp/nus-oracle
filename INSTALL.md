@@ -3,13 +3,13 @@ Setting up your Development Environment
 
 Table of Contents
 -----------------
-* [Overview](#overview)      
-* [Meteor](#installing-meteor)        
+* [Overview](#overview)     
+* [Installing Meteor](#installing-meteor)        
+* [Installing Vagrant](#installing-vagrant)
 * [Running the app](#running-nus-oracle)
-* [Vagrant](#installing-vagrant)
 * [Accessing the development database](#accessing-the-development-database)        
 * [Running test cases](#running-test-cases)
-* [Coding Environment Setup](#coding-environment-setup)         
+* [Setting up your Coding Environment](#coding-environment-setup)         
   * [Atom Text Editor](#atom-text-editor)         
 * [Footnotes](#footnotes)       
 
@@ -32,12 +32,6 @@ Meteor is the full-stack web application platform that NUS Oracle is built on. L
 + Enter the root directory of the cloned repository using `cd`. Ensure that it is running on Meteor version
 1.4.x by typing `meteor --version`
 
-Running NUS Oracle
-------------------
-+ Run the command ``meteor npm install`` to install all npm package dependencies
-+ Run the app with the command `meteor`
-+ Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
-
 Installing Vagrant
 -------------------
 Vagrant is a tool for developers to easily create a virtual environment on your local computer that mimics NUS Oracle's own development environment. If you're familiar with handling virtual environments or want to ensure your own local environment is consistent with ours, please try this method out.        
@@ -59,9 +53,15 @@ Vagrant is a tool for developers to easily create a virtual environment on your 
   * [How to use vagrant on Windows](http://tech.osteel.me/posts/2015/01/25/how-to-use-vagrant-on-windows.html)
   * [Meteor in Window using Vagrant](https://gist.github.com/gabrielhpugliese/5855677)
 
+Running NUS Oracle
+------------------
++ Run the command ``meteor npm install`` to install all npm package dependencies
++ Run the app with the command `meteor`
++ Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
+
 Accessing the development database
 ------------------------------------
-Running `meteor` on the database would only give you access to test fixture information. If you wish to develop on a local machine with full access to a database, please contact us at `nusoracle@gmail.com` where we would provide you with the relevant files and details to how to run the application locally with full database access.
+Running `meteor` on the database would only give you access to test fixture information. If you wish to develop on a local machine with full access to a database, please contact us at `nusoracle@gmail.com` where we would provide you with the relevant files and details on how to run the application locally with full database access.
 
 Running test cases
 ------------------
