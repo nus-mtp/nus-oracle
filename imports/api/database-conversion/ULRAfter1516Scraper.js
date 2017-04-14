@@ -1,5 +1,5 @@
 //import method to check existence of academic cohort
-import {AcademicCohort} from '../database-controller/AcademicCohort/acadCohort';
+import {AcademicCohort} from '../database-controller/academic-cohort/acadCohort';
 // import method to update existing module fulfilment
 import {ModuleFulfilments} from '../database-controller/module-fulfilment/moduleFulfilment';
 import { createNewModuleFulfilment,

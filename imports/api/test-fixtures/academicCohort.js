@@ -3,7 +3,7 @@ import { createNewCohort,
          insertGradRequirementToCohort,
          removeGradRequirementFromCohort,
          insertFocusAreaToCohort,
-         removeFocusAreaFromCohort } from '../database-controller/AcademicCohort/methods';
+         removeFocusAreaFromCohort } from '../database-controller/academic-cohort/methods';
 import { populateGraduationRequirementsFixture } from './graduationRequirements';
 import { populateComputerGraphicsFocusAreaRequirementsFixture } from './focusArea';
 import { GraduationRequirements } from '../database-controller/graduation-requirement/graduationRequirement';

@@ -1,7 +1,7 @@
 import { createPlannerGivenUserID,
-         removePlanner } from '../crud-controller/planner/methods';
-import { insertNewSemesterInPlanner } from '../crud-controller/semester/methods';
-import { insertOneModuleInSemester } from '../crud-controller/module/methods';
+         removePlanner } from '../student-logic-controller/crud-controller/planner/methods';
+import { insertNewSemesterInPlanner } from '../student-logic-controller/crud-controller/semester/methods';
+import { insertOneModuleInSemester } from '../student-logic-controller/crud-controller/module/methods';
 
 export const populatePlannerFixture = function populatePlannerFixture() {
   const userIDs = '9f91pejfj912ras';

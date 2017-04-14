@@ -1,5 +1,5 @@
 import { Planner } from './planner';
-import { getStudentID } from '../../database-controller/student/methods';
+import { getStudentID } from '../../../profile/student/methods';
 import { updateSemesterAcademicYearInPlanner } from '../semester/methods';
 /**
  * creates a planner
@@ -210,6 +210,10 @@ export const duplicatePlannerGivenUserID = function duplicatePlannerGivenUserID(
   return id;
 }
 
+/**
+ * updates the academic year of a planner given academic year
+ * @param  {string}    new academic year in the format AY XX/XX
+ */
 export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYear(newAcademicYear) {
   const studentId = getStudentID();
 

@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { getGraduationRequirements } from '../../../api/gradchecker-controller/methods.js';
-import { Criteria } from '../../../api/gradchecker-controller/criteria.js';
-import { getAllSemestersInPlanner } from '../../../api/crud-controller/semester/methods';
-import { getStudentExemptedModules, getStudentWaivedModules } from '../../../api/database-controller/student/methods';
-import { AY1617 } from '../../../api/gradchecker-controller/allGraduationRequirements.js';
-import { getStudentAcademicCohort } from '../../../api/database-controller/student/methods.js';
+import { getGraduationRequirements } from '../../../api/student-logic-controller/gradchecker-controller/methods.js';
+import { Criteria } from '../../../api/student-logic-controller/gradchecker-controller/criteria.js';
+import { getAllSemestersInPlanner } from '../../../api/student-logic-controller/crud-controller/semester/methods';
+import { getStudentExemptedModules,
+         getStudentWaivedModules,
+         getStudentAcademicCohort } from '../../../api/profile/student/methods';
+import { AY1617 } from '../../../api/student-logic-controller/gradchecker-controller/allGraduationRequirements.js';
 import Nestable from '../common/Nestable.jsx';
 import NestableGradChecker from '../common/NestableGradChecker.jsx';
 

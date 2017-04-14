@@ -2,7 +2,7 @@
 //several planner to reject
 /// test fixture planner
 /// defaultPlanner
-import { Planner } from '../crud-controller/planner/planner';
+import { Planner } from '../student-logic-controller/crud-controller/planner/planner';
 var jsonfile = require('jsonfile');
 
 export const parseForLezzgo = function parseForLezzgo() {
