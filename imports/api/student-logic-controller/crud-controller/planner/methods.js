@@ -210,6 +210,10 @@ export const duplicatePlannerGivenUserID = function duplicatePlannerGivenUserID(
   return id;
 }
 
+/**
+ * updates the academic year of a planner given academic year
+ * @param  {string}    new academic year in the format AY XX/XX
+ */
 export const updateStudentPlannerAcademicYear = function updatePlannerAcademicYear(newAcademicYear) {
   const studentId = getStudentID();
 

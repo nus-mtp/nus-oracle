@@ -161,6 +161,13 @@ export const deleteOneModuleInSemester = function deleteOneModuleInSemester(seme
   return deletedModule;
 };
 
+/**
+ * deletes one module in a semester
+ * @param  {number}    index of semester to be insert into
+ * @param  {string}    id of planner to be inserted into
+ * @return {string}    modules in that semester
+ *
+ */
 export const deleteAllModulesInSemester = function deleteAllModulesInSemester(semesterIndex, plannerID) {
   const planner = Planner.findOne(plannerID);
   if (!planner) {
@@ -192,6 +199,12 @@ export const deleteAllModulesInSemester = function deleteAllModulesInSemester(se
   return oneSemester.moduleHashmap;
 };
 
+/**
+ * deletes one module in a semester
+ * @param  {string}    id of planner to be inserted into
+ * @return {string}    total number of MCs in planner
+ *
+ */
 export const getTotalMCsForAllModules = function getTotalMCsForAllModules(plannerID) {
   const planner = Planner.findOne(plannerID);
   let totalMCs = 0;
