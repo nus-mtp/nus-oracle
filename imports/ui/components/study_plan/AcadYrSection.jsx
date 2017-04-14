@@ -2,7 +2,7 @@ import React from 'react';
 import AcadYrRow from './AcadYrRow.jsx';
 import Button from '../common/Button.jsx';
 
-import { insertNewAcademicYearInPlanner } from '../../../api/crud-controller/semester/methods.js';
+import { insertNewAcademicYearInPlanner } from '../../../api/student-logic-controller/crud-controller/semester/methods.js';
 
 export default class AcadYrSection extends React.Component {
   handleAddAYButtonClick() {

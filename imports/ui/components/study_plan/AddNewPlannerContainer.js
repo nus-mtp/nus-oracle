@@ -5,7 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import AddNewPlanner from './AddNewPlanner.jsx';
 
 // Import Logic methods
-import { getStudentRepackagedDefaultPlannerIDs } from './../../../api/database-controller/student/methods.js';
+import { getStudentRepackagedDefaultPlannerIDs } from './../../../api/profile/student/methods.js';
 
 export default AddNewPlannerContainer = createContainer((props) => {
   let defaultPlannerObjs = getStudentRepackagedDefaultPlannerIDs();

@@ -5,7 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import MCsCounter from './MCsCounter.jsx';
 
 // Import logic functions
-import { getTotalMCsForAllModules } from './../../../api/crud-controller/module/methods.js';
+import { getTotalMCsForAllModules } from './../../../api/student-logic-controller/crud-controller/module/methods.js';
 
 /**
  * Checks if the number of MCs is valid to be printed onscreen.

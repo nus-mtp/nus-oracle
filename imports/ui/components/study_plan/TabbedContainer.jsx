@@ -18,7 +18,7 @@ import AddNewPlannerContainer from './AddNewPlannerContainer.js';
 import { createPlanner,
          removePlanner,
          duplicatePlanner,
-         setPlannerName } from '../../../api/crud-controller/planner/methods.js';
+         setPlannerName } from '../../../api/student-logic-controller/crud-controller/planner/methods.js';
 
  // Import common constants and utilities
  import { ENTER_CHAR_KEY_CODE,

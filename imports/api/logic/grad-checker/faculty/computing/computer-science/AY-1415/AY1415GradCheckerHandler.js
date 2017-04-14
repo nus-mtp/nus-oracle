@@ -1,4 +1,4 @@
-import { getCohortByName } from '../../../../../../database-controller/AcademicCohort/methods';
+import { getCohortByName } from '../../../../../../database-controller/academic-cohort/methods';
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../database-controller/graduation-requirement/methods';
 import { getFocusAreaPrimaryRequirement,

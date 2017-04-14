@@ -1,6 +1,5 @@
 import { FocusArea } from '../database-controller/focus-area/focusArea';
 import{ createNewFocusArea } from '../database-controller/focus-area/methods';
-import{ findModuleAvailability } from '../database-controller/module/methods';
 
 export const populateFocusAreaCollection = function() {
   if(Meteor.isServer){

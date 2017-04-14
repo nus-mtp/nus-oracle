@@ -10,7 +10,7 @@ import { populateGraduationRequirementsFixture,
 
 import { getGradRequirementModules,
          getGradRequirementMCs } from '../../../../../../../database-controller/graduation-requirement/methods';
-import { getAllSemestersInPlanner } from '../../../../../../../crud-controller/semester/methods';
+import { getAllSemestersInPlanner } from '../../../../../../../student-logic-controller/crud-controller/semester/methods';
 
 import { findFoundationRequirementModules } from './methods';
 

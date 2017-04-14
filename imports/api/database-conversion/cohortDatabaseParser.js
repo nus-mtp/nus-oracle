@@ -42,7 +42,7 @@
 
 // import DB pointer in case required.
 import {GraduationRequirements} from '../database-controller/graduation-requirement/graduationRequirement';
-import { AcademicCohort } from '../database-controller/AcademicCohort/acadCohort';
+import { AcademicCohort } from '../database-controller/academic-cohort/acadCohort';
 // import method to insert new graduation requirement methods
 import { createNewGradRequirement,
          insertNewGradRequirementModuleData } from '../database-controller/graduation-requirement/methods';
@@ -51,7 +51,7 @@ import { createNewCohort,
          removeAllCohort,
          updateCohortGradRequirementIDs,
          getCohortByName,
-         updateCohortFocusAreaIDs} from '../database-controller/AcademicCohort/methods';
+         updateCohortFocusAreaIDs} from '../database-controller/academic-cohort/methods';
 // import method to get focus area id from their name.
 import { getFocusAreaIDByName } from '../database-controller/focus-area/methods';
 //import method to check availability of module in module database

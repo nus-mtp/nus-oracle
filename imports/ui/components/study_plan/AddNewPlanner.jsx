@@ -5,7 +5,7 @@ import Button from '../common/Button.jsx';
 import StudyPlanTemplateButton from '../common/StudyPlanTemplateButton.jsx';
 
 // Import logic methods
-import { duplicatePlanner } from './../../../api/crud-controller/planner/methods.js';
+import { duplicatePlanner } from './../../../api/student-logic-controller/crud-controller/planner/methods.js';
 
 export default class AddNewPlanner extends React.Component {
 
