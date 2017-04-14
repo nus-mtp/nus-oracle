@@ -37,7 +37,7 @@ describe('grad-checker-mathSci-1516', function()  {
   });
 
   it ('checks if find modules correct boolean values', function() {
-    const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
+    const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science II', 'PC1221', 'Science I', 'Science III' ];
     const studentInfoObject = {
       studentAcademicCohort: 'AY 2015/2016',
       studentSemesters: getAllSemestersInPlanner(plannerIDs[0]),
@@ -54,10 +54,10 @@ describe('grad-checker-mathSci-1516', function()  {
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[1]], 'MA1521 fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[2]], 'MA1101R fulfiled');
     assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[3]], 'ST2334 fulfiled');
-    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[4]], 'PC1221 fulfiled');
-    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[5]], 'Science One fulfiled');
-    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[6]], 'Science Two fulfiled');
-    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[7]], 'Science Three fulfiled');
+    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[4]], 'Science II fulfiled');
+    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[5]], 'PC1221 fulfiled');
+    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[6]], 'Science I fulfiled');
+    assert.isTrue(markedMathScienceModulesAndMCs.markedMathSciModules[modules[7]], 'Science III fulfiled');
 
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked[modules[0]], 'IS1103 checked');
     assert.isTrue(markedMathScienceModulesAndMCs.moduleChecked[modules[1]], 'CS2101 checked');
