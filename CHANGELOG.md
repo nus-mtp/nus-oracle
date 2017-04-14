@@ -3,7 +3,10 @@
 
 ### Week 5
 * **Study Plan Dashboard**
-    - Static UI skeleton 
+    - Added static mockup for study plan tabs
+    - Added static mockup for module cards that hold 1 semester's modules
+* **Side Bar**
+    - Added static mockup for sidebar tabs
 * **DataBase**
     - Added Planner Collection & Schema
     - Added Semester Schema 
