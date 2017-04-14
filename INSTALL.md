@@ -65,13 +65,15 @@ Running `meteor` on the database would only give you access to test fixture info
 
 Running test cases
 ------------------
++ Set your environment variable `TEST_CLIENT=0` (important!)
 + Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
-+ If you want to keep the test cases running in *watch mode*, set your environment variables like this: `TEST_CLIENT=0` and  `TEST_WATCH=1`. Please note that Windows users need to run `cmd` with administrator privileges.
++ If you want to keep the test cases running in *watch mode*, set your environment variable like this: `TEST_WATCH=1`.
 + Then, run the command `meteor test --driver-package dispatch:mocha`
+*Please note that Windows users need to run your `cmd` console with administrator privileges.*
 
 Coding Environment Setup
 ------------------------
-This is the coding environment setup that NUS Oracle uses. Here's a collection of all the helpful tools that we found throughout the course of our project.
+This is the coding environment setup that the developer team of NUS Oracle uses. Here's a collection of all the helpful tools that we found throughout the course of our project.
 
 These tools are optional for developing on NUS Oracle. However, if you're just starting out as a developer and you're not sure what kinds of tools you should use to help you code, here are some for you to try out!
 
