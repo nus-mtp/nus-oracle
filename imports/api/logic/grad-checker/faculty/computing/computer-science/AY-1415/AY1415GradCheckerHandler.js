@@ -37,6 +37,18 @@ import { findUnrestrictedElectivesRequirementModules } from './unrestricted-elec
  *                for the current JSON to be fulfilled
  */
 
+ /*
+  * FOCUS AREA CONSTANTS
+  */
+ const MIN_NUM_OF_PRIMARY_FOCUS_AREA = 3;
+ const MIN_NUM_OF_PRIMARY_4K = 1;
+ const MIN_4K_MODULE_MCS = 12;
+
+ /*
+  *  GRADUATION MC CONSTANT
+  */
+ const GRADUATION_MCS = 160;
+
 /**
 * retrieves an object of string boolean objects for each graduation requirement
 *  @param {objects}  a full appended object list of all the modules in a student planner
@@ -47,7 +59,6 @@ import { findUnrestrictedElectivesRequirementModules } from './unrestricted-elec
 *
 */
 export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters, studentAcademicCohort, studentExemptedModules, studentWaivedModules) {
-  const graduationMCs = 160;
   const moduleRequirementTitle = ['Computer Science Foundation',
                                   'Computer Science Focus Area',
                                   'Computer Systems Team Project',
@@ -207,7 +218,7 @@ export const AY1415CSGradChecker = function AY1415CSGradChecker(studentSemesters
     // pass in required number of MCs from each requirement checks earlier,
     // pass in semesters
 
-    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(graduationRequirements, graduationMCs, studentInfoObject);
+    graduationRequirements[moduleRequirementTitle[7]] = findUnrestrictedElectivesRequirementModules(graduationRequirements, GRADUATION_MCS, studentInfoObject);
     UIFormatGraduationRequirement.children.push(UIFormatConversion(moduleRequirementTitle[7], [], graduationRequirements[moduleRequirementTitle[7]]));
 
     //console.log(JSON.stringify(studentInfoObject.moduleChecked));
@@ -392,14 +403,20 @@ const UIFormatOneFocusAreaConversion = function UIFormatOneFocusAreaConversion(f
   return tempGradRequirement;
 }
 
+/**
+* creates an object that focus area primary check requires
+*  @param {string}  name of focus area
+*  @return {{object}}  object of focus area information
+*
+*/
 const createFocusAreaPrimaryRequiredInfoObject = function createFocusAreaPrimaryRequiredInfoObject(focusAreaName)  {
   const focusAreaPrimaryRequiredInfo = {
     name: focusAreaName,
     markedFocusAreaPrimary3KAndLessModules: {},
     markedFocusAreaPrimary4KModules: {},
     numberOfFocusAreaPrimaryModulesMarkedTrue: 0,
-    minNumberOfPrimaryFocusArea: 3, // constant that require changing
-    minNumberOfPrimary4K: 1,  // constant that require changing
+    minNumberOfPrimaryFocusArea: MIN_NUM_OF_PRIMARY_FOCUS_AREA,
+    minNumberOfPrimary4K: MIN_NUM_OF_PRIMARY_4K,
     moduleChecked: {},
     threePrimaryModules: false,
     one4KModules: false,
@@ -408,17 +425,31 @@ const createFocusAreaPrimaryRequiredInfoObject = function createFocusAreaPrimary
   return focusAreaPrimaryRequiredInfo;
 }
 
+/**
+* creates an object that at least 12 MCs of 4K required check requires
+*  @return {{object}}  object of focus area information
+*
+*/
 const createFocusAreaAtLeast12MCsOf4KRequiredInfoObject = function createFocusAreaAtLeast12MCsOf4KRequiredInfoObject() {
   const focusAreaAtLeast12MCsOf4KRequiredInfo = {
     markedFocusArea4KModules: {},
     total4KModuleMCs: 0,
     module4KChecked: {},
-    min4KModuleMCs: 12, // constant that require changing
+    min4KModuleMCs: MIN_4K_MODULE_MCS,
     is4KTrue: false,
   };
   return focusAreaAtLeast12MCsOf4KRequiredInfo;
 }
 
+/**
+* creates an object that all graduation check requires
+*  @param {string}  student academic cohort
+*  @param {array}  array of student semester
+*  @param {object}  object of exempted modules
+*  @param {object}  object of waived modules
+*  @return {{object}}  object of required student information
+*
+*/
 const createStudentInfoObject = function createStudentInfoObject(studentAcademicCohort, studentSemesters, studentExemptedModules, studentWaivedModules)  {
   const studentInfoObject = {
     studentAcademicCohort: studentAcademicCohort,

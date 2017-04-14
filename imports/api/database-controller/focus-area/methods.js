@@ -14,6 +14,7 @@ const DEFAULT_MODULE_STATE = false;
   * exists in the database. If not, the module will be removed from the lists.
   */
 export const createNewFocusArea = function createNewFocusArea(name, listOfPrimary, listOfPrimaryFourThousands, listOfFourThousands, listOfNonPrimary){
+  // Uncomment the following lines to do module existence check
   //checkedListPrimary = consolidateModuleArrayValidity(listOfPrimary);
   //checkedListFourThousands = consolidateModuleArrayValidity(listOfFourThousands);
   //checkedListNonPrimary = consolidateModuleArrayValidity(listOfNonPrimary);
@@ -67,6 +68,11 @@ export const consolidateModuleArrayValidity = function CheckValidityForListOfMod
   return checkedModuleArray;
 }
 
+/** This method handles the creation of object list that is  going to be stored in the Focus Area Document
+  * The module that is stored in the graduation requirement need to be present in the module database
+  * @param {[String]} moduleList: list of module that is going to be stored
+  * @return{object} object that is going to be stored under Focus Area Document
+  */
 export const createModuleListObject = function createNewListOfModuleObject(moduleList) {
   // TO-DO: Check for module validity
   const moduleToBeStored = {};
@@ -78,7 +84,10 @@ export const createModuleListObject = function createNewListOfModuleObject(modul
 
   return moduleToBeStored;
 }
-
+/** This method return all the focus area requirements from array of focus area ID that is supplied to the method
+* @param {[String]} focusRequirementIDArray: array of focus area ID
+* @return {object} object containing all focus area requirements from the supplied focus Area ID arrays.
+*/
 export const getFocusAreaRequirement = function getFocusAreaRequirement(getFocusRequirementIDArray)  {
   const allfocusAreaRequirements = {
     focusAreaPrimaryModules: {},
@@ -99,6 +108,12 @@ export const getFocusAreaRequirement = function getFocusAreaRequirement(getFocus
   return allfocusAreaRequirements;
 }
 
+/** This method return all the focus area primary modules requirements information from array of focus area ID that is supplied to the method
+* @param {[String]} focusRequirementIDArray: array of focus area ID
+* @return {object} object containing all focus area primary requirements from the supplied focus Area ID arrays.
+*
+* Note: primary requirement does not involve 4k requirement.
+*/
 export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequirement(getFocusRequirementIDArray) {
   const focusAreaPrimaryRequirements = {};
   let tempFocusAreaPrimaryDoc = {};
@@ -111,6 +126,11 @@ export const getFocusAreaPrimaryRequirement = function getFocusAreaPrimaryRequir
   return focusAreaPrimaryRequirements;
 }
 
+/** This method return all level 4000 and above modules that are listed in the focus area from array of focus area ID that is supplied to the method
+* @param {[String]} focusRequirementIDArray: array of focus area ID
+* @return {object} object containing all level 4000 modules and above from the supplied focus Area ID arrays.
+*
+*/
 export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getFocusRequirementIDArray) {
   const focusArea4KRequirements = {};
   let tempFocusArea4KDoc = {};
@@ -123,6 +143,11 @@ export const getFocusArea4KRequirement = function getFocusArea4KRequirement(getF
   return focusArea4KRequirements;
 }
 
+/** This method return level 4000 and above  primary modules that are listed in the focus area from array of focus area ID that is supplied to the method
+* @param {[String]} focusRequirementIDArray: array of focus area ID
+* @return {object} object containing all level 4000 primary modules and above from the supplied focus Area ID arrays.
+*
+*/
 export const getFocusAreaPrimary4KRequirement = function getFocusAreaPrimary4KRequirement(getFocusRequirementIDArray) {
   const focusAreaPrimary4KRequirements = {};
   let tempFocusPrimaryArea4KDoc = {};
@@ -134,7 +159,11 @@ export const getFocusAreaPrimary4KRequirement = function getFocusAreaPrimary4KRe
   }
   return focusAreaPrimary4KRequirements;
 }
-
+/** This method return all electives modules that are listed in the focus area from array of focus area ID that is supplied to the method
+* @param {[String]} focusRequirementIDArray: array of focus area ID
+* @return {object} object containing all electives module from focus areas which ids are supplied as parameter. 
+*
+*/
 export const getFocusAreaNonPrimaryRequirement = function getFocusAreaNonPrimaryRequirement(getFocusRequirementIDArray) {
   const focusAreaNonPrimaryRequirements = {};
   let tempFocusAreaNonPrimaryDoc = {};

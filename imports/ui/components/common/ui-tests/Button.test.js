@@ -5,7 +5,7 @@ import 'jsdom-global/register'; // Mock load a global HTML doc
 
 import Button from '../Button.jsx';
 
-describe('<Button />', function () {
+describe('<Button />', function() {
   it('renders without any error', () => {
     expect(shallow(<Button />));
   })

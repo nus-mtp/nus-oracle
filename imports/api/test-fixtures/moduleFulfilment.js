@@ -5,7 +5,7 @@ import { createNewModuleFulfilment,
 export const populateModuleFulfilmentFixture = function populateModuleFulfilmentFixture() {
   const foundationModules = ['CS1010', 'CS1020', 'CS2010', 'CS1231', 'CS2100', 'CS2103T', 'CS2105', 'CS2106', 'CS3230'];
   const ITProfessionalismModules = ['IS1103', 'CS2101', 'ES2660'];
-  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science II', 'PC1221', 'Science I' ];
   const teamProjectModules = ['Project I', 'Project II'];
   const industrialExperienceModules = ['ATAP/SIP/Industry Course/NOC/FYP'];
 
@@ -53,9 +53,9 @@ export const populateModuleFulfilmentFixture = function populateModuleFulfilment
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ST2334Equivalent));
     } else if (mathSciModules[i] === 'PC1221')  {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], PC1221Equivalent));
-    } else if (mathSciModules[i] === 'Science One')  {
+    } else if (mathSciModules[i] === 'Science I')  {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
-    } else if (mathSciModules[i] === 'Science Two') {
+    } else if (mathSciModules[i] === 'Science II') {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceTwoEquivalent));
     } else {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], []));
@@ -115,7 +115,7 @@ export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516
   const moduleFulfilmentIDs = [];
   const academicYear = 'AY 2015/2016';
 
-  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three'];
+  const mathSciModules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science II', 'PC1221', 'Science I', 'Science III'];
 
   const ST2334Equivalent = ['ST2131'];
   const PC1221Equivalent = ['PC1221FC', 'PC1221X', 'PC1222', 'PC1222X'];
@@ -133,11 +133,11 @@ export const populateAY1516ComSciMathScienceFulfilment = function populateAY1516
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ST2334Equivalent));
     } else if (mathSciModules[i] === 'PC1221')  {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], PC1221Equivalent));
-    } else if (mathSciModules[i] === 'Science One')  {
+    } else if (mathSciModules[i] === 'Science I')  {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
-    } else if (mathSciModules[i] === 'Science Two') {
+    } else if (mathSciModules[i] === 'Science II') {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceTwoEquivalent));
-    } else if (mathSciModules[i] === 'Science Three') {
+    } else if (mathSciModules[i] === 'Science III') {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], ScienceOneEquivalent));
     }  else {
       moduleFulfilmentIDs.push(createNewModuleFulfilment(academicYear, mathSciModules[i], []));

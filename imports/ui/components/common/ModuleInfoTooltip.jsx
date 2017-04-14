@@ -6,6 +6,10 @@ import ReactTooltip from 'react-tooltip';
 // Import Utility functions
 import { isDefinedObj } from './../../../utils/util.js';
 
+/**
+ * Tooltip displaying module information when user hovers over any
+ * module onscreen
+ */
 export default class ModuleInfoTooltip extends React.Component {
   constructor(props) {
     super(props);
@@ -199,4 +203,10 @@ export default class ModuleInfoTooltip extends React.Component {
       </ReactTooltip>
     );
   }
+}
+
+ModuleInfoTooltip.propTypes = {
+  // Module object containing moduleCode, moduleMC, modulePrerequisite,
+  // modulePreclusion, termOffered, etc.
+  module: React.PropTypes.object
 }

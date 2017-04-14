@@ -1,6 +1,29 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+/**
+As the name suggested, Module Collection store information about the module that is offered in NUS.
+
+Module Document should contain the following:
+- moduleCode
+- moduleName
+- moduleDescription
+- modulePrerequisite
+- moduleCorequisite
+- modulePreclusion
+- moduleMC
+- termOffered
+
+Other than the termOffered which stored the information regarding when the module is being offered in form of json object,
+other information is still stored in string. However this may not be the case in the future.
+
+Prerequisite, corequisite and Preclusion of the module should be stored in format that support the module validity logic
+that is yet to be implemented. Known issues in parsing the string of information containing these three information are:
+- No standardized format of storing these information. Some immediately stored in logical way such as XXXX,YYYY, and ZZZZ.
+  However, some wrote it in sentences that obscure the connection between modules (XXXX AND YYYY or XXXX or YYYY,etc.)
+- Some of the requirement might not be a module. 
+**/
+
 class ModuleCollection extends Mongo.Collection{
 
   insert(moduleData, callBack){

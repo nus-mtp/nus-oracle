@@ -10,8 +10,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 class FocusAreaCollection extends Mongo.Collection {
   insert(focusAreaData, callBack){
     const gradDocument = focusAreaData;
-    let result;
-    //validate document
     return super.insert( gradDocument, callBack);
   };
   update(selector, modifier){

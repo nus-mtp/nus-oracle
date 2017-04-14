@@ -74,7 +74,7 @@ export default class AcadYrRow extends React.Component {
           {/* Academic Year Label */}
           <strong>{this.props.acadYr}</strong>
 
-          {/* Left hand section's Delete All button */}
+          {/* Left hand section's Delete acad year button */}
           {this.props.isLastAcadYr ?
           <Button buttonClass="btn btn-inline btn-danger-outline"
                   style={{position: "relative",
@@ -141,6 +141,7 @@ AcadYrRow.propTypes = {
   semesterIndex: React.PropTypes.array,
 
   // Academic Year represented by this row
+  // e.g. "AY 2015/2016" or "AY 2016/2017"
   acadYr: React.PropTypes.string,
 
   // Planner ID containing this academic year
