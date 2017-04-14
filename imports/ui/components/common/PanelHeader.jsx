@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class PanelHeader extends React.Component{
+  /**
+   * This component is used to render the title of each sidebar panels
+   */
+
   render(){
     return(
         <header className="side-menu-addl-title">
