@@ -141,7 +141,6 @@ Item.propTypes = {
 ListItem.propTypes = {
   /* nestable list object to be rendered */
   isFulfilled: React.PropTypes.bool,
-  isCollapsed: React.PropTypes.bool,
   listName: React.PropTypes.string
 }
 
