@@ -48,7 +48,7 @@ The Team
 ### [See Wenhan](https://github.com/walrys)
 > “Creating an elegant and simple UI is everything but simple”
 
-*Wenhan designed the user interface and styling of the website with ReactJS and other UI tool.*     
+*Wenhan designed the user interface and styling of the website with ReactJS and lots of other UI tools.*     
 
 ### [Adrian Chan Ee Ray](https://github.com/IamVacer)
 > “I Have No Idea What I'm Doing with these Platetora 乁(⚆ᴥ⚆ʋ)ㄏ. Meteor loves me as much as Armageddon loves Earth”      
@@ -58,7 +58,7 @@ The Team
 ### [Natasha Koh Sze Sze](https://github.com/NatashaKSS)
 > “I love working with different users and thinking up lots of different ways to enrich NUS Oracle’s user experience!”       
 
-*Natasha developed the site’s user interface using ReactJS and a plethora of UI tools.*      
+*Natasha developed the site’s user interface using ReactJS and lots of other UI tools.*      
 
 ### [Brandon Swee Yee](https://github.com/bsweeyee)
 > “Being able to solve a student’s graduation requirement is a tough but interesting challenge”       
