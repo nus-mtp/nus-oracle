@@ -53,7 +53,7 @@ Vagrant is a tool for developers to easily create a virtual environment on your 
 + Enter the Virtual box VM with `vagrant ssh`
 + Run `mkdir -p nus_oracle/.meteor/local`
   * check the footnotes for why this must be done
-+ Run `udo mount --bind /home/vagrant/nus_oracle/.meteor/local/vagrant/.meteor/local`
++ Run `sudo mount --bind /home/vagrant/nus_oracle/.meteor/local /vagrant/.meteor/local`
   * check the footnotes for why this must be done
 + Run `cd/vagrant` to move to the directory
 + Run `meteor` in that directory to run the code on your local machine!
