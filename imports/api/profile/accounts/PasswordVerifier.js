@@ -1,7 +1,7 @@
 import { successMsgs,
          errorMsgs } from './../../../ui/components/account/AccountAlerts.js'
 
-//Method to ensure Email is a valid domain
+//Method to ensure password is secure enough for users
 Meteor.methods({
   nusPasswordVerifier(password, repassword) {
     const smallPassword = password.toLowerCase();
