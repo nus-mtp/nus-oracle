@@ -30,7 +30,7 @@ Reliably check if you can graduate
 
 Getting started
 ----------------
-Head on over to our [GETTING STARTED page](https://github.com/nus-mtp/nus-oracle/wiki/getting-started) to find out how to contribute, regardless if you’re a developer or not! We'd love to hear from you! :)
+Head on over to our [GETTING STARTED page](https://github.com/nus-mtp/nus-oracle/wiki/getting-started) to find out how to contribute, whether you’re a developer or not! We'd love to hear from you! :)
 
 Contributing to NUS Oracle
 ---------------------------
