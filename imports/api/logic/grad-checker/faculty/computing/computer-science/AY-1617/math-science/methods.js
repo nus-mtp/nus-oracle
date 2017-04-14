@@ -96,11 +96,22 @@ const markExemptedWaivedModules = function markExemptedWaivedModules(markedMathS
   return markedMathSciModulesAndMCs;
 }
 
-//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
+//check if keyname is ScienceTwo, if so, check if ST2131 is in planner, if so, only allow ST2132 else allow all science module
 const markExceptions = function markExceptions(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule)  {
-  if (originalModule === 'Science Two' &&
-      markedMathSciModulesAndMCs.moduleChecked['ST2131'] )  {
-    markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
+  if (originalModule === 'Science II' )  {
+    let isST2131 = false;
+    for (var i = 0; i < studentSemesters.length; i++) {
+        if (studentSemesters[i].moduleHashmap['ST2131'])  {
+          isST2131 = true;
+      }
+    }
+    if (isST2131) {
+      if (equivalentModule === 'ST2132')  {
+        markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, 'ST2132', originalModule);
+      }
+    } else {
+      markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
+    }
   } else {
     markedMathSciModulesAndMCs = markModules(markedMathSciModulesAndMCs, studentSemesters, equivalentModule, originalModule);
   }
@@ -108,11 +119,20 @@ const markExceptions = function markExceptions(markedMathSciModulesAndMCs, stude
   return markedMathSciModulesAndMCs;
 }
 
-//check if keyname is ScienceTwo, if so, check if ST2131 is in moduleChecked, if so, only allow ST2132 else allow all science module
+//check if keyname is ScienceTwo, if so, check if ST2131 is in exemptedModules/waivedModules, if so, only allow ST2132 else allow all science module
 const markExemptedWaivedExceptions = function markExemptedWaivedExceptions(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule)  {
-  if (originalModule === 'Science Two' &&
-      markedMathSciModulesAndMCs.moduleChecked['ST2131'])  {
-    markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
+  if (originalModule === 'Science II')  {
+    let isST2131 = false;
+    if (exemptedModules['ST2131'] || waivedModules['ST2131'])  {
+        isST2131 = true;
+    }
+    if (isST2131) {
+      if (equivalentModule === 'ST2132')  {
+        markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, 'ST2132', originalModule);
+      }
+    } else {
+      markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
+    }
   } else {
     markedMathSciModulesAndMCs = markExemptedWaivedModules(markedMathSciModulesAndMCs, exemptedModules, waivedModules, equivalentModule, originalModule);
   }

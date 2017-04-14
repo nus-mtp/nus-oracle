@@ -87,7 +87,7 @@ const populateAY1516ComSciITProfessionalismFixture = function populateAY1516ComS
 
 const populateComSciMathScienceFixture = function populateComSciMathScienceFixture()  {
   const requirementName = 'Mathematics and Sciences';
-  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two' ];
+  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science II', 'PC1221', 'Science I'];
   const requirementMCs = 28;
 
   return createNewGradRequirement(requirementName, modules, requirementMCs);
@@ -95,7 +95,7 @@ const populateComSciMathScienceFixture = function populateComSciMathScienceFixtu
 
 const populateAY1516ComSciMathScienceGradFixture = function populateAY1516ComSciMathScienceGradFixture()  {
   const requirementName = 'Mathematics and Sciences';
-  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'PC1221', 'Science One', 'Science Two', 'Science Three' ];
+  const modules = ['MA1301', 'MA1521', 'MA1101R', 'ST2334', 'Science II', 'PC1221', 'Science I', 'Science III'];
   const requirementMCs = 32;
 
   const gradRequirementIDs = [];
