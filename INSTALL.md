@@ -53,23 +53,28 @@ Vagrant is a tool for developers to easily create a virtual environment on your 
   * [How to use vagrant on Windows](http://tech.osteel.me/posts/2015/01/25/how-to-use-vagrant-on-windows.html)
   * [Meteor in Window using Vagrant](https://gist.github.com/gabrielhpugliese/5855677)
 
-Running NUS Oracle
+Running The App
 ------------------
 + Run the command ``meteor npm install`` to install all npm package dependencies
 + Run the app with the command `meteor`
 + Go to `localhost:3000` on your browser and the front page of our website should be displayed on your browser!
 
+**Sidenote:**
+Please take note that NO verification email for new accounts will be sent to your actual NUS email on `localhost`. This is because you're not connected to the Simple Mail Transfer Protocol (SMTP) as authorization to SMTP key is not provided in our repository for security reasons. Thus, when signing up on your `localhost`, the email with signup instructions will instead be printed on your console. Follow the instructions in the console to sign up for NUS Oracle on your local computer. 
+
+*If you wish to develop on a local machine with full access to the database or SMTP, please contact us at `nusoracle@gmail.com`.*
+
 Accessing the development database
 ------------------------------------
-Running `meteor` on the database would only give you access to test fixture information. If you wish to develop on a local machine with full access to a database, please contact us at `nusoracle@gmail.com` where we would provide you with the relevant files and details on how to run the application locally with full database access.
+Running `meteor` on the database would only give you access to mockup data fixtures (i.e. fake data). If you wish to develop on a local machine with full access to a database, please contact us at `nusoracle@gmail.com` where we would provide you with the relevant files and details on how to run the application locally with full database access.
 
 Running test cases
 ------------------
 + Set your environment variable `TEST_CLIENT=0` (important!)
 + Run the app with the command `meteor npm run ci-test`. This command may be customized in the `package.json` file.
 + If you want to keep the test cases running in *watch mode*, set your environment variable like this: `TEST_WATCH=1`.
-+ Then, run the command `meteor test --driver-package dispatch:mocha`
-*Please note that Windows users need to run your `cmd` console with administrator privileges.*
++ Run the command `meteor test --driver-package dispatch:mocha`
+*Please note that **Windows users** need to run your `cmd` console with **administrator privileges**.*
 
 Coding Environment Setup
 ------------------------
