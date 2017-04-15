@@ -6,7 +6,7 @@ Table of Contents
 * [Overview](#overview)     
 * [Installing Meteor](#installing-meteor)        
 * [Installing Vagrant](#installing-vagrant)
-* [Running the app](#running-nus-oracle)
+* [Running the app](#running-the-app)
 * [Accessing the development database](#accessing-the-development-database)        
 * [Running test cases](#running-test-cases)
 * [Setting up your Coding Environment](#coding-environment-setup)         
