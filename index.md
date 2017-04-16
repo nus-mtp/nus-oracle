@@ -38,7 +38,7 @@ If you're a keen developer who's interested in seeing how you can contribute to 
 
 Demo Video
 -----------
-You can find the link to a video demonstrating NUS Oracle and what it can do for you right [here](www.youtube.com).
+You can find the link to a video demonstrating NUS Oracle and what it can do for you right [here](https://youtu.be/_OJcV5Ccnt8).
 
 The Team
 ---------
